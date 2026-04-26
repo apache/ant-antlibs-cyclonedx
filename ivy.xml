@@ -56,5 +56,6 @@
   <dependencies>
     <dependency org="org.cyclonedx" name="cyclonedx-core-java" rev="12.1.0" conf="default"/>
     <dependency org="org.apache.ant" name="ant" rev="1.10.17" conf="provided->default"/>
+    <dependency org="org.apache.ant" name="ant-antunit" rev="1.4.1" conf="test->default"/>
   </dependencies>
 </ivy-module>

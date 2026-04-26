@@ -17,16 +17,7 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<project default="compile" name="cyclonedx">
-
-  <!-- easy way to override properties -->
-  <property file="build.properties"/>
-
-  <target name="ready-to-package" depends="common.ready-to-package">
-    <copy todir="${build.classes}/org/apache/ant/cyclonedx">
-      <file file="version.properties"/>
-    </copy>
-  </target>
-
-  <import file="common/build.xml"/>
-</project>
+<antlib xmlns:au="ant:current">
+  <taskdef name="componentbom"
+    classname="org.apache.ant.cyclonedx.ComponentBomTask"/>
+</antlib>
