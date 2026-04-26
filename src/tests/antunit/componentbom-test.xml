@@ -20,6 +20,7 @@
   <import file="shared.xml" />
 
   <target name="testToolMetadata">
+    <checksum property="sha256hash" file="${antlib.location}" algorithm="SHA-256"/>
     <mkdir dir="${output}"/>
     <cdx:componentbom bomfile="${output}/bom.json"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
@@ -30,11 +31,19 @@
     <au:assertResourceContains
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.json"
-        value='"version" : "0.1alpha"'/>
+        value='"version" : "${artifact.version}"'/>
     <au:assertResourceContains
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.json"
         value='"description" : "Apache CycloneDX Antlib"'/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.json"
+        value='"alg" : "SHA-256"'/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.json"
+        value='"content" : "${sha256hash}"'/>
   </target>
 
 </project>

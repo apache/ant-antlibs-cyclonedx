@@ -33,6 +33,15 @@ public class ComponentBomTask extends Task {
     }
 
     public void execute() {
+        try {
+            Bom bom = createBom();
+            writeBom(bom, bomFile);
+        } catch (IOException | GeneratorException ex) {
+            throw new BuildException("failed to write BOM", ex);
+        }
+    }
+
+    private Bom createBom() throws IOException {
         Bom bom = new Bom();
         bom.setSerialNumber("urn:uuid:" + UUID.randomUUID());
 
@@ -47,13 +56,14 @@ public class ComponentBomTask extends Task {
         meta.setLifecycles(l);
 
         bom.setMetadata(meta);
+        return bom;
+    }
 
+    private void writeBom(Bom bom, File bomFile) throws IOException, GeneratorException {
         BomJsonGenerator generator = BomGeneratorFactory.createJson(Version.VERSION_16, bom);
         try (FileOutputStream fos = new FileOutputStream(bomFile);
              OutputStreamWriter writer = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
             writer.write(generator.toJsonString(true));
-        } catch (IOException | GeneratorException ex) {
-            throw new BuildException("failed to write BOM", ex);
         }
     }
 }

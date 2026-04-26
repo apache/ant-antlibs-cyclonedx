@@ -19,13 +19,12 @@
   <property name="antunit.tmpdir" location="${java.io.tmpdir}"/>
   <property name="input" location="${antunit.tmpdir}/testinput"/>
   <property name="output" location="${antunit.tmpdir}/testoutput"/>
+  <property file="../../../version.properties"/>
 
   <target name="setUp">
-    <echo>${toString:classpath.test}</echo>
     <typedef uri="antlib:org.apache.ant.antunit"
       resource="org/apache/ant/antunit/antlib.xml"
       classpathref="classpath.test"/>
-    <echo>${antlib.location}</echo>
     <typedef uri="antlib:org.apache.ant.cyclonedx"
       resource="org/apache/ant/cyclonedx/antlib.xml">
       <classpath>
