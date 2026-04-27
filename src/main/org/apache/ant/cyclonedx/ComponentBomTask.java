@@ -12,10 +12,12 @@ import java.util.UUID;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
+import org.cyclonedx.Format;
 import org.cyclonedx.Version;
 import org.cyclonedx.exception.GeneratorException;
 import org.cyclonedx.generators.BomGeneratorFactory;
 import org.cyclonedx.generators.json.BomJsonGenerator;
+import org.cyclonedx.generators.xml.BomXmlGenerator;
 import org.cyclonedx.model.Bom;
 import org.cyclonedx.model.LifecycleChoice;
 import org.cyclonedx.model.Lifecycles;
@@ -27,9 +29,14 @@ import org.cyclonedx.model.Metadata;
 public class ComponentBomTask extends Task {
 
     private File bomFile;
+    private Format format = Format.JSON;
 
     public void setBomFile(File f) {
         bomFile = f;
+    }
+
+    public void setFormat(Format format) {
+        this.format = format;
     }
 
     public void execute() {
@@ -60,10 +67,29 @@ public class ComponentBomTask extends Task {
     }
 
     private void writeBom(Bom bom, File bomFile) throws IOException, GeneratorException {
+        switch (format) {
+        case JSON:
+            writeJsonBom(bom, bomFile);
+            break;
+        case XML:
+            writeXmlBom(bom, bomFile);
+            break;
+        }
+    }
+
+    private void writeJsonBom(Bom bom, File bomFile) throws IOException, GeneratorException {
         BomJsonGenerator generator = BomGeneratorFactory.createJson(Version.VERSION_16, bom);
         try (FileOutputStream fos = new FileOutputStream(bomFile);
              OutputStreamWriter writer = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
             writer.write(generator.toJsonString(true));
+        }
+    }
+
+    private void writeXmlBom(Bom bom, File bomFile) throws IOException, GeneratorException {
+        BomXmlGenerator generator = BomGeneratorFactory.createXml(Version.VERSION_16, bom);
+        try (FileOutputStream fos = new FileOutputStream(bomFile);
+             OutputStreamWriter writer = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
+            writer.write(generator.toXmlString());
         }
     }
 }

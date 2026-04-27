@@ -19,7 +19,7 @@
 
   <import file="shared.xml" />
 
-  <target name="testToolMetadata">
+  <target name="testToolMetadataInJsonFormat">
     <checksum property="sha256hash" file="${antlib.location}" algorithm="SHA-256"/>
     <mkdir dir="${output}"/>
     <cdx:componentbom bomfile="${output}/bom.json"
@@ -46,4 +46,51 @@
         value='"content" : "${sha256hash}"'/>
   </target>
 
+  <target name="testToolMetadataInXmlFormat">
+    <checksum property="sha256hash" file="${antlib.location}" algorithm="SHA-256"/>
+    <mkdir dir="${output}"/>
+    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.lifecycles.lifecycle.phase"
+        value="build"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.tools.components.component(type)"
+        value="library"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.tools.components.component.name"
+        value="ant-cyclonedx"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.tools.components.component.group"
+        value="org.apache.ant"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.tools.components.component.version"
+        value="${artifact.version}"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.tools.components.component.description"
+        value="Apache CycloneDX Antlib"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.tools.components.component.manufacturer.name"
+        value="Apache Ant Development Team"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.tools.components.component.manufacturer.url"
+        value="https://ant.apache.org/"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.tools.components.component.licenses.license.id"
+        value="Apache-2.0"/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.xml"
+        value='&lt;hash alg="SHA-256"&gt;${sha256hash}&lt;/hash&gt;'/>
+  </target>
 </project>
