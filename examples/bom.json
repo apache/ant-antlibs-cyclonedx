@@ -1,10 +1,10 @@
 {
   "bomFormat" : "CycloneDX",
   "specVersion" : "1.6",
-  "serialNumber" : "urn:uuid:9473c08b-477c-4087-9fb9-965d51f6b87b",
+  "serialNumber" : "urn:uuid:932573e3-25d5-4922-a5a1-eaa64e76a184",
   "version" : 1,
   "metadata" : {
-    "timestamp" : "2026-05-01T20:20:09Z",
+    "timestamp" : "2026-05-01T20:44:53Z",
     "lifecycles" : [
       {
         "phase" : "build"
@@ -33,35 +33,35 @@
           "hashes" : [
             {
               "alg" : "MD5",
-              "content" : "8f400c4cf1c0fced3eb9e0bfd5d18485"
+              "content" : "6802fde2fdd7103022fb9203fc8ceed2"
             },
             {
               "alg" : "SHA-1",
-              "content" : "9d6e76799441f34d56b39aca6415a36d510b463c"
+              "content" : "06ff4239c338b0e9a6f6b8567a79126c957d4187"
             },
             {
               "alg" : "SHA-256",
-              "content" : "0b12ba1c7c6ae24a49581810c7495b92df933c150eddebf94522f5fdb19902d8"
+              "content" : "480ace3a039d882edb028227aa8ae682cb18fe40461ad757bd04dce7ed513b3f"
             },
             {
               "alg" : "SHA-512",
-              "content" : "7eb05a92293ead979a82953f4ac2eb560f7414b7d52a6caa651f2d71d95bee8c5deb1e85235ede013497400f005a938d7ce3647396a9f2c7859afaa5e1991102"
+              "content" : "e888ecde1d5bbf5b1aef63364bbcabf8f0c92e63379b0bedc085a68c117c011730f643bb9a105157c4eb529190abd3df5b16f61826df85082819b96b2b813b6a"
             },
             {
               "alg" : "SHA3-256",
-              "content" : "18e97fdcdfb34cad170895bf01da95fdc83a77639ca32451bd7dcd3a313dbc47"
+              "content" : "39716ad8b6b6081eefc5a3f61095b39ec650147dbe9bd5a238ada8e732b8bd41"
             },
             {
               "alg" : "SHA3-512",
-              "content" : "dd80e9505830bcd1381ac41b5fb68f9eec5413c9eca02740bdcd2dcdb28a3dce2480a61da1f61fe1b5e27d5f50f95f46dabbb28fa05015140a34245eafd86e3b"
+              "content" : "23e9d1ddc7745d71e55f912246d1cd6f23f14e9000fdeb6911b17d8c305718cb2df9f7d8219c21f89d74709a3ed8b440111b62297b67e6f6a5deb2912769a201"
             },
             {
               "alg" : "SHA-384",
-              "content" : "e64ab7365de5350211165f5f1334d5bcd399d5e918a40791122b529f5f81b5200e83b1d62789b062a40671b45e2b7946"
+              "content" : "461a095ee273e71bfb09659ccf3aa548890058057b59a8d069b5f7bea9a3a437be316c1e61e3e7ca6852202d5ae1d6a6"
             },
             {
               "alg" : "SHA3-384",
-              "content" : "9a632d33939e993910ae7eedafb383a1ac6786b72e4e36a88f5873a3be8690577becd66cddc7875e97fcc98455c11bb3"
+              "content" : "1b3cb728b5eaab8e62538ab986e8ccb4c1370799fbe7f1c8c60702f270a91c566e172ceed7f5fb0acb9cf53e7300f38a"
             }
           ],
           "licenses" : [
@@ -84,6 +84,12 @@
     "component" : {
       "type" : "library",
       "bom-ref" : "pkg:maven/org.apache.ant/ant-cyclonedx@0.1alpha?type=jar",
+      "supplier" : {
+        "name" : "Apache Ant Development Team",
+        "url" : [
+          "https://ant.apache.org/"
+        ]
+      },
       "manufacturer" : {
         "name" : "Apache Ant Development Team",
         "url" : [
@@ -97,35 +103,35 @@
       "hashes" : [
         {
           "alg" : "MD5",
-          "content" : "8f400c4cf1c0fced3eb9e0bfd5d18485"
+          "content" : "6802fde2fdd7103022fb9203fc8ceed2"
         },
         {
           "alg" : "SHA-1",
-          "content" : "9d6e76799441f34d56b39aca6415a36d510b463c"
+          "content" : "06ff4239c338b0e9a6f6b8567a79126c957d4187"
         },
         {
           "alg" : "SHA-256",
-          "content" : "0b12ba1c7c6ae24a49581810c7495b92df933c150eddebf94522f5fdb19902d8"
+          "content" : "480ace3a039d882edb028227aa8ae682cb18fe40461ad757bd04dce7ed513b3f"
         },
         {
           "alg" : "SHA-512",
-          "content" : "7eb05a92293ead979a82953f4ac2eb560f7414b7d52a6caa651f2d71d95bee8c5deb1e85235ede013497400f005a938d7ce3647396a9f2c7859afaa5e1991102"
+          "content" : "e888ecde1d5bbf5b1aef63364bbcabf8f0c92e63379b0bedc085a68c117c011730f643bb9a105157c4eb529190abd3df5b16f61826df85082819b96b2b813b6a"
         },
         {
           "alg" : "SHA3-256",
-          "content" : "18e97fdcdfb34cad170895bf01da95fdc83a77639ca32451bd7dcd3a313dbc47"
+          "content" : "39716ad8b6b6081eefc5a3f61095b39ec650147dbe9bd5a238ada8e732b8bd41"
         },
         {
           "alg" : "SHA3-512",
-          "content" : "dd80e9505830bcd1381ac41b5fb68f9eec5413c9eca02740bdcd2dcdb28a3dce2480a61da1f61fe1b5e27d5f50f95f46dabbb28fa05015140a34245eafd86e3b"
+          "content" : "23e9d1ddc7745d71e55f912246d1cd6f23f14e9000fdeb6911b17d8c305718cb2df9f7d8219c21f89d74709a3ed8b440111b62297b67e6f6a5deb2912769a201"
         },
         {
           "alg" : "SHA-384",
-          "content" : "e64ab7365de5350211165f5f1334d5bcd399d5e918a40791122b529f5f81b5200e83b1d62789b062a40671b45e2b7946"
+          "content" : "461a095ee273e71bfb09659ccf3aa548890058057b59a8d069b5f7bea9a3a437be316c1e61e3e7ca6852202d5ae1d6a6"
         },
         {
           "alg" : "SHA3-384",
-          "content" : "9a632d33939e993910ae7eedafb383a1ac6786b72e4e36a88f5873a3be8690577becd66cddc7875e97fcc98455c11bb3"
+          "content" : "1b3cb728b5eaab8e62538ab986e8ccb4c1370799fbe7f1c8c60702f270a91c566e172ceed7f5fb0acb9cf53e7300f38a"
         }
       ],
       "licenses" : [
@@ -141,6 +147,12 @@
           "type" : "vcs",
           "url" : "https://github.com/apache/ant-antlibs-cyclonedx"
         }
+      ]
+    },
+    "supplier" : {
+      "name" : "Apache Ant Development Team",
+      "url" : [
+        "https://ant.apache.org/"
       ]
     }
   },

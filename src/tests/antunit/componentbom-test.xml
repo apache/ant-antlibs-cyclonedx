@@ -118,6 +118,56 @@
         value='&lt;url&gt;https://github.com/apache/ant-antlibs-cyclonedx&lt;/url&gt;'/>
   </target>
 
+  <target name="testSupplierAndManufacturerInMeta">
+    <mkdir dir="${output}"/>
+    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <manufacturer name="Example">
+        <url url="https://example.org/"/>
+      </manufacturer>
+      <supplier name="Example 2">
+        <url url="https://example.com/"/>
+      </supplier>
+      <component name="testname"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.manufacturer.name"
+        value="Example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.manufacturer.url"
+        value="https://example.org/"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.supplier.name"
+        value="Example 2"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.supplier.url"
+        value="https://example.com/"/>
+
+    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+                      useComponentSupplier="true"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <supplier name="Example 2">
+          <url url="https://example.com/"/>
+        </supplier>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.supplier.name"
+        value="Example 2"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.supplier.url"
+        value="https://example.com/"/>
+</target>
+
   <target name="testComponentIsRequired">
     <au:expectfailure expectedMessage="nested component element is required"
         xmlns:au="antlib:org.apache.ant.antunit">
@@ -329,12 +379,14 @@
     <cdx:componentbom
         bomfile="${output}/bom.json"
         format="JSON"
+        useComponentSupplier="true"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component
           name="ant-cyclonedx"
           group="org.apache.ant"
           version="${artifact.version}"
-          description="Apache CycloneDX Antlib">
+          description="Apache CycloneDX Antlib"
+          manufacturerIsSupplier="true">
         <file file="${antlib.location}"/>
         <manufacturer name="Apache Ant Development Team">
           <url url="https://ant.apache.org/"/>
@@ -375,12 +427,14 @@
     <cdx:componentbom
         bomfile="${output}/bom.xml"
         format="XML"
+        useComponentSupplier="true"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component
           name="ant-cyclonedx"
           group="org.apache.ant"
           version="${artifact.version}"
-          description="Apache CycloneDX Antlib">
+          description="Apache CycloneDX Antlib"
+          manufacturerIsSupplier="true">
         <file file="${antlib.location}"/>
         <manufacturer name="Apache Ant Development Team">
           <url url="https://ant.apache.org/"/>

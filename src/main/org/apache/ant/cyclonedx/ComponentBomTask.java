@@ -27,6 +27,7 @@ import org.cyclonedx.model.Dependency;
 import org.cyclonedx.model.LifecycleChoice;
 import org.cyclonedx.model.Lifecycles;
 import org.cyclonedx.model.Metadata;
+import org.cyclonedx.model.OrganizationalEntity;
 
 /**
  * Task that creates CycloneDX BOM for a single component.
@@ -37,6 +38,9 @@ public class ComponentBomTask extends Task {
     private Format format = Format.JSON;
     private Component component;
     private List<Component> additionalComponents = new ArrayList<>();
+    private Organization manufacturer = null;
+    private Organization supplier = null;
+    private boolean useComponentSupplier = false;
 
     public void setBomFile(File f) {
         bomFile = f;
@@ -58,7 +62,31 @@ public class ComponentBomTask extends Task {
         additionalComponents.add(c);
     }
 
+    public Organization createManufacturer() {
+        if (manufacturer != null) {
+            throw new BuildException("can only have one manufacturer");
+        }
+        manufacturer = new Organization();
+        return manufacturer;
+    }
+
+    public Organization createSupplier() {
+        if (supplier != null) {
+            throw new BuildException("can only have one supplier");
+        }
+        supplier = new Organization();
+        return supplier;
+    }
+
+    public void setUseComponentSupplier(boolean useComponentSupplier) {
+        this.useComponentSupplier = useComponentSupplier;
+    }
+
     public void execute() {
+        if (supplier != null && useComponentSupplier) {
+            throw new BuildException("can't use component's supplier when there is an explicit supplier");
+        }
+
         try {
             Bom bom = createBom();
             writeBom(bom, bomFile);
@@ -85,6 +113,19 @@ public class ComponentBomTask extends Task {
             throw new BuildException("nested component element is required");
         }
         meta.setComponent(component.toMainCycloneDxComponent(Version.VERSION_16));
+        if (useComponentSupplier) {
+            OrganizationalEntity componentSupplier = meta.getComponent().getSupplier();
+            if (componentSupplier == null) {
+                throw new BuildException("useComponentSupplier is true but component supplier is null");
+            }
+            meta.setSupplier(componentSupplier);
+        }
+        if (supplier != null) {
+            meta.setSupplier(supplier.toOrganizationalEntity());
+        }
+        if (manufacturer != null) {
+            meta.setManufacturer(manufacturer.toOrganizationalEntity());
+        }
 
         bom.setMetadata(meta);
 

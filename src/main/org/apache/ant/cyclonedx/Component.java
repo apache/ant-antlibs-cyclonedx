@@ -9,7 +9,6 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.resources.FileProvider;
-import org.apache.tools.ant.types.resources.URLResource;
 
 import org.cyclonedx.Version;
 import org.cyclonedx.model.LicenseChoice;
@@ -236,30 +235,6 @@ public class Component {
         }
 
         component.setHashes(BomUtils.calculateHashes(file, bomVersion));
-    }
-
-    public static class Organization {
-        private String name;
-        private List<String> urls = new ArrayList<>();
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public void addConfiguredUrl(URLResource url) {
-            urls.add(url.getURL().toExternalForm());
-        }
-
-        public OrganizationalEntity toOrganizationalEntity() {
-            OrganizationalEntity oe = new OrganizationalEntity();
-            if (name != null) {
-                oe.setName(name);
-            }
-            if (!urls.isEmpty()) {
-                oe.setUrls(urls);
-            }
-            return oe;
-        }
     }
 
     public static class License {
