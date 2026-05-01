@@ -8,7 +8,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 import org.apache.tools.ant.BuildException;
@@ -21,6 +23,7 @@ import org.cyclonedx.generators.BomGeneratorFactory;
 import org.cyclonedx.generators.json.BomJsonGenerator;
 import org.cyclonedx.generators.xml.BomXmlGenerator;
 import org.cyclonedx.model.Bom;
+import org.cyclonedx.model.Dependency;
 import org.cyclonedx.model.LifecycleChoice;
 import org.cyclonedx.model.Lifecycles;
 import org.cyclonedx.model.Metadata;
@@ -93,7 +96,49 @@ public class ComponentBomTask extends Task {
             bom.setComponents(cs);
         }
 
+        addDependencies(bom);
+
         return bom;
+    }
+
+    private void addDependencies(Bom bom) {
+        List<Dependency> dependencies = new ArrayList<>();
+        Set<String> bomRefs = new HashSet<>();
+        if (component.getBomRef() != null) {
+            bomRefs.add(component.getBomRef());
+        }
+        for (Component c : additionalComponents) {
+            if (c.getBomRef() != null) {
+                bomRefs.add(c.getBomRef());
+            }
+        }
+
+        if (component.getBomRef() != null) {
+            Dependency dep = new Dependency(component.getBomRef());
+            for (Component.Dependency d : component.getDependencies()) {
+                String br = d.getBomRef();
+                if (!bomRefs.contains(br)) {
+                    throw new BuildException("dependency '" + br + "' is unknown");
+                }
+                dep.addDependency(new Dependency(br));
+            }
+            dependencies.add(dep);
+        }
+        for (Component c : additionalComponents) {
+            if (!c.areDependenciesUnknown() && c.getBomRef() != null) {
+                Dependency dep = new Dependency(c.getBomRef());
+                for (Component.Dependency d : c.getDependencies()) {
+                    String br = d.getBomRef();
+                    if (!bomRefs.contains(br)) {
+                        throw new BuildException("dependency '" + br + "' is unknown");
+                    }
+                    dep.addDependency(new Dependency(br));
+                }
+                dependencies.add(dep);
+            }
+        }
+
+        bom.setDependencies(dependencies);
     }
 
     private void writeBom(Bom bom, File bomFile) throws IOException, GeneratorException {

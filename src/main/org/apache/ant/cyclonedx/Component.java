@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.resources.FileProvider;
 import org.apache.tools.ant.types.resources.URLResource;
@@ -29,6 +30,8 @@ public class Component {
     private List<org.cyclonedx.model.ExternalReference> externalReferences = new ArrayList<>();
     private org.cyclonedx.model.Component.Scope scope;
     private boolean isExternal = false;
+    private List<Dependency> dependencies = new ArrayList<>();
+    private boolean unknownDependencies = false;
 
     public void add(Resource resource) {
         if (this.resource != null) {
@@ -106,6 +109,22 @@ public class Component {
         this.isExternal = isExternal;
     }
 
+    public void addDependency(Dependency d) {
+        dependencies.add(d);
+    }
+
+    public Iterable<Dependency> getDependencies() {
+        return dependencies;
+    }
+
+    public void setUnknownDependencies(boolean unknownDependencies) {
+        this.unknownDependencies = unknownDependencies;
+    }
+
+    public boolean areDependenciesUnknown() {
+        return unknownDependencies;
+    }
+
     public org.cyclonedx.model.Component toMainCycloneDxComponent(Version bomVersion)
         throws IOException {
         if (isExternal) {
@@ -157,6 +176,8 @@ public class Component {
         String bomRef = getBomRef();
         if (bomRef != null) {
             component.setBomRef(bomRef);
+        } else if (!dependencies.isEmpty()) {
+            throw new BuildException("a component with dependencies must provide a bomRef");
         }
         if (!externalReferences.isEmpty()) {
             component.setExternalReferences(externalReferences);
@@ -262,6 +283,44 @@ public class Component {
             r.setUrl(url);
             r.setType(type);
             return r;
+        }
+    }
+
+    public static class Dependency extends ProjectComponent {
+        private String bomRef;
+        private String componentRef;
+
+        public void setBomRef(String bomRef) {
+            this.bomRef = bomRef;
+        }
+
+        public void setComponentRef(String componentRef) {
+            this.componentRef = componentRef;
+        }
+
+        public String getBomRef() {
+            if (bomRef == null && componentRef == null) {
+                throw new BuildException("bomRef or componentRef is required");
+            }
+            if (bomRef != null && componentRef != null) {
+                throw new BuildException("only one of bomRef and componentRef are permitted");
+            }
+            if (bomRef != null) {
+                return bomRef;
+            }
+
+            Object component = getProject().getReference(componentRef);
+            if (component == null) {
+                throw new BuildException("componentRef '" + componentRef + "' is unknown");
+            }
+            if (component instanceof Component) {
+                String b = ((Component) component).getBomRef();
+                if (b == null) {
+                    throw new BuildException("component with id '" + componentRef + "' doesn't provide a bomRef");
+                }
+                return b;
+            }
+            throw new BuildException("componentRef '" + componentRef + "' doesn't refer to a component");
         }
     }
 }

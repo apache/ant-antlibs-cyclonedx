@@ -268,18 +268,11 @@
 
   <target name="testMinimalAdditionalComponentData">
     <mkdir dir="${output}"/>
-    <cdx:componentbom bomfile="${output}/bom.json" format="JSON"
-                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <component name="testname"/>
-      <additionalComponent name="dependency" scope="OPTIONAL"/>
-    </cdx:componentbom>
-    <copy file="${output}/bom.json" todir="/tmp"/>
     <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname"/>
       <additionalComponent name="dependency" scope="OPTIONAL"/>
     </cdx:componentbom>
-    <copy file="${output}/bom.xml" todir="/tmp"/>
     <xmlproperty file="${output}/bom.xml"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
@@ -293,6 +286,34 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.components.component.scope"
         value="optional"/>
+  </target>
+
+  <target name="testDependencies">
+    <mkdir dir="${output}"/>
+    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname" group="org.example" version="1.0">
+        <dependency bomRef="pkg:maven/org.example/dependency@1.0?type=jar"/>
+      </component>
+      <additionalComponent
+          name="dependency" group="org.example" version="1.0">
+        <dependency componentRef="transitve"/>
+      </additionalComponent>
+      <additionalComponent
+          name="transitive-dependency" group="org.example"
+          version="1.0" id="transitve"
+          unknownDependencies="true"/>
+      <additionalComponent name="empty" group="org.example" version="1.0"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.dependencies.dependency(ref)"
+        value="pkg:maven/org.example/testname@1.0?type=jar,pkg:maven/org.example/dependency@1.0?type=jar,pkg:maven/org.example/empty@1.0?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.dependencies.dependency.dependency(ref)"
+        value="pkg:maven/org.example/dependency@1.0?type=jar,pkg:maven/org.example/transitive-dependency@1.0?type=jar"/>
   </target>
 
 </project>
