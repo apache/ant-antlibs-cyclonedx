@@ -8,13 +8,11 @@ import java.security.CodeSource;
 import java.util.Collections;
 import java.util.Properties;
 
+import org.apache.tools.ant.types.resources.FileResource;
+import org.apache.tools.ant.types.resources.URLResource;
+
 import org.cyclonedx.Version;
-import org.cyclonedx.model.Component;
-import org.cyclonedx.model.License;
-import org.cyclonedx.model.LicenseChoice;
-import org.cyclonedx.model.OrganizationalEntity;
 import org.cyclonedx.model.metadata.ToolInformation;
-import org.cyclonedx.util.BomUtils;
 
 /**
  * Provides tool information for BOM's metadata section.
@@ -34,29 +32,28 @@ public class ToolData {
         ToolInformation tool = new ToolInformation();
         Component antlibComponent = new Component();
 
-        antlibComponent.setType(Component.Type.LIBRARY);
         antlibComponent.setGroup("org.apache.ant");
         antlibComponent.setName("ant-cyclonedx");
         antlibComponent.setVersion(getVersion());
         antlibComponent.setDescription("Apache CycloneDX Antlib");
 
-        OrganizationalEntity manufacturer = new OrganizationalEntity();
+        Component.Manufacturer manufacturer = antlibComponent.createManufacturer();
         manufacturer.setName("Apache Ant Development Team");
-        manufacturer.setUrls(Collections.singletonList("https://ant.apache.org/"));
-        antlibComponent.setManufacturer(manufacturer);
+        manufacturer.addConfiguredUrl(new URLResource("https://ant.apache.org/"));
 
-        LicenseChoice lc = new LicenseChoice();
-        License license = new License();
-        license.setId("Apache-2.0");
-        lc.setLicenses(Collections.singletonList(license));
-        antlibComponent.setLicenses(lc);
+        Component.License license = new Component.License();
+        license.setLicenseId("Apache-2.0");
+        antlibComponent.addConfiguredLicense(license);
 
         File antlib = findAntlib();
         if (antlib != null) {
-            antlibComponent.setHashes(BomUtils.calculateHashes(antlib, Version.VERSION_16));
+            antlibComponent.add(new FileResource(antlib));
         }
 
-        tool.setComponents(Collections.singletonList(antlibComponent));
+        org.cyclonedx.model.Component cdxComponent =
+            antlibComponent.toCycloneDxComponent(Version.VERSION_16);
+        cdxComponent.setBomRef(null);
+        tool.setComponents(Collections.singletonList(cdxComponent));
         return tool;
     }
 

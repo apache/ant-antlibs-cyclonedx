@@ -19,11 +19,16 @@
 
   <import file="shared.xml" />
 
+  <checksum property="sha256hash" file="${antlib.location}" algorithm="SHA-256"/>
+
   <target name="testToolMetadataInJsonFormat">
-    <checksum property="sha256hash" file="${antlib.location}" algorithm="SHA-256"/>
     <mkdir dir="${output}"/>
     <cdx:componentbom bomfile="${output}/bom.json"
-                      xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <file file="${antlib.location}"/>
+      </component>
+    </cdx:componentbom>
     <au:assertResourceContains
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.json"
@@ -47,10 +52,13 @@
   </target>
 
   <target name="testToolMetadataInXmlFormat">
-    <checksum property="sha256hash" file="${antlib.location}" algorithm="SHA-256"/>
     <mkdir dir="${output}"/>
     <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
-                      xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <file file="${antlib.location}"/>
+      </component>
+    </cdx:componentbom>
     <xmlproperty file="${output}/bom.xml"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
@@ -93,4 +101,156 @@
         resource="${output}/bom.xml"
         value='&lt;hash alg="SHA-256"&gt;${sha256hash}&lt;/hash&gt;'/>
   </target>
+
+  <target name="testComponentIsRequired">
+    <au:expectfailure expectedMessage="nested component element is required"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+  </target>
+
+  <target name="testOnlyOneComponentIsPermitted">
+    <au:expectfailure expectedMessage="only one nested component element is permitted"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component/>
+        <component/>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testComponentNameIsRequired">
+    <au:expectfailure expectedMessage="component name is required"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component/>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testMinimalComponentData">
+    <mkdir dir="${output}"/>
+    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.name"
+        value="testname"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(type)"
+        value="library"/>
+  </target>
+
+  <target name="testComponentTypeCanBeSet">
+    <mkdir dir="${output}"/>
+    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname" type="APPLICATION"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(type)"
+        value="application"/>
+  </target>
+
+  <target name="testCalculatesPurlAndBomRef">
+    <mkdir dir="${output}"/>
+    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname" group="org.example" version="1.0"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.purl"
+        value="pkg:maven/org.example/testname@1.0?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(bom-ref)"
+        value="pkg:maven/org.example/testname@1.0?type=jar"/>
+  </target>
+
+  <target name="testPurlAndBomRefCanBeSet">
+    <mkdir dir="${output}"/>
+    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname" group="org.example" version="1.0"
+                 purl="foo" bomRef="bar"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.purl"
+        value="foo"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(bom-ref)"
+        value="bar"/>
+  </target>
+
+  <target name="testMaximalComponentData">
+    <mkdir dir="${output}"/>
+    <checksum property="ant.file.sha256" file="${ant.file}" algorithm="SHA-256"/>
+    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname" group="org.example" version="1.0"
+                 description="My Test Library">
+        <file file="${ant.file}"/>
+        <manufacturer name="Example">
+          <url url="https://example.org/"/>
+        </manufacturer>
+        <license licenseId="Apache-2.0"/>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.name"
+        value="testname"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(type)"
+        value="library"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.group"
+        value="org.example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.version"
+        value="1.0"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.purl"
+        value="pkg:maven/org.example/testname@1.0?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(bom-ref)"
+        value="pkg:maven/org.example/testname@1.0?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.name"
+        value="Example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.url"
+        value="https://example.org/"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.license.id"
+        value="Apache-2.0"/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.xml"
+        value='&lt;hash alg="SHA-256"&gt;${ant.file.sha256}&lt;/hash&gt;'/>
+  </target>
+
 </project>

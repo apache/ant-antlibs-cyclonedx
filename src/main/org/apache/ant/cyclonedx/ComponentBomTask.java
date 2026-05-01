@@ -30,6 +30,7 @@ public class ComponentBomTask extends Task {
 
     private File bomFile;
     private Format format = Format.JSON;
+    private Component component;
 
     public void setBomFile(File f) {
         bomFile = f;
@@ -37,6 +38,14 @@ public class ComponentBomTask extends Task {
 
     public void setFormat(Format format) {
         this.format = format;
+    }
+
+    public Component createComponent() {
+        if (component != null) {
+            throw new BuildException("only one nested component element is permitted");
+        }
+        component = new Component();
+        return component;
     }
 
     public void execute() {
@@ -61,6 +70,11 @@ public class ComponentBomTask extends Task {
         lc.setPhase(LifecycleChoice.Phase.BUILD);
         l.setLifecycleChoice(Collections.singletonList(lc));
         meta.setLifecycles(l);
+
+        if (component == null) {
+            throw new BuildException("nested component element is required");
+        }
+        meta.setComponent(component.toCycloneDxComponent(Version.VERSION_16));
 
         bom.setMetadata(meta);
         return bom;
