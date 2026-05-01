@@ -26,6 +26,7 @@ public class Component {
     private List<org.cyclonedx.model.License> licenses = new ArrayList<>();
     private String purl;
     private String bomRef;
+    private List<org.cyclonedx.model.ExternalReference> externalReferences = new ArrayList<>();
 
     public void add(Resource resource) {
         if (this.resource != null) {
@@ -91,6 +92,10 @@ public class Component {
         return bomRef;
     }
 
+    public void addConfiguredExternalReference(ExternalReference ref) {
+        externalReferences.add(ref.toCycloneDxExternalReference());
+    }
+
     public org.cyclonedx.model.Component toCycloneDxComponent(Version bomVersion)
         throws IOException {
         if (name == null) {
@@ -125,6 +130,9 @@ public class Component {
         String bomRef = getBomRef();
         if (bomRef != null) {
             component.setBomRef(bomRef);
+        }
+        if (!externalReferences.isEmpty()) {
+            component.setExternalReferences(externalReferences);
         }
         addHashes(component, bomVersion);
         return component;
@@ -200,6 +208,32 @@ public class Component {
                 l.setId(id);
             }
             return l;
+        }
+    }
+
+    public static class ExternalReference {
+        private String url;
+        private org.cyclonedx.model.ExternalReference.Type type;
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public void setType(org.cyclonedx.model.ExternalReference.Type type) {
+            this.type = type;
+        }
+
+        public org.cyclonedx.model.ExternalReference toCycloneDxExternalReference() {
+            if (url == null) {
+                throw new BuildException("external references must have an url");
+            }
+            if (type == null) {
+                throw new BuildException("external references must have a type");
+            }
+            org.cyclonedx.model.ExternalReference r = new org.cyclonedx.model.ExternalReference();
+            r.setUrl(url);
+            r.setType(type);
+            return r;
         }
     }
 }

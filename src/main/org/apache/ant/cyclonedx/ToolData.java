@@ -12,6 +12,7 @@ import org.apache.tools.ant.types.resources.FileResource;
 import org.apache.tools.ant.types.resources.URLResource;
 
 import org.cyclonedx.Version;
+import org.cyclonedx.model.ExternalReference;
 import org.cyclonedx.model.metadata.ToolInformation;
 
 /**
@@ -44,6 +45,11 @@ public class ToolData {
         Component.License license = new Component.License();
         license.setLicenseId("Apache-2.0");
         antlibComponent.addConfiguredLicense(license);
+
+        Component.ExternalReference repo = new Component.ExternalReference();
+        repo.setUrl("https://github.com/apache/ant-antlibs-cyclonedx");
+        repo.setType(ExternalReference.Type.VCS);
+        antlibComponent.addConfiguredExternalReference(repo);
 
         File antlib = findAntlib();
         if (antlib != null) {

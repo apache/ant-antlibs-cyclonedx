@@ -49,6 +49,10 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.json"
         value='"content" : "${sha256hash}"'/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.json"
+        value='"url" : "https://github.com/apache/ant-antlibs-cyclonedx"'/>
   </target>
 
   <target name="testToolMetadataInXmlFormat">
@@ -100,6 +104,10 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.xml"
         value='&lt;hash alg="SHA-256"&gt;${sha256hash}&lt;/hash&gt;'/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.xml"
+        value='&lt;url&gt;https://github.com/apache/ant-antlibs-cyclonedx&lt;/url&gt;'/>
   </target>
 
   <target name="testComponentIsRequired">
@@ -208,6 +216,7 @@
           <url url="https://example.org/"/>
         </manufacturer>
         <license licenseId="Apache-2.0"/>
+        <externalReference type="WEBSITE" url="https://example.com/"/>
       </component>
     </cdx:componentbom>
     <xmlproperty file="${output}/bom.xml"/>
@@ -251,6 +260,10 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.xml"
         value='&lt;hash alg="SHA-256"&gt;${ant.file.sha256}&lt;/hash&gt;'/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.xml"
+        value='&lt;url&gt;https://example.com/&lt;/url&gt;'/>
   </target>
 
 </project>
