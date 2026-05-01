@@ -27,6 +27,8 @@ public class Component {
     private String purl;
     private String bomRef;
     private List<org.cyclonedx.model.ExternalReference> externalReferences = new ArrayList<>();
+    private org.cyclonedx.model.Component.Scope scope;
+    private boolean isExternal = false;
 
     public void add(Resource resource) {
         if (this.resource != null) {
@@ -96,7 +98,32 @@ public class Component {
         externalReferences.add(ref.toCycloneDxExternalReference());
     }
 
-    public org.cyclonedx.model.Component toCycloneDxComponent(Version bomVersion)
+    public void setScope(org.cyclonedx.model.Component.Scope scope) {
+        this.scope = scope;
+    }
+
+    public void setIsExternal(boolean isExternal) {
+        this.isExternal = isExternal;
+    }
+
+    public org.cyclonedx.model.Component toMainCycloneDxComponent(Version bomVersion)
+        throws IOException {
+        if (isExternal) {
+            throw new BuildException("isExternal can not be true for the main bom component");
+        }
+        return toCycloneDxComponent(bomVersion);
+    }
+
+    public org.cyclonedx.model.Component toAdditionalCycloneDxComponent(Version bomVersion)
+        throws IOException {
+        org.cyclonedx.model.Component component = toCycloneDxComponent(bomVersion);
+        if (scope != null) {
+            component.setScope(scope);
+        }
+        return component;
+    }
+
+    private org.cyclonedx.model.Component toCycloneDxComponent(Version bomVersion)
         throws IOException {
         if (name == null) {
             throw new BuildException("component name is required");
@@ -134,6 +161,7 @@ public class Component {
         if (!externalReferences.isEmpty()) {
             component.setExternalReferences(externalReferences);
         }
+        // add isExternal once VERSION_17 is supported by cyclonedx-java-core
         addHashes(component, bomVersion);
         return component;
     }

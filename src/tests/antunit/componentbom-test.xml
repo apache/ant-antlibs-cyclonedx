@@ -266,4 +266,33 @@
         value='&lt;url&gt;https://example.com/&lt;/url&gt;'/>
   </target>
 
+  <target name="testMinimalAdditionalComponentData">
+    <mkdir dir="${output}"/>
+    <cdx:componentbom bomfile="${output}/bom.json" format="JSON"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname"/>
+      <additionalComponent name="dependency" scope="OPTIONAL"/>
+    </cdx:componentbom>
+    <copy file="${output}/bom.json" todir="/tmp"/>
+    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname"/>
+      <additionalComponent name="dependency" scope="OPTIONAL"/>
+    </cdx:componentbom>
+    <copy file="${output}/bom.xml" todir="/tmp"/>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.name"
+        value="dependency"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component(type)"
+        value="library"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.scope"
+        value="optional"/>
+  </target>
+
 </project>

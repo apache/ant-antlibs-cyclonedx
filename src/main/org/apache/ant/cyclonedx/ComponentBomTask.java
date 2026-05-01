@@ -5,8 +5,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.tools.ant.BuildException;
@@ -31,6 +33,7 @@ public class ComponentBomTask extends Task {
     private File bomFile;
     private Format format = Format.JSON;
     private Component component;
+    private List<Component> additionalComponents = new ArrayList<>();
 
     public void setBomFile(File f) {
         bomFile = f;
@@ -46,6 +49,10 @@ public class ComponentBomTask extends Task {
         }
         component = new Component();
         return component;
+    }
+
+    public void addAdditionalComponent(Component c) {
+        additionalComponents.add(c);
     }
 
     public void execute() {
@@ -74,9 +81,18 @@ public class ComponentBomTask extends Task {
         if (component == null) {
             throw new BuildException("nested component element is required");
         }
-        meta.setComponent(component.toCycloneDxComponent(Version.VERSION_16));
+        meta.setComponent(component.toMainCycloneDxComponent(Version.VERSION_16));
 
         bom.setMetadata(meta);
+
+        if (!additionalComponents.isEmpty()) {
+            List<org.cyclonedx.model.Component> cs = new ArrayList<>();
+            for (Component c : additionalComponents) {
+                cs.add(c.toAdditionalCycloneDxComponent(Version.VERSION_16));
+            }
+            bom.setComponents(cs);
+        }
+
         return bom;
     }
 

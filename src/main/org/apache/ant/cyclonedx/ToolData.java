@@ -57,7 +57,7 @@ public class ToolData {
         }
 
         org.cyclonedx.model.Component cdxComponent =
-            antlibComponent.toCycloneDxComponent(Version.VERSION_16);
+            antlibComponent.toMainCycloneDxComponent(Version.VERSION_16);
         cdxComponent.setBomRef(null);
         tool.setComponents(Collections.singletonList(cdxComponent));
         return tool;
