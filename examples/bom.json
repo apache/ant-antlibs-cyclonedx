@@ -1,0 +1,191 @@
+{
+  "bomFormat" : "CycloneDX",
+  "specVersion" : "1.6",
+  "serialNumber" : "urn:uuid:8cfe0788-fca0-491e-a48c-920ac2b05566",
+  "version" : 1,
+  "metadata" : {
+    "timestamp" : "2026-05-01T19:53:39Z",
+    "lifecycles" : [
+      {
+        "phase" : "build"
+      }
+    ],
+    "tools" : {
+      "components" : [
+        {
+          "type" : "library",
+          "manufacturer" : {
+            "name" : "Apache Ant Development Team",
+            "url" : [
+              "https://ant.apache.org/"
+            ]
+          },
+          "group" : "org.apache.ant",
+          "name" : "ant-cyclonedx",
+          "version" : "0.1alpha",
+          "description" : "Apache CycloneDX Antlib",
+          "hashes" : [
+            {
+              "alg" : "MD5",
+              "content" : "a30e1771f4376fc5444a0eff34c57f35"
+            },
+            {
+              "alg" : "SHA-1",
+              "content" : "91174b265156be460602e86dd20456e1b1f3783f"
+            },
+            {
+              "alg" : "SHA-256",
+              "content" : "938be9e478e3134df97d0ae0710d77ebbf39e3916e5f307db99bf131ddd39bb3"
+            },
+            {
+              "alg" : "SHA-512",
+              "content" : "be0b34697f1954938c3875ef857341d6e7fd276b083bd92ce904651c109911995db8d8420608734e348d54c45bcf72c5213223b84a8c88efbebb62a99edbfe90"
+            },
+            {
+              "alg" : "SHA3-256",
+              "content" : "d9a03b56538c8eb3531a333b3727c88e84e51255ddbcfcf324027f0cf5863182"
+            },
+            {
+              "alg" : "SHA3-512",
+              "content" : "a4653e504cb66e18f0629ed3b21ceb2aebf203ba7848bc96593011fc647435d6a2ae2f3ebe21df72413dd4b2a6ed690b2689cb24b4be3f90d3427f0b1111631d"
+            },
+            {
+              "alg" : "SHA-384",
+              "content" : "b94ebd288e066eb3663583b576d28abece610be66343db9e1a76145b0fa468f97b96a10f5aa24074d844586c048de6ce"
+            },
+            {
+              "alg" : "SHA3-384",
+              "content" : "7262084714b890624a731ba65af3ae6b4ffe61bed2d6b6647114f52faa9b15d5a53e77a1f463c36bc5fb2b11e430687d"
+            }
+          ],
+          "licenses" : [
+            {
+              "license" : {
+                "id" : "Apache-2.0"
+              }
+            }
+          ],
+          "purl" : "pkg:maven/org.apache.ant/ant-cyclonedx@0.1alpha?type=jar",
+          "externalReferences" : [
+            {
+              "type" : "vcs",
+              "url" : "https://github.com/apache/ant-antlibs-cyclonedx"
+            }
+          ]
+        }
+      ]
+    },
+    "component" : {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.ant/ant-cyclonedx@0.1alpha?type=jar",
+      "manufacturer" : {
+        "name" : "Apache Ant Development Team",
+        "url" : [
+          "https://ant.apache.org/"
+        ]
+      },
+      "group" : "org.apache.ant",
+      "name" : "ant-cyclonedx",
+      "version" : "0.1alpha",
+      "description" : "Apache CycloneDX Antlib",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "a30e1771f4376fc5444a0eff34c57f35"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "91174b265156be460602e86dd20456e1b1f3783f"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "938be9e478e3134df97d0ae0710d77ebbf39e3916e5f307db99bf131ddd39bb3"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "be0b34697f1954938c3875ef857341d6e7fd276b083bd92ce904651c109911995db8d8420608734e348d54c45bcf72c5213223b84a8c88efbebb62a99edbfe90"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "d9a03b56538c8eb3531a333b3727c88e84e51255ddbcfcf324027f0cf5863182"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "a4653e504cb66e18f0629ed3b21ceb2aebf203ba7848bc96593011fc647435d6a2ae2f3ebe21df72413dd4b2a6ed690b2689cb24b4be3f90d3427f0b1111631d"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "b94ebd288e066eb3663583b576d28abece610be66343db9e1a76145b0fa468f97b96a10f5aa24074d844586c048de6ce"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "7262084714b890624a731ba65af3ae6b4ffe61bed2d6b6647114f52faa9b15d5a53e77a1f463c36bc5fb2b11e430687d"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.ant/ant-cyclonedx@0.1alpha?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/apache/ant-antlibs-cyclonedx"
+        }
+      ]
+    }
+  },
+  "components" : [
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
+      "manufacturer" : {
+        "name" : "Apache Ant Development Team",
+        "url" : [
+          "https://ant.apache.org/"
+        ]
+      },
+      "group" : "org.apache.ant",
+      "name" : "ant",
+      "version" : "1.10.17",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/apache/ant"
+        },
+        {
+          "type" : "website",
+          "url" : "https://ant.apache.org/"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.1.0?type=jar",
+      "group" : "org.cyclonedx",
+      "name" : "cyclonedx-core-java",
+      "version" : "12.1.0",
+      "purl" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.1.0?type=jar"
+    }
+  ],
+  "dependencies" : [
+    {
+      "ref" : "pkg:maven/org.apache.ant/ant-cyclonedx@0.1alpha?type=jar",
+      "dependsOn" : [
+        "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
+        "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.1.0?type=jar"
+      ]
+    }
+  ]
+}

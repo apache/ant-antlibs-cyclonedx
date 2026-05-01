@@ -316,4 +316,100 @@
         value="pkg:maven/org.example/dependency@1.0?type=jar,pkg:maven/org.example/transitive-dependency@1.0?type=jar"/>
   </target>
 
+  <target name="testAntlibsOwnBom">
+    <mkdir dir="${output}"/>
+    <cdx:componentbom
+        bomfile="${output}/bom.json"
+        format="JSON"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component
+          name="ant-cyclonedx"
+          group="org.apache.ant"
+          version="${artifact.version}"
+          description="Apache CycloneDX Antlib">
+        <file file="${antlib.location}"/>
+        <manufacturer name="Apache Ant Development Team">
+          <url url="https://ant.apache.org/"/>
+        </manufacturer>
+        <license licenseId="Apache-2.0"/>
+        <externalReference
+            type="VCS"
+            url="https://github.com/apache/ant-antlibs-cyclonedx"/>
+        <dependency componentRef="ant"/>
+        <dependency componentRef="cyclonedx-core"/>
+      </component>
+      <additionalComponent
+          name="ant"
+          group="org.apache.ant"
+          version="1.10.17"
+          isExternal="true"
+          unknownDependencies="true"
+          id="ant">
+        <manufacturer name="Apache Ant Development Team">
+          <url url="https://ant.apache.org/"/>
+        </manufacturer>
+        <license licenseId="Apache-2.0"/>
+        <externalReference
+            type="VCS"
+            url="https://github.com/apache/ant"/>
+        <externalReference
+            type="WEBSITE"
+            url="https://ant.apache.org/"/>
+      </additionalComponent>
+      <additionalComponent
+          name="cyclonedx-core-java"
+          group="org.cyclonedx"
+          version="12.1.0"
+          id="cyclonedx-core"
+          unknownDependencies="true"/>
+    </cdx:componentbom>
+    <copy todir="/tmp" file="${output}/bom.json"/>
+    <cdx:componentbom
+        bomfile="${output}/bom.xml"
+        format="XML"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component
+          name="ant-cyclonedx"
+          group="org.apache.ant"
+          version="${artifact.version}"
+          description="Apache CycloneDX Antlib">
+        <file file="${antlib.location}"/>
+        <manufacturer name="Apache Ant Development Team">
+          <url url="https://ant.apache.org/"/>
+        </manufacturer>
+        <license licenseId="Apache-2.0"/>
+        <externalReference
+            type="VCS"
+            url="https://github.com/apache/ant-antlibs-cyclonedx"/>
+        <dependency componentRef="ant"/>
+        <dependency componentRef="cyclonedx-core"/>
+      </component>
+      <additionalComponent
+          name="ant"
+          group="org.apache.ant"
+          version="1.10.17"
+          isExternal="true"
+          unknownDependencies="true"
+          id="ant">
+        <manufacturer name="Apache Ant Development Team">
+          <url url="https://ant.apache.org/"/>
+        </manufacturer>
+        <license licenseId="Apache-2.0"/>
+        <externalReference
+            type="VCS"
+            url="https://github.com/apache/ant"/>
+        <externalReference
+            type="WEBSITE"
+            url="https://ant.apache.org/"/>
+      </additionalComponent>
+      <additionalComponent
+          name="cyclonedx-core-java"
+          group="org.cyclonedx"
+          version="12.1.0"
+          id="cyclonedx-core"
+          unknownDependencies="true"/>
+    </cdx:componentbom>
+    <copy todir="/tmp" file="${output}/bom.xml"/>
+  </target>
+
 </project>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bom serialNumber="urn:uuid:b09e9df9-cc7f-4de4-a61d-489046a4358c" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+  <metadata>
+    <timestamp>2026-05-01T19:53:39Z</timestamp>
+    <lifecycles>
+      <lifecycle>
+        <phase>build</phase>
+      </lifecycle>
+    </lifecycles>
+    <tools>
+      <components>
+        <component type="library">
+          <manufacturer>
+            <name>Apache Ant Development Team</name>
+            <url>https://ant.apache.org/</url>
+          </manufacturer>
+          <group>org.apache.ant</group>
+          <name>ant-cyclonedx</name>
+          <version>0.1alpha</version>
+          <description>Apache CycloneDX Antlib</description>
+          <hashes>
+            <hash alg="MD5">a30e1771f4376fc5444a0eff34c57f35</hash>
+            <hash alg="SHA-1">91174b265156be460602e86dd20456e1b1f3783f</hash>
+            <hash alg="SHA-256">938be9e478e3134df97d0ae0710d77ebbf39e3916e5f307db99bf131ddd39bb3</hash>
+            <hash alg="SHA-512">be0b34697f1954938c3875ef857341d6e7fd276b083bd92ce904651c109911995db8d8420608734e348d54c45bcf72c5213223b84a8c88efbebb62a99edbfe90</hash>
+            <hash alg="SHA3-256">d9a03b56538c8eb3531a333b3727c88e84e51255ddbcfcf324027f0cf5863182</hash>
+            <hash alg="SHA3-512">a4653e504cb66e18f0629ed3b21ceb2aebf203ba7848bc96593011fc647435d6a2ae2f3ebe21df72413dd4b2a6ed690b2689cb24b4be3f90d3427f0b1111631d</hash>
+            <hash alg="SHA-384">b94ebd288e066eb3663583b576d28abece610be66343db9e1a76145b0fa468f97b96a10f5aa24074d844586c048de6ce</hash>
+            <hash alg="SHA3-384">7262084714b890624a731ba65af3ae6b4ffe61bed2d6b6647114f52faa9b15d5a53e77a1f463c36bc5fb2b11e430687d</hash>
+          </hashes>
+          <licenses>
+            <license>
+              <id>Apache-2.0</id>
+            </license>
+          </licenses>
+          <purl>pkg:maven/org.apache.ant/ant-cyclonedx@0.1alpha?type=jar</purl>
+          <externalReferences>
+            <reference type="vcs">
+              <url>https://github.com/apache/ant-antlibs-cyclonedx</url>
+            </reference>
+          </externalReferences>
+        </component>
+      </components>
+    </tools>
+    <component type="library" bom-ref="pkg:maven/org.apache.ant/ant-cyclonedx@0.1alpha?type=jar">
+      <manufacturer>
+        <name>Apache Ant Development Team</name>
+        <url>https://ant.apache.org/</url>
+      </manufacturer>
+      <group>org.apache.ant</group>
+      <name>ant-cyclonedx</name>
+      <version>0.1alpha</version>
+      <description>Apache CycloneDX Antlib</description>
+      <hashes>
+        <hash alg="MD5">a30e1771f4376fc5444a0eff34c57f35</hash>
+        <hash alg="SHA-1">91174b265156be460602e86dd20456e1b1f3783f</hash>
+        <hash alg="SHA-256">938be9e478e3134df97d0ae0710d77ebbf39e3916e5f307db99bf131ddd39bb3</hash>
+        <hash alg="SHA-512">be0b34697f1954938c3875ef857341d6e7fd276b083bd92ce904651c109911995db8d8420608734e348d54c45bcf72c5213223b84a8c88efbebb62a99edbfe90</hash>
+        <hash alg="SHA3-256">d9a03b56538c8eb3531a333b3727c88e84e51255ddbcfcf324027f0cf5863182</hash>
+        <hash alg="SHA3-512">a4653e504cb66e18f0629ed3b21ceb2aebf203ba7848bc96593011fc647435d6a2ae2f3ebe21df72413dd4b2a6ed690b2689cb24b4be3f90d3427f0b1111631d</hash>
+        <hash alg="SHA-384">b94ebd288e066eb3663583b576d28abece610be66343db9e1a76145b0fa468f97b96a10f5aa24074d844586c048de6ce</hash>
+        <hash alg="SHA3-384">7262084714b890624a731ba65af3ae6b4ffe61bed2d6b6647114f52faa9b15d5a53e77a1f463c36bc5fb2b11e430687d</hash>
+      </hashes>
+      <licenses>
+        <license>
+          <id>Apache-2.0</id>
+        </license>
+      </licenses>
+      <purl>pkg:maven/org.apache.ant/ant-cyclonedx@0.1alpha?type=jar</purl>
+      <externalReferences>
+        <reference type="vcs">
+          <url>https://github.com/apache/ant-antlibs-cyclonedx</url>
+        </reference>
+      </externalReferences>
+    </component>
+  </metadata>
+  <components>
+    <component type="library" bom-ref="pkg:maven/org.apache.ant/ant@1.10.17?type=jar">
+      <manufacturer>
+        <name>Apache Ant Development Team</name>
+        <url>https://ant.apache.org/</url>
+      </manufacturer>
+      <group>org.apache.ant</group>
+      <name>ant</name>
+      <version>1.10.17</version>
+      <licenses>
+        <license>
+          <id>Apache-2.0</id>
+        </license>
+      </licenses>
+      <purl>pkg:maven/org.apache.ant/ant@1.10.17?type=jar</purl>
+      <externalReferences>
+        <reference type="vcs">
+          <url>https://github.com/apache/ant</url>
+        </reference>
+        <reference type="website">
+          <url>https://ant.apache.org/</url>
+        </reference>
+      </externalReferences>
+    </component>
+    <component type="library" bom-ref="pkg:maven/org.cyclonedx/cyclonedx-core-java@12.1.0?type=jar">
+      <group>org.cyclonedx</group>
+      <name>cyclonedx-core-java</name>
+      <version>12.1.0</version>
+      <purl>pkg:maven/org.cyclonedx/cyclonedx-core-java@12.1.0?type=jar</purl>
+    </component>
+  </components>
+  <dependencies>
+    <dependency ref="pkg:maven/org.apache.ant/ant-cyclonedx@0.1alpha?type=jar">
+      <dependency ref="pkg:maven/org.apache.ant/ant@1.10.17?type=jar"/>
+      <dependency ref="pkg:maven/org.cyclonedx/cyclonedx-core-java@12.1.0?type=jar"/>
+    </dependency>
+  </dependencies>
+</bom>
