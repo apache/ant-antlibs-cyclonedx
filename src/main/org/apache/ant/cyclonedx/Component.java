@@ -23,7 +23,9 @@ public class Component {
     private String group;
     private String version;
     private String description;
-    private Manufacturer manufacturer = null;
+    private Organization manufacturer = null;
+    private Organization supplier = null;
+    private boolean manufacturerIsSupplier = false;
     private List<org.cyclonedx.model.License> licenses = new ArrayList<>();
     private String purl;
     private String bomRef;
@@ -60,12 +62,24 @@ public class Component {
         this.description = description;
     }
 
-    public Manufacturer createManufacturer() {
+    public Organization createManufacturer() {
         if (manufacturer != null) {
             throw new BuildException("component can only have one manufacturer");
         }
-        manufacturer = new Manufacturer();
+        manufacturer = new Organization();
         return manufacturer;
+    }
+
+    public Organization createSupplier() {
+        if (supplier != null) {
+            throw new BuildException("component can only have one supplier");
+        }
+        supplier = new Organization();
+        return supplier;
+    }
+
+    public void setManufacturerIsSupplier(boolean manufacturerIsSupplier) {
+        this.manufacturerIsSupplier = manufacturerIsSupplier;
     }
 
     public void addConfiguredLicense(License l) {
@@ -147,6 +161,14 @@ public class Component {
         if (name == null) {
             throw new BuildException("component name is required");
         }
+        if (manufacturerIsSupplier) {
+            if (manufacturer == null) {
+                throw new BuildException("component without manufacturer can't use manufacturer as supplier");
+            }
+            if (supplier != null) {
+                throw new BuildException("component with supplier can't use manufacturer as supplier");
+            }
+        }
 
         org.cyclonedx.model.Component component = new org.cyclonedx.model.Component();
 
@@ -162,7 +184,14 @@ public class Component {
             component.setDescription(description);
         }
         if (manufacturer != null) {
-            component.setManufacturer(manufacturer.toOrganizationalEntity());
+            OrganizationalEntity oe = manufacturer.toOrganizationalEntity();
+            component.setManufacturer(oe);
+            if (manufacturerIsSupplier) {
+                component.setSupplier(oe);
+            }
+        }
+        if (supplier != null) {
+            component.setSupplier(supplier.toOrganizationalEntity());
         }
         if (!licenses.isEmpty()) {
             LicenseChoice lc = new LicenseChoice();
@@ -209,7 +238,7 @@ public class Component {
         component.setHashes(BomUtils.calculateHashes(file, bomVersion));
     }
 
-    public static class Manufacturer {
+    public static class Organization {
         private String name;
         private List<String> urls = new ArrayList<>();
 

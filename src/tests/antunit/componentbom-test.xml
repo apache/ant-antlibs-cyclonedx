@@ -98,6 +98,14 @@
         value="https://ant.apache.org/"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.tools.components.component.supplier.name"
+        value="Apache Ant Development Team"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.tools.components.component.supplier.url"
+        value="https://ant.apache.org/"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.tools.components.component.licenses.license.id"
         value="Apache-2.0"/>
     <au:assertResourceContains
