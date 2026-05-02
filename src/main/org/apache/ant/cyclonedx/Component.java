@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
+import org.apache.tools.ant.types.DataType;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.resources.FileProvider;
 
@@ -15,7 +16,7 @@ import org.cyclonedx.model.LicenseChoice;
 import org.cyclonedx.model.OrganizationalEntity;
 import org.cyclonedx.util.BomUtils;
 
-public class Component {
+public class Component extends DataType {
     private Resource resource;
     private org.cyclonedx.model.Component.Type type = org.cyclonedx.model.Component.Type.LIBRARY;
     private String name;
@@ -35,6 +36,7 @@ public class Component {
     private boolean unknownDependencies = false;
 
     public void add(Resource resource) {
+        checkChildrenAllowed();
         if (this.resource != null) {
             throw new BuildException("component can only be defined for a single asset");
         }
@@ -42,54 +44,65 @@ public class Component {
     }
 
     public void setType(org.cyclonedx.model.Component.Type type) {
+        checkAttributesAllowed();
         this.type = type;
     }
 
     public void setName(String name) {
+        checkAttributesAllowed();
         this.name = name;
     }
 
     public void setGroup(String group) {
+        checkAttributesAllowed();
         this.group = group;
     }
 
     public void setVersion(String version) {
+        checkAttributesAllowed();
         this.version = version;
     }
 
     public void setDescription(String description) {
+        checkAttributesAllowed();
         this.description = description;
     }
 
-    public Organization createManufacturer() {
-        if (manufacturer != null) {
+    public void addManufacturer(Organization manufacturer) {
+        checkChildrenAllowed();
+        if (this.manufacturer != null) {
             throw new BuildException("component can only have one manufacturer");
         }
-        manufacturer = new Organization();
-        return manufacturer;
+        this.manufacturer = manufacturer;
     }
 
-    public Organization createSupplier() {
-        if (supplier != null) {
+    public void addSupplier(Organization supplier) {
+        checkChildrenAllowed();
+        if (this.supplier != null) {
             throw new BuildException("component can only have one supplier");
         }
-        supplier = new Organization();
-        return supplier;
+        this.supplier = supplier;
     }
 
     public void setManufacturerIsSupplier(boolean manufacturerIsSupplier) {
+        checkAttributesAllowed();
         this.manufacturerIsSupplier = manufacturerIsSupplier;
     }
 
     public void addConfiguredLicense(License l) {
+        checkChildrenAllowed();
         licenses.add(l.toCycloneDxLicense());
     }
 
     public void setPurl(String purl) {
+        checkAttributesAllowed();
         this.purl = purl;
     }
 
     public String getPurl() {
+        if (isReference()) {
+            return getRef().getPurl();
+        }
         if (purl != null) {
             return purl;
         }
@@ -100,10 +113,14 @@ public class Component {
     }
 
     public void setBomRef(String bomRef) {
+        checkAttributesAllowed();
         this.bomRef = bomRef;
     }
 
     public String getBomRef() {
+        if (isReference()) {
+            return getRef().getBomRef();
+        }
         if (bomRef == null) {
             return getPurl();
         }
@@ -111,35 +128,49 @@ public class Component {
     }
 
     public void addConfiguredExternalReference(ExternalReference ref) {
+        checkChildrenAllowed();
         externalReferences.add(ref.toCycloneDxExternalReference());
     }
 
     public void setScope(org.cyclonedx.model.Component.Scope scope) {
+        checkAttributesAllowed();
         this.scope = scope;
     }
 
     public void setIsExternal(boolean isExternal) {
+        checkAttributesAllowed();
         this.isExternal = isExternal;
     }
 
     public void addDependency(Dependency d) {
+        checkChildrenAllowed();
         dependencies.add(d);
     }
 
     public Iterable<Dependency> getDependencies() {
+        if (isReference()) {
+            return getRef().getDependencies();
+        }
         return dependencies;
     }
 
     public void setUnknownDependencies(boolean unknownDependencies) {
+        checkAttributesAllowed();
         this.unknownDependencies = unknownDependencies;
     }
 
     public boolean areDependenciesUnknown() {
+        if (isReference()) {
+            return getRef().areDependenciesUnknown();
+        }
         return unknownDependencies;
     }
 
     public org.cyclonedx.model.Component toMainCycloneDxComponent(Version bomVersion)
         throws IOException {
+        if (isReference()) {
+            return getRef().toMainCycloneDxComponent(bomVersion);
+        }
         if (isExternal) {
             throw new BuildException("isExternal can not be true for the main bom component");
         }
@@ -148,6 +179,9 @@ public class Component {
 
     public org.cyclonedx.model.Component toAdditionalCycloneDxComponent(Version bomVersion)
         throws IOException {
+        if (isReference()) {
+            return getRef().toAdditionalCycloneDxComponent(bomVersion);
+        }
         org.cyclonedx.model.Component component = toCycloneDxComponent(bomVersion);
         if (scope != null) {
             component.setScope(scope);
@@ -326,5 +360,14 @@ public class Component {
             }
             throw new BuildException("componentRef '" + componentRef + "' doesn't refer to a component");
         }
+    }
+
+    /**
+     * Perform the check for circular references and return the
+     * referenced Resource.
+     * @return <code>Component</code>.
+     */
+    protected Component getRef() {
+        return getCheckedRef(Component.class);
     }
 }

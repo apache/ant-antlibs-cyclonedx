@@ -55,11 +55,13 @@
   </target>
 
   <target name="testToolMetadataInXmlFormat">
+    <cdx:component name="testname" id="test"
+                   xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <file file="${antlib.location}"/>
+    </cdx:component>
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <component name="testname">
-        <file file="${antlib.location}"/>
-      </component>
+      <component refid="test"/>
     </cdx:componentbom>
     <xmlproperty file="${output}/bom.xml"/>
     <au:assertPropertyEquals
@@ -117,11 +119,14 @@
   </target>
 
   <target name="testSupplierAndManufacturerInMeta">
+    <cdx:organization name="Example" id="example"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <url url="https://example.org/"/>
+    </cdx:organization>
+
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <manufacturer name="Example">
-        <url url="https://example.org/"/>
-      </manufacturer>
+      <manufacturer refid="example"/>
       <supplier name="Example 2">
         <url url="https://example.com/"/>
       </supplier>
@@ -365,6 +370,12 @@
   </target>
 
   <target name="testAntlibsOwnBom">
+    <cdx:organization
+        name="Apache Ant Development Team"
+        id="ant-team"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <url url="https://ant.apache.org/"/>
+    </cdx:organization>
     <cdx:componentbom
         bomName="ant-cyclonedx-${artifact.version}-cyclonedx"
         outputdirectory="${output}"
@@ -378,9 +389,7 @@
           description="Apache CycloneDX Antlib"
           manufacturerIsSupplier="true">
         <file file="${antlib.location}"/>
-        <manufacturer name="Apache Ant Development Team">
-          <url url="https://ant.apache.org/"/>
-        </manufacturer>
+        <manufacturer refid="ant-team"/>
         <license licenseId="Apache-2.0"/>
         <externalReference
             type="VCS"
@@ -395,9 +404,7 @@
           isExternal="true"
           unknownDependencies="true"
           id="ant">
-        <manufacturer name="Apache Ant Development Team">
-          <url url="https://ant.apache.org/"/>
-        </manufacturer>
+        <manufacturer refid="ant-team"/>
         <license licenseId="Apache-2.0"/>
         <externalReference
             type="VCS"

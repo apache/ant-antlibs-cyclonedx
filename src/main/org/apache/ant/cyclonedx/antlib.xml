@@ -20,4 +20,8 @@ under the License.
 <antlib xmlns:au="ant:current">
   <taskdef name="componentbom"
     classname="org.apache.ant.cyclonedx.ComponentBomTask"/>
+  <typedef name="component"
+    classname="org.apache.ant.cyclonedx.Component"/>
+  <typedef name="organization"
+    classname="org.apache.ant.cyclonedx.Organization"/>
 </antlib>

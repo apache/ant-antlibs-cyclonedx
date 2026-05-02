@@ -38,9 +38,10 @@ public class ToolData {
         antlibComponent.setVersion(getVersion());
         antlibComponent.setDescription("Apache CycloneDX Antlib");
 
-        Organization manufacturer = antlibComponent.createManufacturer();
+        Organization manufacturer = new Organization();
         manufacturer.setName("Apache Ant Development Team");
         manufacturer.addConfiguredUrl(new URLResource("https://ant.apache.org/"));
+        antlibComponent.addManufacturer(manufacturer);
         antlibComponent.setManufacturerIsSupplier(true);
 
         Component.License license = new Component.License();
