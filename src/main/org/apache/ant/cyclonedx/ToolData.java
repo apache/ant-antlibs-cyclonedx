@@ -6,6 +6,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.security.CodeSource;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.apache.tools.ant.types.resources.FileResource;
@@ -19,17 +21,21 @@ import org.cyclonedx.model.metadata.ToolInformation;
  * Provides tool information for BOM's metadata section.
  */
 public class ToolData {
-    private static ToolInformation cachedToolInformation;
+    private static Map<Version, ToolInformation> toolInformationCache = new HashMap<>();
 
     /**
      * Tool Information needed for BOM's metadata section.
      */
-    public static ToolInformation getToolInformation() throws IOException {
-        return cachedToolInformation != null ? cachedToolInformation
-            : (cachedToolInformation = cacheToolInformation());
+    public static ToolInformation getToolInformation(Version specVersion) throws IOException {
+        ToolInformation cachedToolInformation = toolInformationCache.get(specVersion);
+        if (cachedToolInformation == null) {
+            cachedToolInformation = cacheToolInformation(specVersion);
+            toolInformationCache.put(specVersion, cachedToolInformation);
+        }
+        return cachedToolInformation;
     }
 
-    private static ToolInformation cacheToolInformation() throws IOException {
+    private static ToolInformation cacheToolInformation(Version specVersion) throws IOException {
         ToolInformation tool = new ToolInformation();
         Component antlibComponent = new Component();
 
@@ -64,7 +70,7 @@ public class ToolData {
         }
 
         org.cyclonedx.model.Component cdxComponent =
-            antlibComponent.toMainCycloneDxComponent(Version.VERSION_16);
+            antlibComponent.toMainCycloneDxComponent(specVersion);
         cdxComponent.setBomRef(null);
         tool.setComponents(Collections.singletonList(cdxComponent));
         return tool;

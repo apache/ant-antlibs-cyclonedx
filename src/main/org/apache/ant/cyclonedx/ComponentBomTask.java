@@ -18,7 +18,6 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 
 import org.cyclonedx.Format;
-import org.cyclonedx.Version;
 import org.cyclonedx.exception.GeneratorException;
 import org.cyclonedx.generators.BomGeneratorFactory;
 import org.cyclonedx.generators.json.BomJsonGenerator;
@@ -37,6 +36,7 @@ public class ComponentBomTask extends Task {
 
     private File outputDirectory;
     private String bomName = "bom";
+    private SpecVersion specVersion = SpecVersion.VERSION_16;
     private OutputFormat format = OutputFormat.json;
     private Component component;
     private List<Component> additionalComponents = new ArrayList<>();
@@ -54,6 +54,10 @@ public class ComponentBomTask extends Task {
 
     public void setFormat(OutputFormat format) {
         this.format = format;
+    }
+
+    public void setSpecVersion(SpecVersion specVersion) {
+        this.specVersion = specVersion;
     }
 
     public Component createComponent() {
@@ -114,7 +118,7 @@ public class ComponentBomTask extends Task {
 
         Metadata meta = new Metadata();
         meta.setTimestamp(new Date());
-        meta.setToolChoice(ToolData.getToolInformation());
+        meta.setToolChoice(ToolData.getToolInformation(specVersion.getVersion()));
 
         Lifecycles l = new Lifecycles();
         LifecycleChoice lc = new LifecycleChoice();
@@ -125,7 +129,7 @@ public class ComponentBomTask extends Task {
         if (component == null) {
             throw new BuildException("nested component element is required");
         }
-        meta.setComponent(component.toMainCycloneDxComponent(Version.VERSION_16));
+        meta.setComponent(component.toMainCycloneDxComponent(specVersion.getVersion()));
         if (useComponentSupplier) {
             OrganizationalEntity componentSupplier = meta.getComponent().getSupplier();
             if (componentSupplier == null) {
@@ -145,7 +149,7 @@ public class ComponentBomTask extends Task {
         if (!additionalComponents.isEmpty()) {
             List<org.cyclonedx.model.Component> cs = new ArrayList<>();
             for (Component c : additionalComponents) {
-                cs.add(c.toAdditionalCycloneDxComponent(Version.VERSION_16));
+                cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
             }
             bom.setComponents(cs);
         }
@@ -208,7 +212,7 @@ public class ComponentBomTask extends Task {
     }
 
     private void writeJsonBom(Bom bom, File bomFile) throws IOException, GeneratorException {
-        BomJsonGenerator generator = BomGeneratorFactory.createJson(Version.VERSION_16, bom);
+        BomJsonGenerator generator = BomGeneratorFactory.createJson(specVersion.getVersion(), bom);
         try (FileOutputStream fos = new FileOutputStream(bomFile);
              OutputStreamWriter writer = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
             writer.write(generator.toJsonString(true));
@@ -216,7 +220,7 @@ public class ComponentBomTask extends Task {
     }
 
     private void writeXmlBom(Bom bom, File bomFile) throws IOException, GeneratorException {
-        BomXmlGenerator generator = BomGeneratorFactory.createXml(Version.VERSION_16, bom);
+        BomXmlGenerator generator = BomGeneratorFactory.createXml(specVersion.getVersion(), bom);
         try (FileOutputStream fos = new FileOutputStream(bomFile);
              OutputStreamWriter writer = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
             writer.write(generator.toXmlString());
