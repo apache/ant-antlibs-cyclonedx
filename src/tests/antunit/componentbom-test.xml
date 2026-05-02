@@ -22,8 +22,7 @@
   <checksum property="sha256hash" file="${antlib.location}" algorithm="SHA-256"/>
 
   <target name="testToolMetadataInJsonFormat">
-    <mkdir dir="${output}"/>
-    <cdx:componentbom bomfile="${output}/bom.json"
+    <cdx:componentbom outputdirectory="${output}"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname">
         <file file="${antlib.location}"/>
@@ -56,8 +55,7 @@
   </target>
 
   <target name="testToolMetadataInXmlFormat">
-    <mkdir dir="${output}"/>
-    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+    <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname">
         <file file="${antlib.location}"/>
@@ -119,8 +117,7 @@
   </target>
 
   <target name="testSupplierAndManufacturerInMeta">
-    <mkdir dir="${output}"/>
-    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+    <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <manufacturer name="Example">
         <url url="https://example.org/"/>
@@ -148,7 +145,7 @@
         name="bom.metadata.supplier.url"
         value="https://example.com/"/>
 
-    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+    <cdx:componentbom outputdirectory="${output}" format="xml"
                       useComponentSupplier="true"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname">
@@ -171,7 +168,7 @@
   <target name="testComponentIsRequired">
     <au:expectfailure expectedMessage="nested component element is required"
         xmlns:au="antlib:org.apache.ant.antunit">
-      <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+      <cdx:componentbom outputdirectory="${output}" format="xml"
                         xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
     </au:expectfailure>
   </target>
@@ -179,7 +176,7 @@
   <target name="testOnlyOneComponentIsPermitted">
     <au:expectfailure expectedMessage="only one nested component element is permitted"
         xmlns:au="antlib:org.apache.ant.antunit">
-      <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+      <cdx:componentbom outputdirectory="${output}" format="xml"
                         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
         <component/>
         <component/>
@@ -190,7 +187,7 @@
   <target name="testComponentNameIsRequired">
     <au:expectfailure expectedMessage="component name is required"
         xmlns:au="antlib:org.apache.ant.antunit">
-      <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+      <cdx:componentbom outputdirectory="${output}" format="xml"
                         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
         <component/>
       </cdx:componentbom>
@@ -198,8 +195,7 @@
   </target>
 
   <target name="testMinimalComponentData">
-    <mkdir dir="${output}"/>
-    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+    <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname"/>
     </cdx:componentbom>
@@ -215,8 +211,7 @@
   </target>
 
   <target name="testComponentTypeCanBeSet">
-    <mkdir dir="${output}"/>
-    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+    <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname" type="APPLICATION"/>
     </cdx:componentbom>
@@ -228,8 +223,7 @@
   </target>
 
   <target name="testCalculatesPurlAndBomRef">
-    <mkdir dir="${output}"/>
-    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+    <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname" group="org.example" version="1.0"/>
     </cdx:componentbom>
@@ -245,8 +239,7 @@
   </target>
 
   <target name="testPurlAndBomRefCanBeSet">
-    <mkdir dir="${output}"/>
-    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+    <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname" group="org.example" version="1.0"
                  purl="foo" bomRef="bar"/>
@@ -263,9 +256,8 @@
   </target>
 
   <target name="testMaximalComponentData">
-    <mkdir dir="${output}"/>
     <checksum property="ant.file.sha256" file="${ant.file}" algorithm="SHA-256"/>
-    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+    <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname" group="org.example" version="1.0"
                  description="My Test Library">
@@ -325,8 +317,7 @@
   </target>
 
   <target name="testMinimalAdditionalComponentData">
-    <mkdir dir="${output}"/>
-    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+    <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname"/>
       <additionalComponent name="dependency" scope="OPTIONAL"/>
@@ -347,8 +338,7 @@
   </target>
 
   <target name="testDependencies">
-    <mkdir dir="${output}"/>
-    <cdx:componentbom bomfile="${output}/bom.xml" format="XML"
+    <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname" group="org.example" version="1.0">
         <dependency bomRef="pkg:maven/org.example/dependency@1.0?type=jar"/>
@@ -375,10 +365,10 @@
   </target>
 
   <target name="testAntlibsOwnBom">
-    <mkdir dir="${output}"/>
     <cdx:componentbom
-        bomfile="${output}/bom.json"
-        format="JSON"
+        bomName="ant-cyclonedx-${artifact.version}-cyclonedx"
+        outputdirectory="${output}"
+        format="all"
         useComponentSupplier="true"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component
@@ -423,55 +413,9 @@
           id="cyclonedx-core"
           unknownDependencies="true"/>
     </cdx:componentbom>
-    <copy todir="/tmp" file="${output}/bom.json"/>
-    <cdx:componentbom
-        bomfile="${output}/bom.xml"
-        format="XML"
-        useComponentSupplier="true"
-        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <component
-          name="ant-cyclonedx"
-          group="org.apache.ant"
-          version="${artifact.version}"
-          description="Apache CycloneDX Antlib"
-          manufacturerIsSupplier="true">
-        <file file="${antlib.location}"/>
-        <manufacturer name="Apache Ant Development Team">
-          <url url="https://ant.apache.org/"/>
-        </manufacturer>
-        <license licenseId="Apache-2.0"/>
-        <externalReference
-            type="VCS"
-            url="https://github.com/apache/ant-antlibs-cyclonedx"/>
-        <dependency componentRef="ant"/>
-        <dependency componentRef="cyclonedx-core"/>
-      </component>
-      <additionalComponent
-          name="ant"
-          group="org.apache.ant"
-          version="1.10.17"
-          isExternal="true"
-          unknownDependencies="true"
-          id="ant">
-        <manufacturer name="Apache Ant Development Team">
-          <url url="https://ant.apache.org/"/>
-        </manufacturer>
-        <license licenseId="Apache-2.0"/>
-        <externalReference
-            type="VCS"
-            url="https://github.com/apache/ant"/>
-        <externalReference
-            type="WEBSITE"
-            url="https://ant.apache.org/"/>
-      </additionalComponent>
-      <additionalComponent
-          name="cyclonedx-core-java"
-          group="org.cyclonedx"
-          version="12.1.0"
-          id="cyclonedx-core"
-          unknownDependencies="true"/>
-    </cdx:componentbom>
-    <copy todir="/tmp" file="${output}/bom.xml"/>
+    <copy todir="/tmp">
+      <fileset dir="${output}" includes="ant-cyclonedx*"/>
+    </copy>
   </target>
 
 </project>

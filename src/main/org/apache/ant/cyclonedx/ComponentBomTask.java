@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
@@ -34,19 +35,24 @@ import org.cyclonedx.model.OrganizationalEntity;
  */
 public class ComponentBomTask extends Task {
 
-    private File bomFile;
-    private Format format = Format.JSON;
+    private File outputDirectory;
+    private String bomName = "bom";
+    private OutputFormat format = OutputFormat.json;
     private Component component;
     private List<Component> additionalComponents = new ArrayList<>();
     private Organization manufacturer = null;
     private Organization supplier = null;
     private boolean useComponentSupplier = false;
 
-    public void setBomFile(File f) {
-        bomFile = f;
+    public void setOutputDirectory(File f) {
+        outputDirectory = f;
     }
 
-    public void setFormat(Format format) {
+    public void setBomName(String bomName) {
+        this.bomName = bomName;
+    }
+
+    public void setFormat(OutputFormat format) {
         this.format = format;
     }
 
@@ -86,10 +92,17 @@ public class ComponentBomTask extends Task {
         if (supplier != null && useComponentSupplier) {
             throw new BuildException("can't use component's supplier when there is an explicit supplier");
         }
+        if (outputDirectory == null || !outputDirectory.isDirectory()) {
+            throw new BuildException("outputDirectory must point to a directory");
+        }
 
         try {
             Bom bom = createBom();
-            writeBom(bom, bomFile);
+            for (Format f : format.getCycloneDxFormats()) {
+                writeBom(bom, f,
+                         new File(outputDirectory,
+                                  bomName + "." + f.name().toLowerCase(Locale.ENGLISH)));
+            }
         } catch (IOException | GeneratorException ex) {
             throw new BuildException("failed to write BOM", ex);
         }
@@ -182,7 +195,8 @@ public class ComponentBomTask extends Task {
         bom.setDependencies(dependencies);
     }
 
-    private void writeBom(Bom bom, File bomFile) throws IOException, GeneratorException {
+    private void writeBom(Bom bom, Format format, File bomFile)
+        throws IOException, GeneratorException {
         switch (format) {
         case JSON:
             writeJsonBom(bom, bomFile);
