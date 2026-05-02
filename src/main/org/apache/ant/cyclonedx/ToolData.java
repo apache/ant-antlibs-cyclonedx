@@ -44,14 +44,19 @@ public class ToolData {
         antlibComponent.addManufacturer(manufacturer);
         antlibComponent.setManufacturerIsSupplier(true);
 
-        Component.License license = new Component.License();
+        License license = new License();
         license.setLicenseId("Apache-2.0");
+        license.addConfiguredUrl(new URLResource("https://www.apache.org/licenses/LICENSE-2.0.txt"));
         antlibComponent.addConfiguredLicense(license);
 
         Component.ExternalReference repo = new Component.ExternalReference();
         repo.setUrl("https://github.com/apache/ant-antlibs-cyclonedx");
         repo.setType(ExternalReference.Type.VCS);
         antlibComponent.addConfiguredExternalReference(repo);
+        Component.ExternalReference licRef = new Component.ExternalReference();
+        licRef.setUrl("https://www.apache.org/licenses/LICENSE-2.0.txt");
+        licRef.setType(ExternalReference.Type.LICENSE);
+        antlibComponent.addConfiguredExternalReference(licRef);
 
         File antlib = findAntlib();
         if (antlib != null) {

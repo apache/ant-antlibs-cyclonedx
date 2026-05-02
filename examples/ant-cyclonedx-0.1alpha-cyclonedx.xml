@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bom serialNumber="urn:uuid:9bc01eb7-5c9c-4579-8a08-dae8dbbf6820" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+<bom serialNumber="urn:uuid:817ebe65-d467-4d89-b134-17c005157e74" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
   <metadata>
-    <timestamp>2026-05-02T05:54:06Z</timestamp>
+    <timestamp>2026-05-02T08:03:43Z</timestamp>
     <lifecycles>
       <lifecycle>
         <phase>build</phase>
@@ -23,24 +23,28 @@
           <version>0.1alpha</version>
           <description>Apache CycloneDX Antlib</description>
           <hashes>
-            <hash alg="MD5">df005ba963df3f6f51e9323c150619e1</hash>
-            <hash alg="SHA-1">1cb95c53d0af659db41067416c5bd6779faa9e73</hash>
-            <hash alg="SHA-256">a5842cd356a394ecab0931639633721ffb5f1001178310a1e62963ea19be8534</hash>
-            <hash alg="SHA-512">ec06e7292f1ec1cd367d7000854d96e42a1f2e46d15ba0d09895ef1fb33e604d4a1cb6a2131a3948b24913c2c97b63f04247e580e0147d9f8fbe3fd05aa38ccd</hash>
-            <hash alg="SHA3-256">89717eccb2f874580c437d0b4be1ba1854d5aa6f55748a9e97184cbc82b91c7c</hash>
-            <hash alg="SHA3-512">324a5f2a6cda6c0432e9088428a78b60cdc083241ff88a4c7c4396c498ad06abe2c20a25047bf1d0b607f2aa293aaf88deecc003bd94853af2fcd6fa3567c83b</hash>
-            <hash alg="SHA-384">7d323876ba131dff76d8401ef95edb6376ba6034ec2017c8bbd270519527c8090931c862bfaca8024cbf04a0e218c1b5</hash>
-            <hash alg="SHA3-384">8bf326b3d613c5fb7740739c9d1625eb54b9f2487a9dcf498e8fdfb44bf186dd3b467ec179d8efb17f84a7fd765bc800</hash>
+            <hash alg="MD5">14f2e711dd0b6d5abc7a9e5f2a5233a7</hash>
+            <hash alg="SHA-1">720f308380ae53446b78643d9d0b0561a9a6a1e8</hash>
+            <hash alg="SHA-256">d823adf48bded32d8420c02932837cacdcb1052dc1e4abdd27039e2801ab4907</hash>
+            <hash alg="SHA-512">036835030909cdf345a4f8b104f9fcdefc34873024feed1a96899327ca96c7c2be2eecee46b80bf8c2e86b60cb9902f8c17cfae9ea1f30813d8d58f9d880eb37</hash>
+            <hash alg="SHA3-256">622f01c152661392d2d5cf46e075d9602439b9f9fa6bca0e4b3e10815dc4eeed</hash>
+            <hash alg="SHA3-512">675e597165e3bf5fcdab6075628c1dbf6e3c6c346aaaf619a54c54d7eae45458a1f1c9e144cd8571994e34404d1c52f4721f42fde79050cf56db4460aee28aea</hash>
+            <hash alg="SHA-384">02c0c52fe4504538c894b5fd24fe51f9c754a6935c6c241c2419492d6a11cd57bc3f7b1c561ee8a8c038dc5fe3ec1386</hash>
+            <hash alg="SHA3-384">406ff03cf5b204c79e41da2f484b8d86ea1c873ff6a41b752a02beb8e235a901c1de5b764a7688c9f12acacd4a623d84</hash>
           </hashes>
           <licenses>
             <license>
               <id>Apache-2.0</id>
+              <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
             </license>
           </licenses>
           <purl>pkg:maven/org.apache.ant/ant-cyclonedx@0.1alpha?type=jar</purl>
           <externalReferences>
             <reference type="vcs">
               <url>https://github.com/apache/ant-antlibs-cyclonedx</url>
+            </reference>
+            <reference type="license">
+              <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
             </reference>
           </externalReferences>
         </component>
@@ -60,18 +64,19 @@
       <version>0.1alpha</version>
       <description>Apache CycloneDX Antlib</description>
       <hashes>
-        <hash alg="MD5">df005ba963df3f6f51e9323c150619e1</hash>
-        <hash alg="SHA-1">1cb95c53d0af659db41067416c5bd6779faa9e73</hash>
-        <hash alg="SHA-256">a5842cd356a394ecab0931639633721ffb5f1001178310a1e62963ea19be8534</hash>
-        <hash alg="SHA-512">ec06e7292f1ec1cd367d7000854d96e42a1f2e46d15ba0d09895ef1fb33e604d4a1cb6a2131a3948b24913c2c97b63f04247e580e0147d9f8fbe3fd05aa38ccd</hash>
-        <hash alg="SHA3-256">89717eccb2f874580c437d0b4be1ba1854d5aa6f55748a9e97184cbc82b91c7c</hash>
-        <hash alg="SHA3-512">324a5f2a6cda6c0432e9088428a78b60cdc083241ff88a4c7c4396c498ad06abe2c20a25047bf1d0b607f2aa293aaf88deecc003bd94853af2fcd6fa3567c83b</hash>
-        <hash alg="SHA-384">7d323876ba131dff76d8401ef95edb6376ba6034ec2017c8bbd270519527c8090931c862bfaca8024cbf04a0e218c1b5</hash>
-        <hash alg="SHA3-384">8bf326b3d613c5fb7740739c9d1625eb54b9f2487a9dcf498e8fdfb44bf186dd3b467ec179d8efb17f84a7fd765bc800</hash>
+        <hash alg="MD5">14f2e711dd0b6d5abc7a9e5f2a5233a7</hash>
+        <hash alg="SHA-1">720f308380ae53446b78643d9d0b0561a9a6a1e8</hash>
+        <hash alg="SHA-256">d823adf48bded32d8420c02932837cacdcb1052dc1e4abdd27039e2801ab4907</hash>
+        <hash alg="SHA-512">036835030909cdf345a4f8b104f9fcdefc34873024feed1a96899327ca96c7c2be2eecee46b80bf8c2e86b60cb9902f8c17cfae9ea1f30813d8d58f9d880eb37</hash>
+        <hash alg="SHA3-256">622f01c152661392d2d5cf46e075d9602439b9f9fa6bca0e4b3e10815dc4eeed</hash>
+        <hash alg="SHA3-512">675e597165e3bf5fcdab6075628c1dbf6e3c6c346aaaf619a54c54d7eae45458a1f1c9e144cd8571994e34404d1c52f4721f42fde79050cf56db4460aee28aea</hash>
+        <hash alg="SHA-384">02c0c52fe4504538c894b5fd24fe51f9c754a6935c6c241c2419492d6a11cd57bc3f7b1c561ee8a8c038dc5fe3ec1386</hash>
+        <hash alg="SHA3-384">406ff03cf5b204c79e41da2f484b8d86ea1c873ff6a41b752a02beb8e235a901c1de5b764a7688c9f12acacd4a623d84</hash>
       </hashes>
       <licenses>
         <license>
           <id>Apache-2.0</id>
+          <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
       </licenses>
       <purl>pkg:maven/org.apache.ant/ant-cyclonedx@0.1alpha?type=jar</purl>
@@ -98,6 +103,7 @@
       <licenses>
         <license>
           <id>Apache-2.0</id>
+          <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
         </license>
       </licenses>
       <purl>pkg:maven/org.apache.ant/ant@1.10.17?type=jar</purl>

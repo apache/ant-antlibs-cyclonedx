@@ -24,4 +24,6 @@ under the License.
     classname="org.apache.ant.cyclonedx.Component"/>
   <typedef name="organization"
     classname="org.apache.ant.cyclonedx.Organization"/>
+  <typedef name="license"
+    classname="org.apache.ant.cyclonedx.License"/>
 </antlib>

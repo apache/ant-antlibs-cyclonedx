@@ -376,6 +376,12 @@
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <url url="https://ant.apache.org/"/>
     </cdx:organization>
+    <cdx:license
+        licenseId="Apache-2.0"
+        id="apache-2"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <url url="https://www.apache.org/licenses/LICENSE-2.0.txt"/>
+    </cdx:license>
     <cdx:componentbom
         bomName="ant-cyclonedx-${artifact.version}-cyclonedx"
         outputdirectory="${output}"
@@ -390,7 +396,7 @@
           manufacturerIsSupplier="true">
         <file file="${antlib.location}"/>
         <manufacturer refid="ant-team"/>
-        <license licenseId="Apache-2.0"/>
+        <license refid="apache-2"/>
         <externalReference
             type="VCS"
             url="https://github.com/apache/ant-antlibs-cyclonedx"/>
@@ -405,7 +411,7 @@
           unknownDependencies="true"
           id="ant">
         <manufacturer refid="ant-team"/>
-        <license licenseId="Apache-2.0"/>
+        <license refid="apache-2"/>
         <externalReference
             type="VCS"
             url="https://github.com/apache/ant"/>

@@ -38,7 +38,7 @@ public class Organization extends DataType {
 
     /**
      * Perform the check for circular references and return the
-     * referenced Resource.
+     * referenced Organization.
      * @return <code>Organization</code>.
      */
     protected Organization getRef() {

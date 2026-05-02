@@ -271,33 +271,6 @@ public class Component extends DataType {
         component.setHashes(BomUtils.calculateHashes(file, bomVersion));
     }
 
-    public static class License {
-        private String id;
-        private String name;
-
-        public void setLicenseId(String id) {
-            this.id = id;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        public org.cyclonedx.model.License toCycloneDxLicense() {
-            if (name == null && id == null) {
-                throw new BuildException("license name or id is required");
-            }
-            org.cyclonedx.model.License l = new org.cyclonedx.model.License();
-            if (name != null) {
-                l.setName(name);
-            }
-            if (id != null) {
-                l.setId(id);
-            }
-            return l;
-        }
-    }
-
     public static class ExternalReference {
         private String url;
         private org.cyclonedx.model.ExternalReference.Type type;
@@ -364,7 +337,7 @@ public class Component extends DataType {
 
     /**
      * Perform the check for circular references and return the
-     * referenced Resource.
+     * referenced Component.
      * @return <code>Component</code>.
      */
     protected Component getRef() {
