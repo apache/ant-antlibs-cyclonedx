@@ -272,6 +272,7 @@
         </manufacturer>
         <license licenseId="Apache-2.0"/>
         <externalReference type="WEBSITE" url="https://example.com/"/>
+        <component name="other-test" group="org.example" version="1.1"/>
       </component>
     </cdx:componentbom>
     <xmlproperty file="${output}/bom.xml"/>
@@ -315,6 +316,30 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.xml"
         value='&lt;hash alg="SHA-256"&gt;${ant.file.sha256}&lt;/hash&gt;'/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.name"
+        value="other-test"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component(type)"
+        value="library"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.group"
+        value="org.example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.version"
+        value="1.1"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.purl"
+        value="pkg:maven/org.example/other-test@1.1?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component(bom-ref)"
+        value="pkg:maven/org.example/other-test@1.1?type=jar"/>
     <au:assertResourceContains
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.xml"
@@ -393,6 +418,7 @@
           group="org.apache.ant"
           version="${artifact.version}"
           description="Apache CycloneDX Antlib"
+          publisher="The Apache Software Foundation"
           manufacturerIsSupplier="true">
         <file file="${antlib.location}"/>
         <manufacturer refid="ant-team"/>

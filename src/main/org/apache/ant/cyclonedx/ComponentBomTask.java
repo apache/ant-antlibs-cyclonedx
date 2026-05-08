@@ -130,7 +130,7 @@ public class ComponentBomTask extends Task {
             throw new BuildException("nested component element is required");
         }
         Set<String> knownComponents = new HashSet<>();
-        knownComponents.add(component.getGroup() + ":" + component.getName());
+        addToKnownComponents(knownComponents, component);
         meta.setComponent(component.toMainCycloneDxComponent(specVersion.getVersion()));
         if (useComponentSupplier) {
             OrganizationalEntity componentSupplier = meta.getComponent().getSupplier();
@@ -152,14 +152,14 @@ public class ComponentBomTask extends Task {
             List<org.cyclonedx.model.Component> cs = new ArrayList<>();
             List<Component> resolvedComponents = new ArrayList<>();
             for (Component c : additionalComponents) {
-                knownComponents.add(c.getGroup() + ":" + c.getName());
+                addToKnownComponents(knownComponents, c);
                 resolvedComponents.addAll(c.resolve());
                 cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
             }
             for (Component c : resolvedComponents) {
                 String componentKey = c.getGroup() + ":" + c.getName();
                 if (!knownComponents.contains(componentKey)) {
-                    knownComponents.add(componentKey);
+                    addToKnownComponents(knownComponents, c);
                     cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
                 }
             }
@@ -212,6 +212,12 @@ public class ComponentBomTask extends Task {
         }
 
         bom.setDependencies(dependencies);
+    }
+
+    private void addToKnownComponents(Set<String> knownComponents, Component component) {
+        knownComponents.add(component.getGroup() + ":" + component.getName());
+        component.getNestedComponents().stream()
+            .forEach(c -> addToKnownComponents(knownComponents, c));
     }
 
     private void writeBom(Bom bom, Format format, File bomFile)

@@ -48,6 +48,7 @@ public class Component extends DataType {
     private List<org.cyclonedx.model.ExternalReference> externalReferences = new ArrayList<>();
     private org.cyclonedx.model.Component.Scope scope;
     private boolean isExternal = false;
+    private List<Component> nestedComponents = new ArrayList<>();
     private List<Dependency> dependencies = new ArrayList<>();
     private boolean unknownDependencies = false;
     private boolean sbomLinkResolved = false;
@@ -221,7 +222,27 @@ public class Component extends DataType {
         if (isReference()) {
             return getRef().getDependencies();
         }
+        dieOnCircularReference();
         return dependencies;
+    }
+
+    public void addComponent(Component c) {
+        checkChildrenAllowed();
+        nestedComponents.add(c);
+    }
+
+    public List<Component> getNestedComponents() {
+        if (isReference()) {
+            return getRef().getNestedComponents();
+        }
+        dieOnCircularReference();
+        List<Component> result = new ArrayList<>();
+        result.addAll(nestedComponents);
+        result.addAll(nestedComponents
+                      .stream()
+                      .flatMap(c -> c.getNestedComponents().stream())
+                      .collect(Collectors.toList()));
+        return result;
     }
 
     public void setUnknownDependencies(boolean unknownDependencies) {
@@ -356,6 +377,7 @@ public class Component extends DataType {
 
     private org.cyclonedx.model.Component toCycloneDxComponent(Version bomVersion)
         throws IOException {
+        dieOnCircularReference();
         if (name == null) {
             throw new BuildException("component name is required");
         }
@@ -429,6 +451,9 @@ public class Component extends DataType {
         if (!externalReferences.isEmpty()) {
             component.setExternalReferences(externalReferences);
         }
+        for (Component c : nestedComponents) {
+            component.addComponent(c.toAdditionalCycloneDxComponent(bomVersion));
+        }
         // add isExternal once VERSION_17 is supported by cyclonedx-java-core
         addHashes(component, bomVersion);
         return component;
@@ -474,6 +499,13 @@ public class Component extends DataType {
         if (real.getTags() != null && real.getTags().getTags() != null) {
             tags.clear();
             tags.addAll(real.getTags().getTags());
+        }
+        if (real.getComponents() != null) {
+            nestedComponents.clear();
+            nestedComponents.addAll(real.getComponents()
+                                    .stream()
+                                    .map(Component::from)
+                                    .collect(Collectors.toList()));
         }
     }
 
