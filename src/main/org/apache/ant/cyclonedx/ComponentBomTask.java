@@ -129,6 +129,8 @@ public class ComponentBomTask extends Task {
         if (component == null) {
             throw new BuildException("nested component element is required");
         }
+        Set<String> knownComponents = new HashSet<>();
+        knownComponents.add(component.getGroup() + ":" + component.getName());
         meta.setComponent(component.toMainCycloneDxComponent(specVersion.getVersion()));
         if (useComponentSupplier) {
             OrganizationalEntity componentSupplier = meta.getComponent().getSupplier();
@@ -148,9 +150,18 @@ public class ComponentBomTask extends Task {
 
         if (!additionalComponents.isEmpty()) {
             List<org.cyclonedx.model.Component> cs = new ArrayList<>();
+            List<Component> resolvedComponents = new ArrayList<>();
             for (Component c : additionalComponents) {
-                c.resolve();
+                knownComponents.add(c.getGroup() + ":" + c.getName());
+                resolvedComponents.addAll(c.resolve());
                 cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
+            }
+            for (Component c : resolvedComponents) {
+                String componentKey = c.getGroup() + ":" + c.getName();
+                if (!knownComponents.contains(componentKey)) {
+                    knownComponents.add(componentKey);
+                    cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
+                }
             }
             bom.setComponents(cs);
         }
@@ -166,9 +177,12 @@ public class ComponentBomTask extends Task {
         if (component.getBomRef() != null) {
             bomRefs.add(component.getBomRef());
         }
-        for (Component c : additionalComponents) {
-            if (c.getBomRef() != null) {
-                bomRefs.add(c.getBomRef());
+        List<org.cyclonedx.model.Component> components = bom.getComponents();
+        if (components != null) {
+            for (org.cyclonedx.model.Component c : components) {
+                if (c.getBomRef() != null) {
+                    bomRefs.add(c.getBomRef());
+                }
             }
         }
 

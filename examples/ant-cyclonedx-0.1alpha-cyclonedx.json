@@ -1,10 +1,10 @@
 {
   "bomFormat" : "CycloneDX",
   "specVersion" : "1.6",
-  "serialNumber" : "urn:uuid:1b67466f-e18e-401b-857b-ce95cdd9cc82",
+  "serialNumber" : "urn:uuid:87cc16ad-4397-473c-bab8-fbd7899b27cb",
   "version" : 1,
   "metadata" : {
-    "timestamp" : "2026-05-08T12:48:39Z",
+    "timestamp" : "2026-05-08T16:15:00Z",
     "lifecycles" : [
       {
         "phase" : "build"
@@ -33,35 +33,35 @@
           "hashes" : [
             {
               "alg" : "MD5",
-              "content" : "0504c60f77b82c2d29f3b71d7c4af59b"
+              "content" : "6aeaa4d90eb5a78e1de7de2e4d4ad034"
             },
             {
               "alg" : "SHA-1",
-              "content" : "a58ca1d9c117d4a53c1d542746d06ea9a600900d"
+              "content" : "ed43b1dbded26e2a2a24c6d213d7b813c4e2bc6e"
             },
             {
               "alg" : "SHA-256",
-              "content" : "ecb1194156998b8ab00e924bdcde7feb3db5e58ee9f3b25f7d2c035faea4cb0a"
+              "content" : "dca5a782a71ec62524e1d570c6473258d019656e12fe0fe4bdbc2a44545c5324"
             },
             {
               "alg" : "SHA-512",
-              "content" : "54753aed7aff4e081f73f0c650b7123b38e75d72b0435fcc53cba999fbcb76eb28dfca338dedc7a45baf255295ca91b810c30dfbf831d046d7e93a294bd09934"
+              "content" : "f427019b0505e0860dd1ded1866296ec363fb5d832cb49072a23aa27be3632192570c7339330308bf6a6b8a39555f816b2d9afcd6c798f1a06fbaec8361d5f22"
             },
             {
               "alg" : "SHA3-256",
-              "content" : "55278e0880bc15adee69a99914ae0e6b21168dc42686645ecbe70e35ee43a7bf"
+              "content" : "a69ab61d30bf7d890622726a448a44ff02a741c91d205c45e943fc94ac0ff328"
             },
             {
               "alg" : "SHA3-512",
-              "content" : "88fba63cfe760889da636707607e9ecbe6939956047b2fe93a2c7d2c41f7fb224b45156cc5e91c3d4622d3cba9fb4125e9db44db56f75ddc961441837f3249ed"
+              "content" : "305eb78224477a3b88a0506db5fd99f08706b20c8707851150b207f4127adbe648f4ba44c139a07799153cb46367bd382284f43874be3e49b7ec30cee69c0844"
             },
             {
               "alg" : "SHA-384",
-              "content" : "30bc5a491bfee55b328c5396750a20ead6539eaff5dbfb8f7a87c6d2fc3b554c1a98fc97bb54fda567fce3e6aae4d08a"
+              "content" : "faa448fc61c705102c4f7edf584c1660c697fb723297522021e462e3911de05a3bbd049dd607139c203d67f44ce5fc09"
             },
             {
               "alg" : "SHA3-384",
-              "content" : "a5da389ae35bd9dde14e4cff5ead642ca63f54170726166f978f0573cffda4d8c5424f599f522e28da4bff8b1c43d3c9"
+              "content" : "d19b4b2d1aff17e35a76c2fa731200e3ee9d32ce784e2efa8f86e985513fb1568efbf7e1612df068e0871c8e0918263b"
             }
           ],
           "licenses" : [
@@ -108,35 +108,35 @@
       "hashes" : [
         {
           "alg" : "MD5",
-          "content" : "0504c60f77b82c2d29f3b71d7c4af59b"
+          "content" : "6aeaa4d90eb5a78e1de7de2e4d4ad034"
         },
         {
           "alg" : "SHA-1",
-          "content" : "a58ca1d9c117d4a53c1d542746d06ea9a600900d"
+          "content" : "ed43b1dbded26e2a2a24c6d213d7b813c4e2bc6e"
         },
         {
           "alg" : "SHA-256",
-          "content" : "ecb1194156998b8ab00e924bdcde7feb3db5e58ee9f3b25f7d2c035faea4cb0a"
+          "content" : "dca5a782a71ec62524e1d570c6473258d019656e12fe0fe4bdbc2a44545c5324"
         },
         {
           "alg" : "SHA-512",
-          "content" : "54753aed7aff4e081f73f0c650b7123b38e75d72b0435fcc53cba999fbcb76eb28dfca338dedc7a45baf255295ca91b810c30dfbf831d046d7e93a294bd09934"
+          "content" : "f427019b0505e0860dd1ded1866296ec363fb5d832cb49072a23aa27be3632192570c7339330308bf6a6b8a39555f816b2d9afcd6c798f1a06fbaec8361d5f22"
         },
         {
           "alg" : "SHA3-256",
-          "content" : "55278e0880bc15adee69a99914ae0e6b21168dc42686645ecbe70e35ee43a7bf"
+          "content" : "a69ab61d30bf7d890622726a448a44ff02a741c91d205c45e943fc94ac0ff328"
         },
         {
           "alg" : "SHA3-512",
-          "content" : "88fba63cfe760889da636707607e9ecbe6939956047b2fe93a2c7d2c41f7fb224b45156cc5e91c3d4622d3cba9fb4125e9db44db56f75ddc961441837f3249ed"
+          "content" : "305eb78224477a3b88a0506db5fd99f08706b20c8707851150b207f4127adbe648f4ba44c139a07799153cb46367bd382284f43874be3e49b7ec30cee69c0844"
         },
         {
           "alg" : "SHA-384",
-          "content" : "30bc5a491bfee55b328c5396750a20ead6539eaff5dbfb8f7a87c6d2fc3b554c1a98fc97bb54fda567fce3e6aae4d08a"
+          "content" : "faa448fc61c705102c4f7edf584c1660c697fb723297522021e462e3911de05a3bbd049dd607139c203d67f44ce5fc09"
         },
         {
           "alg" : "SHA3-384",
-          "content" : "a5da389ae35bd9dde14e4cff5ead642ca63f54170726166f978f0573cffda4d8c5424f599f522e28da4bff8b1c43d3c9"
+          "content" : "d19b4b2d1aff17e35a76c2fa731200e3ee9d32ce784e2efa8f86e985513fb1568efbf7e1612df068e0871c8e0918263b"
         }
       ],
       "licenses" : [
@@ -233,6 +233,291 @@
           "url" : "https://github.com/CycloneDX/cyclonedx-core-java.git"
         }
       ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
+      "group" : "commons-io",
+      "name" : "commons-io",
+      "version" : "2.21.0",
+      "description" : "The Apache Commons IO library contains utility classes, stream implementations, file filters, file comparators, endian transformation classes, and much more.",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://commons.apache.org/proper/commons-io/"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://github.com/apache/commons-parent/actions"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://repository.apache.org/service/local/staging/deploy/maven2"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://issues.apache.org/jira/browse/IO"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://mail-archives.apache.org/mod_mbox/commons-user/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://gitbox.apache.org/repos/asf?p=commons-io.git"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
+      "group" : "org.apache.commons",
+      "name" : "commons-collections4",
+      "version" : "4.5.0",
+      "description" : "The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://commons.apache.org/proper/commons-collections/"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://builds.apache.org/"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://repository.apache.org/service/local/staging/deploy/maven2"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "http://issues.apache.org/jira/browse/COLLECTIONS"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://mail-archives.apache.org/mod_mbox/commons-user/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://git-wip-us.apache.org/repos/asf?p=commons-collections.git"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.github.package-url/packageurl-java@1.5.0?type=jar",
+      "group" : "com.github.package-url",
+      "name" : "packageurl-java",
+      "version" : "1.5.0",
+      "description" : "The official Java implementation of the PackageURL specification. PackageURL (purl) is a minimal specification for describing a package via a \"mostly universal\" URL.",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "MIT",
+            "url" : "https://opensource.org/licenses/MIT"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.github.package-url/packageurl-java@1.5.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://github.com/package-url/packageurl-java"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://travis-ci.com/package-url/packageurl-java"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/package-url/packageurl-java/issues"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/package-url/packageurl-java.git"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-xml@2.21.1?type=jar",
+      "group" : "com.fasterxml.jackson.dataformat",
+      "name" : "jackson-dataformat-xml",
+      "version" : "2.21.1",
+      "description" : "Data format extension for Jackson to offer alternative support for serializing POJOs as XML and deserializing XML as pojos.",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-xml@2.21.1?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://github.com/FasterXML/jackson-dataformat-xml"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/FasterXML/jackson-dataformat-xml/issues"
+        },
+        {
+          "type" : "vcs",
+          "url" : "http://github.com/FasterXML/jackson-dataformat-xml"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.networknt/json-schema-validator@2.0.1?type=jar",
+      "group" : "com.networknt",
+      "name" : "json-schema-validator",
+      "version" : "2.0.1",
+      "description" : "A json schema validator that supports draft v4, v6, v7, v2019-09 and v2020-12",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.networknt/json-schema-validator@2.0.1?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://github.com/networknt/json-schema-validator"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/networknt/json-schema-validator/issues"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com:networknt/json-schema-validator.git"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/commons-codec/commons-codec@1.21.1?type=jar",
+      "group" : "commons-codec",
+      "name" : "commons-codec",
+      "version" : "1.21.1",
+      "description" : "The Apache Commons Codec component contains encoders and decoders for various formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these widely used encoders and decoders, the codec package also maintains a collection of phonetic encoding utilities.",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/commons-codec/commons-codec@1.21.1?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://commons.apache.org/proper/commons-codec/"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://github.com/apache/commons-parent/actions"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://repository.apache.org/service/local/staging/deploy/maven2"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://issues.apache.org/jira/browse/CODEC"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://mail-archives.apache.org/mod_mbox/commons-user/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/apache/commons-codec"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
+      "group" : "org.apache.commons",
+      "name" : "commons-lang3",
+      "version" : "3.20.0",
+      "description" : "Apache Commons Lang, a package of Java utility classes for the classes that are in java.lang's hierarchy, or are considered to be so standard as to justify existence in java.lang. The code is tested using the latest revision of the JDK for supported LTS releases: 8, 11, 17 and 21 currently. See https://github.com/apache/commons-lang/blob/master/.github/workflows/maven.yml Please ensure your build environment is up-to-date and kindly report any build issues.",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://commons.apache.org/proper/commons-lang/"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://github.com/apache/commons-parent/actions"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://repository.apache.org/service/local/staging/deploy/maven2"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://issues.apache.org/jira/browse/LANG"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://mail-archives.apache.org/mod_mbox/commons-user/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://gitbox.apache.org/repos/asf?p=commons-lang.git"
+        }
+      ]
     }
   ],
   "dependencies" : [
@@ -241,6 +526,18 @@
       "dependsOn" : [
         "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
         "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.2.0?type=jar"
+      ]
+    },
+    {
+      "ref" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.2.0?type=jar",
+      "dependsOn" : [
+        "pkg:maven/commons-codec/commons-codec@1.21.1?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
+        "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
+        "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
+        "pkg:maven/com.github.package-url/packageurl-java@1.5.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-xml@2.21.1?type=jar",
+        "pkg:maven/com.networknt/json-schema-validator@2.0.1?type=jar"
       ]
     }
   ]

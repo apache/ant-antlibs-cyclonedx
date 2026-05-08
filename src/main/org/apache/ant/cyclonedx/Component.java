@@ -5,7 +5,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.ProjectComponent;
@@ -41,6 +45,7 @@ public class Component extends DataType {
     private boolean isExternal = false;
     private List<Dependency> dependencies = new ArrayList<>();
     private boolean unknownDependencies = false;
+    private boolean sbomLinkResolved = false;
     private Union sbomLink;
 
     public void add(Resource resource) {
@@ -61,9 +66,23 @@ public class Component extends DataType {
         this.name = name;
     }
 
+    public String getName() {
+        if (isReference()) {
+            return getRef().getName();
+        }
+        return name;
+    }
+
     public void setGroup(String group) {
         checkAttributesAllowed();
         this.group = group;
+    }
+
+    public String getGroup() {
+        if (isReference()) {
+            return getRef().getGroup();
+        }
+        return group;
     }
 
     public void setVersion(String version) {
@@ -172,6 +191,13 @@ public class Component extends DataType {
         return sbomLink == null ? (sbomLink = new Union()) : sbomLink;
     }
 
+    public boolean hasSbomLink() {
+        if (isReference()) {
+            return getRef().hasSbomLink();
+        }
+        return sbomLink != null;
+    }
+
     public boolean areDependenciesUnknown() {
         if (isReference()) {
             return getRef().areDependenciesUnknown();
@@ -179,13 +205,12 @@ public class Component extends DataType {
         return unknownDependencies;
     }
 
-    public void resolve() throws IOException {
+    public Collection<Component> resolve() throws IOException {
         if (isReference()) {
-            getRef().resolve();
-            return;
+            return getRef().resolve();
         }
 
-        if (sbomLink != null) {
+        if (sbomLink != null && !sbomLinkResolved) {
             if (sbomLink.size() != 1) {
                 throw new BuildException("sbomLink requires exactly one nested resource");
             }
@@ -209,38 +234,49 @@ public class Component extends DataType {
                     if (real == null) {
                         throw new BuildException("referenced SBOM file lacks component");
                     }
-                    setType(real.getType());
-                    setName(real.getName());
-                    setGroup(real.getGroup());
-                    setVersion(real.getVersion());
-                    setDescription(real.getDescription());
-                    setPurl(real.getPurl());
-                    setBomRef(real.getBomRef());
-                    setScope(real.getScope());
-                    setUnknownDependencies(true);
-                    OrganizationalEntity manufacturer = real.getManufacturer();
-                    if (manufacturer != null) {
-                        this.manufacturer = Organization.from(manufacturer);
+                    fillFrom(real);
+
+                    List<org.cyclonedx.model.Dependency> allDependencies = bom.getDependencies();
+                    if (allDependencies != null) {
+                        setUnknownDependencies(true);
+                        org.cyclonedx.model.Dependency myDependencies = allDependencies
+                            .stream()
+                            .filter(d -> Objects.equals(d.getRef(), getBomRef()))
+                            .findAny()
+                            .orElse(null);
+                        if (myDependencies != null && myDependencies.getDependencies() != null) {
+                            setUnknownDependencies(false);
+                            dependencies.clear();
+                            dependencies
+                                .addAll(myDependencies.getDependencies()
+                                        .stream()
+                                        .map(Dependency::from)
+                                        .collect(Collectors.toList()));
+                        }
                     }
-                    OrganizationalEntity supplier = real.getSupplier();
-                    if (supplier != null) {
-                        this.supplier = Organization.from(supplier);
+
+                    List<org.cyclonedx.model.Component> additionalComponents = bom.getComponents();
+                    if (additionalComponents != null && !areDependenciesUnknown()) {
+                        List<Component> toReturn = new ArrayList<>();
+                        for (org.cyclonedx.model.Component c : additionalComponents) {
+                            Component dep = from(c);
+                            if (dependencies.stream().anyMatch(d -> Objects.equals(dep.getBomRef(), d.getBomRef()))) {
+                                // we don't want to resolve transitive dependencies automatically
+                                dep.setUnknownDependencies(true);
+                                toReturn.add(dep);
+                            }
+                        }
+                        return toReturn;
                     }
-                    LicenseChoice licenses = real.getLicenses();
-                    if (licenses != null) {
-                        this.licenses.clear();
-                        this.licenses.addAll(licenses.getLicenses());
-                    }
-                    if (real.getExternalReferences() != null) {
-                        this.externalReferences.clear();
-                        this.externalReferences.addAll(real.getExternalReferences());
-                    }
+
                 } catch (ParseException ex) {
                     throw new BuildException("failed to parse sbomlink " + sbom.getName());
                 }
             }
-            sbomLink = null;
+            sbomLinkResolved = true;
         }
+
+        return Collections.emptyList();
     }
 
     public org.cyclonedx.model.Component toMainCycloneDxComponent(Version bomVersion)
@@ -264,6 +300,12 @@ public class Component extends DataType {
             component.setScope(scope);
         }
         return component;
+    }
+
+    public static Component from(org.cyclonedx.model.Component real) {
+        Component c = new Component();
+        c.fillFrom(real);
+        return c;
     }
 
     private org.cyclonedx.model.Component toCycloneDxComponent(Version bomVersion)
@@ -324,6 +366,34 @@ public class Component extends DataType {
         // add isExternal once VERSION_17 is supported by cyclonedx-java-core
         addHashes(component, bomVersion);
         return component;
+    }
+
+    private void fillFrom(org.cyclonedx.model.Component real) {
+        setType(real.getType());
+        setName(real.getName());
+        setGroup(real.getGroup());
+        setVersion(real.getVersion());
+        setDescription(real.getDescription());
+        setPurl(real.getPurl());
+        setBomRef(real.getBomRef());
+        setScope(real.getScope());
+        OrganizationalEntity manufacturer = real.getManufacturer();
+        if (manufacturer != null) {
+            this.manufacturer = Organization.from(manufacturer);
+        }
+        OrganizationalEntity supplier = real.getSupplier();
+        if (supplier != null) {
+            this.supplier = Organization.from(supplier);
+        }
+        LicenseChoice licenses = real.getLicenses();
+        if (licenses != null) {
+            this.licenses.clear();
+            this.licenses.addAll(licenses.getLicenses());
+        }
+        if (real.getExternalReferences() != null) {
+            this.externalReferences.clear();
+            this.externalReferences.addAll(real.getExternalReferences());
+        }
     }
 
     private void addHashes(org.cyclonedx.model.Component component, Version bomVersion)
@@ -409,6 +479,12 @@ public class Component extends DataType {
                 return b;
             }
             throw new BuildException("componentRef '" + componentRef + "' doesn't refer to a component");
+        }
+
+        public static Dependency from(org.cyclonedx.model.Dependency dependency) {
+            Dependency d = new Dependency();
+            d.setBomRef(dependency.getRef());
+            return d;
         }
     }
 
