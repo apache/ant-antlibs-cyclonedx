@@ -1,10 +1,10 @@
 {
   "bomFormat" : "CycloneDX",
   "specVersion" : "1.6",
-  "serialNumber" : "urn:uuid:87cc16ad-4397-473c-bab8-fbd7899b27cb",
+  "serialNumber" : "urn:uuid:266aabc2-6812-4036-88b0-1c88d390502c",
   "version" : 1,
   "metadata" : {
-    "timestamp" : "2026-05-08T16:15:00Z",
+    "timestamp" : "2026-05-08T16:48:44Z",
     "lifecycles" : [
       {
         "phase" : "build"
@@ -26,6 +26,7 @@
               "https://ant.apache.org/"
             ]
           },
+          "publisher" : "The Apache Software Foundation",
           "group" : "org.apache.ant",
           "name" : "ant-cyclonedx",
           "version" : "0.1alpha",
@@ -33,35 +34,35 @@
           "hashes" : [
             {
               "alg" : "MD5",
-              "content" : "6aeaa4d90eb5a78e1de7de2e4d4ad034"
+              "content" : "6d0e2adf8c544249288e7ee596c566e9"
             },
             {
               "alg" : "SHA-1",
-              "content" : "ed43b1dbded26e2a2a24c6d213d7b813c4e2bc6e"
+              "content" : "48d86c01594b9ac882d4153bf41e5fc55b620faa"
             },
             {
               "alg" : "SHA-256",
-              "content" : "dca5a782a71ec62524e1d570c6473258d019656e12fe0fe4bdbc2a44545c5324"
+              "content" : "4219d857d3100fd4ec043318f63836bafddedf4181b0767774ee1cf4916f8a2d"
             },
             {
               "alg" : "SHA-512",
-              "content" : "f427019b0505e0860dd1ded1866296ec363fb5d832cb49072a23aa27be3632192570c7339330308bf6a6b8a39555f816b2d9afcd6c798f1a06fbaec8361d5f22"
+              "content" : "2347e3843020e10bc1bb5b3d255d105ae4403a832398406c541b7bcf45eef73bfed63bb7181cddae056f386faba9effdd5e83a48692db48df79307b4e39688ba"
             },
             {
               "alg" : "SHA3-256",
-              "content" : "a69ab61d30bf7d890622726a448a44ff02a741c91d205c45e943fc94ac0ff328"
+              "content" : "6f64a5f69c6a2dc750cef5143c66beaf3aa19600716ed63cbb0afa980c5b46fb"
             },
             {
               "alg" : "SHA3-512",
-              "content" : "305eb78224477a3b88a0506db5fd99f08706b20c8707851150b207f4127adbe648f4ba44c139a07799153cb46367bd382284f43874be3e49b7ec30cee69c0844"
+              "content" : "6859d0d58ea10a43f7704c1617a73609522763d4460ad5c52f067374bc995f7aa3a3d43851015625bcddaf354c528e79b38a5d7c9cb36272afa2a98b9b05c966"
             },
             {
               "alg" : "SHA-384",
-              "content" : "faa448fc61c705102c4f7edf584c1660c697fb723297522021e462e3911de05a3bbd049dd607139c203d67f44ce5fc09"
+              "content" : "72d5b1dfaa25985a0891d763ef8b65169a58f67ca3b47864f3aa16204649247e8d6f8c0654959553ae12e6d3bb564a81"
             },
             {
               "alg" : "SHA3-384",
-              "content" : "d19b4b2d1aff17e35a76c2fa731200e3ee9d32ce784e2efa8f86e985513fb1568efbf7e1612df068e0871c8e0918263b"
+              "content" : "56afebe15d38d52e2f80580659f0558f618deba550f0139f9a72b6254afe9f3a90bb3cb9837568ca8f93a8495c2ba2f3"
             }
           ],
           "licenses" : [
@@ -108,35 +109,35 @@
       "hashes" : [
         {
           "alg" : "MD5",
-          "content" : "6aeaa4d90eb5a78e1de7de2e4d4ad034"
+          "content" : "6d0e2adf8c544249288e7ee596c566e9"
         },
         {
           "alg" : "SHA-1",
-          "content" : "ed43b1dbded26e2a2a24c6d213d7b813c4e2bc6e"
+          "content" : "48d86c01594b9ac882d4153bf41e5fc55b620faa"
         },
         {
           "alg" : "SHA-256",
-          "content" : "dca5a782a71ec62524e1d570c6473258d019656e12fe0fe4bdbc2a44545c5324"
+          "content" : "4219d857d3100fd4ec043318f63836bafddedf4181b0767774ee1cf4916f8a2d"
         },
         {
           "alg" : "SHA-512",
-          "content" : "f427019b0505e0860dd1ded1866296ec363fb5d832cb49072a23aa27be3632192570c7339330308bf6a6b8a39555f816b2d9afcd6c798f1a06fbaec8361d5f22"
+          "content" : "2347e3843020e10bc1bb5b3d255d105ae4403a832398406c541b7bcf45eef73bfed63bb7181cddae056f386faba9effdd5e83a48692db48df79307b4e39688ba"
         },
         {
           "alg" : "SHA3-256",
-          "content" : "a69ab61d30bf7d890622726a448a44ff02a741c91d205c45e943fc94ac0ff328"
+          "content" : "6f64a5f69c6a2dc750cef5143c66beaf3aa19600716ed63cbb0afa980c5b46fb"
         },
         {
           "alg" : "SHA3-512",
-          "content" : "305eb78224477a3b88a0506db5fd99f08706b20c8707851150b207f4127adbe648f4ba44c139a07799153cb46367bd382284f43874be3e49b7ec30cee69c0844"
+          "content" : "6859d0d58ea10a43f7704c1617a73609522763d4460ad5c52f067374bc995f7aa3a3d43851015625bcddaf354c528e79b38a5d7c9cb36272afa2a98b9b05c966"
         },
         {
           "alg" : "SHA-384",
-          "content" : "faa448fc61c705102c4f7edf584c1660c697fb723297522021e462e3911de05a3bbd049dd607139c203d67f44ce5fc09"
+          "content" : "72d5b1dfaa25985a0891d763ef8b65169a58f67ca3b47864f3aa16204649247e8d6f8c0654959553ae12e6d3bb564a81"
         },
         {
           "alg" : "SHA3-384",
-          "content" : "d19b4b2d1aff17e35a76c2fa731200e3ee9d32ce784e2efa8f86e985513fb1568efbf7e1612df068e0871c8e0918263b"
+          "content" : "56afebe15d38d52e2f80580659f0558f618deba550f0139f9a72b6254afe9f3a90bb3cb9837568ca8f93a8495c2ba2f3"
         }
       ],
       "licenses" : [
@@ -198,6 +199,7 @@
     {
       "type" : "library",
       "bom-ref" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.2.0?type=jar",
+      "publisher" : "OWASP Foundation",
       "group" : "org.cyclonedx",
       "name" : "cyclonedx-core-java",
       "version" : "12.2.0",
@@ -237,6 +239,7 @@
     {
       "type" : "library",
       "bom-ref" : "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
+      "publisher" : "The Apache Software Foundation",
       "group" : "commons-io",
       "name" : "commons-io",
       "version" : "2.21.0",
@@ -281,6 +284,7 @@
     {
       "type" : "library",
       "bom-ref" : "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
+      "publisher" : "The Apache Software Foundation",
       "group" : "org.apache.commons",
       "name" : "commons-collections4",
       "version" : "4.5.0",
@@ -364,6 +368,7 @@
     {
       "type" : "library",
       "bom-ref" : "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-xml@2.21.1?type=jar",
+      "publisher" : "FasterXML",
       "group" : "com.fasterxml.jackson.dataformat",
       "name" : "jackson-dataformat-xml",
       "version" : "2.21.1",
@@ -434,6 +439,7 @@
     {
       "type" : "library",
       "bom-ref" : "pkg:maven/commons-codec/commons-codec@1.21.1?type=jar",
+      "publisher" : "The Apache Software Foundation",
       "group" : "commons-codec",
       "name" : "commons-codec",
       "version" : "1.21.1",
@@ -478,6 +484,7 @@
     {
       "type" : "library",
       "bom-ref" : "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
+      "publisher" : "The Apache Software Foundation",
       "group" : "org.apache.commons",
       "name" : "commons-lang3",
       "version" : "3.20.0",

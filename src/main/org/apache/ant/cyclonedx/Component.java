@@ -22,7 +22,10 @@ import org.cyclonedx.Version;
 import org.cyclonedx.exception.ParseException;
 import org.cyclonedx.model.Bom;
 import org.cyclonedx.model.LicenseChoice;
+import org.cyclonedx.model.OrganizationalContact;
 import org.cyclonedx.model.OrganizationalEntity;
+import org.cyclonedx.model.Property;
+import org.cyclonedx.model.component.Tags;
 import org.cyclonedx.parsers.BomParserFactory;
 import org.cyclonedx.parsers.Parser;
 import org.cyclonedx.util.BomUtils;
@@ -32,8 +35,10 @@ public class Component extends DataType {
     private org.cyclonedx.model.Component.Type type = org.cyclonedx.model.Component.Type.LIBRARY;
     private String name;
     private String group;
+    private String publisher;
     private String version;
     private String description;
+    private String copyright;
     private Organization manufacturer = null;
     private Organization supplier = null;
     private boolean manufacturerIsSupplier = false;
@@ -46,6 +51,10 @@ public class Component extends DataType {
     private List<Dependency> dependencies = new ArrayList<>();
     private boolean unknownDependencies = false;
     private boolean sbomLinkResolved = false;
+    private List<OrganizationalContact> authors = new ArrayList<>();
+    private List<String> tags = new ArrayList<>();
+    private List<Property> properties = new ArrayList<>();
+    private String mimeType;
     private Union sbomLink;
 
     public void add(Resource resource) {
@@ -95,6 +104,21 @@ public class Component extends DataType {
         this.description = description;
     }
 
+    public void setPublisher(String publisher) {
+        checkAttributesAllowed();
+        this.publisher = publisher;
+    }
+
+    public void setCopyright(String copyright) {
+        checkAttributesAllowed();
+        this.copyright = copyright;
+    }
+
+    public void setMimeType(String mimeType) {
+        checkAttributesAllowed();
+        this.mimeType = mimeType;
+    }
+
     public void addManufacturer(Organization manufacturer) {
         checkChildrenAllowed();
         if (this.manufacturer != null) {
@@ -109,6 +133,21 @@ public class Component extends DataType {
             throw new BuildException("component can only have one supplier");
         }
         this.supplier = supplier;
+    }
+
+    public void addAuthor(OrganizationalContact author) {
+        checkChildrenAllowed();
+        authors.add(author);
+    }
+
+    public void addTag(String tag) {
+        checkChildrenAllowed();
+        tags.add(tag);
+    }
+
+    public void addProperty(Property property) {
+        checkChildrenAllowed();
+        properties.add(property);
     }
 
     public void setManufacturerIsSupplier(boolean manufacturerIsSupplier) {
@@ -335,6 +374,15 @@ public class Component extends DataType {
         if (description != null) {
             component.setDescription(description);
         }
+        if (publisher != null) {
+            component.setPublisher(publisher);
+        }
+        if (copyright != null) {
+            component.setCopyright(copyright);
+        }
+        if (mimeType != null) {
+            component.setMimeType(mimeType);
+        }
         if (manufacturer != null) {
             OrganizationalEntity oe = manufacturer.toOrganizationalEntity();
             component.setManufacturer(oe);
@@ -344,6 +392,17 @@ public class Component extends DataType {
         }
         if (supplier != null) {
             component.setSupplier(supplier.toOrganizationalEntity());
+        }
+        if (!authors.isEmpty()) {
+            component.setAuthors(authors);
+        }
+        if (!properties.isEmpty()) {
+            component.setProperties(properties);
+        }
+        if (!tags.isEmpty()) {
+            Tags t = new Tags();
+            t.setTags(tags);
+            component.setTags(t);
         }
         if (!licenses.isEmpty()) {
             LicenseChoice lc = new LicenseChoice();
@@ -374,6 +433,9 @@ public class Component extends DataType {
         setGroup(real.getGroup());
         setVersion(real.getVersion());
         setDescription(real.getDescription());
+        setPublisher(real.getPublisher());
+        setCopyright(real.getCopyright());
+        setMimeType(real.getMimeType());
         setPurl(real.getPurl());
         setBomRef(real.getBomRef());
         setScope(real.getScope());
@@ -393,6 +455,18 @@ public class Component extends DataType {
         if (real.getExternalReferences() != null) {
             this.externalReferences.clear();
             this.externalReferences.addAll(real.getExternalReferences());
+        }
+        if (real.getAuthors() != null) {
+            authors.clear();
+            authors.addAll(real.getAuthors());
+        }
+        if (real.getProperties() != null) {
+            properties.clear();
+            properties.addAll(real.getProperties());
+        }
+        if (real.getTags() != null && real.getTags().getTags() != null) {
+            tags.clear();
+            tags.addAll(real.getTags().getTags());
         }
     }
 

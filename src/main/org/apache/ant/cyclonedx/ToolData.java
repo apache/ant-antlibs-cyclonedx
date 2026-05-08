@@ -43,6 +43,7 @@ public class ToolData {
         antlibComponent.setName("ant-cyclonedx");
         antlibComponent.setVersion(getVersion());
         antlibComponent.setDescription("Apache CycloneDX Antlib");
+        antlibComponent.setPublisher("The Apache Software Foundation");
 
         Organization manufacturer = new Organization();
         manufacturer.setName("Apache Ant Development Team");
