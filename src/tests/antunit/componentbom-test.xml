@@ -199,6 +199,20 @@
     </au:expectfailure>
   </target>
 
+  <target name="testComponentsDetectCircularReferences">
+    <au:expectfailure expectedMessage="This data type contains a circular reference"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom outputdirectory="${output}" format="xml"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="level1" id="top">
+          <component name="level2">
+            <component refid="top"/>
+          </component>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
   <target name="testMinimalComponentData">
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">

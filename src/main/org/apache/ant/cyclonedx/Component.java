@@ -9,9 +9,11 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Stack;
 import java.util.stream.Collectors;
 
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.DataType;
 import org.apache.tools.ant.types.Resource;
@@ -229,6 +231,7 @@ public class Component extends DataType {
     public void addComponent(Component c) {
         checkChildrenAllowed();
         nestedComponents.add(c);
+        setChecked(false);
     }
 
     public List<Component> getNestedComponents() {
@@ -525,7 +528,7 @@ public class Component extends DataType {
             file = fp.getFile();
         }
         if (file == null || !file.isFile()) {
-            throw new BuildException("component resource doesn't provide a file");
+            throw new BuildException("component resource " + resource + " doesn't provide a file");
         }
 
         component.setHashes(BomUtils.calculateHashes(file, bomVersion));
@@ -608,5 +611,21 @@ public class Component extends DataType {
      */
     protected Component getRef() {
         return getCheckedRef(Component.class);
+    }
+
+    @Override
+    protected synchronized void dieOnCircularReference(Stack<Object> stk, Project p)
+        throws BuildException {
+        if (isChecked()) {
+            return;
+        }
+        if (isReference()) {
+            super.dieOnCircularReference(stk, p);
+        } else {
+            for (Component c : nestedComponents) {
+                pushAndInvokeCircularReferenceCheck(c, stk, p);
+            }
+            setChecked(true);
+        }
     }
 }
