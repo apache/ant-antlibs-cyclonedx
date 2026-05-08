@@ -26,6 +26,7 @@ public class Organization extends DataType {
         if (isReference()) {
             return getRef().toOrganizationalEntity();
         }
+        dieOnCircularReference();
         OrganizationalEntity oe = new OrganizationalEntity();
         if (name != null) {
             oe.setName(name);

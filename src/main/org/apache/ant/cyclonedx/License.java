@@ -31,6 +31,7 @@ public class License extends DataType {
         if (isReference()) {
             return getRef().toCycloneDxLicense();
         }
+        dieOnCircularReference();
         if (name == null && id == null) {
             throw new BuildException("license name or id is required");
         }

@@ -79,6 +79,7 @@ public class Component extends DataType {
         if (isReference()) {
             return getRef().getName();
         }
+        dieOnCircularReference();
         return name;
     }
 
@@ -91,6 +92,7 @@ public class Component extends DataType {
         if (isReference()) {
             return getRef().getGroup();
         }
+        dieOnCircularReference();
         return group;
     }
 
@@ -169,6 +171,7 @@ public class Component extends DataType {
         if (isReference()) {
             return getRef().getPurl();
         }
+        dieOnCircularReference();
         if (purl != null) {
             return purl;
         }
@@ -187,6 +190,7 @@ public class Component extends DataType {
         if (isReference()) {
             return getRef().getBomRef();
         }
+        dieOnCircularReference();
         if (bomRef == null) {
             return getPurl();
         }
@@ -234,6 +238,7 @@ public class Component extends DataType {
         if (isReference()) {
             return getRef().hasSbomLink();
         }
+        dieOnCircularReference();
         return sbomLink != null;
     }
 
@@ -241,6 +246,7 @@ public class Component extends DataType {
         if (isReference()) {
             return getRef().areDependenciesUnknown();
         }
+        dieOnCircularReference();
         return unknownDependencies;
     }
 
@@ -248,6 +254,7 @@ public class Component extends DataType {
         if (isReference()) {
             return getRef().resolve();
         }
+        dieOnCircularReference();
 
         if (sbomLink != null && !sbomLinkResolved) {
             if (sbomLink.size() != 1) {
