@@ -36,6 +36,16 @@ public class Organization extends DataType {
         return oe;
     }
 
+    public static Organization from(OrganizationalEntity oe) {
+        Organization o = new Organization();
+        o.setName(oe.getName());
+        List<String> urls = oe.getUrls();
+        if (urls != null) {
+            o.urls.addAll(urls);
+        }
+        return o;
+    }
+
     /**
      * Perform the check for circular references and return the
      * referenced Organization.

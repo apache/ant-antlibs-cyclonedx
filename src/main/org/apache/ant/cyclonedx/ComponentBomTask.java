@@ -149,6 +149,7 @@ public class ComponentBomTask extends Task {
         if (!additionalComponents.isEmpty()) {
             List<org.cyclonedx.model.Component> cs = new ArrayList<>();
             for (Component c : additionalComponents) {
+                c.resolve();
                 cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
             }
             bom.setComponents(cs);

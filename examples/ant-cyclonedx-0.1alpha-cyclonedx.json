@@ -1,10 +1,10 @@
 {
   "bomFormat" : "CycloneDX",
   "specVersion" : "1.6",
-  "serialNumber" : "urn:uuid:817ebe65-d467-4d89-b134-17c005157e74",
+  "serialNumber" : "urn:uuid:1b67466f-e18e-401b-857b-ce95cdd9cc82",
   "version" : 1,
   "metadata" : {
-    "timestamp" : "2026-05-02T08:03:43Z",
+    "timestamp" : "2026-05-08T12:48:39Z",
     "lifecycles" : [
       {
         "phase" : "build"
@@ -33,35 +33,35 @@
           "hashes" : [
             {
               "alg" : "MD5",
-              "content" : "14f2e711dd0b6d5abc7a9e5f2a5233a7"
+              "content" : "0504c60f77b82c2d29f3b71d7c4af59b"
             },
             {
               "alg" : "SHA-1",
-              "content" : "720f308380ae53446b78643d9d0b0561a9a6a1e8"
+              "content" : "a58ca1d9c117d4a53c1d542746d06ea9a600900d"
             },
             {
               "alg" : "SHA-256",
-              "content" : "d823adf48bded32d8420c02932837cacdcb1052dc1e4abdd27039e2801ab4907"
+              "content" : "ecb1194156998b8ab00e924bdcde7feb3db5e58ee9f3b25f7d2c035faea4cb0a"
             },
             {
               "alg" : "SHA-512",
-              "content" : "036835030909cdf345a4f8b104f9fcdefc34873024feed1a96899327ca96c7c2be2eecee46b80bf8c2e86b60cb9902f8c17cfae9ea1f30813d8d58f9d880eb37"
+              "content" : "54753aed7aff4e081f73f0c650b7123b38e75d72b0435fcc53cba999fbcb76eb28dfca338dedc7a45baf255295ca91b810c30dfbf831d046d7e93a294bd09934"
             },
             {
               "alg" : "SHA3-256",
-              "content" : "622f01c152661392d2d5cf46e075d9602439b9f9fa6bca0e4b3e10815dc4eeed"
+              "content" : "55278e0880bc15adee69a99914ae0e6b21168dc42686645ecbe70e35ee43a7bf"
             },
             {
               "alg" : "SHA3-512",
-              "content" : "675e597165e3bf5fcdab6075628c1dbf6e3c6c346aaaf619a54c54d7eae45458a1f1c9e144cd8571994e34404d1c52f4721f42fde79050cf56db4460aee28aea"
+              "content" : "88fba63cfe760889da636707607e9ecbe6939956047b2fe93a2c7d2c41f7fb224b45156cc5e91c3d4622d3cba9fb4125e9db44db56f75ddc961441837f3249ed"
             },
             {
               "alg" : "SHA-384",
-              "content" : "02c0c52fe4504538c894b5fd24fe51f9c754a6935c6c241c2419492d6a11cd57bc3f7b1c561ee8a8c038dc5fe3ec1386"
+              "content" : "30bc5a491bfee55b328c5396750a20ead6539eaff5dbfb8f7a87c6d2fc3b554c1a98fc97bb54fda567fce3e6aae4d08a"
             },
             {
               "alg" : "SHA3-384",
-              "content" : "406ff03cf5b204c79e41da2f484b8d86ea1c873ff6a41b752a02beb8e235a901c1de5b764a7688c9f12acacd4a623d84"
+              "content" : "a5da389ae35bd9dde14e4cff5ead642ca63f54170726166f978f0573cffda4d8c5424f599f522e28da4bff8b1c43d3c9"
             }
           ],
           "licenses" : [
@@ -108,35 +108,35 @@
       "hashes" : [
         {
           "alg" : "MD5",
-          "content" : "14f2e711dd0b6d5abc7a9e5f2a5233a7"
+          "content" : "0504c60f77b82c2d29f3b71d7c4af59b"
         },
         {
           "alg" : "SHA-1",
-          "content" : "720f308380ae53446b78643d9d0b0561a9a6a1e8"
+          "content" : "a58ca1d9c117d4a53c1d542746d06ea9a600900d"
         },
         {
           "alg" : "SHA-256",
-          "content" : "d823adf48bded32d8420c02932837cacdcb1052dc1e4abdd27039e2801ab4907"
+          "content" : "ecb1194156998b8ab00e924bdcde7feb3db5e58ee9f3b25f7d2c035faea4cb0a"
         },
         {
           "alg" : "SHA-512",
-          "content" : "036835030909cdf345a4f8b104f9fcdefc34873024feed1a96899327ca96c7c2be2eecee46b80bf8c2e86b60cb9902f8c17cfae9ea1f30813d8d58f9d880eb37"
+          "content" : "54753aed7aff4e081f73f0c650b7123b38e75d72b0435fcc53cba999fbcb76eb28dfca338dedc7a45baf255295ca91b810c30dfbf831d046d7e93a294bd09934"
         },
         {
           "alg" : "SHA3-256",
-          "content" : "622f01c152661392d2d5cf46e075d9602439b9f9fa6bca0e4b3e10815dc4eeed"
+          "content" : "55278e0880bc15adee69a99914ae0e6b21168dc42686645ecbe70e35ee43a7bf"
         },
         {
           "alg" : "SHA3-512",
-          "content" : "675e597165e3bf5fcdab6075628c1dbf6e3c6c346aaaf619a54c54d7eae45458a1f1c9e144cd8571994e34404d1c52f4721f42fde79050cf56db4460aee28aea"
+          "content" : "88fba63cfe760889da636707607e9ecbe6939956047b2fe93a2c7d2c41f7fb224b45156cc5e91c3d4622d3cba9fb4125e9db44db56f75ddc961441837f3249ed"
         },
         {
           "alg" : "SHA-384",
-          "content" : "02c0c52fe4504538c894b5fd24fe51f9c754a6935c6c241c2419492d6a11cd57bc3f7b1c561ee8a8c038dc5fe3ec1386"
+          "content" : "30bc5a491bfee55b328c5396750a20ead6539eaff5dbfb8f7a87c6d2fc3b554c1a98fc97bb54fda567fce3e6aae4d08a"
         },
         {
           "alg" : "SHA3-384",
-          "content" : "406ff03cf5b204c79e41da2f484b8d86ea1c873ff6a41b752a02beb8e235a901c1de5b764a7688c9f12acacd4a623d84"
+          "content" : "a5da389ae35bd9dde14e4cff5ead642ca63f54170726166f978f0573cffda4d8c5424f599f522e28da4bff8b1c43d3c9"
         }
       ],
       "licenses" : [
@@ -197,11 +197,42 @@
     },
     {
       "type" : "library",
-      "bom-ref" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.1.0?type=jar",
+      "bom-ref" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.2.0?type=jar",
       "group" : "org.cyclonedx",
       "name" : "cyclonedx-core-java",
-      "version" : "12.1.0",
-      "purl" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.1.0?type=jar"
+      "version" : "12.2.0",
+      "description" : "The CycloneDX core module provides a model representation of the BOM along with utilities to assist in creating, parsing, and validating BOMs.",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.2.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://github.com/CycloneDX/cyclonedx-core-java"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://github.com/CycloneDX/cyclonedx-core-java/actions"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/CycloneDX/cyclonedx-core-java/issues"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/CycloneDX/cyclonedx-core-java.git"
+        }
+      ]
     }
   ],
   "dependencies" : [
@@ -209,7 +240,7 @@
       "ref" : "pkg:maven/org.apache.ant/ant-cyclonedx@0.1alpha?type=jar",
       "dependsOn" : [
         "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
-        "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.1.0?type=jar"
+        "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.2.0?type=jar"
       ]
     }
   ]

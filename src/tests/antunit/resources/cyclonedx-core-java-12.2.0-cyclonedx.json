@@ -1,0 +1,366 @@
+{
+  "bomFormat" : "CycloneDX",
+  "specVersion" : "1.5",
+  "serialNumber" : "urn:uuid:98ec33f4-dd93-4090-bb72-fe4c5febb88a",
+  "version" : 1,
+  "metadata" : {
+    "timestamp" : "2026-05-08T11:10:13Z",
+    "lifecycles" : [
+      {
+        "phase" : "build"
+      }
+    ],
+    "authors": [
+      {
+        "name": "Stefan Bodewig",
+        "email": "bodewig@apache.org"
+      }
+    ],
+    "component" : {
+      "publisher" : "OWASP Foundation",
+      "group" : "org.cyclonedx",
+      "name" : "cyclonedx-core-java",
+      "version" : "12.2.0",
+      "description" : "The CycloneDX core module provides a model representation of the BOM along with utilities to assist in creating, parsing, and validating BOMs.",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.2.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://github.com/CycloneDX/cyclonedx-core-java"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://github.com/CycloneDX/cyclonedx-core-java/actions"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/CycloneDX/cyclonedx-core-java/issues"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/CycloneDX/cyclonedx-core-java.git"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.2.0?type=jar"
+    }
+  },
+  "components" : [
+    {
+      "publisher" : "The Apache Software Foundation",
+      "group" : "commons-io",
+      "name" : "commons-io",
+      "version" : "2.21.0",
+      "description" : "The Apache Commons IO library contains utility classes, stream implementations, file filters, file comparators, endian transformation classes, and much more.",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://commons.apache.org/proper/commons-io/"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://github.com/apache/commons-parent/actions"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://repository.apache.org/service/local/staging/deploy/maven2"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://issues.apache.org/jira/browse/IO"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://mail-archives.apache.org/mod_mbox/commons-user/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://gitbox.apache.org/repos/asf?p=commons-io.git"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/commons-io/commons-io@2.21.0?type=jar"
+    },
+    {
+      "publisher" : "The Apache Software Foundation",
+      "group" : "org.apache.commons",
+      "name" : "commons-collections4",
+      "version" : "4.5.0",
+      "description" : "The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://commons.apache.org/proper/commons-collections/"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://builds.apache.org/"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://repository.apache.org/service/local/staging/deploy/maven2"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "http://issues.apache.org/jira/browse/COLLECTIONS"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://mail-archives.apache.org/mod_mbox/commons-user/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://git-wip-us.apache.org/repos/asf?p=commons-collections.git"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar"
+    },
+    {
+      "group" : "com.github.package-url",
+      "name" : "packageurl-java",
+      "version" : "1.5.0",
+      "description" : "The official Java implementation of the PackageURL specification. PackageURL (purl) is a minimal specification for describing a package via a \"mostly universal\" URL.",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "MIT",
+            "url" : "https://opensource.org/licenses/MIT"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.github.package-url/packageurl-java@1.5.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://github.com/package-url/packageurl-java"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://travis-ci.com/package-url/packageurl-java"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/package-url/packageurl-java/issues"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/package-url/packageurl-java.git"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.github.package-url/packageurl-java@1.5.0?type=jar"
+    },
+    {
+      "publisher" : "FasterXML",
+      "group" : "com.fasterxml.jackson.dataformat",
+      "name" : "jackson-dataformat-xml",
+      "version" : "2.21.1",
+      "description" : "Data format extension for Jackson to offer alternative support for serializing POJOs as XML and deserializing XML as pojos.",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-xml@2.21.1?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://github.com/FasterXML/jackson-dataformat-xml"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/FasterXML/jackson-dataformat-xml/issues"
+        },
+        {
+          "type" : "vcs",
+          "url" : "http://github.com/FasterXML/jackson-dataformat-xml"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-xml@2.21.1?type=jar"
+    },
+    {
+      "group" : "com.networknt",
+      "name" : "json-schema-validator",
+      "version" : "2.0.1",
+      "description" : "A json schema validator that supports draft v4, v6, v7, v2019-09 and v2020-12",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.networknt/json-schema-validator@2.0.1?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://github.com/networknt/json-schema-validator"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/networknt/json-schema-validator/issues"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com:networknt/json-schema-validator.git"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.networknt/json-schema-validator@2.0.1?type=jar"
+    },
+    {
+      "publisher" : "The Apache Software Foundation",
+      "group" : "commons-codec",
+      "name" : "commons-codec",
+      "version" : "1.21.1",
+      "description" : "The Apache Commons Codec component contains encoders and decoders for various formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these widely used encoders and decoders, the codec package also maintains a collection of phonetic encoding utilities.",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/commons-codec/commons-codec@1.21.1?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://commons.apache.org/proper/commons-codec/"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://github.com/apache/commons-parent/actions"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://repository.apache.org/service/local/staging/deploy/maven2"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://issues.apache.org/jira/browse/CODEC"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://mail-archives.apache.org/mod_mbox/commons-user/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/apache/commons-codec"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/commons-codec/commons-codec@1.21.1?type=jar"
+    },
+    {
+      "publisher" : "The Apache Software Foundation",
+      "group" : "org.apache.commons",
+      "name" : "commons-lang3",
+      "version" : "3.20.0",
+      "description" : "Apache Commons Lang, a package of Java utility classes for the classes that are in java.lang's hierarchy, or are considered to be so standard as to justify existence in java.lang. The code is tested using the latest revision of the JDK for supported LTS releases: 8, 11, 17 and 21 currently. See https://github.com/apache/commons-lang/blob/master/.github/workflows/maven.yml Please ensure your build environment is up-to-date and kindly report any build issues.",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "https://commons.apache.org/proper/commons-lang/"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://github.com/apache/commons-parent/actions"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://repository.apache.org/service/local/staging/deploy/maven2"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://issues.apache.org/jira/browse/LANG"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://mail-archives.apache.org/mod_mbox/commons-user/"
+        },
+        {
+          "type" : "vcs",
+          "url" : "https://gitbox.apache.org/repos/asf?p=commons-lang.git"
+        }
+      ],
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar"
+    }
+  ],
+  "dependencies" : [
+    {
+      "ref" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.2.0?type=jar",
+      "dependsOn" : [
+        "pkg:maven/commons-codec/commons-codec@1.21.1?type=jar",
+        "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
+        "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
+        "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
+        "pkg:maven/com.github.package-url/packageurl-java@1.5.0?type=jar",
+        "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-xml@2.21.1?type=jar",
+        "pkg:maven/com.networknt/json-schema-validator@2.0.1?type=jar"
+      ]
+    }
+  ]
+}

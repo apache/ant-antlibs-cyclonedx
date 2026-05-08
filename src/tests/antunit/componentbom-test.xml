@@ -419,12 +419,11 @@
             type="WEBSITE"
             url="https://ant.apache.org/"/>
       </additionalComponent>
-      <additionalComponent
-          name="cyclonedx-core-java"
-          group="org.cyclonedx"
-          version="12.1.0"
-          id="cyclonedx-core"
-          unknownDependencies="true"/>
+      <additionalComponent id="cyclonedx-core">
+        <sbomLink>
+          <file file="resources/cyclonedx-core-java-12.2.0-cyclonedx.json"/>
+        </sbomLink>
+      </additionalComponent>
     </cdx:componentbom>
     <copy todir="/tmp">
       <fileset dir="${output}" includes="ant-cyclonedx*"/>

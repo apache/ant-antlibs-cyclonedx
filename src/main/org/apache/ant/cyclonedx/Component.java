@@ -1,7 +1,9 @@
 package org.apache.ant.cyclonedx;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,10 +12,15 @@ import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.DataType;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.resources.FileProvider;
+import org.apache.tools.ant.types.resources.Union;
 
 import org.cyclonedx.Version;
+import org.cyclonedx.exception.ParseException;
+import org.cyclonedx.model.Bom;
 import org.cyclonedx.model.LicenseChoice;
 import org.cyclonedx.model.OrganizationalEntity;
+import org.cyclonedx.parsers.BomParserFactory;
+import org.cyclonedx.parsers.Parser;
 import org.cyclonedx.util.BomUtils;
 
 public class Component extends DataType {
@@ -34,6 +41,7 @@ public class Component extends DataType {
     private boolean isExternal = false;
     private List<Dependency> dependencies = new ArrayList<>();
     private boolean unknownDependencies = false;
+    private Union sbomLink;
 
     public void add(Resource resource) {
         checkChildrenAllowed();
@@ -159,11 +167,80 @@ public class Component extends DataType {
         this.unknownDependencies = unknownDependencies;
     }
 
+    public Union createSbomLink() {
+        checkChildrenAllowed();
+        return sbomLink == null ? (sbomLink = new Union()) : sbomLink;
+    }
+
     public boolean areDependenciesUnknown() {
         if (isReference()) {
             return getRef().areDependenciesUnknown();
         }
         return unknownDependencies;
+    }
+
+    public void resolve() throws IOException {
+        if (isReference()) {
+            getRef().resolve();
+            return;
+        }
+
+        if (sbomLink != null) {
+            if (sbomLink.size() != 1) {
+                throw new BuildException("sbomLink requires exactly one nested resource");
+            }
+            Resource sbom = sbomLink.iterator().next();
+            try (InputStream data = sbom.getInputStream();
+                 ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+                byte[] buf = new byte[4096];
+                int count = data.read(buf, 0, buf.length);
+                while (count >= 0) {
+                    baos.write(buf, 0, count);
+                    count = data.read(buf, 0, buf.length);
+                }
+                byte[] content = baos.toByteArray();
+                try {
+                    Parser parser = BomParserFactory.createParser(content);
+                    Bom bom = parser.parse(content);
+                    if (bom.getMetadata() == null) {
+                        throw new BuildException("referenced SBOM file lacks metadata");
+                    }
+                    org.cyclonedx.model.Component real = bom.getMetadata().getComponent();
+                    if (real == null) {
+                        throw new BuildException("referenced SBOM file lacks component");
+                    }
+                    setType(real.getType());
+                    setName(real.getName());
+                    setGroup(real.getGroup());
+                    setVersion(real.getVersion());
+                    setDescription(real.getDescription());
+                    setPurl(real.getPurl());
+                    setBomRef(real.getBomRef());
+                    setScope(real.getScope());
+                    setUnknownDependencies(true);
+                    OrganizationalEntity manufacturer = real.getManufacturer();
+                    if (manufacturer != null) {
+                        this.manufacturer = Organization.from(manufacturer);
+                    }
+                    OrganizationalEntity supplier = real.getSupplier();
+                    if (supplier != null) {
+                        this.supplier = Organization.from(supplier);
+                    }
+                    LicenseChoice licenses = real.getLicenses();
+                    if (licenses != null) {
+                        this.licenses.clear();
+                        this.licenses.addAll(licenses.getLicenses());
+                    }
+                    if (real.getExternalReferences() != null) {
+                        this.externalReferences.clear();
+                        this.externalReferences.addAll(real.getExternalReferences());
+                    }
+                } catch (ParseException ex) {
+                    throw new BuildException("failed to parse sbomlink " + sbom.getName());
+                }
+            }
+            sbomLink = null;
+        }
     }
 
     public org.cyclonedx.model.Component toMainCycloneDxComponent(Version bomVersion)
