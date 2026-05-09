@@ -55,7 +55,7 @@ public class Component extends DataType {
     private boolean unknownDependencies = false;
     private boolean sbomLinkResolved = false;
     private List<OrganizationalContact> authors = new ArrayList<>();
-    private List<String> tags = new ArrayList<>();
+    private List<Tag> tags = new ArrayList<>();
     private List<Property> properties = new ArrayList<>();
     private String mimeType;
     private Union sbomLink;
@@ -145,7 +145,7 @@ public class Component extends DataType {
         authors.add(author);
     }
 
-    public void addTag(String tag) {
+    public void addTag(Tag tag) {
         checkChildrenAllowed();
         tags.add(tag);
     }
@@ -432,9 +432,9 @@ public class Component extends DataType {
             component.setProperties(properties);
         }
         if (!tags.isEmpty()) {
-            Tags t = new Tags();
-            t.setTags(tags);
-            component.setTags(t);
+            Tags ts = new Tags();
+            ts.setTags(tags.stream().map(t -> t.getTag()).collect(Collectors.toList()));
+            component.setTags(ts);
         }
         if (!licenses.isEmpty()) {
             LicenseChoice lc = new LicenseChoice();
@@ -501,7 +501,14 @@ public class Component extends DataType {
         }
         if (real.getTags() != null && real.getTags().getTags() != null) {
             tags.clear();
-            tags.addAll(real.getTags().getTags());
+            tags.addAll(real.getTags().getTags()
+                        .stream()
+                        .map(t -> {
+                                Tag tag = new Tag();
+                                tag.addText(t);
+                                return tag;
+                            })
+                        .collect(Collectors.toList()));
         }
         if (real.getComponents() != null) {
             nestedComponents.clear();
@@ -601,6 +608,18 @@ public class Component extends DataType {
             Dependency d = new Dependency();
             d.setBomRef(dependency.getRef());
             return d;
+        }
+    }
+
+    public static class Tag {
+        private String tag;
+
+        public void addText(String text) {
+            tag = text;
+        }
+
+        public String getTag() {
+            return tag;
         }
     }
 
