@@ -64,6 +64,22 @@ public class ToolData {
         licRef.setUrl("https://www.apache.org/licenses/LICENSE-2.0.txt");
         licRef.setType(ExternalReference.Type.LICENSE);
         antlibComponent.addConfiguredExternalReference(licRef);
+        Component.ExternalReference ci = new Component.ExternalReference();
+        ci.setUrl("https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/");
+        ci.setType(ExternalReference.Type.BUILD_SYSTEM);
+        antlibComponent.addConfiguredExternalReference(ci);
+        Component.ExternalReference mailList = new Component.ExternalReference();
+        mailList.setUrl("https://ant.apache.org/mail.html");
+        mailList.setType(ExternalReference.Type.MAILING_LIST);
+        antlibComponent.addConfiguredExternalReference(mailList);
+        Component.ExternalReference bugzilla = new Component.ExternalReference();
+        bugzilla.setUrl("https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&product=Ant");
+        bugzilla.setType(ExternalReference.Type.ISSUE_TRACKER);
+        antlibComponent.addConfiguredExternalReference(bugzilla);
+        Component.ExternalReference homepage = new Component.ExternalReference();
+        homepage.setUrl("https://ant.apache.org/antlibs/cyclonedx/");
+        homepage.setType(ExternalReference.Type.WEBSITE);
+        antlibComponent.addConfiguredExternalReference(homepage);
 
         File antlib = findAntlib();
         if (antlib != null) {

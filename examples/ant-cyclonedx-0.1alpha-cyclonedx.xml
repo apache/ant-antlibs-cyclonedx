@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bom serialNumber="urn:uuid:b102ed07-8561-4e8d-9124-2fbaeda2af87" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+<bom serialNumber="urn:uuid:646a5858-6d5a-41ef-89f2-5640aaf30cdd" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
   <metadata>
-    <timestamp>2026-05-08T19:48:59Z</timestamp>
+    <timestamp>2026-05-09T08:04:37Z</timestamp>
     <lifecycles>
       <lifecycle>
         <phase>build</phase>
@@ -24,14 +24,14 @@
           <version>0.1alpha</version>
           <description>Apache CycloneDX Antlib</description>
           <hashes>
-            <hash alg="MD5">cd60dca84b42bad257fd776c541a937d</hash>
-            <hash alg="SHA-1">f27f9d1e378987673e96868fab2c64ff076310c7</hash>
-            <hash alg="SHA-256">ad7490c23be951353bfdc299269816c87c680f2b08a0461d55bde3689d291234</hash>
-            <hash alg="SHA-512">80784ae9b36496e7b5a70e91dfe0280d3437d79a211e2a6b8f761b77f0407494752ecbee9e7b6d5a2c014e04b7069b4dfc36a684fb9a11c982c59913d7ff97e6</hash>
-            <hash alg="SHA3-256">1c6387b9e32013e79dfb420bc005e6dff736546152a95bbd6673b07a413b78f7</hash>
-            <hash alg="SHA3-512">f57f015857b33731781a646b5131037897dc23f2e1a9e202984d5ac9a484d3843bbc9e1216aee46b4a36da213323f2d1f0f79dfa1e69f788d7bc538adfad9bc1</hash>
-            <hash alg="SHA-384">e93b7acd21cbb36b41b273582b4c3a58828d0e908261549fdef3da0ebdce4e573cfd65e0406c0186cb6d8e76552347c3</hash>
-            <hash alg="SHA3-384">241ac570fb9fc5e5ba1b7362df02167d214be3e7e6e371fe90ce4312bf63c7cd5ba3d988b5bd276040e94a4fdc23464c</hash>
+            <hash alg="MD5">0a399d9079aaabff62080f089e80afa2</hash>
+            <hash alg="SHA-1">d9ec5e2da210f4671b283a9c52606c438a10868c</hash>
+            <hash alg="SHA-256">8245ac667a63f1cb3c63c57232cbf1b0b8ff0fc833f0e182893b8d41ba57a986</hash>
+            <hash alg="SHA-512">e0aaf2736ab7c4920bcf3e7c83d2787abb5eefc45c79ab7d030039ef3e60db3eea087e7c1d66970040375982ebfec16c5467c359fd40dd00d1e977e8095de564</hash>
+            <hash alg="SHA3-256">9d886110a2d0b56053dfb6c279a2ccfb1ffc6a9577db6cc836d81799eb60b8d3</hash>
+            <hash alg="SHA3-512">db4702ac4434235d939775edd3869b27987d3a7c057f93642af462713396c4b3f84971797534f7a9cecb71f8b29870defec7842dee60ae15f4e58ebefa93a710</hash>
+            <hash alg="SHA-384">3ebd7c73a900e0009bf7fc7f139c211662c98e241698a30d2b1bc12749c172f06cd63850dbf78b549c882d4c045dfe35</hash>
+            <hash alg="SHA3-384">b24842345675c75f0ae625a1d7a1a6e202b8adfba7e623864309c7e5851461ac077301aaff97e9257439ff4d3dd068c2</hash>
           </hashes>
           <licenses>
             <license>
@@ -46,6 +46,18 @@
             </reference>
             <reference type="license">
               <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            </reference>
+            <reference type="build-system">
+              <url>https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/</url>
+            </reference>
+            <reference type="mailing-list">
+              <url>https://ant.apache.org/mail.html</url>
+            </reference>
+            <reference type="issue-tracker">
+              <url>https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&amp;product=Ant</url>
+            </reference>
+            <reference type="website">
+              <url>https://ant.apache.org/antlibs/cyclonedx/</url>
             </reference>
           </externalReferences>
         </component>
@@ -66,14 +78,14 @@
       <version>0.1alpha</version>
       <description>Apache CycloneDX Antlib</description>
       <hashes>
-        <hash alg="MD5">cd60dca84b42bad257fd776c541a937d</hash>
-        <hash alg="SHA-1">f27f9d1e378987673e96868fab2c64ff076310c7</hash>
-        <hash alg="SHA-256">ad7490c23be951353bfdc299269816c87c680f2b08a0461d55bde3689d291234</hash>
-        <hash alg="SHA-512">80784ae9b36496e7b5a70e91dfe0280d3437d79a211e2a6b8f761b77f0407494752ecbee9e7b6d5a2c014e04b7069b4dfc36a684fb9a11c982c59913d7ff97e6</hash>
-        <hash alg="SHA3-256">1c6387b9e32013e79dfb420bc005e6dff736546152a95bbd6673b07a413b78f7</hash>
-        <hash alg="SHA3-512">f57f015857b33731781a646b5131037897dc23f2e1a9e202984d5ac9a484d3843bbc9e1216aee46b4a36da213323f2d1f0f79dfa1e69f788d7bc538adfad9bc1</hash>
-        <hash alg="SHA-384">e93b7acd21cbb36b41b273582b4c3a58828d0e908261549fdef3da0ebdce4e573cfd65e0406c0186cb6d8e76552347c3</hash>
-        <hash alg="SHA3-384">241ac570fb9fc5e5ba1b7362df02167d214be3e7e6e371fe90ce4312bf63c7cd5ba3d988b5bd276040e94a4fdc23464c</hash>
+        <hash alg="MD5">0a399d9079aaabff62080f089e80afa2</hash>
+        <hash alg="SHA-1">d9ec5e2da210f4671b283a9c52606c438a10868c</hash>
+        <hash alg="SHA-256">8245ac667a63f1cb3c63c57232cbf1b0b8ff0fc833f0e182893b8d41ba57a986</hash>
+        <hash alg="SHA-512">e0aaf2736ab7c4920bcf3e7c83d2787abb5eefc45c79ab7d030039ef3e60db3eea087e7c1d66970040375982ebfec16c5467c359fd40dd00d1e977e8095de564</hash>
+        <hash alg="SHA3-256">9d886110a2d0b56053dfb6c279a2ccfb1ffc6a9577db6cc836d81799eb60b8d3</hash>
+        <hash alg="SHA3-512">db4702ac4434235d939775edd3869b27987d3a7c057f93642af462713396c4b3f84971797534f7a9cecb71f8b29870defec7842dee60ae15f4e58ebefa93a710</hash>
+        <hash alg="SHA-384">3ebd7c73a900e0009bf7fc7f139c211662c98e241698a30d2b1bc12749c172f06cd63850dbf78b549c882d4c045dfe35</hash>
+        <hash alg="SHA3-384">b24842345675c75f0ae625a1d7a1a6e202b8adfba7e623864309c7e5851461ac077301aaff97e9257439ff4d3dd068c2</hash>
       </hashes>
       <licenses>
         <license>
@@ -85,6 +97,21 @@
       <externalReferences>
         <reference type="vcs">
           <url>https://github.com/apache/ant-antlibs-cyclonedx</url>
+        </reference>
+        <reference type="license">
+          <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </reference>
+        <reference type="build-system">
+          <url>https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/</url>
+        </reference>
+        <reference type="mailing-list">
+          <url>https://ant.apache.org/mail.html</url>
+        </reference>
+        <reference type="issue-tracker">
+          <url>https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&amp;product=Ant</url>
+        </reference>
+        <reference type="website">
+          <url>https://ant.apache.org/antlibs/cyclonedx/</url>
         </reference>
       </externalReferences>
     </component>

@@ -497,6 +497,21 @@
         <externalReference
             type="VCS"
             url="https://github.com/apache/ant-antlibs-cyclonedx"/>
+        <externalReference
+            type="LICENSE"
+            url="https://www.apache.org/licenses/LICENSE-2.0.txt"/>
+        <externalReference
+            type="BUILD_SYSTEM"
+            url="https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/"/>
+        <externalReference
+            type="MAILING_LIST"
+            url="https://ant.apache.org/mail.html"/>
+        <externalReference
+            type="ISSUE_TRACKER"
+            url="https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&amp;product=Ant"/>
+        <externalReference
+            type="WEBSITE"
+            url="https://ant.apache.org/antlibs/cyclonedx/"/>
         <dependency componentRef="ant"/>
         <dependency componentRef="cyclonedx-core"/>
       </component>
