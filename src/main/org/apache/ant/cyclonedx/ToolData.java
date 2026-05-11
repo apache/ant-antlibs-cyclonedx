@@ -56,30 +56,33 @@ public class ToolData {
         license.addConfiguredUrl(new URLResource("https://www.apache.org/licenses/LICENSE-2.0.txt"));
         antlibComponent.addConfiguredLicense(license);
 
-        Component.ExternalReference repo = new Component.ExternalReference();
-        repo.setUrl("https://github.com/apache/ant-antlibs-cyclonedx");
-        repo.setType(ExternalReference.Type.VCS);
-        antlibComponent.addConfiguredExternalReference(repo);
-        Component.ExternalReference licRef = new Component.ExternalReference();
-        licRef.setUrl("https://www.apache.org/licenses/LICENSE-2.0.txt");
-        licRef.setType(ExternalReference.Type.LICENSE);
-        antlibComponent.addConfiguredExternalReference(licRef);
-        Component.ExternalReference ci = new Component.ExternalReference();
-        ci.setUrl("https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/");
-        ci.setType(ExternalReference.Type.BUILD_SYSTEM);
-        antlibComponent.addConfiguredExternalReference(ci);
-        Component.ExternalReference mailList = new Component.ExternalReference();
-        mailList.setUrl("https://ant.apache.org/mail.html");
-        mailList.setType(ExternalReference.Type.MAILING_LIST);
-        antlibComponent.addConfiguredExternalReference(mailList);
-        Component.ExternalReference bugzilla = new Component.ExternalReference();
-        bugzilla.setUrl("https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&product=Ant");
-        bugzilla.setType(ExternalReference.Type.ISSUE_TRACKER);
-        antlibComponent.addConfiguredExternalReference(bugzilla);
-        Component.ExternalReference homepage = new Component.ExternalReference();
-        homepage.setUrl("https://ant.apache.org/antlibs/cyclonedx/");
-        homepage.setType(ExternalReference.Type.WEBSITE);
-        antlibComponent.addConfiguredExternalReference(homepage);
+        antlibComponent.addConfiguredExternalReference(
+           createExternalReference(ExternalReference.Type.VCS,
+                                   "https://github.com/apache/ant-antlibs-cyclonedx"));
+        antlibComponent.addConfiguredExternalReference(
+           createExternalReference(ExternalReference.Type.LICENSE,
+                                   "https://www.apache.org/licenses/LICENSE-2.0.txt"));
+        antlibComponent.addConfiguredExternalReference(
+           createExternalReference(ExternalReference.Type.BUILD_SYSTEM,
+                                   "https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/"));
+        antlibComponent.addConfiguredExternalReference(
+           createExternalReference(ExternalReference.Type.MAILING_LIST,
+                                   "https://ant.apache.org/mail.html"));
+        antlibComponent.addConfiguredExternalReference(
+           createExternalReference(ExternalReference.Type.ISSUE_TRACKER,
+                                   "https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&product=Ant"));
+        antlibComponent.addConfiguredExternalReference(
+           createExternalReference(ExternalReference.Type.WEBSITE,
+                                   "https://ant.apache.org/antlibs/cyclonedx/"));
+        antlibComponent.addConfiguredExternalReference(
+           createExternalReference(ExternalReference.Type.DISTRIBUTION,
+                                   "https://ant.apache.org/antlibs/bindownload.cgi"));
+        antlibComponent.addConfiguredExternalReference(
+           createExternalReference(ExternalReference.Type.SOURCE_DISTRIBUTION,
+                                   "https://ant.apache.org/antlibs/srcdownload.cgi"));
+        antlibComponent.addConfiguredExternalReference(
+           createExternalReference(ExternalReference.Type.SECURITY_CONTACT,
+                                   "https://www.apache.org/security/"));
 
         File antlib = findAntlib();
         if (antlib != null) {
@@ -118,4 +121,11 @@ public class ToolData {
         return null;
     }
 
+    private static Component.ExternalReference
+        createExternalReference(ExternalReference.Type type, String url) {
+        Component.ExternalReference e = new Component.ExternalReference();
+        e.setUrl(url);
+        e.setType(type);
+        return e;
+    }
 }
