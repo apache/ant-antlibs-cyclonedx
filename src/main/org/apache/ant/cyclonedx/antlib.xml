@@ -26,4 +26,6 @@ under the License.
     classname="org.apache.ant.cyclonedx.Organization"/>
   <typedef name="license"
     classname="org.apache.ant.cyclonedx.License"/>
+  <typedef name="externalreferenceset"
+    classname="org.apache.ant.cyclonedx.ExternalReferenceSet"/>
 </antlib>
