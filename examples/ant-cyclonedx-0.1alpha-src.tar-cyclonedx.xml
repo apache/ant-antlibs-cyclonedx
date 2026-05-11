@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bom serialNumber="urn:uuid:13793a16-79b9-48cf-9e36-e55b3329ed7b" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+  <metadata>
+    <timestamp>2026-05-11T18:37:18Z</timestamp>
+    <lifecycles>
+      <lifecycle>
+        <phase>build</phase>
+      </lifecycle>
+    </lifecycles>
+    <tools>
+      <components>
+        <component type="library">
+          <supplier>
+            <name>Apache Ant Development Team</name>
+            <url>https://ant.apache.org/</url>
+          </supplier>
+          <manufacturer>
+            <name>Apache Ant Development Team</name>
+            <url>https://ant.apache.org/</url>
+          </manufacturer>
+          <publisher>The Apache Software Foundation</publisher>
+          <group>org.apache.ant</group>
+          <name>ant-cyclonedx</name>
+          <version>0.1alpha</version>
+          <description>Apache CycloneDX Antlib</description>
+          <hashes>
+            <hash alg="MD5">9232980d8f8bc5345f372928a4d113db</hash>
+            <hash alg="SHA-1">75d2d3a76d98fa39a73e219b93ff8dc01d97998e</hash>
+            <hash alg="SHA-256">d216cd00a7b37591c764a59ab2e6d9606bc7a1679d9264b6dbded0e0cfd6a449</hash>
+            <hash alg="SHA-512">1e50ac1232496c6f4af68f771f4c08a739f6ea1c8d803bb97149a4d38b27b2ab4ed0867f8f689065172b86f62118166d47ff10b934ce2093f0ec359c6273f9b7</hash>
+            <hash alg="SHA3-256">5fd9c23859de36b93acbe18034d4a7d9a84741794e8911531de555dc6b31eb70</hash>
+            <hash alg="SHA3-512">075b73bc86d1447327697a97e0e5f9471366f335958697fc90315d27498e928b65a98795f3081938c3986f5d30612c002b42dc9efea1c01396529c787bcb3fb9</hash>
+            <hash alg="SHA-384">ad7df73c092ae25fc567bb94f6ea0ed6393b038293baa24e21a568da0dca625283607ddaf4429baea3d16695bcf0f770</hash>
+            <hash alg="SHA3-384">feeecbf414c01d8468ff37bb11cd8fc4f9a995150bfb9591bda08dc5919d5d9f4d6d7ca3f9ed68e0713e70c64cf32721</hash>
+          </hashes>
+          <licenses>
+            <license>
+              <id>Apache-2.0</id>
+              <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            </license>
+          </licenses>
+          <purl>pkg:maven/org.apache.ant/ant-cyclonedx@0.1alpha?type=jar</purl>
+          <externalReferences>
+            <reference type="vcs">
+              <url>https://github.com/apache/ant-antlibs-cyclonedx</url>
+            </reference>
+            <reference type="license">
+              <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            </reference>
+            <reference type="build-system">
+              <url>https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/</url>
+            </reference>
+            <reference type="mailing-list">
+              <url>https://ant.apache.org/mail.html</url>
+            </reference>
+            <reference type="issue-tracker">
+              <url>https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&amp;product=Ant</url>
+            </reference>
+            <reference type="website">
+              <url>https://ant.apache.org/antlibs/cyclonedx/</url>
+            </reference>
+          </externalReferences>
+        </component>
+      </components>
+    </tools>
+    <component type="file">
+      <supplier>
+        <name>Apache Ant Development Team</name>
+        <url>https://ant.apache.org/</url>
+      </supplier>
+      <manufacturer>
+        <name>Apache Ant Development Team</name>
+        <url>https://ant.apache.org/</url>
+      </manufacturer>
+      <publisher>The Apache Software Foundation</publisher>
+      <name>ant-cyclonedx-src.tar</name>
+      <version>0.1alpha</version>
+      <description>Apache CycloneDX Antlib Source Distribution</description>
+      <licenses>
+        <license>
+          <id>Apache-2.0</id>
+          <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+      </licenses>
+      <externalReferences>
+        <reference type="vcs">
+          <url>https://github.com/apache/ant-antlibs-cyclonedx</url>
+        </reference>
+        <reference type="license">
+          <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </reference>
+        <reference type="build-system">
+          <url>https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/</url>
+        </reference>
+        <reference type="mailing-list">
+          <url>https://ant.apache.org/mail.html</url>
+        </reference>
+        <reference type="issue-tracker">
+          <url>https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&amp;product=Ant</url>
+        </reference>
+        <reference type="website">
+          <url>https://ant.apache.org/antlibs/cyclonedx/</url>
+        </reference>
+      </externalReferences>
+    </component>
+    <supplier>
+      <name>Apache Ant Development Team</name>
+      <url>https://ant.apache.org/</url>
+    </supplier>
+  </metadata>
+  <components>
+    <component type="file">
+      <name>LICENSE</name>
+      <hashes>
+        <hash alg="MD5">9d5c70f64c4e0c69aa08d70c66fcc77b</hash>
+        <hash alg="SHA-1">e818f00fb9ad95bcd40e8625b2ddaa0558f5d9ba</hash>
+        <hash alg="SHA-256">7e8cfa3e866c3add6bbf6fc905cb266ff63d7b18b0d6f6114286042fbc141c67</hash>
+        <hash alg="SHA-512">ab14f9ce1100afc918cb2152b1a338053c437e5fe169ed87709e08992c6c0138073f2699b36f826a5da43945cd37f0ed1c036846355bbf28e8158aa95bfb3057</hash>
+        <hash alg="SHA3-256">171ffd3d207f9a338eb27c2fffb4107cc0c3a2397c83cfc1392b09d2e2def46f</hash>
+        <hash alg="SHA3-512">70aa965bf4ac7564284b83acba8c45428887d9a2378e1bdc337b9f30ff8c2fd6c6e743c6e3584a1904d71db82705f1df5c15a73bbc153971430197c0002cbf88</hash>
+        <hash alg="SHA-384">9642d614b7d94e0fc87074cfda202b63ea70208d405cbffd7ee84bae0932fd56284ce293bcffe95a191ae859dbf8bd7e</hash>
+        <hash alg="SHA3-384">7843505bdb0f76a7e18daa6ae007ecc73b773105b7958f1713b515c9196a6f313ac6dfcb61541073a8f3a2b2e33bd972</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>NOTICE</name>
+      <hashes>
+        <hash alg="MD5">554a0745cb9882819da3e89fe116bf15</hash>
+        <hash alg="SHA-1">81b77dd3142127483924f32ad812a87eb1bb444c</hash>
+        <hash alg="SHA-256">458b71a522312cf86ddf75e0c8927ceadd535c5fb9cf4a5306b4ca450c7fb67e</hash>
+        <hash alg="SHA-512">61bc3f1ec58676d56ccbdbc8ee61bb14330da4c525ac5e084b7f31cf1b347e8f85735f8a7f7e4773131cf6c726d7d437c9394aba7ae1cb0328401af629af0712</hash>
+        <hash alg="SHA3-256">ac6c9f205c52f01c3c289d4fbf3f5384a41fef68a397d9281d62919a242ae16d</hash>
+        <hash alg="SHA3-512">d021fd3efde130a690197f563b4b58c259c1ce7165beac913fb95cff6d6a21b1108f4d94f05631b97d97911844ca060605aba9a046f58ac698158f47110360b1</hash>
+        <hash alg="SHA-384">117a504981f9435c86593bb319269868a50602b08590b00bb403d825ea062f7dc01472c67532d4f33dc69e30c0c9af70</hash>
+        <hash alg="SHA3-384">ff586b1aa6f9dadba616b8a732da2cc0322bffa0f06685f6f25f8d8c6b18768b44c3851b279b9934c7292c17fb9ed297</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>README.md</name>
+      <hashes>
+        <hash alg="MD5">9ba6e6e72b13928d3b85716cfe17303e</hash>
+        <hash alg="SHA-1">9ffcd759c6fb2eeabc3aba5d270ed7e428c8bbc8</hash>
+        <hash alg="SHA-256">95fe2062314cfa664593f01366febb05488316867c2da97ed0446d420d2248f9</hash>
+        <hash alg="SHA-512">91a21f55ab0601408665f1068e08871111e25b22e0cc9371c1230b722a0e3b26980a6b7e71d1b8db6886a1d8ef674c1b05ffa13695809a843a50c21ad90423b6</hash>
+        <hash alg="SHA3-256">4750c85dbd6f44dd61af7c9a058f6d96eaaf0843106a5161ce9cd74cb6874ed9</hash>
+        <hash alg="SHA3-512">1d0f2be34c7e9dd1b73b041a0688fed3655e7e00b261b686fe59663a4504d241006a27fd3262b5d77fec79557217de421fe634aad7186955dc53cd9da0cc4eef</hash>
+        <hash alg="SHA-384">10bd1f1caddf583ac827427be5056c6988b75e13aff588c407aaa1bdf8166749401260518824ef181b6d4d97f29d59de</hash>
+        <hash alg="SHA3-384">e29214c4ad3b11e391fa86aa57c962eb4034ef0e10fd12740c7fc7676e3b0e0cc83b0edf1c061a8a83ebbcc5455cfc04</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>build.properties</name>
+      <hashes>
+        <hash alg="MD5">4d7ced77f4562927820deb3b08e9c976</hash>
+        <hash alg="SHA-1">ffd86733e9a5db7bcafa8827f2eff25cdb212e9c</hash>
+        <hash alg="SHA-256">6f49cfc6c2e8aca3586b3f0c086be5c8f4c641ab2d8515cb2bca22353c9afb7f</hash>
+        <hash alg="SHA-512">c8a8a324cf2c8f48f39e1daca58230c9c1037a73a5a800c23b23fdbf444fa1a578acf658acfb281b3833059e4071a2b4ea82b496d8e95284f68b7228cc84305e</hash>
+        <hash alg="SHA3-256">9ac1f96250d8fd609c9ce10cebb8003512523f3527e178117ada84f81c8ef897</hash>
+        <hash alg="SHA3-512">b5f988e6bacd0916469f494cd0dce28e7f7f6f6a956a0d29e65372857781bf51d761b722e3737a0a24df390bcdacd12097948100434c28cc6878a422f5ffe077</hash>
+        <hash alg="SHA-384">432942d8c4a5fa6c2e3db75b2d30ff6e3aab7e4207cb1c16df46dc2ac31c7697e29191bd17003a088c9f84c7d1e35dc3</hash>
+        <hash alg="SHA3-384">5bd48367148fd497a24c737451d72bba9fa907ef0511f22a4d2c1f545b84e6b703e6e76f8b5fdecd7d01b2505d11df91</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>build.xml</name>
+      <hashes>
+        <hash alg="MD5">7fe81ccc31aab1738c9ac8bf2496b0ea</hash>
+        <hash alg="SHA-1">f59f222e4b1ea0f52db83eeea7793614bfa1fa34</hash>
+        <hash alg="SHA-256">30a3077cac763275ddf83989ba4c216aae2d290f93f96b94b2dbd35af8b74e2b</hash>
+        <hash alg="SHA-512">ba1174f8f62e538148b605470d32a9b5f1025536514df9fdea2ef48959f2d5b6709796cab82356320de549d681f94f3f26a6f32c482b73a32dc9529eb9f7ccc8</hash>
+        <hash alg="SHA3-256">011122a9b06f68484d40ada6b78d93c577eab0b5ac957ea4569d318d690e5d54</hash>
+        <hash alg="SHA3-512">653c6b205e10d880f616bbc0b19fafee69431c275e445a91aa0eba39d159259216dc337a553fecf56e35e3aaf7a2665296d3af81b54f39285fbf63eaf013fd93</hash>
+        <hash alg="SHA-384">4dd1d35bcab09619393d015f04ef9548735b070396601ce5fb0fe2c96d11b774f7120d206201f4263e268863577ea39b</hash>
+        <hash alg="SHA3-384">96806efd755c6579ba49cbe995d9bdbc0cef9f07503928253257e3e80d4a8b3827d51212a06c45d247a7fcf76dde2010</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>changes.xml</name>
+      <hashes>
+        <hash alg="MD5">00b49dde4d3d0532a37c2dfa8abd552c</hash>
+        <hash alg="SHA-1">c8be17aa899eab6f8376d0def1e5bffe9772220c</hash>
+        <hash alg="SHA-256">7d2cfcd8b810bc8dbaecc290e43cc72958382b8c384c2ea9630500328684561c</hash>
+        <hash alg="SHA-512">e1076d71e2c8137c99ce6b3331eb3a4166bba13a0b2e095114683507bc55e24f73fbe80b21ca356117245970a2bcace84869a0625b652e42b1e39dd7fbe4e6bc</hash>
+        <hash alg="SHA3-256">5546341d7e6cdc3ced73581168a7c938489e10dbd9cbe0012e15d30ffc9539cf</hash>
+        <hash alg="SHA3-512">b5f874bc38cb65fca09a05002c2f7f20abea9c7b77c3c5b67ceaa0241f90c676cf6b6b4e52c5367362d59a66dce78c729c0a24e072e3803882293ccb1aa87e88</hash>
+        <hash alg="SHA-384">48a913fa3330b30b9edf979b84c946da8b7c062b855c0b240056970ad953fb9d773f7e11895a8941dd129f7e45f1a161</hash>
+        <hash alg="SHA3-384">90c05006e22a9576ba74228d4858da0a5644012e160770d8f4dc3602825760a1b19ffdce5aeffc0bcfede3a981a25be7</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/KEYS</name>
+      <hashes>
+        <hash alg="MD5">b9a4bad5f75a253f595f25b8a194091b</hash>
+        <hash alg="SHA-1">0f2fa3eedc8223c6ebcbf00c48b5cad990ffe47c</hash>
+        <hash alg="SHA-256">ff8b47b0b405fa41b013a2091e090cd6a265b06c93b0c6ccb559e43ef598c5a3</hash>
+        <hash alg="SHA-512">c6fc45fe61f1eb91d2fa2d204e7caa56bd9405c58eb22ad8ccaa11889864c0485ee6edb6d39dc06490935b49ab1cfc1670818e33d531d4acb8887e98c8cd16f3</hash>
+        <hash alg="SHA3-256">89ea54aa949d13cc1777a7400358d85d2e82a44fa379988596ba45f1a069e69f</hash>
+        <hash alg="SHA3-512">65bd0c540aa41d728555087a5dcb0d5c51f68e9a0cdabbb4940ad2bcf4c8003eb90089db748cb4673ea34c2398d9037987ca8a7c4e606df934d2d052c83d7e54</hash>
+        <hash alg="SHA-384">ff5e74a7e60ae2ef38e0aee6bbb61e97b11b7cdec88d663b3001194dbf1e683b08f53d21e7492c06a1f4a060e07eb718</hash>
+        <hash alg="SHA3-384">2be2afb2e51cb80e576cb0b42d69ab9f1753602e8985ed3a46911cb62358303539f6607ef2c37ea29cbfa5b9d2dd81f5</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/LICENSE</name>
+      <hashes>
+        <hash alg="MD5">9d5c70f64c4e0c69aa08d70c66fcc77b</hash>
+        <hash alg="SHA-1">e818f00fb9ad95bcd40e8625b2ddaa0558f5d9ba</hash>
+        <hash alg="SHA-256">7e8cfa3e866c3add6bbf6fc905cb266ff63d7b18b0d6f6114286042fbc141c67</hash>
+        <hash alg="SHA-512">ab14f9ce1100afc918cb2152b1a338053c437e5fe169ed87709e08992c6c0138073f2699b36f826a5da43945cd37f0ed1c036846355bbf28e8158aa95bfb3057</hash>
+        <hash alg="SHA3-256">171ffd3d207f9a338eb27c2fffb4107cc0c3a2397c83cfc1392b09d2e2def46f</hash>
+        <hash alg="SHA3-512">70aa965bf4ac7564284b83acba8c45428887d9a2378e1bdc337b9f30ff8c2fd6c6e743c6e3584a1904d71db82705f1df5c15a73bbc153971430197c0002cbf88</hash>
+        <hash alg="SHA-384">9642d614b7d94e0fc87074cfda202b63ea70208d405cbffd7ee84bae0932fd56284ce293bcffe95a191ae859dbf8bd7e</hash>
+        <hash alg="SHA3-384">7843505bdb0f76a7e18daa6ae007ecc73b773105b7958f1713b515c9196a6f313ac6dfcb61541073a8f3a2b2e33bd972</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/NOTICE.template</name>
+      <hashes>
+        <hash alg="MD5">0b8496ab331b7cfb51366ec5ae32802d</hash>
+        <hash alg="SHA-1">1f3c8bb2c7dc8374afa9b1b89ac20af5f6e6bc06</hash>
+        <hash alg="SHA-256">4a232af48bc4a341a54184cd20937cf622971efe7d8610fc400e60aea709ea08</hash>
+        <hash alg="SHA-512">a191f1426b4cfce148f0adb35a2da3bb19af7dc5947f39239c914e1829df224e9ea905e855473add126fa142fb8db514ebe54eb4d20f3df52783293b7ca42b69</hash>
+        <hash alg="SHA3-256">8fe7f17a90e2f86df95ad099c11f4f2c52764f5b377d1a98dcf40a57f0d5f742</hash>
+        <hash alg="SHA3-512">441861fc795ee90d6292b65aa4f9e28ed752204f26cd8daf244a2a2a57d84d82e50a829aebd6d8f90c64dbfb6ef8b179c51cccaa3f2bb20dbdd10bffb0e90a30</hash>
+        <hash alg="SHA-384">e34bb1da6922b2256831dc33bd8029c52decea7b845c6c784fe1103a2457eb5f9a218fcfb3f3b0371100a4a0e3fd5292</hash>
+        <hash alg="SHA3-384">b7ffca3464a0a3bb6226863a4688a3844056199baebe861cc7711c421bff7ae3afdd651fe88375401bd5512fc673efd2</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/README.md</name>
+      <hashes>
+        <hash alg="MD5">71779233dd3279da9880c70a2370387c</hash>
+        <hash alg="SHA-1">291ea4b5c47b786975cf9a89df22ac494189673b</hash>
+        <hash alg="SHA-256">ee985f8036874a1be75c226ed44085f4e894c0863f4f67e66dc84d754a11bbc4</hash>
+        <hash alg="SHA-512">18224654f65aecdee78440b6f9521ca50831e5c22006d9d9835b4edad8c495b01321dead32e02f63077414e049a4fe5a50bbd4b2fdb8f26a87e78283cf73872d</hash>
+        <hash alg="SHA3-256">61b390fe95d265c1cf037137c1d700050f0611d9fc756a564fd4402d26b81928</hash>
+        <hash alg="SHA3-512">e96e5aba9057753b2b3fcb84032c8294ba9722743936cf68e8486891eba26c128e03650159a3439193d90d973873bd6f002745330abe393f1e51042bc6130dd3</hash>
+        <hash alg="SHA-384">b9740391ce6aab12185bcec7ef008d19dfceccecfd50a74c34ddc623e65e228277ad2a9e403989beda8b3588d1be7e9d</hash>
+        <hash alg="SHA3-384">985b184d2b4da8ff85d364487c9a9cd4b040d49e329446cefd65f0df544b70606900cc31f90bfd7a1cb4d3ad09acc175</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/ReleaseInstructions</name>
+      <hashes>
+        <hash alg="MD5">51db9fa8f64b8b384354c46b10d3c76d</hash>
+        <hash alg="SHA-1">7f89f642a714fd8685fe275df01e8c8fa15a131b</hash>
+        <hash alg="SHA-256">cecbfef28fcc8fe05bc281c7aec84219ff72667f5fc2a7dc72ec2530b90bb625</hash>
+        <hash alg="SHA-512">3890fe940929dcef618f89ea56ddb126586578415ebb19f9bc3c5636815dd4cb821ad17bb15313c42f948a6ead963947aa8fc156024f18cd194d2456262e5a5a</hash>
+        <hash alg="SHA3-256">0bbe89bb20a8f356a9807055fb21dacc9681fc5e18db6fe5037486a892a1ed94</hash>
+        <hash alg="SHA3-512">44eecf4e5d524971962304a5ffb0acca452bdedd1283155602cff1946574f121a42a640113c26ce7a5b64e369e78fb96b00f05a092f310113b8bc1c994cadf49</hash>
+        <hash alg="SHA-384">4741d7adbae3335827f57ae92225c588f55389a7115be27efa959947569fd1b33bf308d0030c39b6789e22de3e418897</hash>
+        <hash alg="SHA3-384">9bdaf039bba9ed76deaf823c87ad5a2cf89eade9495031c87982af6fac5e5d69b48e63d393aec112644de64e26bb0769</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/build.properties</name>
+      <hashes>
+        <hash alg="MD5">9c390c97b5903153e767c3850a96237b</hash>
+        <hash alg="SHA-1">9f124807ce0f9b1ef018987bb871ad5abc1a1cf3</hash>
+        <hash alg="SHA-256">3d834e564a317309a79e482154a09405324326280d6172860a72a3abb9971017</hash>
+        <hash alg="SHA-512">981cea310d02495911d3fcd35262fdb796c15d91a67b98efc82ffb7066c872b6f32356bf4096192137387a9082bff1b8fbb8d37b22de4c7161a42151adf21dd4</hash>
+        <hash alg="SHA3-256">b6cd2fd878d8b09d6862a899e1ed246ff3bb88007ffbb39d4f33117ad4626957</hash>
+        <hash alg="SHA3-512">fbeefd17879f975166391ce2afe3643d259543823d4c1b15e012137e5371f4db9cb3f86fd567b43867837afb3dfffea2a52f172fbd288f89ad3cb4f53014cc37</hash>
+        <hash alg="SHA-384">018242224045898d36c336eabeb351dfcd1c69f89b5daf77c64ee9e239335c9452e8b28a1e8cde7610a1491e9bd901b2</hash>
+        <hash alg="SHA3-384">b690840b625abb20ad3ce5995ad56faa82a1cde39e4c6b50a18b54a5fb2660a0ddfd24aae9f3ce7a5262bc57267d93b0</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/build.xml</name>
+      <hashes>
+        <hash alg="MD5">a267f89bb6c71b9065cca135474991f5</hash>
+        <hash alg="SHA-1">fd5489037523784160ec8103ba84dc831c0389e8</hash>
+        <hash alg="SHA-256">e2021f19efeb5ced7a1c5592e7862309602e0c3d46faf8f7b75938084d5d250b</hash>
+        <hash alg="SHA-512">174445f58b8cfca0ccc551d1d74c6fc0c0447dd2ee29c6b3602b890354f65968c177ec6cb785eea1df31f03d006d4ba33d9b5943b88451775f26ec8bb35f48be</hash>
+        <hash alg="SHA3-256">ba035fa18c653e697cc758ae3a2205ceb53fc7b94d2c5fc84a3bd28aa57f257f</hash>
+        <hash alg="SHA3-512">723d09ae33dcb3d12517714575a841362feb564454800f8f56e5fbeeb0f9921682a1c3c51e69eff6b73a6c8c7f7b195b470d63052d54be117a0c7f0089141bc0</hash>
+        <hash alg="SHA-384">7aaa15863dc91daab7be0232cafe2b1897135dd47c77aa247258f503dc9cbbf515f406b267da3330dc87931bfa33ae72</hash>
+        <hash alg="SHA3-384">679d5e2398ce9705a3e4a548a59b23adfc4933d01efd39b67f36adf7f334d9dc5d3441832692b5ac41003de201c54725</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/common-tasks.xml</name>
+      <hashes>
+        <hash alg="MD5">6bc24681b29a8f144a66b127d8621b6a</hash>
+        <hash alg="SHA-1">dcb4dc200beecaf254e3536689d0ab316701216a</hash>
+        <hash alg="SHA-256">e935c7d6bd563785d5e2347ee854eda8306bce24e0f1de87b1d64dd0f1736b73</hash>
+        <hash alg="SHA-512">f90e8a5d8d17cf41d601a4e51a974e4e3d34d63a19d93e0ca713741424855b91a1967fb0d048371aa1848a85b73301d58c87ae1b22e9765c2431d16d259e200f</hash>
+        <hash alg="SHA3-256">d3969cd27e02fec9905bc75a26b7181f02c0c33bb041325cf17df788bf118dfd</hash>
+        <hash alg="SHA3-512">f1c8c87be7e522acd2d39c3673d64aec470944cc8a85bc78dac33b39aa03ec0b61530c9bfa630cd7c9aa0912c8849027ebbbd681db381b362d916130f830b891</hash>
+        <hash alg="SHA-384">8c96538afb0f09713cf9cfad1c64d2c3f8d0bfae66f2013bc10de0a2eb30c2a94b8af840f46974963c2e2e0d1a420d2e</hash>
+        <hash alg="SHA3-384">9c1221ddce25805c8ab8738bcc161badc445cd71fa6cd50aa6926ee6a2b701068b5635336f55e20c6da82397e0638555</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/fetch.xml</name>
+      <hashes>
+        <hash alg="MD5">18eda5f76dedd74678100a2f8c56cd9f</hash>
+        <hash alg="SHA-1">f0fd5c6cf5be5bc3761618b1818b4ab5f29c7f1f</hash>
+        <hash alg="SHA-256">1edd6b060a70834955ec921945b52e8f8f995f07bc9219ccab8ac6373ad8dc37</hash>
+        <hash alg="SHA-512">8a068de7940583ea1f6b1f21fb2eb88cac0d6a5f330a15273796f14ab29c7de2a830b7f42e2ebc87f98047d2b31365a079a05573b0cac14e00675993cdd3b957</hash>
+        <hash alg="SHA3-256">c5991180dfbdd385fe7ce52cce5c70f11734a79c83bbf2396dd3231f5aa7111e</hash>
+        <hash alg="SHA3-512">9e9db8988c300bd9a86fb17fd962adb3ee768c20b52e52626ba872b7b78f83412efbd190bfe43343ab393dd652be8ab890744661a751da91f6d56ed7fc4e2bd3</hash>
+        <hash alg="SHA-384">f55150b40cc6780fd96fcb64068a9f5bd3322647eec36a0e9cf91d99d3e44b0f65a8a76f81efb4dfbfedba1c361a588f</hash>
+        <hash alg="SHA3-384">46b2ee0bdefeba08c648da793d342fe64730e110e62db2e4d6a3cc9011df40dbe7aaa70d082310887dc4fba4aecc779c</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/ivy.xml</name>
+      <hashes>
+        <hash alg="MD5">51b303917287a0a2846ca3530617467d</hash>
+        <hash alg="SHA-1">0acc67a551d566901d684dcebd1996cc46d4707a</hash>
+        <hash alg="SHA-256">0ddd9a5ed5327e63bc821d4299d1765f3a9c80ae19e980726433d53f79baff59</hash>
+        <hash alg="SHA-512">3a822c2f6fd3e08fd4d73abf5059a4163225029aecedd069993d757e39d2a3d47b786dfb16a6d9a6505e6dbbaf5850c7d32b4bb8fa4ccaaadc1b7c2f0cd37c44</hash>
+        <hash alg="SHA3-256">33559f6e64853ea0de19fd81b1051b1303dc3687b13ec8b0b52a0b6339c69c38</hash>
+        <hash alg="SHA3-512">a568d07de6b3f0217e4e6e457a8302316b352586eb0094de3d1faf6e9d9a31423e5fdba03b05743e63181616540f540b1c503e5ce5472c7dadbf3ccf3735b351</hash>
+        <hash alg="SHA-384">faa5fe59b09a65f897b544fdcd8eab19088264b316ca833b0c795c189b9b5db911bec36d0c0fd139922ebfabc8ff9c6f</hash>
+        <hash alg="SHA3-384">5533cb1363802d03739e65e79ab24bd521cf532c3ba85b631169fcd284ec78b49aa412732f7ecd7d71ccf314d38ad4b0</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/ivysettings-nexus.xml</name>
+      <hashes>
+        <hash alg="MD5">17819d6e9097248f70774181228f33a4</hash>
+        <hash alg="SHA-1">a8c15707893a3703d47579cd89a1bea310c85a25</hash>
+        <hash alg="SHA-256">95229409c4a11f46ced620511a782b3f5db63dd7cb79d28f6c7107248ad9f843</hash>
+        <hash alg="SHA-512">a8e861ab506fd2ccf9c3bdf78ced82e06f23896d3be166fc31effcd7b272be88000314958797d84333370e932c656abb2024611d3414be4bc414d23508a0592a</hash>
+        <hash alg="SHA3-256">41d2033f7eb1a98b0d1a618ad12d3d43461e5c7dbd3ea788f6f23c1133e7aa7a</hash>
+        <hash alg="SHA3-512">c6eb68a8905e0503df6d165e6b4c8f2980e2aace6ae86e038253a4d52699de51b90af89c4aa918828929c59b67e0115ee5d8f083b2c2a3a163b8b8d8057ce566</hash>
+        <hash alg="SHA-384">2f1d5d72cfd58aae270c0724020bc7f150944945171bd7bcd1824dd6d58760a8c19eb28c54ba9181cd9381641893470f</hash>
+        <hash alg="SHA3-384">e14433762d0d43e7aabf1f7625cd6078b267e285a416a0f1b92c258b35ce3c679f36452d1b70ec3c6e5e34c7206ab285</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/m2.xml</name>
+      <hashes>
+        <hash alg="MD5">99702197cc965cbb6d210c0d2399eadd</hash>
+        <hash alg="SHA-1">980ff1801bda9c5a2bc87ef6102e559dbe5b25ec</hash>
+        <hash alg="SHA-256">0001e4e131092577f158e4863fa42b3212f4617357126a8d1f54deaf43454894</hash>
+        <hash alg="SHA-512">30612827fe268e1ca0fff1554c956d4298c63695600769c7eb2c7f35844174b055962bc3a082f59fe067b1cdb80d26737d4e0b9086566eba0df4feb244ebd471</hash>
+        <hash alg="SHA3-256">11f7329a5c3de40cc82d36324161d37b968a91c313206f14cb7a668b6268a424</hash>
+        <hash alg="SHA3-512">7fbef95f8573c217d198fbf16c1e5558d9966fe0ca998ee974c2bbd5787eb40fb65e8ed435c9df71763eb2b9fae360d4c190b65d44413dfd60b6f63ae19a99b9</hash>
+        <hash alg="SHA-384">1ab2d54f9c0e9be516f2793978ecf51a0411ee5e793245e0e8854bdaffc6b444cbd8a933b5d7700fba40fef6794627ed</hash>
+        <hash alg="SHA3-384">8129335e225be26dbed63f5c53bf811acf7c23983960fa9999ed70190e1a9d58b25a1ace0a82a8d5e24baf7f01270015</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/prepare.xml</name>
+      <hashes>
+        <hash alg="MD5">2aa044847a9e62afdf570bb777290517</hash>
+        <hash alg="SHA-1">2692dbd7c840cc39003a54b81a4296ed3e358492</hash>
+        <hash alg="SHA-256">8d20d9f2219ddadff1b77752eb72ddeda2c250ad65f1f9c8640b767743a74099</hash>
+        <hash alg="SHA-512">a23080ca89cb32fc92a46e6caa91d9568d66b1d6aeb7b4b8b69d55addfb2154492fd08bee5f335169fd8b8c64256ee9df48210513b135a38b87c13e1982e5002</hash>
+        <hash alg="SHA3-256">b95c21b0d2248869d34239aff0c6631483c6d1b9289538ee3b93b854ba1a4419</hash>
+        <hash alg="SHA3-512">7052bfdf7b3d59c02cd3be75729bc037a8fa94f8034b69ae90dc9c970fd36380a9ad891eecdde7dc0bf22df2a5b4207fd59b8c55abf24fa01ca89c7f84733406</hash>
+        <hash alg="SHA-384">a2cd2b22b7b3c8f92f5cded72be45add0df128af3dd10036dba89b5fbcb4606241cb2d1959211dd0435c2508a7e7c469</hash>
+        <hash alg="SHA3-384">8e992525278b14869762a77297df6ecf6d69207f826bceb963dc4d9f348ab278289660d88c5cfab03f513bbac6d961be</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/style.css</name>
+      <hashes>
+        <hash alg="MD5">a4137a9d8d60eb2bd02c3b8ddc5d6d74</hash>
+        <hash alg="SHA-1">4c83d9f57ec8c3c195604684e6f1f30d8d2738f8</hash>
+        <hash alg="SHA-256">b22eeae818ccd5f21eff7d57902f984e5c5ed09f00d3d7f9bdbc0b75e32f8300</hash>
+        <hash alg="SHA-512">9cdb59566595b937b90a8721d4dcd01baa84f19a791728a2ebf379185fd1cab71bd7e723c738a283dc0a3aa2337ebf7ca6da5cc97741d535c28597db21bb3495</hash>
+        <hash alg="SHA3-256">07d0ceb6b09704f2018b5be2445773e3640f80a3e34f4065dea7e32de9a795c9</hash>
+        <hash alg="SHA3-512">22d1f33edf32d734454aec3ea4313d0cb143d1802fc779c81fe32e63b6a3c3aa26a7fcb2d0b15637de7fb3322558f858470791f656c53a7eef42cb0807febcb2</hash>
+        <hash alg="SHA-384">570ba2914111f3427b8b7213249d5797aa68cbaa974a4c47addb78d7a051311f414e1aac994ee32aeee67406603334bf</hash>
+        <hash alg="SHA3-384">942476fec2d873508bf291bcf6bf650ab1c60ca527bd2516cb041f33c035b7d68790c2bbedb109d3410515b6dfecb57f</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/stylesheets/changes2readmehtml.xsl</name>
+      <hashes>
+        <hash alg="MD5">0fc9165f26000cc97986aef0ac20d4bd</hash>
+        <hash alg="SHA-1">cc987357b29269843aecf72dae53a4e820c5fc37</hash>
+        <hash alg="SHA-256">f0945fb6262be8e365fe88a75586d595ac64ffc129c236c4085e28068dfb2d8b</hash>
+        <hash alg="SHA-512">980b1a9a7fbf4c62f740810a9030dc146b0da59a01066fff0162ddbd2bfa19dd9e11f156ccf0024875d35ab768c01e748da6f51f1296551c1f5bc12b79698a7e</hash>
+        <hash alg="SHA3-256">39f863bddcbe8798df3b03a9fdc3f1ed8957b67f875f3b995daa2f4b32c1e745</hash>
+        <hash alg="SHA3-512">bdfd7ceb0e66531c89c045ad165851030e5da9b16bc16f5165e917b325afe287db3f9acfa35a5e379303a442c95332b6e480766ff31205d685aa163a08b05606</hash>
+        <hash alg="SHA-384">c917ec96a7901989df05c99bfa41d430e6854436f904d328a5fd6fcb03d70f1c6e0df06de111b7832b95bab9d58d1de9</hash>
+        <hash alg="SHA3-384">02c274f83e0a7bbfddfd3e8d6215c643fb5c76b96bb95718f046d4dea11e54a13e985413ee99d8b0e27cb0d72b2ac596</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/stylesheets/changes2whatsnew.xsl</name>
+      <hashes>
+        <hash alg="MD5">a398094cd7e08c7f8048f60ef0fc1637</hash>
+        <hash alg="SHA-1">1f4ad49e8d12378cda3b35b52e590687c274edbd</hash>
+        <hash alg="SHA-256">01587563fd25e1bec09936974b14d220c216858ce3d1520fd4202df1f1911fad</hash>
+        <hash alg="SHA-512">53f121883381ac39c0a2491385b2d7b78d677ad74ad85eb9116f2a19bd63fe9a836da05ec8c8713432e1fd337ef41b9042bcc96a705a1421ce0cabda2741ab4b</hash>
+        <hash alg="SHA3-256">f8def6f74ce9cf272bfe64f02322ab027feb0d730e7bb5ac2a31b5d71bc37991</hash>
+        <hash alg="SHA3-512">6176733b2531e5e6484e08fac553086e15e56de64f857a2c70cc16c6641d90fd2027e93c83be5f23a1b2f674abecf4df6ccff099f9472f3afad8fe934171a430</hash>
+        <hash alg="SHA-384">2841445731d554e7d6dd37cec730bd3fb0bf7ffbdc5326d3a02b59a25b211d7cf87d04da86ef59ef74e47e479a90d5ec</hash>
+        <hash alg="SHA3-384">3dd5ac410c94f0597f5f2199a41bd42cb8088d88a5e2cf374295f62e93e303f357d020bb9104eb077fe1843bf453a26d</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/stylesheets/contributors.xsl</name>
+      <hashes>
+        <hash alg="MD5">b55a03bf8402ace05c2bfcf3307ddd7c</hash>
+        <hash alg="SHA-1">9fb6e118de521fe1b8a027f599cfc81dac98094f</hash>
+        <hash alg="SHA-256">184ac93d97ac9bcd7b7165cb1f20a68b3f863b42553d2f62c7c55a2608d42fba</hash>
+        <hash alg="SHA-512">4e89238a724c974ad75dbaf2066c3efc46ab5a78c128fe3bdc5199d8394fb6d41ed760aefa898d8f3e15d2966a52402c2f9b5333cf392434c96e50c1f4364dc7</hash>
+        <hash alg="SHA3-256">35150d40df1e446098393d34f06ed28073aecfd786163faa8809c8cf47dbcdc5</hash>
+        <hash alg="SHA3-512">87b2a39cac7f2b77e0ccacf91b288966b9cbfc4c516e6d95f113a30862bf18a435affe891d3c33e410f2c4b16185b98b6ae4301f4d4c753113ed3fb75c8aaa7b</hash>
+        <hash alg="SHA-384">e72506519628a386417b53f98aeb1ee2f27e548da5d41662ec23c699303a80f63f2141fd01dd7e19ac6d19914bfdc393</hash>
+        <hash alg="SHA3-384">8719cc6b5350e1f26e86b7d8f9c2cc67694a2f9ff029defced8b2e06855a06849ade0004a8cacd19b71b8b75c7972dce</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>common/upload.xml</name>
+      <hashes>
+        <hash alg="MD5">40bd0dc938175db6353d74bc586ab746</hash>
+        <hash alg="SHA-1">bf4d09ab36ef067d1a33abac8bf7e81b0ebc7437</hash>
+        <hash alg="SHA-256">ad2f7b07037bba11bbd2727d15a7d9ec5a19f24640cff9ab35145dcdafbea6fa</hash>
+        <hash alg="SHA-512">f37385c8e091f68224f3f4bb017020ce6754ff153a480cc7551879d5b4055d62b9d5d0f2863283a4005a2d31cc6a8b5f26ad894e5f2ee54ef470f6cbf1f00a8a</hash>
+        <hash alg="SHA3-256">6b4b18f64ac326ec6b66ead78229dee0bd4c1698edbd99516f8f8dc153218d50</hash>
+        <hash alg="SHA3-512">381448b4d6f92ae13117065036a910d7d1df0501eb3cd1caa97154954cd5ecce3c8e724327b644a62b5432a26fc23e4e5c31bad133075eeb0e3edf37ed87f566</hash>
+        <hash alg="SHA-384">bf5dc0362914e4a79fc9e53730462a7ac2668e184546703f0ad56db81c520c0ad5446d3d5149545f3aa35b1a70802e41</hash>
+        <hash alg="SHA3-384">0d8591d7b375d6b9b3ffcf922599f0b766b65f31b20bea021e5f74f4a75dad940b000d2aac198b7a1fcc375f8301118a</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>contributors.xml</name>
+      <hashes>
+        <hash alg="MD5">1e03940e097c807998d765aeb5d32573</hash>
+        <hash alg="SHA-1">170370f5e964c9afc78c581986f044c6def7c6ec</hash>
+        <hash alg="SHA-256">9121b5e63ed8b004ccb3bb5545ec7b6aed55ecf597484ead8140379498898c22</hash>
+        <hash alg="SHA-512">80e39a1ecac9372c20e9ea738db7e1a6032cee92820533f46aefffdaff4f5d74fe7cd50908946c2b0dc219347bd04a32ca7152f6301db4f9df9465e6d0a4ec9e</hash>
+        <hash alg="SHA3-256">d41365a6b450e762474053cd3126c95e29ab990aa2e436d7bc3fb01e8b869799</hash>
+        <hash alg="SHA3-512">0d4fa05b046fcd032603a448bdb84b0165b56b943dd8a5aac06f3caf35c32f898b3bbd05b4261f4709baf0952a37cffc6b02fe107a50365f5009afac0c9174e3</hash>
+        <hash alg="SHA-384">3f561198e041a4213ece48438b0487b9671b43a4783c5819957871028ec20c1c0ff94569eb35d4864668b1a17c457338</hash>
+        <hash alg="SHA3-384">adfabc1840f38513b2f6541f24f90e92341e4ca6eae64af0fabc75cef0dda83ba38ff192259151d65856dc0d3f6dbea8</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>examples/ant-cyclonedx-0.1alpha-cyclonedx.json</name>
+      <hashes>
+        <hash alg="MD5">526d27832c29d4400ad61f42e24fbbcc</hash>
+        <hash alg="SHA-1">9dcedb21833bd09c8b8e286b4570068442804060</hash>
+        <hash alg="SHA-256">31b2e6ec919fdd9fa9a449332d4cefd5795c81bcc354494d30934fea9b5069a8</hash>
+        <hash alg="SHA-512">f337da8c610fde54e5a3af11fb4a300b1e0287dd1d81e1979903745bbc453d37515b087e7fbb71b4ba8fd706af4114424f4f05470e8349a269594ec1bae937b0</hash>
+        <hash alg="SHA3-256">2d349cfca8160adf0d56a52d4494105542d2682d61f45bac3830bc34262c8f08</hash>
+        <hash alg="SHA3-512">59180c7c510361b3a30666152a50de6983cf8c881a73d59227596366c1439edadfc2c019331b1aac497cc6e350343aefe950a31324f4b21beff915681785c925</hash>
+        <hash alg="SHA-384">5f7f0f0f565ff0da244db11c500e34c6acc03cc88db874a5f6649b75142eb343df9b347eb79bef11724f68bbd3696ba2</hash>
+        <hash alg="SHA3-384">cceeb90049659cbc7f1ce9be8887d41aba3141344aeb5f85d83e5ab8264ee5786f5a8a4fa70a2c22a6e968f6aa32e4b5</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>examples/ant-cyclonedx-0.1alpha-cyclonedx.xml</name>
+      <hashes>
+        <hash alg="MD5">9e17ad4ff7289cd460b72f24aa992faf</hash>
+        <hash alg="SHA-1">b1eaae9061babad2ad26a501f119541fbffd9b9d</hash>
+        <hash alg="SHA-256">28c28f224d0f5949c1df1eb8aebf85dbe0f05851aa7e83b8fe748a7d1ca54746</hash>
+        <hash alg="SHA-512">25679d5bb511b76fa4144446903a84a6754c1f604f77c8cba6f23892ffa021f1335d6b28be223158ddfdcb4d0ae438a0e6649ee3e05c5f4f002e52a90e1e622b</hash>
+        <hash alg="SHA3-256">7be050e0c34780c21916261b69594a0728c13cfa6f2c35534f56e3aea0e1ee6c</hash>
+        <hash alg="SHA3-512">3a434488455248dc2e68313cf77de890766f758fd664772bb9d86f79714666f944ee867525e16b04a45257df99f1e036aec95775474f6b616f4badabfd671ac8</hash>
+        <hash alg="SHA-384">ad8430a251d6e743cc5760d1cd8e4d54365295130f4599b60a7a54e8ea6d77c1cb9cfc93879e54df3b78d9377fdaa798</hash>
+        <hash alg="SHA3-384">b2102b9a7005767709e2b55df3910df06421060bfd2d401552a150f184347625652bb130c99ea600400555d6918677b7</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>examples/ant-cyclonedx-0.1alpha-src.tar-cyclonedx.json</name>
+      <hashes>
+        <hash alg="MD5">fef166d5084f6e23f7abec6db4797469</hash>
+        <hash alg="SHA-1">d683dae021e36fb5f80854b08ce34e804ff66e8c</hash>
+        <hash alg="SHA-256">df02ff51cb42fd1449ae16a15f3026b6a76f203c31b5b85095250d9e05cd3261</hash>
+        <hash alg="SHA-512">09863dff1927828b870997f255c86608631aca78adc678c777ef0235c64bb18a4c91d2f78210c4c7bf48545912e896246361d4888045e64040ff14bf6e71e531</hash>
+        <hash alg="SHA3-256">43d34240d14b91dd3b20f8041e6468fb7ea3c329767cf31dbe59b71975cd4a1d</hash>
+        <hash alg="SHA3-512">a3b390baccb578d5c170593a01ec2656799e971dc21af8fa1567e299358168290fe02c69c517232b0c57390490a9af066d285211e5b4208771ea645fdee07df4</hash>
+        <hash alg="SHA-384">c7af31544a3923e98f4666a66fd76b12fff28c1eb07854231e5f73a88de4bffb7959de08e873806b6a47c4397e36ea2d</hash>
+        <hash alg="SHA3-384">e577fd7884629ff12a79d1a8b6815eb0a78e6d206756ba9db82dea87e8dbe9a0ef046c1c2739a2abf3c3b930f8373c9d</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>examples/ant-cyclonedx-0.1alpha-src.tar-cyclonedx.xml</name>
+      <hashes>
+        <hash alg="MD5">13ad272d2d6595bebac5eb34e36d35ba</hash>
+        <hash alg="SHA-1">b7161bde701fc531b2bd737c2a81d2e171da93a7</hash>
+        <hash alg="SHA-256">b765be22ee1401fe5993e974b6f58d8acbf7d1e68464868191fc39929f7580db</hash>
+        <hash alg="SHA-512">0deabca29949efaf45d671ba24fa4de8bc5c58e055a85ce057616f92a6659cb2020c3b7608571d7ae989934271d3c06c33a2d76a9ecc2bab14976ecbbefff787</hash>
+        <hash alg="SHA3-256">6ef2eb3b0331296d87e7f46c3141c441b72cb861e4094e854ec502ae1043a879</hash>
+        <hash alg="SHA3-512">80f478b15cabf3ce97877332edfe09459d99062841982b2de2edefba306d30966ec0dc72e05815eb61faeaa812ecf02d29bebefd7be0e0a79b9b991241517c04</hash>
+        <hash alg="SHA-384">f04205039647aeec90a13f2ba708b21fc3636d5b8b2ac4770220689772da3c7ae96eaa5fc13346c088225c3693cfaed2</hash>
+        <hash alg="SHA3-384">f99510b0c63d2fa19f6ff39da3100f2b0a091e426c21f80b417e6d1c4dc684c27a2f2f4c812b86581f3de3998b2e4c99</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>ivy.xml</name>
+      <hashes>
+        <hash alg="MD5">63b4f7338f3e87c6c35e52409569831f</hash>
+        <hash alg="SHA-1">f7f89d23272b6ccda12ef2bd5146559d29953233</hash>
+        <hash alg="SHA-256">0829d44c821235adbd6e0cee233100510db24a6ae33136a1697d5db84ce32e08</hash>
+        <hash alg="SHA-512">bc10698258386f674b6a81d7d35eeb3a6de10cfdafac36c7b04d92056f353a29f5868045b660fe888107531b7aa9556bffb2ac3f5359a69411afbd6a3dcdbbfd</hash>
+        <hash alg="SHA3-256">096693bf313d4019141851eb69f99caab8645690a9a71a194e6172201dfb9690</hash>
+        <hash alg="SHA3-512">41ddfb9b3569b54e10c3569e8b4e1ba0e9cb98220be691ea62b9251b81dd933060cbffe05da2b80860549d7870355f8a55473a46d3eccf445905d833464c221e</hash>
+        <hash alg="SHA-384">2b6ab233253097780683d58f2965ebc4afdc589940d7dee096e55e0771aab2cb9885faf5f51dccd1457ec54f43c1a292</hash>
+        <hash alg="SHA3-384">adc00c1dc9eb49773a940fab1d745cf790d17d29a058c6b2abeacdef089e620cfafffcd63a550323610e5f5214cea496</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>src/main/org/apache/ant/cyclonedx/Component.java</name>
+      <hashes>
+        <hash alg="MD5">07f6b778c25ae3dc378eb47cfddbaebc</hash>
+        <hash alg="SHA-1">f3571f83c957ad6057379f38f1264f7795b5c036</hash>
+        <hash alg="SHA-256">815711fca76f07eb8880aa92059639558d705f886022a07c12df80e666ac1201</hash>
+        <hash alg="SHA-512">b7284af5e0fff3c4f08dfafee5b20fc3898bdcd5e4f724ac5a448322d43e4eb4f458cef1bb733e957bbd4783752d212a34062826615a31753a62f74672442dfb</hash>
+        <hash alg="SHA3-256">9349e1b55c684cd4739b048af2323265c69025800c360ee1a56b48740ee4576b</hash>
+        <hash alg="SHA3-512">ba0944ec5cb7ed16c85dda94eac174eba2160f64a086e00f41830ded9a62b609ac5c0b05466288b6f42028d7cfe670eb0ec8b140c175ec593ed9d7a04c2a7e73</hash>
+        <hash alg="SHA-384">07ea1d7d6f3ebb7030ad9ec40f5cb18c2d31359a01a9b5c3163e9ada41e53c58b29925bcd6e9f5883a8fe5b6e7bf4245</hash>
+        <hash alg="SHA3-384">d876258e7ed05701dad1fde10552040fbbbe4918614e57735e2e626095bd96cb35707c3299d218d53825f8c107cc23b0</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>src/main/org/apache/ant/cyclonedx/ComponentBomTask.java</name>
+      <hashes>
+        <hash alg="MD5">aa08e73f16009667a031729d882df544</hash>
+        <hash alg="SHA-1">af2084055815cc40c4db31427ad28fb606beac54</hash>
+        <hash alg="SHA-256">1badc1697580c0420a40bf8bd1bd6851b46b9cfc86426c568669b35c2dfcc24e</hash>
+        <hash alg="SHA-512">bf3ded18f2c609ca1e9db3e5a1e2d9327aeb53bd8e6e92403f32c226932f82e248039bbc6ffd054fb6f3ebc000cb679f61c28e5c08655a12a1f6f4aeac782d71</hash>
+        <hash alg="SHA3-256">c2335dcf14795ea2d440472f6d23b672579fc7660afbaf57b9f9f5b63991e92e</hash>
+        <hash alg="SHA3-512">930b6576af5430dcd34b9c4873490688b0ce54b77de0866e837a193230d1cb3bc1b9101c33c55e59de00ddfd9f9643881835edef22bd15f8873f8ce72fc3a7d2</hash>
+        <hash alg="SHA-384">d2d525cc8a25736b76fa4a11903150a4359717b2518c63d5df589176bb705a0576f93d48c578d44516aebda53a9d2bba</hash>
+        <hash alg="SHA3-384">707188f0467775aed40dd5c328d177636639a615db64afd889d14e2b1e3fae39ab5e6fd106eecd72267c411380026503</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>src/main/org/apache/ant/cyclonedx/License.java</name>
+      <hashes>
+        <hash alg="MD5">996776d27779286d87930681c0fa9997</hash>
+        <hash alg="SHA-1">1eb742efb0ef69b7cf4d998401e04a62053e3416</hash>
+        <hash alg="SHA-256">a0c6ee7d9f2fe96575b75636ada6f35a70201e889250a90800e9794cef752cdd</hash>
+        <hash alg="SHA-512">38377a57d7625ce9d23036b9e1b8a360ba89ab99d9e148959092876e5f9ce0f77f63cbfb5e0807a95b2801b9232ba6fad5be297861c604071d70c3d6fd5070ed</hash>
+        <hash alg="SHA3-256">898c0ca9fc2cd0a410535d56250adcb69148e2178faaee440f50787b56ba3286</hash>
+        <hash alg="SHA3-512">9b6648777bc73001e06da55c771ebc7a3d345c075815018e50770684b392521e55c2858773ac02a1f65e32aa625a532664155ca97825e8c3dadc5ea0ffcdf1b6</hash>
+        <hash alg="SHA-384">e5d1d2937e7f7fed9c8e10cbe17e9501d8e92b00b8658c2b2c92f6d8b9c5aeefb3936942023b3d2d50bb4c6fec26813c</hash>
+        <hash alg="SHA3-384">399d4fb6cf4c8d16d7cad03f1d6c0c8a778880621d9e3455b05ec695161e3d84f98560dd10d24e1a1382c93064526ca3</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>src/main/org/apache/ant/cyclonedx/Organization.java</name>
+      <hashes>
+        <hash alg="MD5">e22c5cacd2be9c490211b230523152f0</hash>
+        <hash alg="SHA-1">94fefa747b6238d075764702ba287c1ccaf38cb6</hash>
+        <hash alg="SHA-256">c1f30596cc801a7ed17c30fd6c4c4456c67edc0612308c73f9b333fae19e3e06</hash>
+        <hash alg="SHA-512">e253b700a17845a9c70bb45422244055e6d872c8a61a426a745e5162943734ae33cb739dd9fbc266aca89182ebd1c57366cd8ca5a9256d0d9c52a0c472ab1dc6</hash>
+        <hash alg="SHA3-256">6b5b66ac7982ba7835f98b365c1a7bc7ef539de0f33d9e723b896e2c32662260</hash>
+        <hash alg="SHA3-512">cc984623f42f728389a56030ba6c5e6035d8dc19c997719291a955df8a0c2c118ac911390fe44e7265ac70afc789d916975b0a6fab0096a3343a4e85595df120</hash>
+        <hash alg="SHA-384">f8a039b7eb91b762c552592d7738930c3b79d178c170df5bcad1fdd28aae980119e2548e17620bfa7a47507781b7a00f</hash>
+        <hash alg="SHA3-384">77e87eb68b5c73fabba38aad2415e81ee73d073bf77b17d659cfacf000b717b6b0977a82e3b7a59cc76ec05d0295f45d</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>src/main/org/apache/ant/cyclonedx/OutputFormat.java</name>
+      <hashes>
+        <hash alg="MD5">8fb7f7134b5f12952975e46f6c73e0bf</hash>
+        <hash alg="SHA-1">71c883018babbcb2ef4ff3a64d4fc82e5f83e163</hash>
+        <hash alg="SHA-256">2d730b55673ec716e92e43355a536c23ea26d06828649bcd7cf25943d934e9a3</hash>
+        <hash alg="SHA-512">ad8a8022f9b560e43307e4bcb4f5ae3d68a20b62cba29bcf990251e310d18d0bd4eba4aa4a6f892ce05ce2a5f9c0c6a3efd4d4ea0c73157e6e4676bb555b4526</hash>
+        <hash alg="SHA3-256">d46bef3f33b2c5da5381efae97083af3c180660da253278e46aaa0211970074a</hash>
+        <hash alg="SHA3-512">5a5cb8b2901abc06408c631a2df13b593eda8d6a84ab2f6853b2c4b795248936b93821e6f6de8b66efaeee7fa9b10b0a2c9d657ff4d0984ebcdafea5cf6c5d83</hash>
+        <hash alg="SHA-384">3a8a6781b80993b4204c5db50d9430099712f66751f3ca7059bc6a000ea63123c29b889c2a6859765cb0dc6e65f88bf6</hash>
+        <hash alg="SHA3-384">234408d1dfeb255f6ecf78143a8db570d128e356780bd96c2da3402b455243ee2dd6b0de64956a1d6877363cddb1cc34</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>src/main/org/apache/ant/cyclonedx/SpecVersion.java</name>
+      <hashes>
+        <hash alg="MD5">5a370db9b0f175bfcf4ef78307130b0b</hash>
+        <hash alg="SHA-1">9ec3e1ae082793c1c3c51a211549c39bcc684dc4</hash>
+        <hash alg="SHA-256">fa98e4acf43ca58f4eff17cf046d1957ffad6b5a4ff4cb2f8b5b3ba96a2405e4</hash>
+        <hash alg="SHA-512">3e6307810ea729404f94bc281ab95a8500174523e4848127c343bd966d6bd7b7e2d67bee44ac9a69f68772d65fd7075596493a5b4b5491aa93165fce0d565251</hash>
+        <hash alg="SHA3-256">439a9fc32ca2b6f6e65eb0546b0a1994664d8da83ea6a8ef2aa408ed04d20269</hash>
+        <hash alg="SHA3-512">6caf87283926488f498a5e05829a258d63b49269f688f56dfc4a6f728bc1e2fb9e737d8ef0c11cb906ec9fc727fe66b650ebcd6342e8ea1e00984b0f22626859</hash>
+        <hash alg="SHA-384">2b931c943fb2e85e47904a15f7409cd6de241de5cad52f0a9bb1b22ca567963c5c072f4b29eac60c72962c7ec2f7d2c7</hash>
+        <hash alg="SHA3-384">4bcf010dac13e1baa9a75131c4944cc7f5b041d215aac8a28eda89579951a58a9f748ac786917dee27c240678e066883</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>src/main/org/apache/ant/cyclonedx/ToolData.java</name>
+      <hashes>
+        <hash alg="MD5">2c476b481007dee037dd06811f45daeb</hash>
+        <hash alg="SHA-1">25ade5074d72b3f71a1fba7e3ad615e70e03846b</hash>
+        <hash alg="SHA-256">ba48784182873874912d28cd8b27439002368b2a2183d0ed747f5c55e2fca240</hash>
+        <hash alg="SHA-512">d293822f72e600589ebe94abe65fdcb4813111a1a607c155293c8150e7eb97aaa6bd3e32fe0a0821fe7bac8704ff9ebaebe0eba40b8ff69b35b8e2ec9d809ae6</hash>
+        <hash alg="SHA3-256">5242fb21bcf4f1e58a42c1ecd790d4be496801f842e09cc4ab54ded9bc309331</hash>
+        <hash alg="SHA3-512">38c85b3a42bb7e058035f7643f57a111c9710583a92926855e2daa098fe5fc30c0bc3f90477ca0d623b8d2d2e85102beb77e88ba6a04a0c4eb2f07dc2a030690</hash>
+        <hash alg="SHA-384">e338034115767aeb4fdf5a127096b2f97926a22924251cf2b882db2245608b0ec52a912c767f6c42d58fc50587f5a89b</hash>
+        <hash alg="SHA3-384">5aae6a0d8fd1dd1a128f78acf1e7ca57c77591136e354f111a3da0dae54319a3b47192c834d88e722defad19b539c9b2</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>src/main/org/apache/ant/cyclonedx/antlib.xml</name>
+      <hashes>
+        <hash alg="MD5">f1bce85505bb0400c7eda504edc6d8e6</hash>
+        <hash alg="SHA-1">091dc975c2b210e98b67c1153d29afb2aeb20986</hash>
+        <hash alg="SHA-256">1e6c7dc5ece5b704907a1a16adc76a99f6968f58ac7131cb60a5c0336b031fb3</hash>
+        <hash alg="SHA-512">5a5fa6e6e432c655c949b8cb410e28b5ebd58f9dc3f115f59dd6e767273180e2a7217d3a2688db77fb27041d1355b99b934d4f053fa86bc3dfa2af54da6c4c9c</hash>
+        <hash alg="SHA3-256">513bced310a481c81e7f6addc7904a07c6059a7dd0a9e7a1ff5cc72c8c7baac2</hash>
+        <hash alg="SHA3-512">39a5926557de5982afcfd25e90a9cd6b2287048b514d3eb372937f169e8de1d7d73737ff5dfff069089028e7a4e674093f6e0afdb1baa3036269d12cccbbc89d</hash>
+        <hash alg="SHA-384">f20090860c1ae449089156b855f3148e311b24025580f2f8281bb7c7f4d6bc58456711e7e7d53dfb2d8e9349c3632998</hash>
+        <hash alg="SHA3-384">74f8da32404ef3b65c5b8b15f1085b5a35f0ca15a55eaa40fb28d0759d6ef39f43cb8e34ab4b0c789c7a5149812afdff</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>src/tests/antunit/componentbom-test.xml</name>
+      <hashes>
+        <hash alg="MD5">955bb04acda6c1bcaa915af2841a4e7b</hash>
+        <hash alg="SHA-1">91e6f296fdf6d61cac57b7b68f02b273d13fb651</hash>
+        <hash alg="SHA-256">86ee4643bb7cc49513e8175be1a525137102df61e59f0ea6c6d15b682739caa1</hash>
+        <hash alg="SHA-512">cf6712b6c7b9e83e3526cc8fce89753258749286cc3471b23f7157996ae92f4b867be7272d0970923c8453192fb48c1c7470bbd9ef7be82a38fd862b43faccad</hash>
+        <hash alg="SHA3-256">c28d5cc09b5b45512acb72e5861f73a74c22b9229169fd759c085837badb71be</hash>
+        <hash alg="SHA3-512">77ed296735a451eda224c660950245a7092f0dd01f5b533a89968940f290083b8bb2af9afa5b4d85529259af3b2df04ee5eb753753454544006dcf3d543c24aa</hash>
+        <hash alg="SHA-384">069c548bd91db04f75ec110a378e9f4bde5310dbf3371b0500bb057860fee7c081c8f77c1e3ebeee6d4d10fbacb49763</hash>
+        <hash alg="SHA3-384">2c661b80cff169de5e069e7c2cedd523d6462028a74db0a97ebe0fc6f8b1d6bc86527ae1a7f2de34d25bbe75efafbcda</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>src/tests/antunit/resources/cyclonedx-core-java-12.2.0-cyclonedx.json</name>
+      <hashes>
+        <hash alg="MD5">a57c216de8722ed0a86f9fbff9570f6e</hash>
+        <hash alg="SHA-1">8c0b1a0353700dd8db83d4ca86533efb1ba5c2d2</hash>
+        <hash alg="SHA-256">96694d5f0330c2d5f02638abb06b9162f44e75b1f6d2dd913f7d518a2109fcf5</hash>
+        <hash alg="SHA-512">c5598dc4242e37d5df7ac56a35c9f5a40777554d3a9b806c86ff988bcbe6dbf4dee0e5fc7718ed63266a310385951f418353d51d29d486bcd5efd7e7e4e4f8da</hash>
+        <hash alg="SHA3-256">09f4e0e7796f786c0b7bdecc6a83208c1803e06147afaf18ba392c0d80c35ecb</hash>
+        <hash alg="SHA3-512">beac1516ab28dcb30baf34ca3c4f11956c7e1c64178ad806b25ea92689f32bfaa26cecd4f76e166291faa78be524a101497bda4a2b4af5d3dbca875dd22c74a8</hash>
+        <hash alg="SHA-384">7d9469e70c52179fefe9501da104b44f5242eb3238fc39a8fd6f70b123d819e3ef1e22fdb5c4dbfa95b6c71c1859f001</hash>
+        <hash alg="SHA3-384">66ee8dee2e5fbb7d3c89e44b112fa547306183e2447d0c146b4c2e69d04f406387503c4ad2da03cdc789364ab1655279</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>src/tests/antunit/shared.xml</name>
+      <hashes>
+        <hash alg="MD5">e0ac6bd4420c458ca4067795ca59d847</hash>
+        <hash alg="SHA-1">907b9a16a2c625ba44c5d2c07b2adf649be8ed24</hash>
+        <hash alg="SHA-256">b26c46961843c20a0a610bf125def17beac6ce548caa614403b0b6a45e192ff9</hash>
+        <hash alg="SHA-512">06048344c4b20cd3c082526ea935aedee627a9694884406995a9146f46b0c3cfd3df467d0bca3ef50442f1695e9fc8e0062c2972af707ecc81fdcacef0afbf6f</hash>
+        <hash alg="SHA3-256">6b02aa72c589439dcd90db26f7199bfe536aefa14c257c77d3d545837875f8ef</hash>
+        <hash alg="SHA3-512">8372ac6a9a70c757b62167afdb38f96abb8c2b5d1263e286ec4cecbf5faf0020711f2b49291b1649e3f694e80ab51e8ad566b72ea4c5b36f4b32002c59b03caf</hash>
+        <hash alg="SHA-384">5f79b3f0b794001abdce88537d0baee222bf9ab5240ae46dbec42fcdb330abc484715806765d02f40dc772d2a80efe9c</hash>
+        <hash alg="SHA3-384">3c8e54837b3820c8f65b11e584b98950a1ba8944305a37c4a497864aa2d08293d38a80f2114ba05617f05b196fb2f2e2</hash>
+      </hashes>
+    </component>
+    <component type="file">
+      <name>version.properties</name>
+      <hashes>
+        <hash alg="MD5">c71754bdf947ed3bb5678f0d52d0ad03</hash>
+        <hash alg="SHA-1">3cd68991f3149cdf76ea1532976b72ca8d605b47</hash>
+        <hash alg="SHA-256">77927199173957fdfe297a4d2cedcaeace7e4294c55b09c3b78d5e704908826e</hash>
+        <hash alg="SHA-512">c32db949498f37a2af1e3d5519ae39a11b6d9f5e9d8860282f4166578b2ef1c2d4a33f990cd4fc60228f3137148ba546848ba415077fbb330a26ddb8069cafcb</hash>
+        <hash alg="SHA3-256">9f303da9b99187f3166ce0f65863f789b962e0389a99eb5c5ced46f2df403881</hash>
+        <hash alg="SHA3-512">e2b77ed812e6c4febbbadab30fcfd227b2324181faf2fa32d06c5eb0b72b0e350a1f30f226a4b24079a80ffd26fc26b88d76622ba88278f261485ead667203ae</hash>
+        <hash alg="SHA-384">e8386d190a9ec4d44b7194cd652c1b55d376bbfebf2c4478e1c4f4fdfb0c1aa2a07e07005fee014fac45b92e17aace58</hash>
+        <hash alg="SHA3-384">10d7cb89e2c7ec555ce931845f5c538d7ff93d5064271efd6d57dcffabd76e70217b43cd6aff4ccaf528ec4398e8e37b</hash>
+      </hashes>
+    </component>
+  </components>
+</bom>

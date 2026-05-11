@@ -16,6 +16,9 @@ import java.util.UUID;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
+import org.apache.tools.ant.types.Resource;
+import org.apache.tools.ant.types.ResourceCollection;
+import org.apache.tools.ant.types.resources.Union;
 
 import org.cyclonedx.Format;
 import org.cyclonedx.exception.GeneratorException;
@@ -43,6 +46,7 @@ public class ComponentBomTask extends Task {
     private Organization manufacturer = null;
     private Organization supplier = null;
     private boolean useComponentSupplier = false;
+    private Union pureFileComponents = new Union();
 
     public void setOutputDirectory(File f) {
         outputDirectory = f;
@@ -92,12 +96,19 @@ public class ComponentBomTask extends Task {
         this.useComponentSupplier = useComponentSupplier;
     }
 
+    public Union createPureFileComponents() {
+        return pureFileComponents;
+    }
+
     public void execute() {
         if (supplier != null && useComponentSupplier) {
             throw new BuildException("can't use component's supplier when there is an explicit supplier");
         }
         if (outputDirectory == null || !outputDirectory.isDirectory()) {
             throw new BuildException("outputDirectory must point to a directory");
+        }
+        if (pureFileComponents.size() > 0 && !pureFileComponents.isFilesystemOnly()) {
+            throw new BuildException("only file system resources are supported for pureFileComponents");
         }
 
         try {
@@ -148,7 +159,7 @@ public class ComponentBomTask extends Task {
 
         bom.setMetadata(meta);
 
-        if (!additionalComponents.isEmpty()) {
+        if (!additionalComponents.isEmpty() || pureFileComponents.size() > 0) {
             List<org.cyclonedx.model.Component> cs = new ArrayList<>();
             List<Component> resolvedComponents = new ArrayList<>();
             for (Component c : additionalComponents) {
@@ -162,6 +173,14 @@ public class ComponentBomTask extends Task {
                     addToKnownComponents(knownComponents, c);
                     cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
                 }
+            }
+            for (Resource r : pureFileComponents) {
+                Component c = new Component();
+                c.setProject(getProject());
+                c.add(r);
+                c.setName(r.getName());
+                c.setType(org.cyclonedx.model.Component.Type.FILE);
+                cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
             }
             bom.setComponents(cs);
         }
