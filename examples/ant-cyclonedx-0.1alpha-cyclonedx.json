@@ -1,10 +1,10 @@
 {
   "bomFormat" : "CycloneDX",
   "specVersion" : "1.6",
-  "serialNumber" : "urn:uuid:646a5858-6d5a-41ef-89f2-5640aaf30cdd",
+  "serialNumber" : "urn:uuid:987966fd-cd0e-443f-a27a-17c8398b77a5",
   "version" : 1,
   "metadata" : {
-    "timestamp" : "2026-05-09T08:04:37Z",
+    "timestamp" : "2026-05-11T17:20:21Z",
     "lifecycles" : [
       {
         "phase" : "build"
@@ -469,7 +469,7 @@
         },
         {
           "type" : "vcs",
-          "url" : "https://github.com:networknt/json-schema-validator.git"
+          "url" : "https://github.com/networknt/json-schema-validator.git"
         }
       ]
     },

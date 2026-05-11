@@ -252,7 +252,7 @@
         },
         {
           "type" : "vcs",
-          "url" : "https://github.com:networknt/json-schema-validator.git"
+          "url" : "https://github.com/networknt/json-schema-validator.git"
         }
       ],
       "type" : "library",
