@@ -15,7 +15,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<project name="componentbom-test" default="antunit">
+<project name="externalreferences-test" default="antunit">
 
   <import file="shared.xml" />
 
@@ -145,4 +145,22 @@
         value="https://ant.apache.org/"/>
   </target>
 
+  <target
+      name="testExternalReferenceWithRefIdDoesntAllowNestedChildren">
+    <cdx:externalreferenceset id="test-set"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <externalReference
+          type="website" url="https://ant.apache.org/"/>
+    </cdx:externalreferenceset>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:externalreferenceset
+          refid="test-set"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <externalReference
+            type="license" url="https://www.apache.org/licenses/LICENSE-2.0.txt"/>
+      </cdx:externalreferenceset>
+    </au:expectfailure>
+  </target>
 </project>

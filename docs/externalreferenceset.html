@@ -1,0 +1,103 @@
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       https://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<html>
+  <head>
+    <meta http-equiv="Content-Language" content="en-us"></meta>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Apache CycloneDX Ant Library - externalreferenceset</title>
+  </head>
+
+  <body>
+    <h2 id="externalreferenceset">externalreferenceset</h2>
+
+    <p>externalreferencesets are collections of external references
+      (typed links) that can be associated to a component or an
+      SBOM. They can be used as top-level elements and be given an id
+      so they can be later referred to via the <code>refid</code>
+      attribute -
+      see <a href="https://ant.apache.org/manual/using.html#references">the
+        Ant manual</a>.</p>
+
+    <p>Apart from Ant's <code>id/refid</code> this element doesn't
+      support any attributes.</p>
+
+    <h3>Nested elements</h3>
+
+    <h4>externalReference</h4>
+
+    <p>Represents a single external reference to be added to the
+      BOM.</p>
+
+    <table class="attr">
+      <tr>
+        <th scope="col">Attribute</th>
+        <th scope="col">Description</th>
+        <th scope="col">Required</th>
+      </tr>
+      <tr>
+        <td>type</td>
+        <td>The type of external references. The valid values are
+          defined by the CycloneDX specification.</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td>url</td>
+        <td>The url of the external reference.</td>
+        <td>Yes</td>
+      </tr>
+    </table>
+
+    <h2>Examples</h2>
+
+    <p>Below is a set of external references this Ant Library could
+      use for itself.</p>
+
+    <pre>
+      &lt;cdx:externalreferenceset
+        id="antlib-ext-refs"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        &lt;externalReference
+            type="vcs"
+            url="https://github.com/apache/ant-antlibs-cyclonedx"/>
+        &lt;externalReference
+            type="license"
+            url="https://www.apache.org/licenses/LICENSE-2.0.txt"/>
+        &lt;externalReference
+            type="build-system"
+            url="https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/"/>
+        &lt;externalReference
+            type="mailing-list"
+            url="https://ant.apache.org/mail.html"/>
+        &lt;externalReference
+            type="issue-tracker"
+            url="https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&amp;product=Ant"/>
+        &lt;externalReference
+            type="website"
+            url="https://ant.apache.org/antlibs/cyclonedx/"/>
+        &lt;externalReference
+            type="distribution"
+            url="https://ant.apache.org/antlibs/bindownload.cgi"/>
+        &lt;externalReference
+            type="source-distribution"
+            url="https://ant.apache.org/antlibs/srcdownload.cgi"/>
+        &lt;externalReference
+            type="security-contact"
+            url="https://www.apache.org/security/"/>
+      &lt;/cdx:externalreferenceset>
+    </pre>
+
+  </body>
