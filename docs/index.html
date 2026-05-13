@@ -1,0 +1,82 @@
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       https://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<html>
+  <head>
+    <meta http-equiv="Content-Language" content="en-us"></meta>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Apache CycloneDX Ant Library</title>
+  </head>
+
+  <body>
+    <h2>Introduction</h2>
+
+    <p>This Ant library provides a layer of Ant types and a task to
+      create <a href="https://cyclonedx.org/">CycloneDX</a> SBOMs.</p>
+
+    <p>The library is meant to be used for projects that manage their
+      dependencies manually (or haven't got any dependencies at
+      all). For projects
+      using <a href="https://ant.apache.org/ivy/">Apache Ivy</a> we
+      plan to create a separate Ant Library leveraging automatic
+      dependency management.</p>
+
+    <p>At the same time this Ant library is not restricted to
+      providing SBOMs for jar modules you publish. It is supposed to be
+      generic enough to provide SBOMs for distribution tarballs,
+      executables or generic components.</p>
+
+    <p>Technically it provides a pretty thin layer on top
+      of <a href="https://github.com/CycloneDX/cyclonedx-core-java">CycloneDX
+      Core (Java)</a> and can only provide what the libary itself
+      supports. For example this means the task doesn't support
+      CycloneDX 1.7, yet, as the underlying library doesn't.</p>
+
+    <p>Right now only a subset of things that can be expressed by a
+      CycloneDX SBOM is possible to create with the Ant task of this
+      library. The main focus has been to support what the Ant project
+      needs for its own releases - but contributions beyond that are
+      certainly welcome.</p>
+
+    <p>This manual follows the CycloneDX terminology closely, as do
+      the tasks and types. It can not serve as an introduction to
+      SBOMs, in particular as the authors understanding of the topic
+      may be limited or even wrong.</p>
+
+    <h2>Tasks and Types provided by this Ant Library</h2>
+
+    <h2>Requirements and Dependencies of this Ant Library</h2>
+
+    <p>This Ant Library requires Java 8 at a minimum to build and at
+      runtime. It is meant to be compatible with Ant 1.10.x but there
+      is no guarantee it will work with any version prior to
+      1.10.17.</p>
+
+    <p>The only direct dependency
+      is <a href="https://github.com/CycloneDX/cyclonedx-core-java">CycloneDX
+      Core (Java)</a> but this in turn transitively depends on
+      commons-io, commons-lang3, commons-collections4 and
+      commons-codec of
+      the <a href="https://commons.apache.org/">Apache Commons</a>
+      project as well
+      as <a href="https://github.com/package-url/packageurl-java">Package
+      URL (purl) for Java</a>. It also depends
+      on <a href="https://github.com/FasterXML/jackson">Jackson</a>
+      but it may be possible to avoid the Jackson dependency if you
+      only create the JSON format of the SBOM.</p>
+    
+  </body>
+</html>
