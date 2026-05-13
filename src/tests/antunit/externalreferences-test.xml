@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<project name="componentbom-test" default="antunit">
+
+  <import file="shared.xml" />
+
+  <target name="testExternalReferenceRequiresUrl">
+    <au:expectfailure
+        expectedMessage="external references must have an url"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom
+          outputdirectory="${output}" format="xml"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname">
+          <externalReference type="WEBSITE"/>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testExternalReferenceRequiresType">
+    <au:expectfailure
+        expectedMessage="external references must have a type"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom
+          outputdirectory="${output}" format="xml"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname">
+          <externalReference url="https://ant.apache.org/"/>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testExternalReferenceWorksAsDirectChildrenOfComponent">
+    <cdx:componentbom
+        outputdirectory="${output}" format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <externalReference type="WEBSITE" url="https://ant.apache.org/"/>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.externalReferences.reference(type)"
+        value="website"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.externalReferences.reference.url"
+        value="https://ant.apache.org/"/>
+  </target>
+
+  <target name="testExternalReferenceWorksNestedIntoAsSet">
+    <cdx:componentbom
+        outputdirectory="${output}" format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <externalReferenceSet>
+          <externalReference
+              type="WEBSITE" url="https://ant.apache.org/"/>
+        </externalReferenceSet>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.externalReferences.reference(type)"
+        value="website"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.externalReferences.reference.url"
+        value="https://ant.apache.org/"/>
+  </target>
+
+  <target name="testExternalReferenceWorksViaReferenceToASet">
+    <cdx:externalreferenceset id="test-set"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <externalReference
+          type="WEBSITE" url="https://ant.apache.org/"/>
+    </cdx:externalreferenceset>
+    <cdx:componentbom
+        outputdirectory="${output}" format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <externalReferenceSet refid="test-set"/>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.externalReferences.reference(type)"
+        value="website"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.externalReferences.reference.url"
+        value="https://ant.apache.org/"/>
+  </target>
+
+</project>
