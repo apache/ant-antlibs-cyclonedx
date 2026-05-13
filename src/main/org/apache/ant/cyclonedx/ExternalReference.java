@@ -15,7 +15,7 @@ import org.apache.tools.ant.BuildException;
  */
 public class ExternalReference {
     private String url;
-    private org.cyclonedx.model.ExternalReference.Type type;
+    private String type;
 
     /**
      * Set the URL (actually URI) of the external reference.
@@ -32,15 +32,13 @@ public class ExternalReference {
      *
      * <p>Required.</p>
      *
-     * <p>To make keep this easy to extend the <a
-      href="https://javadoc.io/static/org.cyclonedx/cyclonedx-core-java/12.2.0/org/cyclonedx/model/ExternalReference.Type.html">type
-      enum</a> of the <a
+     * <p>Types defined by the specification or the enum names of <a
       href="https://github.com/CycloneDX/cyclonedx-core-java">CycloneDX
-      Core (Java)</a> library is used directly. This also means you
-      need to specify the type in uppercase rather than the lower case
-      type defined by the standard.</p>
+      Core (Java)</a>'s <a
+      href="https://javadoc.io/static/org.cyclonedx/cyclonedx-core-java/12.2.0/org/cyclonedx/model/ExternalReference.Type.html">type
+      enum</a> are accepted.</p>
      */
-    public void setType(org.cyclonedx.model.ExternalReference.Type type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -51,9 +49,18 @@ public class ExternalReference {
         if (type == null) {
             throw new BuildException("external references must have a type");
         }
+        org.cyclonedx.model.ExternalReference.Type t = org.cyclonedx.model.ExternalReference.Type.fromString(type);
+        if (t == null) {
+            try {
+                t = org.cyclonedx.model.ExternalReference.Type.valueOf(type);
+            } catch (IllegalArgumentException ex) {
+                throw new BuildException("external references type \"" + type + "\" is not supported");
+            }
+        }
+
         org.cyclonedx.model.ExternalReference r = new org.cyclonedx.model.ExternalReference();
         r.setUrl(url);
-        r.setType(type);
+        r.setType(t);
         return r;
     }
 }

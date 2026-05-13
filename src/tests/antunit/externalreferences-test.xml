@@ -27,7 +27,7 @@
           outputdirectory="${output}" format="xml"
           xmlns:cdx="antlib:org.apache.ant.cyclonedx">
         <component name="testname">
-          <externalReference type="WEBSITE"/>
+          <externalReference type="website"/>
         </component>
       </cdx:componentbom>
     </au:expectfailure>
@@ -47,7 +47,40 @@
     </au:expectfailure>
   </target>
 
+  <target name="testExternalReferenceFailsForUnsupportedType">
+    <au:expectfailure
+        expectedMessage='external references type "foo" is not supported'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom
+          outputdirectory="${output}" format="xml"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname">
+          <externalReference type="foo" url="https://ant.apache.org/"/>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
   <target name="testExternalReferenceWorksAsDirectChildrenOfComponent">
+    <cdx:componentbom
+        outputdirectory="${output}" format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <externalReference type="website" url="https://ant.apache.org/"/>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.externalReferences.reference(type)"
+        value="website"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.externalReferences.reference.url"
+        value="https://ant.apache.org/"/>
+  </target>
+
+  <target name="testExternalReferenceSuppportsEnumValuesAsType">
     <cdx:componentbom
         outputdirectory="${output}" format="xml"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
@@ -73,7 +106,7 @@
       <component name="testname">
         <externalReferenceSet>
           <externalReference
-              type="WEBSITE" url="https://ant.apache.org/"/>
+              type="website" url="https://ant.apache.org/"/>
         </externalReferenceSet>
       </component>
     </cdx:componentbom>
@@ -92,7 +125,7 @@
     <cdx:externalreferenceset id="test-set"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <externalReference
-          type="WEBSITE" url="https://ant.apache.org/"/>
+          type="website" url="https://ant.apache.org/"/>
     </cdx:externalreferenceset>
     <cdx:componentbom
         outputdirectory="${output}" format="xml"

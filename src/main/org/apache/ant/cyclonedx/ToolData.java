@@ -125,7 +125,7 @@ public class ToolData {
         createExternalReference(ExternalReference.Type type, String url) {
         org.apache.ant.cyclonedx.ExternalReference e = new org.apache.ant.cyclonedx.ExternalReference();
         e.setUrl(url);
-        e.setType(type);
+        e.setType(type.name());
         return e;
     }
 }
