@@ -61,7 +61,7 @@
     </au:expectfailure>
   </target>
 
-  <target name="testExternalReferenceWorksAsDirectChildrenOfComponent">
+  <target name="testExternalReferenceWorksAsDirectChildOfComponent">
     <cdx:componentbom
         outputdirectory="${output}" format="xml"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">

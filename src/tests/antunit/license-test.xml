@@ -1,0 +1,131 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<project name="license-test" default="antunit">
+
+  <import file="shared.xml" />
+
+  <target name="testLicenseRequiresIdOrName">
+    <au:expectfailure
+        expectedMessage="license name or licenseId is required"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom
+          outputdirectory="${output}" format="xml"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname">
+          <license/>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testLicenseDoesntAllowMultipleUrls">
+    <au:expectfailure
+        expectedMessage="only one URL is allowed in license"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom
+          outputdirectory="${output}" format="xml"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname">
+          <license name="foo">
+            <url url="https://example.org/"/>
+            <url url="https://example.com/"/>
+          </license>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testLicenseWorksAsDirectChildOfComponent">
+    <cdx:componentbom
+        outputdirectory="${output}" format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <license name="foo">
+          <url url="https://example.org/"/>
+        </license>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.license.name"
+        value="foo"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.license.url"
+        value="https://example.org/"/>
+  </target>
+
+  <target name="testLicenseWorksViaReference">
+    <cdx:license
+        licenseId="0BSD" id="test-license"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <url url="https://example.org/"/>
+    </cdx:license>
+    <cdx:componentbom
+        outputdirectory="${output}" format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <license refid="test-license"/>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.license.id"
+        value="0BSD"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.license.url"
+        value="https://example.org/"/>
+  </target>
+
+  <target
+      name="testLicenseWithRefIdDoesntAllowNestedChildren">
+    <cdx:license
+        name="foo" licenseId="0BSD" id="test-license"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <url url="https://example.org/"/>
+    </cdx:license>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:license refid="test-license"
+                   xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <url url="https://example.org/"/>
+      </cdx:license>
+    </au:expectfailure>
+  </target>
+
+  <target
+      name="testLicenseWithRefIdDoesntAllowOtherAttributes">
+    <cdx:license
+        name="foo" licenseId="0BSD" id="test-license"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <url url="https://example.org/"/>
+    </cdx:license>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:license refid="test-license"
+                   name="foo"
+                   xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      </cdx:license>
+    </au:expectfailure>
+  </target>
+</project>
