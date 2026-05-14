@@ -205,7 +205,7 @@ public class ComponentBomTask extends Task {
             }
         }
 
-        if (component.getBomRef() != null) {
+        if (component.getBomRef() != null && !component.areDependenciesUnknown()) {
             Dependency dep = new Dependency(component.getBomRef());
             for (Component.Dependency d : component.getDependencies()) {
                 String br = d.getBomRef();

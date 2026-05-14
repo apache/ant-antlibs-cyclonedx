@@ -1,0 +1,311 @@
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       https://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<html>
+  <head>
+    <meta http-equiv="Content-Language" content="en-us"></meta>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Apache CycloneDX Ant Library - component</title>
+  </head>
+
+  <body>
+    <h2 id="component">component</h2>
+
+    <p>Components are central to CycloneDX SBOMs. There is <b>the</b>
+      component the whole SBOM is about - and there are more
+      components specified inside the SBOM as (transitive)
+      dependencies or parts of the other components.</p>
+
+    <p>The component elements can be used as top-level elements and be
+      given an id so they can be later referred to via
+      the <code>refid</code> attribute -
+      see <a href="https://ant.apache.org/manual/using.html#references">the
+      Ant manual</a>. The can also be referred to by
+      a <a href="#dependency">dependency</a> of another component
+      via <code>componentRef</code>.</p>
+
+    <h3>Attributes</h3>
+
+    <table class="attr">
+      <tr>
+        <th scope="col">Attribute</th>
+        <th scope="col">Description</th>
+        <th scope="col">Required</th>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td>The name of the component.</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td>type</td>
+        <td>The type of the component. Valid types are defined by the
+          <a href="https://cyclonedx.org/docs/1.7/json/#metadata_tools_oneOf_i0_components_items_type">CycloneDX
+          specification</a>.</td>
+        <td>No, the default is "library"</td>
+      </tr>
+      <tr>
+        <td>group</td>
+        <td>The group of the component.</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>version</td>
+        <td>The version of the component.</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>purl</td>
+        <td>The <a href="https://github.com/package-url/purl-spec">Package-URL
+            (purl)</a> of the component.</td>
+        <td>No - if not set but <code>name</code>, <code>group</code>
+          and <code>version</code> are present an implicit purl is
+          calculated as <code>pkg:maven</code> purl from these
+          values.</td>
+      </tr>
+      <tr>
+        <td>bomRef</td>
+        <td>The bom-ref of the component.</td>
+        <td>No - if not set, the component's - potentially calculated
+          - purl will be used.</td>
+      </tr>
+      <tr>
+        <td>scope</td>
+        <td>The scope of the component. Valid scopes are defined by the
+          <a href="https://cyclonedx.org/docs/1.7/json/#metadata_tools_oneOf_i0_components_items_scope">CycloneDX
+          specification</a>.</td>
+        <td>No, <code>scope</code> is prohibited for the main
+          component of the SBOM.</td>
+      </tr>
+      <tr>
+        <td>isExternal</td>
+        <td>Whether the component is external. The CycloneDX
+          Specification says:
+          <cite>An external component is one that is not part of an
+            assembly, but is expected to be provided by the
+            environment, regardless of the component's
+            scope.</cite><br/>
+          This attribute doesn't have any effect as long as CycloneDX
+          Core doesn't support version 1.7 of the specification.
+        </td>
+        <td>No, <code>isExternal</code> must not be <code>true</code>
+          for the main component of the SBOM.</td>
+      </tr>
+      <tr>
+        <td>description</td>
+        <td>The description of the component.</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>publisher</td>
+        <td>The publisher of the component.</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>copyright</td>
+        <td>The copyright of the component.</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>mimetype</td>
+        <td>The MIME-type of the component.</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>manufacturerIsSupplier</td>
+        <td>Whether the
+          nested <a href="#manufacturer">manufacturer</a> shall be used
+          as supplier as well.</td>
+        <td>No - defaults to <code>false</code>. Must not
+          be <code>true</code> if a
+          nested <a href="#supplier">supplier</a> exists.</td>
+      </tr>
+      <tr>
+        <td>unknownDependencies</td>
+        <td>Whether the dependencies of this component are unknown. If
+          set to <code>false</code> then a component without any
+          nested
+          <a href="#dependency">dependency</a> elements is treated as
+          having no dependencies at all. </td>
+        <td>No - defaults to <code>false</code>.</td>
+      </tr>
+    </table>
+
+    <h3>Nested elements</h3>
+
+    <h4>any
+      file-system <a href="https://ant.apache.org/manual/Types/resources.html">resource</a></h4>
+
+    <p>At most one nested resource specifies the file the component
+      describes. This is required if you want to include hashes for
+      the component in your SBOM.</p>
+
+    <h4 id="manufacturer">manufacturer</h4>
+
+    <p>At most one nested <a href="organization.html">organization</a>
+      specifies the manufacturer of the component.</p>
+
+    <h4 id="supplier">supplier</h4>
+
+    <p>At most one nested <a href="organization.html">organization</a>
+      specifies the supplier of the component.</p>
+
+    <h4>author</h4>
+
+    <p>Adds an author to the component.</p>
+
+    <h5>Attributes</h5>
+
+    <table class="attr">
+      <tr>
+        <th scope="col">Attribute</th>
+        <th scope="col">Description</th>
+        <th scope="col">Required</th>
+      </tr>
+      <tr>
+        <td>bomRef</td>
+        <td>The bom-ref of the author.</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td>The name of the author.</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>email</td>
+        <td>The email of the author.</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>phone</td>
+        <td>The phone of the author.</td>
+        <td>No</td>
+      </tr>
+    </table>
+
+    <h4>tag</h4>
+
+    <p>Adds a tag to the component. Tags haven't got any attributes or
+      nested elements, the nested text is used as tag.</p>
+
+    <h4>property</h4>
+
+    <p>Adds a property to the component.</p>
+
+    <h5>Attributes</h5>
+
+    <table class="attr">
+      <tr>
+        <th scope="col">Attribute</th>
+        <th scope="col">Description</th>
+        <th scope="col">Required</th>
+      </tr>
+      <tr>
+        <td>name</td>
+        <td>The name of the property.</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>value</td>
+        <td>The value of the property.</td>
+        <td>No</td>
+      </tr>
+    </table>
+
+    <h4>license</h4>
+
+    <p>A nested <a href="license.html">license</a> specifies the
+      license information of the component.</p>
+
+    <h4>externalReference</h4>
+
+    <p>A
+      nested <a href="externalreferenceset.html#externalReference">externalReference</a>
+      specifies an external reference for the component.</p>
+
+    <h4>externalReferenceSet</h4>
+
+    <p>A
+      nested <a href="externalreferenceset.html">externalreferenceset</a>
+      specifies external references for the component.</p>
+
+    <h4 id="dependency">dependency</h4>
+
+    <p>Adds a dependency to the component.</p>
+
+    <h5>Attributes</h5>
+
+    <table class="attr">
+      <tr>
+        <th scope="col">Attribute</th>
+        <th scope="col">Description</th>
+        <th scope="col">Required</th>
+      </tr>
+      <tr>
+        <td>bomRef</td>
+        <td>References the dependency by
+          its <code>bom-ref</code>.</td>
+        <td rowspan="2">Exactly one of the two.</td>
+      </tr>
+      <tr>
+        <td>componentRef</td>
+        <td>References the dependency by its Ant <code>id</code>
+          attribute. The referenced component must have
+          a <code>bom-ref</code>.</td>
+      </tr>
+    </table>
+
+    <h3>Examples</h3>
+
+    <p>Below is a component that could describe this Antlib.</p>
+
+    <pre>
+      &lt;cdx:component
+          name="ant"
+          group="org.apache.ant"
+          version="1.10.17"
+          isExternal="true"
+          unknownDependencies="true"
+          id="ant"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        &lt;manufacturer refid="ant-team"/>
+        &lt;license refid="apache-2"/>
+        &lt;externalReference
+            type="VCS"
+            url="https://github.com/apache/ant"/>
+        &lt;externalReference
+            type="WEBSITE"
+            url="https://ant.apache.org/"/>
+      &lt;/cdx:component>
+      &lt;cdx:component
+          name="ant-cyclonedx"
+          group="org.apache.ant"
+          version="0.1"
+          description="Apache CycloneDX Antlib"
+          publisher="The Apache Software Foundation"
+          manufacturerIsSupplier="true"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        &lt;file file="ant-antlibs-cyclonedx-0.1.jar"/>
+        &lt;manufacturer refid="ant-team"/>
+        &lt;license refid="apache-2"/>
+        &lt;externalReferenceSet refid="antlib-ext-refs"/>
+        &lt;dependency componentRef="ant"/>
+        &lt;dependency bomRef="pkg:maven/org.cyclonedx/cyclonedx-core-java@12.2.0?type=jar"/>
+      &lt;/cdx:component>
+    </pre>
+  </body>
+</html>

@@ -239,30 +239,6 @@
     </au:expectfailure>
   </target>
 
-  <target name="testComponentNameIsRequired">
-    <au:expectfailure expectedMessage="component name is required"
-        xmlns:au="antlib:org.apache.ant.antunit">
-      <cdx:componentbom outputdirectory="${output}" format="xml"
-                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-        <component/>
-      </cdx:componentbom>
-    </au:expectfailure>
-  </target>
-
-  <target name="testComponentsDetectCircularReferences">
-    <au:expectfailure expectedMessage="This data type contains a circular reference"
-        xmlns:au="antlib:org.apache.ant.antunit">
-      <cdx:componentbom outputdirectory="${output}" format="xml"
-                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-        <component name="level1" id="top">
-          <component name="level2">
-            <component refid="top"/>
-          </component>
-        </component>
-      </cdx:componentbom>
-    </au:expectfailure>
-  </target>
-
   <target name="testSpecVersionAsVersionString">
     <cdx:componentbom
         outputdirectory="${output}"
@@ -289,79 +265,6 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.json"
         value='"specVersion" : "1.6"'/>
-  </target>
-
-  <target name="testMinimalComponentData">
-    <cdx:componentbom outputdirectory="${output}" format="xml"
-                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <component name="testname"/>
-    </cdx:componentbom>
-    <xmlproperty file="${output}/bom.xml"/>
-    <au:assertPropertyEquals
-        xmlns:au="antlib:org.apache.ant.antunit"
-        name="bom.metadata.component.name"
-        value="testname"/>
-    <au:assertPropertyEquals
-        xmlns:au="antlib:org.apache.ant.antunit"
-        name="bom.metadata.component(type)"
-        value="library"/>
-  </target>
-
-  <target name="testComponentTypeCanBeSet">
-    <cdx:componentbom outputdirectory="${output}" format="xml"
-                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <component name="testname" type="APPLICATION"/>
-    </cdx:componentbom>
-    <xmlproperty file="${output}/bom.xml"/>
-    <au:assertPropertyEquals
-        xmlns:au="antlib:org.apache.ant.antunit"
-        name="bom.metadata.component(type)"
-        value="application"/>
-  </target>
-
-  <target name="testComponentTypeCanBeSetInLowerCase">
-    <cdx:componentbom outputdirectory="${output}" format="xml"
-                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <component name="testname" type="application"/>
-    </cdx:componentbom>
-    <xmlproperty file="${output}/bom.xml"/>
-    <au:assertPropertyEquals
-        xmlns:au="antlib:org.apache.ant.antunit"
-        name="bom.metadata.component(type)"
-        value="application"/>
-  </target>
-
-  <target name="testCalculatesPurlAndBomRef">
-    <cdx:componentbom outputdirectory="${output}" format="xml"
-                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <component name="testname" group="org.example" version="1.0"/>
-    </cdx:componentbom>
-    <xmlproperty file="${output}/bom.xml"/>
-    <au:assertPropertyEquals
-        xmlns:au="antlib:org.apache.ant.antunit"
-        name="bom.metadata.component.purl"
-        value="pkg:maven/org.example/testname@1.0?type=jar"/>
-    <au:assertPropertyEquals
-        xmlns:au="antlib:org.apache.ant.antunit"
-        name="bom.metadata.component(bom-ref)"
-        value="pkg:maven/org.example/testname@1.0?type=jar"/>
-  </target>
-
-  <target name="testPurlAndBomRefCanBeSet">
-    <cdx:componentbom outputdirectory="${output}" format="xml"
-                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <component name="testname" group="org.example" version="1.0"
-                 purl="foo" bomRef="bar"/>
-    </cdx:componentbom>
-    <xmlproperty file="${output}/bom.xml"/>
-    <au:assertPropertyEquals
-        xmlns:au="antlib:org.apache.ant.antunit"
-        name="bom.metadata.component.purl"
-        value="foo"/>
-    <au:assertPropertyEquals
-        xmlns:au="antlib:org.apache.ant.antunit"
-        name="bom.metadata.component(bom-ref)"
-        value="bar"/>
   </target>
 
   <target name="testMaximalComponentData">

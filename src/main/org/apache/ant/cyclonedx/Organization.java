@@ -9,8 +9,8 @@ import org.apache.tools.ant.types.resources.URLResource;
 import org.cyclonedx.model.OrganizationalEntity;
 
 /**
- * Organization appears as "manufacturer", "publisher" or "supplier"
- * of components or the SBOM itself.
+ * Organization appears as "manufacturer" or "supplier" of components
+ * or the SBOM itself.
  *
  * <p>The CycloneDX specification supports more information for an
  * organization than this type currently exposes.</p>
