@@ -20,13 +20,13 @@ import org.cyclonedx.model.metadata.ToolInformation;
 /**
  * Provides tool information for BOM's metadata section.
  */
-public class ToolData {
+class ToolData {
     private static Map<Version, ToolInformation> toolInformationCache = new HashMap<>();
 
     /**
      * Tool Information needed for BOM's metadata section.
      */
-    public static ToolInformation getToolInformation(Version specVersion) throws IOException {
+    static ToolInformation getToolInformation(Version specVersion) throws IOException {
         ToolInformation cachedToolInformation = toolInformationCache.get(specVersion);
         if (cachedToolInformation == null) {
             cachedToolInformation = cacheToolInformation(specVersion);

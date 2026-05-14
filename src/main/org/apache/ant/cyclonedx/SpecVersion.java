@@ -1,45 +1,47 @@
 package org.apache.ant.cyclonedx;
 
+import java.util.Arrays;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.EnumeratedAttribute;
 
 import org.cyclonedx.Version;
 
+/**
+ * CycloneDX specification version to use for the SBOM.
+ *
+ * <p>Accepts the enum constants like {@code VERSION_16} as well as
+ * the human readable version {@code 1.6}. The values are directly
+ * provided by CycloneDX Core's enum.</p>
+ */
 public class SpecVersion extends EnumeratedAttribute {
 
-    public static final SpecVersion VERSION_16;
+    public static final SpecVersion DEFAULT;
 
     static {
-        VERSION_16 = new SpecVersion();
-        VERSION_16.setValue("1.6");
+        DEFAULT = new SpecVersion();
+        DEFAULT.setValue(Version.VERSION_16.name());
     }
 
     @Override
     public String[] getValues() {
-        return new String[] { "1.0", "1.1", "1.2", "1.3", "1.4", "1.5", "1.6" };
+        return Arrays.stream(Version.values())
+            .flatMap(v -> Stream.of(v.name(), v.getVersionString()))
+            .toArray(String[]::new);
     }
 
     public Version getVersion() {
-        switch (getValue()) {
-        case "1.0":
-            return Version.VERSION_10;
-        case "1.1":
-            return Version.VERSION_11;
-        case "1.2":
-            return Version.VERSION_12;
-        case "1.3":
-            return Version.VERSION_13;
-        case "1.4":
-            return Version.VERSION_14;
-        case "1.5":
-            return Version.VERSION_15;
-        case "1.6":
-            return Version.VERSION_16;
-        default:
-            throw new BuildException("version '" + getValue() + "' is not supported");
+        Version version = Version.fromVersionString(getValue());
+        if (version == null) {
+            try {
+                version = Version.valueOf(getValue());
+            } catch (IllegalArgumentException ex) {
+                throw new BuildException(getValue() + " is not a supported version");
+            }
         }
+        return version;
     }
 
     @Override

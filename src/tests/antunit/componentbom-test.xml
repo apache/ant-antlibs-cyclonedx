@@ -263,6 +263,34 @@
     </au:expectfailure>
   </target>
 
+  <target name="testSpecVersionAsVersionString">
+    <cdx:componentbom
+        outputdirectory="${output}"
+        format="json"
+        specVersion="1.6"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname"/>
+    </cdx:componentbom>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.json"
+        value='"specVersion" : "1.6"'/>
+  </target>
+
+  <target name="testSpecVersionAsEnumValue">
+    <cdx:componentbom
+        outputdirectory="${output}"
+        format="json"
+        specVersion="VERSION_16"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname"/>
+    </cdx:componentbom>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.json"
+        value='"specVersion" : "1.6"'/>
+  </target>
+
   <target name="testMinimalComponentData">
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">

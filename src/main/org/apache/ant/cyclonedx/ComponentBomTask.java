@@ -39,7 +39,7 @@ public class ComponentBomTask extends Task {
 
     private File outputDirectory;
     private String bomName = "bom";
-    private SpecVersion specVersion = SpecVersion.VERSION_16;
+    private SpecVersion specVersion = SpecVersion.DEFAULT;
     private OutputFormat format = OutputFormat.json;
     private Component component;
     private List<Component> additionalComponents = new ArrayList<>();
