@@ -582,6 +582,12 @@
         </sbomLink>
       </additionalComponent>
     </cdx:componentbom>
+    <au:assertFileExists
+        xmlns:au="antlib:org.apache.ant.antunit"
+        file="${output}/ant-cyclonedx-${artifact.version}-cyclonedx.json"/>
+    <au:assertFileExists
+        xmlns:au="antlib:org.apache.ant.antunit"
+        file="${output}/ant-cyclonedx-${artifact.version}-cyclonedx.xml"/>
     <copy todir="/tmp">
       <fileset dir="${output}" includes="ant-cyclonedx*"/>
     </copy>
