@@ -24,6 +24,8 @@ import org.cyclonedx.Format;
  */
 public class OutputFormat extends EnumeratedAttribute {
 
+    private static final String ALL = "ALL";
+
     public static final OutputFormat JSON;
 
     static {
@@ -34,9 +36,8 @@ public class OutputFormat extends EnumeratedAttribute {
     @Override
     public String[] getValues() {
         return Stream
-            .concat(Arrays.stream(Format.values())
-                    .flatMap(f -> Stream.of(f.name(), f.getExtension())),
-                    Stream.of("all", "ALL"))
+            .concat(Arrays.stream(EnumUtils.valuesPlus(Format.class, Format::getExtension)),
+                    Stream.of(ALL, ALL.toLowerCase(Locale.ENGLISH)))
             .toArray(String[]::new);
     }
 

@@ -1,8 +1,6 @@
 package org.apache.ant.cyclonedx;
 
-import java.util.Arrays;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.EnumeratedAttribute;
@@ -27,9 +25,7 @@ public class SpecVersion extends EnumeratedAttribute {
 
     @Override
     public String[] getValues() {
-        return Arrays.stream(Version.values())
-            .flatMap(v -> Stream.of(v.name(), v.getVersionString()))
-            .toArray(String[]::new);
+        return EnumUtils.valuesPlus(Version.class, Version::getVersionString);
     }
 
     /**

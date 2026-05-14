@@ -174,7 +174,7 @@
       <url url="https://example.org/"/>
     </cdx:organization>
 
-    <cdx:componentbom outputdirectory="${output}" format="xml"
+    <cdx:componentbom outputdirectory="${output}" format="XML"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <manufacturer refid="example"/>
       <supplier name="Example 2">
@@ -311,6 +311,18 @@
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname" type="APPLICATION"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(type)"
+        value="application"/>
+  </target>
+
+  <target name="testComponentTypeCanBeSetInLowerCase">
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname" type="application"/>
     </cdx:componentbom>
     <xmlproperty file="${output}/bom.xml"/>
     <au:assertPropertyEquals
@@ -496,20 +508,21 @@
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname"/>
       <additionalComponent name="dependency" scope="OPTIONAL"/>
+      <additionalComponent name="dependency2" scope="optional"/>
     </cdx:componentbom>
     <xmlproperty file="${output}/bom.xml"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.components.component.name"
-        value="dependency"/>
+        value="dependency,dependency2"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.components.component(type)"
-        value="library"/>
+        value="library,library"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.components.component.scope"
-        value="optional"/>
+        value="optional,optional"/>
   </target>
 
   <target name="testDependencies">

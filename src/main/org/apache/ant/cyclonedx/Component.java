@@ -68,9 +68,9 @@ public class Component extends DataType {
         this.resource = resource;
     }
 
-    public void setType(org.cyclonedx.model.Component.Type type) {
+    public void setType(ComponentType type) {
         checkAttributesAllowed();
-        this.type = type;
+        this.type = type.getType();
     }
 
     public void setName(String name) {
@@ -210,9 +210,9 @@ public class Component extends DataType {
         externalReferences.addAll(set.getExternalReferences());
     }
 
-    public void setScope(org.cyclonedx.model.Component.Scope scope) {
+    public void setScope(ComponentScope scope) {
         checkAttributesAllowed();
-        this.scope = scope;
+        this.scope = scope.getScope();
     }
 
     public void setIsExternal(boolean isExternal) {
@@ -468,7 +468,7 @@ public class Component extends DataType {
     }
 
     private void fillFrom(org.cyclonedx.model.Component real) {
-        setType(real.getType());
+        setType(ComponentType.from(real.getType()));
         setName(real.getName());
         setGroup(real.getGroup());
         setVersion(real.getVersion());
@@ -478,7 +478,9 @@ public class Component extends DataType {
         setMimeType(real.getMimeType());
         setPurl(real.getPurl());
         setBomRef(real.getBomRef());
-        setScope(real.getScope());
+        if (real.getScope() != null) {
+            setScope(ComponentScope.from(real.getScope()));
+        }
         OrganizationalEntity manufacturer = real.getManufacturer();
         if (manufacturer != null) {
             this.manufacturer = Organization.from(manufacturer);

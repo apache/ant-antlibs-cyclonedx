@@ -179,7 +179,7 @@ public class ComponentBomTask extends Task {
                 c.setProject(getProject());
                 c.add(r);
                 c.setName(r.getName());
-                c.setType(org.cyclonedx.model.Component.Type.FILE);
+                c.setType(ComponentType.from(org.cyclonedx.model.Component.Type.FILE));
                 cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
             }
             bom.setComponents(cs);
