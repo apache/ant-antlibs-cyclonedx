@@ -40,7 +40,7 @@ public class ComponentBomTask extends Task {
     private File outputDirectory;
     private String bomName = "bom";
     private SpecVersion specVersion = SpecVersion.DEFAULT;
-    private OutputFormat format = OutputFormat.json;
+    private OutputFormat format = OutputFormat.JSON;
     private Component component;
     private List<Component> additionalComponents = new ArrayList<>();
     private Organization manufacturer = null;
@@ -113,7 +113,7 @@ public class ComponentBomTask extends Task {
 
         try {
             Bom bom = createBom();
-            for (Format f : format.getCycloneDxFormats()) {
+            for (Format f : format.getCycloneDxFormats(specVersion.getVersion())) {
                 writeBom(bom, f,
                          new File(outputDirectory,
                                   bomName + "." + f.name().toLowerCase(Locale.ENGLISH)));

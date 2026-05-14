@@ -32,6 +32,11 @@ public class SpecVersion extends EnumeratedAttribute {
             .toArray(String[]::new);
     }
 
+    /**
+     * Translates this instance to a {@link Version}.
+     *
+     * @throws BuildException if the value can not be translated.
+     */
     public Version getVersion() {
         Version version = Version.fromVersionString(getValue());
         if (version == null) {
