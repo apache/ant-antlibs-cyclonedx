@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<project name="organization-test" default="antunit">
+
+  <import file="shared.xml" />
+
+  <target name="testOrganizationAsDirectChildOfComponent">
+    <cdx:componentbom
+        outputdirectory="${output}" format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <manufacturer name="Example">
+          <url url="https://example.org/"/>
+        </manufacturer>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.name"
+        value="Example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.url"
+        value="https://example.org/"/>
+  </target>
+
+  <target name="testOrganizationAllowsMultipleUrlChildren">
+    <cdx:componentbom
+        outputdirectory="${output}" format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <manufacturer name="Example">
+          <url url="https://example.org/"/>
+          <url url="https://example.com/"/>
+        </manufacturer>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.name"
+        value="Example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.url"
+        value="https://example.org/,https://example.com/"/>
+  </target>
+
+  <target name="testOrganizationWorksViaReference">
+    <cdx:organization name="Example" id="test-org"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <url url="https://example.org/"/>
+    </cdx:organization>
+    <cdx:componentbom
+        outputdirectory="${output}" format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <manufacturer refid="test-org"/>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.name"
+        value="Example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.url"
+        value="https://example.org/"/>
+  </target>
+
+  <target
+      name="testOrganizationWithRefIdDoesntAllowNestedChildren">
+    <cdx:organization name="Example" id="test-org"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <url url="https://example.org/"/>
+    </cdx:organization>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:organization refid="test-org"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <url url="https://example.org/"/>
+      </cdx:organization>
+    </au:expectfailure>
+  </target>
+
+  <target
+      name="testLicenseWithRefIdDoesntAllowOtherAttributes">
+    <cdx:organization name="Example" id="test-org"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <url url="https://example.org/"/>
+    </cdx:organization>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:organization refid="test-org"
+                        name="foo"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+  </target>
+</project>
