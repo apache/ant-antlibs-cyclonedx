@@ -177,6 +177,145 @@
     </cdx:componentbom>
   </target>
 
+  <target name="testMaximalComponentData">
+    <checksum property="ant.file.sha256" file="${ant.file}" algorithm="SHA-256"/>
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component
+          name="testname"
+          group="org.example"
+          version="1.0"
+          description="My Test Library"
+          publisher="test publisher"
+          copyright="Copyright 2026 ACME Com"
+          mimeType="text/plain"
+          >
+        <file file="${ant.file}"/>
+        <manufacturer name="Example">
+          <url url="https://example.org/"/>
+        </manufacturer>
+        <supplier name="Example 2">
+          <url url="https://example.com/"/>
+        </supplier>
+        <license name="My License"/>
+        <externalReference type="WEBSITE" url="https://example.com/"/>
+        <component name="other-test" group="org.example" version="1.1"/>
+        <author name="Author" email="author@example.org"/>
+        <tag>label</tag>
+        <property name="foo" value="bar"/>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.name"
+        value="testname"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(type)"
+        value="library"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.group"
+        value="org.example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.version"
+        value="1.0"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.publisher"
+        value="test publisher"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.copyright"
+        value="Copyright 2026 ACME Com"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(mime-type)"
+        value="text/plain"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.purl"
+        value="pkg:maven/org.example/testname@1.0?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(bom-ref)"
+        value="pkg:maven/org.example/testname@1.0?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.authors.author.name"
+        value="Author"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.authors.author.email"
+        value="author@example.org"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.name"
+        value="Example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.url"
+        value="https://example.org/"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.supplier.name"
+        value="Example 2"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.supplier.url"
+        value="https://example.com/"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.license.name"
+        value="My License"/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.xml"
+        value='&lt;hash alg="SHA-256"&gt;${ant.file.sha256}&lt;/hash&gt;'/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.tags.tag"
+        value="label"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.properties.property(name)"
+        value="foo"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.properties.property"
+        value="bar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.name"
+        value="other-test"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component(type)"
+        value="library"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.group"
+        value="org.example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.version"
+        value="1.1"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.purl"
+        value="pkg:maven/org.example/other-test@1.1?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component(bom-ref)"
+        value="pkg:maven/org.example/other-test@1.1?type=jar"/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.xml"
+        value='&lt;url&gt;https://example.com/&lt;/url&gt;'/>
+  </target>
+
   <target name="testManufacturerIsNotCopiedToSupplierByDefault">
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
@@ -248,6 +387,77 @@
     </au:expectfailure>
   </target>
 
+  <target name="testLicenseWorksAsReference">
+    <cdx:license
+        licenseId="Apache-2.0"
+        id="apache-2"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <url url="https://www.apache.org/licenses/LICENSE-2.0.txt"/>
+    </cdx:license>
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <license refid="apache-2"/>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.license.id"
+        value="Apache-2.0"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.license.url"
+        value="https://www.apache.org/licenses/LICENSE-2.0.txt"/>
+  </target>
+
+  <target name="testExternalReferenceWorksNestedIntoSet">
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <externalreferenceset>
+          <externalReference
+              type="VCS"
+              url="https://github.com/apache/ant-antlibs-cyclonedx"/>
+        </externalreferenceset>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.externalReferences.reference(type)"
+        value="vcs"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.externalReferences.reference.url"
+        value="https://github.com/apache/ant-antlibs-cyclonedx"/>
+  </target>
+
+  <target name="testExternalReferenceSetWorksAsReference">
+    <cdx:externalreferenceset
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx"
+        id="test-reference">
+      <externalReference
+          type="VCS"
+          url="https://github.com/apache/ant-antlibs-cyclonedx"/>
+    </cdx:externalreferenceset>
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <externalreferenceset refid="test-reference"/>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.externalReferences.reference(type)"
+        value="vcs"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.externalReferences.reference.url"
+        value="https://github.com/apache/ant-antlibs-cyclonedx"/>
+  </target>
+
   <target name="testDependenciesAreEmptyByDefault">
     <cdx:componentbom outputdirectory="${output}" format="json"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
@@ -270,4 +480,77 @@
         resource="${output}/bom.json"
         value='"dependencies" : [ ]'/>
   </target>
+
+  <target name="testDependenciesRequireEitherBomRefOrComponentRef">
+    <au:expectfailure expectedMessage="bomRef or componentRef is required"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom outputdirectory="${output}" format="json"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="foo" bomRef="foo">
+          <dependency/>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testDependencyBomRefAndComponentRefAreExclusive">
+    <cdx:component name="bar" bomRef="bar" id="bar"
+                   xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    <au:expectfailure expectedMessage="only one of bomRef and componentRef are permitted"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom outputdirectory="${output}" format="json"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="foo" bomRef="foo">
+          <dependency bomRef="bar" componentRef="bar"/>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testDependencyComponentRefMustExist">
+    <cdx:component name="bar" bomRef="bar"
+                   xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    <au:expectfailure expectedMessage="Reference bar not found."
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom outputdirectory="${output}" format="json"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="foo" bomRef="foo">
+          <dependency componentRef="bar"/>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testDependencyComponentRefMustPointToComponent">
+    <cdx:license
+        licenseId="Apache-2.0"
+        id="bar"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <url url="https://www.apache.org/licenses/LICENSE-2.0.txt"/>
+    </cdx:license>
+    <au:expectfailure expectedMessage="componentRef 'bar' doesn't refer to a component"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom outputdirectory="${output}" format="json"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="foo" bomRef="foo">
+          <dependency componentRef="bar"/>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testDependencyComponentRefMustPointToComponentWithBomRef">
+    <cdx:component name="bar" id="bar"
+                   xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    <au:expectfailure expectedMessage="component with id 'bar' doesn't provide a bomRef"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom outputdirectory="${output}" format="json"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="foo" bomRef="foo">
+          <dependency componentRef="bar"/>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
 </project>

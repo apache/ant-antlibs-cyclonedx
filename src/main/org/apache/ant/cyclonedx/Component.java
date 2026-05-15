@@ -723,11 +723,11 @@ public class Component extends DataType {
             if (component instanceof Component) {
                 String b = ((Component) component).getBomRef();
                 if (b == null) {
-                    throw new BuildException("component with id '" + componentRef + "' doesn't provide a bomRef");
+                    throw new BuildException("component with id '" + componentRef.getRefId() + "' doesn't provide a bomRef");
                 }
                 return b;
             }
-            throw new BuildException("componentRef '" + componentRef + "' doesn't refer to a component");
+            throw new BuildException("componentRef '" + componentRef.getRefId() + "' doesn't refer to a component");
         }
 
         static Dependency from(org.cyclonedx.model.Dependency dependency) {
