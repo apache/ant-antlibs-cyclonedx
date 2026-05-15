@@ -528,6 +528,9 @@ public class Component extends DataType {
         if (name == null) {
             throw new BuildException("component name is required");
         }
+        if (!dependencies.isEmpty() && getBomRef() == null) {
+            throw new BuildException("components without bomRef cannot have dependencies");
+        }
         if (manufacturerIsSupplier) {
             if (manufacturer == null) {
                 throw new BuildException("component without manufacturer can't use manufacturer as supplier");

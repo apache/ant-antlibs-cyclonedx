@@ -247,6 +247,12 @@
 
     <p>Adds a dependency to the component.</p>
 
+    <p>Inside the SBOM both the dependee and the dependency side are
+      identified by their bom-ref. Therefore nested dependency children
+      are only allowed in components that provide a bom-ref - either via
+      an explicit <code>bomRef</code> attribute or an explicit r
+      calculated <code>purl</code>.</p>
+
     <h5>Attributes</h5>
 
     <table class="attr">

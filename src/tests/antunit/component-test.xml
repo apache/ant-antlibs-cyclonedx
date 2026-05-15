@@ -553,4 +553,16 @@
     </au:expectfailure>
   </target>
 
+  <target name="testDependeesRequireABomRef">
+    <au:expectfailure expectedMessage="components without bomRef cannot have dependencies"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom outputdirectory="${output}" format="json"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="foo">
+          <dependency bomRef="bar"/>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
 </project>
