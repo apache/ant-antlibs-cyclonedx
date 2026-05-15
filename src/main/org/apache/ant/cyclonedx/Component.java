@@ -300,6 +300,9 @@ public class Component extends DataType {
         this.unknownDependencies = unknownDependencies;
     }
 
+    /**
+     * Adds a nested component.
+     */
     public void addComponent(Component c) {
         checkChildrenAllowed();
         nestedComponents.add(c);
@@ -393,6 +396,9 @@ public class Component extends DataType {
         return unknownDependencies;
     }
 
+    /**
+     * Recursively returns the nested components of this component.
+     */
     public List<Component> getNestedComponents() {
         if (isReference()) {
             return getRef().getNestedComponents();

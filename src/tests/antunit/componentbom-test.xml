@@ -294,6 +294,64 @@
         value="pkg:maven/org.example/dependency@1.0?type=jar,pkg:maven/org.example/transitive-dependency@1.0?type=jar"/>
   </target>
 
+  <target name="testNestedComponents">
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname" group="org.example" version="1.0">
+        <component name="testname-child" group="org.example" version="1.0">
+          <component name="testname-grand-child" group="org.example" version="1.0"/>
+        </component>
+      </component>
+      <additionalComponent name="testname2" group="org.example" version="1.0">
+        <component name="testname2-child" group="org.example" version="1.0">
+          <component name="testname2-grand-child" group="org.example" version="1.0"/>
+        </component>
+      </additionalComponent>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.name"
+        value="testname-child"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.components.component.name"
+        value="testname-grand-child"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.components.component.components.component.name"
+        value="testname2-grand-child"/>
+  </target>
+
+  <target name="testNestedComponentDependencies">
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname" group="org.example" version="1.0" unknownDependencies="true">
+        <component name="testname-child" group="org.example" version="1.0">
+          <component name="testname-grand-child" group="org.example" version="1.0" unknownDependencies="true"/>
+          <dependency bomref="pkg:maven/org.example/testname2-child@1.0?type=jar"/>
+        </component>
+      </component>
+      <additionalComponent name="testname2" group="org.example" version="1.0" unknownDependencies="true">
+        <component name="testname2-child" group="org.example" version="1.0" unknownDependencies="true">
+          <component name="testname2-grand-child" group="org.example" version="1.0">
+            <dependency bomref="pkg:maven/org.example/testname-grand-child@1.0?type=jar"/>
+          </component>
+        </component>
+      </additionalComponent>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <copy todir="/tmp" file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.dependencies.dependency(ref)"
+        value="pkg:maven/org.example/testname-child@1.0?type=jar,pkg:maven/org.example/testname2-grand-child@1.0?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.dependencies.dependency.dependency(ref)"
+        value="pkg:maven/org.example/testname2-child@1.0?type=jar,pkg:maven/org.example/testname-grand-child@1.0?type=jar"/>
+  </target>
+
   <target name="testAntlibsOwnBom" depends="commonReferences">
     <cdx:componentbom
         bomName="ant-cyclonedx-${artifact.version}-cyclonedx"

@@ -250,7 +250,7 @@
     <p>Inside the SBOM both the dependee and the dependency side are
       identified by their bom-ref. Therefore nested dependency children
       are only allowed in components that provide a bom-ref - either via
-      an explicit <code>bomRef</code> attribute or an explicit r
+      an explicit <code>bomRef</code> attribute or an explicit or
       calculated <code>purl</code>.</p>
 
     <h5>Attributes</h5>
@@ -274,6 +274,19 @@
           a <code>bom-ref</code>.</td>
       </tr>
     </table>
+
+    <h4 id="component">component</h4>
+
+    <p>Adds a nested component to the component.</p>
+
+    <p>Nested components can be used to represent a hierarchy of
+      components into sub-components and so on.</p>
+
+    <p>Components can be added as full elements or via
+      the <code>refid</code> attribute as references to components
+      defined elsewhere in the build file. Ant verifies this doesn't
+      cause a circular dependency between a component and one higher
+      up in the hierarchy.</p>
 
     <h3>Examples</h3>
 

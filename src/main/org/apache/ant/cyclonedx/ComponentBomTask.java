@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -141,7 +142,7 @@ public class ComponentBomTask extends Task {
             throw new BuildException("nested component element is required");
         }
         Set<String> knownComponents = new HashSet<>();
-        addToKnownComponents(knownComponents, component);
+        visitAllComponents(c -> knownComponents.add(getUnversionedCoordinates(c)));
         meta.setComponent(component.toMainCycloneDxComponent(specVersion.getVersion()));
         if (useComponentSupplier) {
             OrganizationalEntity componentSupplier = meta.getComponent().getSupplier();
@@ -163,14 +164,13 @@ public class ComponentBomTask extends Task {
             List<org.cyclonedx.model.Component> cs = new ArrayList<>();
             List<Component> resolvedComponents = new ArrayList<>();
             for (Component c : additionalComponents) {
-                addToKnownComponents(knownComponents, c);
                 resolvedComponents.addAll(c.resolve());
                 cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
             }
             for (Component c : resolvedComponents) {
-                String componentKey = c.getGroup() + ":" + c.getName();
+                String componentKey = getUnversionedCoordinates(c);
                 if (!knownComponents.contains(componentKey)) {
-                    addToKnownComponents(knownComponents, c);
+                    knownComponents.add(componentKey);
                     cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
                 }
             }
@@ -191,52 +191,71 @@ public class ComponentBomTask extends Task {
     }
 
     private void addDependencies(Bom bom) {
-        List<Dependency> dependencies = new ArrayList<>();
-        Set<String> bomRefs = new HashSet<>();
-        if (component.getBomRef() != null) {
-            bomRefs.add(component.getBomRef());
-        }
-        List<org.cyclonedx.model.Component> components = bom.getComponents();
-        if (components != null) {
-            for (org.cyclonedx.model.Component c : components) {
-                if (c.getBomRef() != null) {
-                    bomRefs.add(c.getBomRef());
+        final Set<String> bomRefs = new HashSet<>();
+        visitAllBomComponents(bom, c -> {
+                String bomRef = c.getBomRef();
+                if (bomRef != null) {
+                    bomRefs.add(bomRef);
                 }
-            }
-        }
+            });
 
-        if (component.getBomRef() != null && !component.areDependenciesUnknown()) {
-            Dependency dep = new Dependency(component.getBomRef());
-            for (Component.Dependency d : component.getDependencies()) {
-                String br = d.getBomRef();
-                if (!bomRefs.contains(br)) {
-                    throw new BuildException("dependency '" + br + "' is unknown");
-                }
-                dep.addDependency(new Dependency(br));
-            }
-            dependencies.add(dep);
-        }
-        for (Component c : additionalComponents) {
-            if (!c.areDependenciesUnknown() && c.getBomRef() != null) {
-                Dependency dep = new Dependency(c.getBomRef());
-                for (Component.Dependency d : c.getDependencies()) {
-                    String br = d.getBomRef();
-                    if (!bomRefs.contains(br)) {
-                        throw new BuildException("dependency '" + br + "' is unknown");
+        final List<Dependency> dependencies = new ArrayList<>();
+        visitAllComponents(c -> {
+                String bomRef = c.getBomRef();
+                if (bomRef != null && !c.areDependenciesUnknown()) {
+                    Dependency dep = new Dependency(bomRef);
+                    for (Component.Dependency d : c.getDependencies()) {
+                        String br = d.getBomRef();
+                        if (!bomRefs.contains(br)) {
+                            throw new BuildException("dependency '" + br + "' is unknown");
+                        }
+                        dep.addDependency(new Dependency(br));
                     }
-                    dep.addDependency(new Dependency(br));
+                    dependencies.add(dep);
                 }
-                dependencies.add(dep);
-            }
-        }
+            });
 
         bom.setDependencies(dependencies);
     }
 
-    private void addToKnownComponents(Set<String> knownComponents, Component component) {
-        knownComponents.add(component.getGroup() + ":" + component.getName());
-        component.getNestedComponents().stream()
-            .forEach(c -> addToKnownComponents(knownComponents, c));
+    private void visitAllComponents(Consumer<Component> visitor) {
+        visitAllComponents(component, visitor);
+        visitAllComponents(additionalComponents, visitor);
+    }
+
+    private void visitAllComponents(Component c,
+                                    Consumer<Component> visitor) {
+        visitor.accept(c);
+        List<Component> cs = c.getNestedComponents();
+        if (cs != null) {
+            // getNestedComponents() has already traversed the whole hierarchy recursively
+            cs.forEach(visitor);
+        }
+    }
+
+    private void visitAllComponents(List<Component> cs,
+                                    Consumer<Component> visitor) {
+        if (cs != null) {
+            cs.forEach(c -> visitAllComponents(c, visitor));
+        }
+    }
+
+    private void visitAllBomComponents(Bom bom, Consumer<org.cyclonedx.model.Component> visitor) {
+        visitAllBomComponents(bom.getMetadata().getComponent(), visitor);
+        visitAllBomComponents(bom.getComponents(), visitor);
+    }
+
+    private void visitAllBomComponents(org.cyclonedx.model.Component c,
+                                       Consumer<org.cyclonedx.model.Component> visitor) {
+        visitor.accept(c);
+        visitAllBomComponents(c.getComponents(), visitor);
+    }
+
+    private void visitAllBomComponents(List<org.cyclonedx.model.Component> cs,
+                                       Consumer<org.cyclonedx.model.Component> visitor) {
+        if (cs != null) {
+            cs.forEach(c -> visitAllBomComponents(c, visitor));
+        }
     }
 
     private void writeBom(Bom bom, Format format, File bomFile)
@@ -265,5 +284,9 @@ public class ComponentBomTask extends Task {
              OutputStreamWriter writer = new OutputStreamWriter(fos, StandardCharsets.UTF_8)) {
             writer.write(generator.toXmlString());
         }
+    }
+
+    private static String getUnversionedCoordinates(Component c) {
+        return c.getGroup() + ":" + c.getName();
     }
 }
