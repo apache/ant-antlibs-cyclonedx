@@ -565,4 +565,187 @@
     </au:expectfailure>
   </target>
 
+  <target
+      name="testComponentWithRefIdDoesntAllowOtherAttributes">
+    <cdx:component name="foo" bomRef="foo" id="foo"
+                   xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component name="foo" refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component type="library" refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component group="foo" refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component version="1.0" refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component purl="foo" refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component bomRef="foo" refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component scope="optional" refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component isExternal="false" refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component description="foo" refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component publisher="foo" refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component copyright="foo" refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component mimetype="foo" refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component unknownDependencies="false" refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify more than one attribute when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component manufacturerIsSupplier="false" refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    </au:expectfailure>
+  </target>
+
+  <target
+      name="testComponentWithRefIdDoesntAllowNestedChildren">
+    <cdx:component name="foo" bomRef="foo" id="foo"
+                   xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <file file="${ant.file}"/>
+      </cdx:component>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <manufacturer/>
+      </cdx:component>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <supplier/>
+      </cdx:component>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <author/>
+      </cdx:component>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <tag/>
+      </cdx:component>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <property/>
+      </cdx:component>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <license/>
+      </cdx:component>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <externalReference/>
+      </cdx:component>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <externalreferenceset/>
+      </cdx:component>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <dependency/>
+      </cdx:component>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component/>
+      </cdx:component>
+    </au:expectfailure>
+  </target>
 </project>
