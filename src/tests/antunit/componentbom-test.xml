@@ -341,7 +341,6 @@
       </additionalComponent>
     </cdx:componentbom>
     <xmlproperty file="${output}/bom.xml"/>
-    <copy todir="/tmp" file="${output}/bom.xml"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.dependencies.dependency(ref)"
@@ -401,7 +400,7 @@
     <au:assertFileExists
         xmlns:au="antlib:org.apache.ant.antunit"
         file="${output}/ant-cyclonedx-${artifact.version}-cyclonedx.xml"/>
-    <copy todir="/tmp">
+    <copy todir="${java.io.tmpdir}">
       <fileset dir="${output}" includes="ant-cyclonedx*"/>
     </copy>
   </target>
@@ -434,7 +433,7 @@
         </fileset>
       </pureFileComponents>
     </cdx:componentbom>
-    <copy todir="/tmp">
+    <copy todir="${java.io.tmpdir}">
       <fileset dir="${output}" includes="ant-cyclonedx*"/>
     </copy>
   </target>

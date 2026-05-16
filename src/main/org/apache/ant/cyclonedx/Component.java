@@ -560,10 +560,13 @@ public class Component extends DataType {
         component.setAuthors(authors);
         component.setProperties(properties);
         component.setTags(new Tags(tags.stream().sorted().collect(Collectors.toList())));
-        LicenseChoice lc = new LicenseChoice();
-        lc.setLicenses(licenses);
-        component.setLicenses(lc);
         component.setExternalReferences(externalReferences);
+        if (!licenses.isEmpty()) {
+            // would create an empty licenses node otherwise
+            LicenseChoice lc = new LicenseChoice();
+            lc.setLicenses(licenses);
+            component.setLicenses(lc);
+        }
         for (Component c : nestedComponents) {
             component.addComponent(c.toAdditionalCycloneDxComponent(bomVersion));
         }
