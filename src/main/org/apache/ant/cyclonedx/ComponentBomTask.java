@@ -10,7 +10,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -35,7 +34,7 @@ import org.cyclonedx.model.Metadata;
 import org.cyclonedx.model.OrganizationalEntity;
 
 /**
- * Task that creates CycloneDX BOM for a single component.
+ * Task that creates CycloneDX BOMs for a single component.
  */
 public class ComponentBomTask extends Task {
 
@@ -51,20 +50,44 @@ public class ComponentBomTask extends Task {
     private Union pureFileComponents = new Union();
     private List<org.cyclonedx.model.License> licenses = new ArrayList<>();
 
-    public void setOutputDirectory(File f) {
-        outputDirectory = f;
+    /**
+     * Specifies the CycloneDX version to use.
+     *
+     * <p>Defaults to 1.6.</p>
+     */
+    public void setSpecVersion(SpecVersion specVersion) {
+        this.specVersion = specVersion;
     }
 
-    public void setBomName(String bomName) {
-        this.bomName = bomName;
-    }
-
+    /**
+     * Which serialization format of CycloneDX SBOM to use.
+     */
     public void setFormat(OutputFormat format) {
         this.format = format;
     }
 
-    public void setSpecVersion(SpecVersion specVersion) {
-        this.specVersion = specVersion;
+    /**
+     * Sets the base name of the generated BOM.
+     *
+     * <p>The file name will be the base name plus the extension of
+     * the {@see #setFormat format}.
+     */
+    public void setBomName(String bomName) {
+        this.bomName = bomName;
+    }
+
+    /**
+     * Sets the output directory for the generated SBOM.
+     */
+    public void setOutputDirectory(File f) {
+        outputDirectory = f;
+    }
+
+    /**
+     * Whether to use the supplier of the main component as supplier for the BOM as well.
+     */
+    public void setUseComponentSupplier(boolean useComponentSupplier) {
+        this.useComponentSupplier = useComponentSupplier;
     }
 
     public Component createComponent() {
@@ -95,10 +118,6 @@ public class ComponentBomTask extends Task {
         return supplier;
     }
 
-    public void setUseComponentSupplier(boolean useComponentSupplier) {
-        this.useComponentSupplier = useComponentSupplier;
-    }
-
     public Union createPureFileComponents() {
         return pureFileComponents;
     }
@@ -114,7 +133,7 @@ public class ComponentBomTask extends Task {
         if (supplier != null && useComponentSupplier) {
             throw new BuildException("can't use component's supplier when there is an explicit supplier");
         }
-        if (outputDirectory == null || !outputDirectory.isDirectory()) {
+        if (outputDirectory != null && !outputDirectory.isDirectory()) {
             throw new BuildException("outputDirectory must point to a directory");
         }
         if (pureFileComponents.size() > 0 && !pureFileComponents.isFilesystemOnly()) {
@@ -122,11 +141,10 @@ public class ComponentBomTask extends Task {
         }
 
         try {
+            File dir = outputDirectory != null ? outputDirectory : getProject().getBaseDir();
             Bom bom = createBom();
             for (Format f : format.getCycloneDxFormats(specVersion.getVersion())) {
-                writeBom(bom, f,
-                         new File(outputDirectory,
-                                  bomName + "." + f.name().toLowerCase(Locale.ENGLISH)));
+                writeBom(bom, f, new File(dir, bomName + "." + f.getExtension()));
             }
         } catch (IOException | GeneratorException ex) {
             throw new BuildException("failed to write BOM", ex);

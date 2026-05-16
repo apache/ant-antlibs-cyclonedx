@@ -218,6 +218,59 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.supplier.url"
         value="https://example.com/"/>
+
+    <au:expectfailure expectedMessage="useComponentSupplier is true but component supplier is null"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom format="xml"
+                        useComponentSupplier="true"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname"/>
+      </cdx:componentbom>
+    </au:expectfailure>
+
+    <au:expectfailure expectedMessage="can't use component's supplier when there is an explicit supplier"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom format="xml"
+                        useComponentSupplier="true"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname">
+          <supplier name="Foo"/>
+        </component>
+        <supplier name="Foo"/>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testOutputDirectoryDefaultsToBaseDir">
+    <cdx:componentbom format="xml" xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname"/>
+    </cdx:componentbom>
+    <condition property="file-exists">
+      <available file="bom.xml"/>
+    </condition>
+    <delete file="bom.xml" failonerror="false" deleteonexit="true"/>
+    <au:assertPropertySet name="file-exists"
+                          xmlns:au="antlib:org.apache.ant.antunit"/>
+  </target>
+
+  <target name="testOutputDirectoryMustExist">
+    <au:expectfailure expectedMessage="outputDirectory must point to a directory"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom outputdirectory="foo" format="xml"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname"/>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testOutputDirectoryMustBeADirectory">
+    <au:expectfailure expectedMessage="outputDirectory must point to a directory"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom outputdirectory="${ant.file}" format="xml"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname"/>
+      </cdx:componentbom>
+    </au:expectfailure>
   </target>
 
   <target name="testComponentIsRequired">

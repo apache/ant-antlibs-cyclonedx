@@ -24,7 +24,7 @@
   <body>
     <h2>Introduction</h2>
 
-    <p>This Ant library provides a layer of Ant types and a task to
+    <p>This Ant library provides Ant types and a task to
       create <a href="https://cyclonedx.org/">CycloneDX</a> SBOMs.</p>
 
     <p>The library is meant to be used for projects that manage their
@@ -52,13 +52,23 @@
       certainly welcome.</p>
 
     <p>This manual follows the CycloneDX terminology closely, as do
-      the tasks and types. It can not serve as an introduction to
+      the task and types. It can not serve as an introduction to
       SBOMs, in particular as the authors understanding of the topic
       may be limited or even wrong.</p>
 
     <h2>Tasks and Types provided by this Ant Library</h2>
 
+    <p>The main entry point to this library is
+      the <a href="componentbom.html">componentbom</a> task that
+      creates CycloneDX SBOMs for a single component. The Ant types
+      provided by this library are mainly there as stand-alone types
+      so they can be reused if you need things in more than one SBOM -
+      because you are publishing multiple components or package them
+      in multiple artifacts for example.</p>
+
+    <p>The types provided by the library are:</p>
     <ul>
+      <li><a href="component.html">component</a></li>
       <li><a href="externalreferenceset.html">externalreferenceset</a></li>
       <li><a href="license.html">license</a></li>
       <li><a href="organization.html">organization</a></li>

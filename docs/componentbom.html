@@ -1,0 +1,97 @@
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       https://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<html>
+  <head>
+    <meta http-equiv="Content-Language" content="en-us"></meta>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Apache CycloneDX Ant Library - componentbom Task</title>
+  </head>
+
+  <body>
+    <h2 id="componentbom">componentbom Task</h2>
+
+    <p>The <code>compomentbom</code> task creates CycloneDX SBOMs for
+      a component ind the formats supported by
+      the <a href="https://github.com/CycloneDX/cyclonedx-core-java">CycloneDX
+        Core (Java)</a> library.</p>
+
+    <p>As a minimum a single nested <code>component</code> element is
+      required that specifies the component to create an SBOM
+      for.</p>
+
+    <h3>Attributes</h3>
+
+    <table class="attr">
+      <tr>
+        <th scope="col">Attribute</th>
+        <th scope="col">Description</th>
+        <th scope="col">Required</th>
+      </tr>
+      <tr>
+        <td>specVersion</td>
+        <td>Version of the CycloneDX specification for the generated
+          SBOM. This can be specified as number (like "1.6") or one of
+          the enum constants of the <code>org.cyclonedx.Version</code>
+          type (i.e. like "VERSION_16").<br/>
+          The supported values depend on the CycloneDX Core (Java)
+          library version used.
+        </td>
+        <td>No, defaults to "1.6" in the current version of the Ant
+          library but this may change in future versions.</td>
+      </tr>
+      <tr>
+        <td>format</td>
+        <td>The format of the SBOM(s) to write. May be "json", "xml"
+          (or rather the enum constants of
+          the <code>org.cyclonedx.Format</code> type and their file
+          extensions) or the special value "all". <br/>
+          For spec version 1.2 and later "all" means both "json" and
+          "xml" (so the task will create two files), for "1.0" and
+          "1.1" it is equivalent to "xml".<br/>
+          The supported values depend on the CycloneDX Core (Java)
+          library version used.
+        </td>
+        <td>No, defaults to "json".</td>
+      </tr>
+      <tr>
+        <td>bomName</td>
+        <td>The base name of the generated SBOM file. The full file
+          name will be <em>bomName</em>.<em>format</em>.</td>
+        <td>No, defaults to "bom".</td>
+      </tr>
+      <tr>
+        <td>outputDirectory</td>
+        <td>Sets the directory where the SBOM file(s) will be written
+          to. Relative paths are relative to the project's base
+          directory</td>
+        <td>No, defaults to the project's <code>basedir</code>.</td>
+      </tr>
+      <tr>
+        <td>useComponentSupplier</td>
+        <td>If set to <code>true</code> the supplier of the SBOM's
+          main component will be used for the SBOM itself.<br/>
+          If this is <code>true</code> the main component must specify
+          a supplier. Also you must not use a
+          nested <code>supplier</code> child for this task if this is
+          <code>true</code>.</td>
+        <td>No, defaults to <code>false</code>.</td>
+      </tr>
+    </table>
+
+    <h3>Nested elements</h3>
+  </body>
+</html>
