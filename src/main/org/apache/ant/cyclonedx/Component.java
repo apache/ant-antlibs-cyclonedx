@@ -308,6 +308,7 @@ public class Component extends DataType {
     public void addComponent(Component c) {
         checkChildrenAllowed();
         nestedComponents.add(c);
+        // the newly added component may cause a circular dependency
         setChecked(false);
     }
 
@@ -415,6 +416,10 @@ public class Component extends DataType {
         return result;
     }
 
+    /**
+     * Whether this component links to an external SBOM and wants to
+     * read data from it.
+     */
     public boolean hasSbomLink() {
         if (isReference()) {
             return getRef().hasSbomLink();
@@ -423,13 +428,22 @@ public class Component extends DataType {
         return sbomLink != null;
     }
 
-    public Collection<Component> resolve() throws IOException {
+    /**
+     * Read the linked SBOM (if any) and merge its content with the
+     * one already defined for this component.
+     *
+     * @return the "addtional" components defined in the linked SBOM
+     * that are dependencies of this component.
+     */
+    public synchronized Collection<Component> resolve() throws IOException {
         if (isReference()) {
             return getRef().resolve();
         }
         dieOnCircularReference();
 
         if (sbomLink != null && !sbomLinkResolved) {
+            sbomLinkResolved = true;
+
             Bom bom = readLinkedSbom();
             if (bom.getMetadata() == null) {
                 throw new BuildException("referenced SBOM file lacks metadata");
@@ -439,23 +453,14 @@ public class Component extends DataType {
                 throw new BuildException("referenced SBOM file lacks component");
             }
             List<org.cyclonedx.model.Dependency> allDependencies = bom.getDependencies();
-            fillFrom(real, allDependencies);
+            fillFromBomLink(real, allDependencies);
 
-            List<org.cyclonedx.model.Component> additionalComponents = bom.getComponents();
-            if (additionalComponents != null && !areDependenciesUnknown()) {
-                List<Component> toReturn = new ArrayList<>();
-                for (org.cyclonedx.model.Component c : additionalComponents) {
-                    Component dep = from(c, Collections.emptyList());
-                    if (dependencies.stream().anyMatch(d -> Objects.equals(dep.getBomRef(), d.getBomRef()))) {
-                        // only include "additional components" this component depends on directly.
-                        // we don't want to resolve transitive dependencies automatically
-                        dep.setUnknownDependencies(true);
-                        toReturn.add(dep);
-                    }
+            if (!areDependenciesUnknown() && !dependencies.isEmpty()) {
+                List<org.cyclonedx.model.Component> additionalComponents = bom.getComponents();
+                if (additionalComponents != null) {
+                    return extractComponentsThatAreDirectDependencies(additionalComponents);
                 }
-                return toReturn;
             }
-            sbomLinkResolved = true;
         }
 
         return Collections.emptyList();
@@ -484,14 +489,8 @@ public class Component extends DataType {
         if (scope != null) {
             component.setScope(scope);
         }
+        // add isExternal once VERSION_17 is supported by cyclonedx-java-core
         return component;
-    }
-
-    private static Component from(org.cyclonedx.model.Component real,
-                                  List<org.cyclonedx.model.Dependency> dependencies) {
-        Component c = new Component();
-        c.fillFrom(real, dependencies);
-        return c;
     }
 
     private org.cyclonedx.model.Component toCycloneDxComponent(Version bomVersion)
@@ -548,20 +547,6 @@ public class Component extends DataType {
         if (supplier != null) {
             component.setSupplier(supplier.toOrganizationalEntity());
         }
-        if (!authors.isEmpty()) {
-            component.setAuthors(authors);
-        }
-        if (!properties.isEmpty()) {
-            component.setProperties(properties);
-        }
-        if (!tags.isEmpty()) {
-            component.setTags(new Tags(tags.stream().sorted().collect(Collectors.toList())));
-        }
-        if (!licenses.isEmpty()) {
-            LicenseChoice lc = new LicenseChoice();
-            lc.setLicenses(licenses);
-            component.setLicenses(lc);
-        }
         String purl = getPurl();
         if (purl != null) {
             component.setPurl(purl);
@@ -572,19 +557,45 @@ public class Component extends DataType {
         } else if (!dependencies.isEmpty()) {
             throw new BuildException("a component with dependencies must provide a bomRef");
         }
-        if (!externalReferences.isEmpty()) {
-            component.setExternalReferences(externalReferences);
-        }
+        component.setAuthors(authors);
+        component.setProperties(properties);
+        component.setTags(new Tags(tags.stream().sorted().collect(Collectors.toList())));
+        LicenseChoice lc = new LicenseChoice();
+        lc.setLicenses(licenses);
+        component.setLicenses(lc);
+        component.setExternalReferences(externalReferences);
         for (Component c : nestedComponents) {
             component.addComponent(c.toAdditionalCycloneDxComponent(bomVersion));
         }
-        // add isExternal once VERSION_17 is supported by cyclonedx-java-core
         addHashes(component, bomVersion);
         return component;
     }
 
-    private void fillFrom(org.cyclonedx.model.Component real,
-                          List<org.cyclonedx.model.Dependency> allDependencies) {
+    private List<Component> extractComponentsThatAreDirectDependencies(List<org.cyclonedx.model.Component> cs) {
+        List<Component> toReturn = new ArrayList<>();
+        for (org.cyclonedx.model.Component c : cs) {
+            Component dep = from(c, Collections.emptyList());
+            if (dependencies.stream().anyMatch(d -> Objects.equals(dep.getBomRef(), d.getBomRef()))) {
+                // only include "additional components" this component depends on directly.
+                // we don't want to resolve transitive dependencies automatically
+                dep.setUnknownDependencies(true);
+                toReturn.add(dep);
+            }
+        }
+        return toReturn;
+    }
+
+    private static Component from(
+        org.cyclonedx.model.Component real,
+        List<org.cyclonedx.model.Dependency> dependencies) {
+        Component c = new Component();
+        c.fillFromBomLink(real, dependencies);
+        return c;
+    }
+
+    private void fillFromBomLink(
+        org.cyclonedx.model.Component real,
+        List<org.cyclonedx.model.Dependency> allDependencies) {
         if (type == null) {
             setType(ComponentType.from(real.getType()));
         }
@@ -668,11 +679,11 @@ public class Component extends DataType {
             }
         }
         if (dependencies.isEmpty() && allDependencies != null) {
-            fillDependencies(allDependencies);
+            fillDependenciesFromBomLink(allDependencies);
         }
     }
 
-    private void fillDependencies(List<org.cyclonedx.model.Dependency> allDependencies) {
+    private void fillDependenciesFromBomLink(List<org.cyclonedx.model.Dependency> allDependencies) {
         setUnknownDependencies(true);
         org.cyclonedx.model.Dependency myDependencies = allDependencies
             .stream()
@@ -766,15 +777,16 @@ public class Component extends DataType {
                 return bomRef;
             }
 
+            String refid = componentRef.getRefId();
             Object component = componentRef.getReferencedObject();
             if (component instanceof Component) {
                 String b = ((Component) component).getBomRef();
                 if (b == null) {
-                    throw new BuildException("component with id '" + componentRef.getRefId() + "' doesn't provide a bomRef");
+                    throw new BuildException("component with id '" + refid + "' doesn't provide a bomRef");
                 }
                 return b;
             }
-            throw new BuildException("componentRef '" + componentRef.getRefId() + "' doesn't refer to a component");
+            throw new BuildException("componentRef '" + refid + "' doesn't refer to a component");
         }
 
         static Dependency from(org.cyclonedx.model.Dependency dependency) {

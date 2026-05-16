@@ -914,6 +914,39 @@
   </target>
 
   <target
+      name="testSbomLinkDoesNotUseLinkedSupplierIfManufacturerIsSupplier"
+      depends="createMaximalComponentData">
+    <cdx:componentbom
+        bomName="merged"
+        outputdirectory="${output}"
+        format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component manufacturerIsSupplier="true">
+        <sbomLink>
+          <file file="${output}/bom.json"/>
+        </sbomLink>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/merged.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.name"
+        value="Example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.url"
+        value="https://example.org/"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.supplier.name"
+        value="Example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.supplier.url"
+        value="https://example.org/"/>
+  </target>
+
+  <target
       name="testDataFromLinkedSbomCanBeOverwerittenOrMerged"
       depends="createMaximalComponentData">
     <cdx:componentbom
