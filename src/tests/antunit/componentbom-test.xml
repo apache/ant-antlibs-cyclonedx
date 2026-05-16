@@ -393,6 +393,7 @@
           <file file="resources/cyclonedx-core-java-12.2.0-cyclonedx.json"/>
         </sbomLink>
       </additionalComponent>
+      <license refid="apache-2"/>
     </cdx:componentbom>
     <au:assertFileExists
         xmlns:au="antlib:org.apache.ant.antunit"
@@ -432,6 +433,7 @@
           <exclude name="target/"/>
         </fileset>
       </pureFileComponents>
+      <license refid="apache-2"/>
     </cdx:componentbom>
     <copy todir="${java.io.tmpdir}">
       <fileset dir="${output}" includes="ant-cyclonedx*"/>

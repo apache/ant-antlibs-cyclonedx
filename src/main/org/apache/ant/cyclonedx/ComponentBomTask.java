@@ -28,6 +28,7 @@ import org.cyclonedx.generators.json.BomJsonGenerator;
 import org.cyclonedx.generators.xml.BomXmlGenerator;
 import org.cyclonedx.model.Bom;
 import org.cyclonedx.model.Dependency;
+import org.cyclonedx.model.LicenseChoice;
 import org.cyclonedx.model.LifecycleChoice;
 import org.cyclonedx.model.Lifecycles;
 import org.cyclonedx.model.Metadata;
@@ -48,6 +49,7 @@ public class ComponentBomTask extends Task {
     private Organization supplier = null;
     private boolean useComponentSupplier = false;
     private Union pureFileComponents = new Union();
+    private List<org.cyclonedx.model.License> licenses = new ArrayList<>();
 
     public void setOutputDirectory(File f) {
         outputDirectory = f;
@@ -101,6 +103,13 @@ public class ComponentBomTask extends Task {
         return pureFileComponents;
     }
 
+    /**
+     * Adds a license to the SBOM's metadata.
+     */
+    public void addConfiguredLicense(License l) {
+        licenses.add(l.toCycloneDxLicense());
+    }
+
     public void execute() {
         if (supplier != null && useComponentSupplier) {
             throw new BuildException("can't use component's supplier when there is an explicit supplier");
@@ -131,6 +140,11 @@ public class ComponentBomTask extends Task {
         Metadata meta = new Metadata();
         meta.setTimestamp(new Date());
         meta.setToolChoice(ToolData.getToolInformation(specVersion.getVersion()));
+        if (!licenses.isEmpty()) {
+            LicenseChoice lc = new LicenseChoice();
+            lc.setLicenses(licenses);
+            meta.setLicenses(lc);
+        }
 
         Lifecycles l = new Lifecycles();
         LifecycleChoice lc = new LifecycleChoice();
