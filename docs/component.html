@@ -153,6 +153,39 @@
       describes. This is required if you want to include hashes for
       the component in your SBOM.</p>
 
+    <h4 id="sbomLink">sbomLink</h4>
+
+    <p>At most one resource can be specified
+      as <code>sbomLink</code>. When present the referenced resource is
+      read as CycloneDX SBOM and:</p>
+
+    <ul>
+      <li><code>type</code>, <code>name</code>, <code>group</code>, <code>version</code>,
+        <code>purl</code>, <code>bomRef</code>, <code>scope</code>,
+        <code>decription</code>, <code>publisher</code>, <code>copright</code>,
+        <code>mimeType</code> and <code>manufacturer</code> are taken
+        from the SBOM's metadata component unless they are explicitly
+        specified on the component element itself.</li>
+      <li><code>supplier</code> is taken from the SBOM's metadata
+        component unless it is explicitly specified on the component
+        element itself or <code>manufacturerissupplier</code>
+        is <code>true</code>.</li>
+      <li>Tags are merged wiht those of the SBOM's metadata
+        component.</li>
+      <li><code>author</code>s, <code>license</code>s, <code>exteranlReference</code>s,
+        <code>dependency</code>s and nested <code>components</code>
+        are taken from the SBOM's metadata component if and only if
+        there is no corresponding element in this component
+        element.</li>
+      <li>Hashes of the linked SBOM are ignored completely.</li>
+      <li>Other components specified in the linked SBOM are also added
+        to the SBOM created by the compomentbom task if they are
+        direct dependencies of the current component element. And
+        their dependencies are set to "unknown" as handling of
+        transitive dependencies is beyond the scope of this
+        library.</li>
+    </ul>
+
     <h4 id="manufacturer">manufacturer</h4>
 
     <p>At most one nested <a href="organization.html">organization</a>

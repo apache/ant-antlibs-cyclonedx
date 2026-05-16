@@ -7,8 +7,10 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.Stack;
 import java.util.stream.Collectors;
 
@@ -45,7 +47,7 @@ import org.cyclonedx.util.BomUtils;
  */
 public class Component extends DataType {
     private Resource resource;
-    private org.cyclonedx.model.Component.Type type = org.cyclonedx.model.Component.Type.LIBRARY;
+    private org.cyclonedx.model.Component.Type type;
     private String name;
     private String group;
     private String publisher;
@@ -66,7 +68,7 @@ public class Component extends DataType {
     private boolean unknownDependencies = false;
     private boolean sbomLinkResolved = false;
     private List<OrganizationalContact> authors = new ArrayList<>();
-    private List<Tag> tags = new ArrayList<>();
+    private Set<String> tags = new HashSet<>();
     private List<Property> properties = new ArrayList<>();
     private String mimeType;
     private Union sbomLink;
@@ -205,9 +207,9 @@ public class Component extends DataType {
     /**
      * Adds a tag to the component.
      */
-    public void addTag(Tag tag) {
+    public void addConfiguredTag(Tag tag) {
         checkChildrenAllowed();
-        tags.add(tag);
+        tags.add(tag.getTag());
     }
 
     /**
@@ -428,67 +430,30 @@ public class Component extends DataType {
         dieOnCircularReference();
 
         if (sbomLink != null && !sbomLinkResolved) {
-            if (sbomLink.size() != 1) {
-                throw new BuildException("sbomLink requires exactly one nested resource");
+            Bom bom = readLinkedSbom();
+            if (bom.getMetadata() == null) {
+                throw new BuildException("referenced SBOM file lacks metadata");
             }
-            Resource sbom = sbomLink.iterator().next();
-            try (InputStream data = sbom.getInputStream();
-                 ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                byte[] buf = new byte[4096];
-                int count = data.read(buf, 0, buf.length);
-                while (count >= 0) {
-                    baos.write(buf, 0, count);
-                    count = data.read(buf, 0, buf.length);
+            org.cyclonedx.model.Component real = bom.getMetadata().getComponent();
+            if (real == null) {
+                throw new BuildException("referenced SBOM file lacks component");
+            }
+            List<org.cyclonedx.model.Dependency> allDependencies = bom.getDependencies();
+            fillFrom(real, allDependencies);
+
+            List<org.cyclonedx.model.Component> additionalComponents = bom.getComponents();
+            if (additionalComponents != null && !areDependenciesUnknown()) {
+                List<Component> toReturn = new ArrayList<>();
+                for (org.cyclonedx.model.Component c : additionalComponents) {
+                    Component dep = from(c, Collections.emptyList());
+                    if (dependencies.stream().anyMatch(d -> Objects.equals(dep.getBomRef(), d.getBomRef()))) {
+                        // only include "additional components" this component depends on directly.
+                        // we don't want to resolve transitive dependencies automatically
+                        dep.setUnknownDependencies(true);
+                        toReturn.add(dep);
+                    }
                 }
-                byte[] content = baos.toByteArray();
-                try {
-                    Parser parser = BomParserFactory.createParser(content);
-                    Bom bom = parser.parse(content);
-                    if (bom.getMetadata() == null) {
-                        throw new BuildException("referenced SBOM file lacks metadata");
-                    }
-                    org.cyclonedx.model.Component real = bom.getMetadata().getComponent();
-                    if (real == null) {
-                        throw new BuildException("referenced SBOM file lacks component");
-                    }
-                    fillFrom(real);
-
-                    List<org.cyclonedx.model.Dependency> allDependencies = bom.getDependencies();
-                    if (allDependencies != null) {
-                        setUnknownDependencies(true);
-                        org.cyclonedx.model.Dependency myDependencies = allDependencies
-                            .stream()
-                            .filter(d -> Objects.equals(d.getRef(), getBomRef()))
-                            .findAny()
-                            .orElse(null);
-                        if (myDependencies != null && myDependencies.getDependencies() != null) {
-                            setUnknownDependencies(false);
-                            dependencies.clear();
-                            dependencies
-                                .addAll(myDependencies.getDependencies()
-                                        .stream()
-                                        .map(Dependency::from)
-                                        .collect(Collectors.toList()));
-                        }
-                    }
-
-                    List<org.cyclonedx.model.Component> additionalComponents = bom.getComponents();
-                    if (additionalComponents != null && !areDependenciesUnknown()) {
-                        List<Component> toReturn = new ArrayList<>();
-                        for (org.cyclonedx.model.Component c : additionalComponents) {
-                            Component dep = from(c);
-                            if (dependencies.stream().anyMatch(d -> Objects.equals(dep.getBomRef(), d.getBomRef()))) {
-                                // we don't want to resolve transitive dependencies automatically
-                                dep.setUnknownDependencies(true);
-                                toReturn.add(dep);
-                            }
-                        }
-                        return toReturn;
-                    }
-
-                } catch (ParseException ex) {
-                    throw new BuildException("failed to parse sbomlink " + sbom.getName());
-                }
+                return toReturn;
             }
             sbomLinkResolved = true;
         }
@@ -522,9 +487,10 @@ public class Component extends DataType {
         return component;
     }
 
-    private static Component from(org.cyclonedx.model.Component real) {
+    private static Component from(org.cyclonedx.model.Component real,
+                                  List<org.cyclonedx.model.Dependency> dependencies) {
         Component c = new Component();
-        c.fillFrom(real);
+        c.fillFrom(real, dependencies);
         return c;
     }
 
@@ -548,7 +514,11 @@ public class Component extends DataType {
 
         org.cyclonedx.model.Component component = new org.cyclonedx.model.Component();
 
-        component.setType(type);
+        if (type != null) {
+            component.setType(type);
+        } else {
+            component.setType(org.cyclonedx.model.Component.Type.LIBRARY);
+        }
         component.setName(name);
         if (group != null) {
             component.setGroup(group);
@@ -585,9 +555,7 @@ public class Component extends DataType {
             component.setProperties(properties);
         }
         if (!tags.isEmpty()) {
-            Tags ts = new Tags();
-            ts.setTags(tags.stream().map(t -> t.getTag()).collect(Collectors.toList()));
-            component.setTags(ts);
+            component.setTags(new Tags(tags.stream().sorted().collect(Collectors.toList())));
         }
         if (!licenses.isEmpty()) {
             LicenseChoice lc = new LicenseChoice();
@@ -615,62 +583,109 @@ public class Component extends DataType {
         return component;
     }
 
-    private void fillFrom(org.cyclonedx.model.Component real) {
-        setType(ComponentType.from(real.getType()));
-        setName(real.getName());
-        setGroup(real.getGroup());
-        setVersion(real.getVersion());
-        setDescription(real.getDescription());
-        setPublisher(real.getPublisher());
-        setCopyright(real.getCopyright());
-        setMimeType(real.getMimeType());
-        setPurl(real.getPurl());
-        setBomRef(real.getBomRef());
-        if (real.getScope() != null) {
+    private void fillFrom(org.cyclonedx.model.Component real,
+                          List<org.cyclonedx.model.Dependency> allDependencies) {
+        if (type == null) {
+            setType(ComponentType.from(real.getType()));
+        }
+        if (getBomRef() == null) {
+            setBomRef(real.getBomRef());
+        }
+        if (getPurl() == null) {
+            setPurl(real.getPurl());
+        }
+        if (name == null) {
+            setName(real.getName());
+        }
+        if (group == null) {
+            setGroup(real.getGroup());
+        }
+        if (version == null) {
+            setVersion(real.getVersion());
+        }
+        if (scope == null && real.getScope() != null) {
             setScope(ComponentScope.from(real.getScope()));
         }
-        OrganizationalEntity manufacturer = real.getManufacturer();
-        if (manufacturer != null) {
-            this.manufacturer = Organization.from(manufacturer);
+        // copy isExternal once CycloneDX Core supports it
+        if (description == null) {
+            setDescription(real.getDescription());
         }
-        OrganizationalEntity supplier = real.getSupplier();
-        if (supplier != null) {
-            this.supplier = Organization.from(supplier);
+        if (publisher == null) {
+            setPublisher(real.getPublisher());
         }
-        LicenseChoice licenses = real.getLicenses();
-        if (licenses != null) {
-            this.licenses.clear();
-            this.licenses.addAll(licenses.getLicenses());
+        if (copyright == null) {
+            setCopyright(real.getCopyright());
         }
-        if (real.getExternalReferences() != null) {
-            this.externalReferences.clear();
-            this.externalReferences.addAll(real.getExternalReferences());
+        if (mimeType == null) {
+            setMimeType(real.getMimeType());
         }
-        if (real.getAuthors() != null) {
-            authors.clear();
-            authors.addAll(real.getAuthors());
+        if (manufacturer == null) {
+            OrganizationalEntity realManufacturer = real.getManufacturer();
+            if (realManufacturer != null) {
+                manufacturer = Organization.from(realManufacturer);
+            }
         }
-        if (real.getProperties() != null) {
-            properties.clear();
-            properties.addAll(real.getProperties());
+        if (supplier == null && !manufacturerIsSupplier) {
+            OrganizationalEntity realSupplier = real.getSupplier();
+            if (realSupplier != null) {
+                supplier = Organization.from(realSupplier);
+            }
+        }
+        if (licenses.isEmpty()) {
+            LicenseChoice realLicenses = real.getLicenses();
+            if (realLicenses != null) {
+                licenses.addAll(realLicenses.getLicenses());
+            }
+        }
+        if (externalReferences.isEmpty()) {
+            List<org.cyclonedx.model.ExternalReference> realExternalReferences =
+                real.getExternalReferences();
+            if (realExternalReferences != null) {
+                externalReferences.addAll(realExternalReferences);
+            }
+        }
+        if (authors.isEmpty()) {
+            List<OrganizationalContact> realAuthors = real.getAuthors();
+            if (realAuthors != null) {
+                authors.addAll(realAuthors);
+            }
+        }
+        if (properties.isEmpty()) {
+            List<Property> realProperties = real.getProperties();
+            if (realProperties != null) {
+                properties.addAll(realProperties);
+            }
         }
         if (real.getTags() != null && real.getTags().getTags() != null) {
-            tags.clear();
-            tags.addAll(real.getTags().getTags()
-                        .stream()
-                        .map(t -> {
-                                Tag tag = new Tag();
-                                tag.addText(t);
-                                return tag;
-                            })
-                        .collect(Collectors.toList()));
+            tags.addAll(real.getTags().getTags());
         }
-        if (real.getComponents() != null) {
-            nestedComponents.clear();
-            nestedComponents.addAll(real.getComponents()
-                                    .stream()
-                                    .map(Component::from)
-                                    .collect(Collectors.toList()));
+        if (nestedComponents.isEmpty()) {
+            List<org.cyclonedx.model.Component> realComponents = real.getComponents();
+            if (realComponents != null) {
+                nestedComponents.addAll(realComponents.stream()
+                                        .map(c -> Component.from(c, allDependencies))
+                                        .collect(Collectors.toList()));
+            }
+        }
+        if (dependencies.isEmpty() && allDependencies != null) {
+            fillDependencies(allDependencies);
+        }
+    }
+
+    private void fillDependencies(List<org.cyclonedx.model.Dependency> allDependencies) {
+        setUnknownDependencies(true);
+        org.cyclonedx.model.Dependency myDependencies = allDependencies
+            .stream()
+            .filter(d -> Objects.equals(d.getRef(), getBomRef()))
+            .findAny()
+            .orElse(null);
+        if (myDependencies != null && myDependencies.getDependencies() != null) {
+            setUnknownDependencies(false);
+            dependencies
+                .addAll(myDependencies.getDependencies()
+                        .stream()
+                        .map(Dependency::from)
+                        .collect(Collectors.toList()));
         }
     }
 
@@ -694,6 +709,29 @@ public class Component extends DataType {
         }
 
         component.setHashes(BomUtils.calculateHashes(file, bomVersion));
+    }
+
+    private Bom readLinkedSbom() throws IOException {
+        if (sbomLink.size() != 1) {
+            throw new BuildException("sbomLink requires exactly one nested resource");
+        }
+        Resource sbom = sbomLink.iterator().next();
+        try (InputStream data = sbom.getInputStream();
+             ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+            byte[] buf = new byte[4096];
+            int count = data.read(buf, 0, buf.length);
+            while (count >= 0) {
+                baos.write(buf, 0, count);
+                count = data.read(buf, 0, buf.length);
+            }
+            byte[] content = baos.toByteArray();
+            try {
+                Parser parser = BomParserFactory.createParser(content);
+                return parser.parse(content);
+            } catch (ParseException ex) {
+                throw new BuildException("failed to parse sbomlink " + sbom.getName(), ex);
+            }
+        }
     }
 
     /**

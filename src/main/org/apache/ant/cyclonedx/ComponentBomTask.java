@@ -142,7 +142,15 @@ public class ComponentBomTask extends Task {
             throw new BuildException("nested component element is required");
         }
         Set<String> knownComponents = new HashSet<>();
-        visitAllComponents(c -> knownComponents.add(getUnversionedCoordinates(c)));
+        List<Component> resolvedComponents = new ArrayList<>();
+        visitAllComponents(c -> {
+                try {
+                    resolvedComponents.addAll(c.resolve());
+                } catch (IOException ex) {
+                    throw new BuildException("failed to resolve component", ex);
+                }
+                knownComponents.add(getUnversionedCoordinates(c));
+            });
         meta.setComponent(component.toMainCycloneDxComponent(specVersion.getVersion()));
         if (useComponentSupplier) {
             OrganizationalEntity componentSupplier = meta.getComponent().getSupplier();
@@ -160,13 +168,14 @@ public class ComponentBomTask extends Task {
 
         bom.setMetadata(meta);
 
-        if (!additionalComponents.isEmpty() || pureFileComponents.size() > 0) {
-            List<org.cyclonedx.model.Component> cs = new ArrayList<>();
-            List<Component> resolvedComponents = new ArrayList<>();
+        List<org.cyclonedx.model.Component> cs = new ArrayList<>();
+        if (!additionalComponents.isEmpty()) {
             for (Component c : additionalComponents) {
-                resolvedComponents.addAll(c.resolve());
                 cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
             }
+        }
+
+        if (!resolvedComponents.isEmpty()) {
             for (Component c : resolvedComponents) {
                 String componentKey = getUnversionedCoordinates(c);
                 if (!knownComponents.contains(componentKey)) {
@@ -174,6 +183,9 @@ public class ComponentBomTask extends Task {
                     cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
                 }
             }
+        }
+
+        if (pureFileComponents.size() > 0) {
             for (Resource r : pureFileComponents) {
                 Component c = new Component();
                 c.setProject(getProject());
@@ -182,9 +194,9 @@ public class ComponentBomTask extends Task {
                 c.setType(ComponentType.from(org.cyclonedx.model.Component.Type.FILE));
                 cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
             }
-            bom.setComponents(cs);
         }
 
+        bom.setComponents(cs);
         addDependencies(bom);
 
         return bom;

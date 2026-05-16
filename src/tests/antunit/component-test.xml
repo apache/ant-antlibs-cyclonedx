@@ -177,9 +177,9 @@
     </cdx:componentbom>
   </target>
 
-  <target name="testMaximalComponentData">
+  <target name="createMaximalComponentData" depends="setUp">
     <checksum property="ant.file.sha256" file="${ant.file}" algorithm="SHA-256"/>
-    <cdx:componentbom outputdirectory="${output}" format="xml"
+    <cdx:componentbom outputdirectory="${output}" format="all"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component
           name="testname"
@@ -199,12 +199,18 @@
         </supplier>
         <license name="My License"/>
         <externalReference type="WEBSITE" url="https://example.com/"/>
-        <component name="other-test" group="org.example" version="1.1"/>
+        <component name="other-test" group="org.example" version="1.1"
+                   unknownDependencies="true"/>
         <author name="Author" email="author@example.org"/>
         <tag>label</tag>
         <property name="foo" value="bar"/>
+        <dependency bomRef="some-dependency"/>
       </component>
+      <additionalComponent name="dep" bomRef="some-dependency"/>
     </cdx:componentbom>
+  </target>
+
+  <target name="testMaximalComponentData" depends="createMaximalComponentData">
     <xmlproperty file="${output}/bom.xml"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
@@ -242,6 +248,10 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.component(bom-ref)"
         value="pkg:maven/org.example/testname@1.0?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.description"
+        value="My Test Library"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.component.authors.author.name"
@@ -314,6 +324,14 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.xml"
         value='&lt;url&gt;https://example.com/&lt;/url&gt;'/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.dependencies.dependency(ref)"
+        value="pkg:maven/org.example/testname@1.0?type=jar,some-dependency"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.dependencies.dependency.dependency(ref)"
+        value="some-dependency"/>
   </target>
 
   <target name="testManufacturerIsNotCopiedToSupplierByDefault">
@@ -474,7 +492,6 @@
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="foo" bomRef="foo" unknownDependencies="true"/>
     </cdx:componentbom>
-    <copy todir="/tmp" file="${output}/bom.json"/>
     <au:assertResourceContains
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.json"
@@ -747,5 +764,314 @@
         <component/>
       </cdx:component>
     </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:component refid="foo"
+                     xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <sbomLink/>
+      </cdx:component>
+    </au:expectfailure>
+  </target>
+
+  <target name="testSbomLinkUsesDataFromLinkedSbom" depends="createMaximalComponentData">
+    <cdx:componentbom
+        bomName="merged"
+        outputdirectory="${output}"
+        format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component>
+        <sbomLink>
+          <file file="${output}/bom.json"/>
+        </sbomLink>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/merged.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.name"
+        value="testname"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(type)"
+        value="library"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.group"
+        value="org.example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.version"
+        value="1.0"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.publisher"
+        value="test publisher"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.copyright"
+        value="Copyright 2026 ACME Com"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(mime-type)"
+        value="text/plain"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.purl"
+        value="pkg:maven/org.example/testname@1.0?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(bom-ref)"
+        value="pkg:maven/org.example/testname@1.0?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.description"
+        value="My Test Library"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.authors.author.name"
+        value="Author"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.authors.author.email"
+        value="author@example.org"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.name"
+        value="Example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.url"
+        value="https://example.org/"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.supplier.name"
+        value="Example 2"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.supplier.url"
+        value="https://example.com/"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.license.name"
+        value="My License"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.tags.tag"
+        value="label"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.properties.property(name)"
+        value="foo"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.properties.property"
+        value="bar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.name"
+        value="other-test"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component(type)"
+        value="library"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.group"
+        value="org.example"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.version"
+        value="1.1"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.purl"
+        value="pkg:maven/org.example/other-test@1.1?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component(bom-ref)"
+        value="pkg:maven/org.example/other-test@1.1?type=jar"/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.xml"
+        value='&lt;url&gt;https://example.com/&lt;/url&gt;'/>
+    <!-- some dependency is not here as we explicitly set the its
+         dependencies to unknown. We don't want top open the can of
+         transitive dependency worms -->
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.dependencies.dependency(ref)"
+        value="pkg:maven/org.example/testname@1.0?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.dependencies.dependency.dependency(ref)"
+        value="some-dependency"/>
+    <!-- ensure hashes are not taken from the linked SBOM -->
+    <au:assertResourceDoesntContain
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/merged.xml"
+        value='&lt;hash alg="SHA-256"&gt;${ant.file.sha256}&lt;/hash&gt;'/>
+  </target>
+
+  <target
+      name="testDataFromLinkedSbomCanBeOverwerittenOrMerged"
+      depends="createMaximalComponentData">
+    <cdx:componentbom
+        bomName="merged"
+        outputdirectory="${output}"
+        format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component
+          type="APPLICATION"
+          name="testname2"
+          group="org.example2"
+          version="2.0"
+          description="My Second Test Library"
+          publisher="test2 publisher"
+          copyright="Copyright 2026 ACME Corp"
+          mimeType="text/xml"
+          >
+        <file file="${ant.file}"/>
+        <manufacturer name="Example 3">
+          <url url="https://example.org/3"/>
+        </manufacturer>
+        <supplier name="Example 4">
+          <url url="https://example.com/4"/>
+        </supplier>
+        <license name="My Other License"/>
+        <externalReference type="WEBSITE" url="https://example.org/site"/>
+        <component name="yet-another-test" group="org.example2"
+                   version="1.2" unknownDependencies="true"/>
+        <author name="Author2" email="author2@example.org"/>
+        <tag>label2</tag>
+        <property name="xyzzy" value="baz"/>
+        <dependency bomRef="my-own-dependency"/>
+        <sbomLink>
+          <file file="${output}/bom.json"/>
+        </sbomLink>
+      </component>
+      <additionalComponent name="my-own-dependency" bomRef="my-own-dependency"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/merged.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.name"
+        value="testname2"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(type)"
+        value="application"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.group"
+        value="org.example2"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.version"
+        value="2.0"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.publisher"
+        value="test2 publisher"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.copyright"
+        value="Copyright 2026 ACME Corp"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(mime-type)"
+        value="text/xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.purl"
+        value="pkg:maven/org.example2/testname2@2.0?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component(bom-ref)"
+        value="pkg:maven/org.example2/testname2@2.0?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.description"
+        value="My Second Test Library"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.authors.author.name"
+        value="Author2"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.authors.author.email"
+        value="author2@example.org"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.name"
+        value="Example 3"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.manufacturer.url"
+        value="https://example.org/3"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.supplier.name"
+        value="Example 4"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.supplier.url"
+        value="https://example.com/4"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.license.name"
+        value="My Other License"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.tags.tag"
+        value="label,label2"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.properties.property(name)"
+        value="xyzzy"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.properties.property"
+        value="baz"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.name"
+        value="yet-another-test"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component(type)"
+        value="library"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.group"
+        value="org.example2"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.version"
+        value="1.2"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component.purl"
+        value="pkg:maven/org.example2/yet-another-test@1.2?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.components.component(bom-ref)"
+        value="pkg:maven/org.example2/yet-another-test@1.2?type=jar"/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/merged.xml"
+        value='&lt;url&gt;https://example.org/site&lt;/url&gt;'/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/merged.xml"
+        value='&lt;hash alg="SHA-256"&gt;${ant.file.sha256}&lt;/hash&gt;'/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.dependencies.dependency(ref)"
+        value="pkg:maven/org.example2/testname2@2.0?type=jar,my-own-dependency"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.dependencies.dependency.dependency(ref)"
+        value="my-own-dependency"/>
   </target>
 </project>
