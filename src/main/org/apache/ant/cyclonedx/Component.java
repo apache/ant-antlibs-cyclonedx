@@ -466,6 +466,15 @@ public class Component extends DataType {
         return Collections.emptyList();
     }
 
+    public static Component createFileComponent(Project project, Resource r) {
+        Component c = new Component();
+        c.setProject(project);
+        c.add(r);
+        c.setName(r.getName());
+        c.setType(ComponentType.from(org.cyclonedx.model.Component.Type.FILE));
+        return c;
+    }
+
     org.cyclonedx.model.Component toMainCycloneDxComponent(Version bomVersion)
         throws IOException {
         if (isReference()) {

@@ -90,6 +90,9 @@ public class ComponentBomTask extends Task {
         this.useComponentSupplier = useComponentSupplier;
     }
 
+    /**
+     * Sets the component for the SBOM.
+     */
     public Component createComponent() {
         if (component != null) {
             throw new BuildException("only one nested component element is permitted");
@@ -98,10 +101,11 @@ public class ComponentBomTask extends Task {
         return component;
     }
 
-    public void addAdditionalComponent(Component c) {
-        additionalComponents.add(c);
-    }
-
+    /**
+     * Sets the manufacturer of the component.
+     *
+     * <p>At most one manufacturer can be set.</p>
+     */
     public Organization createManufacturer() {
         if (manufacturer != null) {
             throw new BuildException("can only have one manufacturer");
@@ -110,6 +114,11 @@ public class ComponentBomTask extends Task {
         return manufacturer;
     }
 
+    /**
+     * Sets the supplier of the component.
+     *
+     * <p>At most one supplier can be set.</p>
+     */
     public Organization createSupplier() {
         if (supplier != null) {
             throw new BuildException("can only have one supplier");
@@ -118,15 +127,26 @@ public class ComponentBomTask extends Task {
         return supplier;
     }
 
-    public Union createPureFileComponents() {
-        return pureFileComponents;
-    }
-
     /**
      * Adds a license to the SBOM's metadata.
      */
     public void addConfiguredLicense(License l) {
         licenses.add(l.toCycloneDxLicense());
+    }
+
+    /**
+     * Adds another component to the SBOM.
+     */
+    public void addAdditionalComponent(Component c) {
+        additionalComponents.add(c);
+    }
+
+    /**
+     * Accepts arbitrary file-system only resources that will be added
+     * as components of type file.
+     */
+    public Union createPureFileComponents() {
+        return pureFileComponents;
     }
 
     public void execute() {
@@ -138,6 +158,9 @@ public class ComponentBomTask extends Task {
         }
         if (pureFileComponents.size() > 0 && !pureFileComponents.isFilesystemOnly()) {
             throw new BuildException("only file system resources are supported for pureFileComponents");
+        }
+        if (component == null) {
+            throw new BuildException("nested component element is required");
         }
 
         try {
@@ -155,6 +178,55 @@ public class ComponentBomTask extends Task {
         Bom bom = new Bom();
         bom.setSerialNumber("urn:uuid:" + UUID.randomUUID());
 
+        Metadata meta = createMetadata();
+
+        Set<String> knownComponents = new HashSet<>();
+        List<Component> resolvedComponents = new ArrayList<>();
+        visitAllComponents(c -> {
+                try {
+                    resolvedComponents.addAll(c.resolve());
+                } catch (IOException ex) {
+                    throw new BuildException("failed to resolve component", ex);
+                }
+                knownComponents.add(getUnversionedCoordinates(c));
+            });
+        meta.setComponent(component.toMainCycloneDxComponent(specVersion.getVersion()));
+
+        if (useComponentSupplier) {
+            OrganizationalEntity componentSupplier = meta.getComponent().getSupplier();
+            if (componentSupplier == null) {
+                throw new BuildException("useComponentSupplier is true but component supplier is null");
+            }
+            meta.setSupplier(componentSupplier);
+        }
+
+        bom.setMetadata(meta);
+
+        List<org.cyclonedx.model.Component> cs = new ArrayList<>();
+        for (Component c : additionalComponents) {
+            cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
+        }
+
+        for (Component c : resolvedComponents) {
+            String componentKey = getUnversionedCoordinates(c);
+            if (!knownComponents.contains(componentKey)) {
+                knownComponents.add(componentKey);
+                cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
+            }
+        }
+
+        for (Resource r : pureFileComponents) {
+            Component c = Component.createFileComponent(getProject(), r);
+            cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
+        }
+
+        bom.setComponents(cs);
+        addDependencies(bom);
+
+        return bom;
+    }
+
+    private Metadata createMetadata() throws IOException {
         Metadata meta = new Metadata();
         meta.setTimestamp(new Date());
         meta.setToolChoice(ToolData.getToolInformation(specVersion.getVersion()));
@@ -170,27 +242,6 @@ public class ComponentBomTask extends Task {
         l.setLifecycleChoice(Collections.singletonList(lc));
         meta.setLifecycles(l);
 
-        if (component == null) {
-            throw new BuildException("nested component element is required");
-        }
-        Set<String> knownComponents = new HashSet<>();
-        List<Component> resolvedComponents = new ArrayList<>();
-        visitAllComponents(c -> {
-                try {
-                    resolvedComponents.addAll(c.resolve());
-                } catch (IOException ex) {
-                    throw new BuildException("failed to resolve component", ex);
-                }
-                knownComponents.add(getUnversionedCoordinates(c));
-            });
-        meta.setComponent(component.toMainCycloneDxComponent(specVersion.getVersion()));
-        if (useComponentSupplier) {
-            OrganizationalEntity componentSupplier = meta.getComponent().getSupplier();
-            if (componentSupplier == null) {
-                throw new BuildException("useComponentSupplier is true but component supplier is null");
-            }
-            meta.setSupplier(componentSupplier);
-        }
         if (supplier != null) {
             meta.setSupplier(supplier.toOrganizationalEntity());
         }
@@ -198,40 +249,7 @@ public class ComponentBomTask extends Task {
             meta.setManufacturer(manufacturer.toOrganizationalEntity());
         }
 
-        bom.setMetadata(meta);
-
-        List<org.cyclonedx.model.Component> cs = new ArrayList<>();
-        if (!additionalComponents.isEmpty()) {
-            for (Component c : additionalComponents) {
-                cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
-            }
-        }
-
-        if (!resolvedComponents.isEmpty()) {
-            for (Component c : resolvedComponents) {
-                String componentKey = getUnversionedCoordinates(c);
-                if (!knownComponents.contains(componentKey)) {
-                    knownComponents.add(componentKey);
-                    cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
-                }
-            }
-        }
-
-        if (pureFileComponents.size() > 0) {
-            for (Resource r : pureFileComponents) {
-                Component c = new Component();
-                c.setProject(getProject());
-                c.add(r);
-                c.setName(r.getName());
-                c.setType(ComponentType.from(org.cyclonedx.model.Component.Type.FILE));
-                cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
-            }
-        }
-
-        bom.setComponents(cs);
-        addDependencies(bom);
-
-        return bom;
+        return meta;
     }
 
     private void addDependencies(Bom bom) {

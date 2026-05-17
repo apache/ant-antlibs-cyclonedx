@@ -404,6 +404,55 @@
         value="pkg:maven/org.example/testname2-child@1.0?type=jar,pkg:maven/org.example/testname-grand-child@1.0?type=jar"/>
   </target>
 
+  <target name="testPureFileComponentsMustNotContainNonFileResources">
+    <au:expectfailure expectedMessage="only file system resources are supported for pureFileComponents"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom outputdirectory="${output}" format="xml"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname"/>
+        <pureFileComponents>
+          <url url="https://example.org/"/>
+        </pureFileComponents>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testDependencyMustExist">
+    <au:expectfailure expectedMessage="dependency 'test' is unknown"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom outputdirectory="${output}" format="xml"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname" bomref="foo">
+          <dependency bomref="test"/>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testPureFileComponentsAddsFileComponents">
+    <checksum property="ant.file.sha256" file="${ant.file}" algorithm="SHA-256"/>
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname"/>
+      <pureFileComponents>
+        <file file="${ant.file}"/>
+      </pureFileComponents>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.name"
+        value="componentbom-test.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component(type)"
+        value="file"/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.xml"
+        value='&lt;hash alg="SHA-256"&gt;${ant.file.sha256}&lt;/hash&gt;'/>
+  </target>
+
   <target name="testAntlibsOwnBom" depends="commonReferences">
     <cdx:componentbom
         bomName="ant-cyclonedx-${artifact.version}-cyclonedx"
@@ -484,6 +533,7 @@
           <exclude name="ivy/"/>
           <exclude name="lib/"/>
           <exclude name="target/"/>
+          <exclude name="examples/"/>
         </fileset>
       </pureFileComponents>
       <license refid="apache-2"/>

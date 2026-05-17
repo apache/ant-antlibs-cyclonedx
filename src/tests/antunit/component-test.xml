@@ -895,7 +895,7 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.xml"
         value='&lt;url&gt;https://example.com/&lt;/url&gt;'/>
-    <!-- some dependency is not here as we explicitly set the its
+    <!-- some-dependency is not here as we explicitly set the its
          dependencies to unknown. We don't want top open the can of
          transitive dependency worms -->
     <au:assertPropertyEquals

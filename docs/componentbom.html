@@ -33,6 +33,14 @@
       required that specifies the component to create an SBOM
       for.</p>
 
+    <p>Components that get "resolved" because they specify
+      an <code>sbomLink</code> can add more components to the SBOM than
+      are specified explicitly via the child elements of this
+      task.</p>
+
+    <p>It is an error if any component specifies a dependency on a
+      component that is not part of the generated SBOM.</p>
+
     <h3>Attributes</h3>
 
     <table class="attr">
@@ -93,5 +101,93 @@
     </table>
 
     <h3>Nested elements</h3>
+
+    <h4>component</h4>
+
+    <p>Exactly one <code>component</code> child element is
+      required - this is the component the SBOM is about.</p>
+
+    <p>The structure is the same as of
+      the <a href="component.html">component</a>
+      type. The <code>scope</code> attribute is prohibited for this
+      child element and <code>isExternal</code> must not
+      be <code>true</code>.</p>
+
+    <h4 id="manufacturer">manufacturer</h4>
+
+    <p>At most one nested <a href="organization.html">organization</a>
+      specifies the manufacturer of the SBOM.</p>
+
+    <h4 id="supplier">supplier</h4>
+
+    <p>At most one nested <a href="organization.html">organization</a>
+      specifies the supplier of the SBOM.</p>
+
+    <p>This is prohibited if the <code>useComponentSupplier</code>
+      attribute is set to <code>true</code>.</p>
+
+    <h4>license</h4>
+
+    <p>A nested <a href="license.html">license</a> specifies the
+      license information of the SBOM.</p>
+
+    <h4>additionalComponent</h4>
+
+    <p><code>additionalComponent</code> child elements
+      specify <a href="component.html">component</a>s that are part of
+      the SBOM but not the main entity. They are required for
+      (transitive) dependencies of the main component but may also be
+      present for different reasons.</p>
+
+    <h4>pureFileComponents</h4>
+
+    <p><code>pureFileComponents</code> is a container for arbitrary
+      resources or resource collections. Only file-system resources
+      are allowed.</p>
+
+    <p>Each file contained in the nested children will be added as
+      component of type <code>file</code> to the SBOM. The name will
+      be the (relative) file name and hashes are calculated.</p>
+
+    <p>This is useful when describing the contents of a tarball for
+      example.</p>
+
+
+    <h3>Examples</h3>
+
+    <p>The following task could be used to create the SBOM of the
+      source tarball of this Ant library:</p>
+
+    <pre>
+    &lt;cdx:componentbom
+        bomName="ant-cyclonedx-${artifact.version}-src.tar-cyclonedx"
+        outputdirectory="${output}"
+        format="all"
+        useComponentSupplier="true"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      &lt;component
+          name="ant-cyclonedx-src.tar"
+          version="${artifact.version}"
+          description="Apache CycloneDX Antlib Source Distribution"
+          publisher="The Apache Software Foundation"
+          type="FILE"
+          manufacturerIsSupplier="true">
+        &lt;manufacturer refid="ant-team"/>
+        &lt;license refid="apache-2"/>
+        &lt;externalReferenceSet refid="antlib-ext-refs"/>
+      &lt;/component>
+      &lt;pureFileComponents>
+        &lt;fileset dir="../../..">
+          &lt;exclude name="build/"/>
+          &lt;exclude name="docs/style.css"/>
+          &lt;exclude name="ivy/"/>
+          &lt;exclude name="lib/"/>
+          &lt;exclude name="target/"/>
+          &lt;exclude name="examples/"/>
+        &lt;/fileset>
+      &lt;/pureFileComponents>
+      &lt;license refid="apache-2"/>
+    &lt;/cdx:componentbom>
+    </pre>
   </body>
 </html>

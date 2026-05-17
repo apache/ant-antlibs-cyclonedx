@@ -183,7 +183,15 @@
         direct dependencies of the current component element. And
         their dependencies are set to "unknown" as handling of
         transitive dependencies is beyond the scope of this
-        library.</li>
+        library.<br/>
+        Components specified explicitly in the SBOM take precedence
+        over those found by parsing an SBOM link. If there already
+        exists a component as part of the SBOM with the same name and
+        group as one read from the linked SBOM, the linked component
+        will be ignored. Here the version is ignored, it is assumed
+        the component explicitly specified is the result of a process
+        that resolved conflicts in dependency versions.
+      </li>
     </ul>
 
     <p>The <a hre="https://github.com/CycloneDX/cyclonedx-core-java">CycloneDX
