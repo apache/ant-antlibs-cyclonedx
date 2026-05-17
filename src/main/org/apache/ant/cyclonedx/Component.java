@@ -417,18 +417,6 @@ public class Component extends DataType {
     }
 
     /**
-     * Whether this component links to an external SBOM and wants to
-     * read data from it.
-     */
-    public boolean hasSbomLink() {
-        if (isReference()) {
-            return getRef().hasSbomLink();
-        }
-        dieOnCircularReference();
-        return sbomLink != null;
-    }
-
-    /**
      * Read the linked SBOM (if any) and merge its content with the
      * one already defined for this component.
      *
