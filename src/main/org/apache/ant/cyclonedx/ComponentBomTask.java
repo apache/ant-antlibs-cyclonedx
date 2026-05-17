@@ -43,6 +43,7 @@ public class ComponentBomTask extends Task {
     private SpecVersion specVersion = SpecVersion.DEFAULT;
     private OutputFormat format = OutputFormat.JSON;
     private Component component;
+    private List<Component> toolComponents = new ArrayList<>();
     private List<Component> additionalComponents = new ArrayList<>();
     private Organization manufacturer = null;
     private Organization supplier = null;
@@ -142,6 +143,17 @@ public class ComponentBomTask extends Task {
     }
 
     /**
+     * Adds component to be added to the metadata.tools section of the
+     * SBOM.
+     *
+     * <p>This is meant to be used by tools that have also taken part
+     * in the generation of thsi SBOM.</p>
+     */
+    public void addToolComponent(Component c) {
+        toolComponents.add(c);
+    }
+
+    /**
      * Accepts arbitrary file-system only resources that will be added
      * as components of type file.
      */
@@ -230,6 +242,14 @@ public class ComponentBomTask extends Task {
         Metadata meta = new Metadata();
         meta.setTimestamp(new Date());
         meta.setToolChoice(ToolData.getToolInformation(specVersion.getVersion()));
+        if (!toolComponents.isEmpty()) {
+            List<org.cyclonedx.model.Component> tools =
+                new ArrayList(meta.getToolChoice().getComponents());
+            for (Component c : toolComponents) {
+                tools .add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
+            }
+            meta.getToolChoice().setComponents(tools);
+        }
         if (!licenses.isEmpty()) {
             LicenseChoice lc = new LicenseChoice();
             lc.setLicenses(licenses);

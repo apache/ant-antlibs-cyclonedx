@@ -168,6 +168,19 @@
         value="The Apache Software Foundation"/>
   </target>
 
+  <target name="testMulipleTools">
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="test"/>
+      <toolComponent name="extra-tool"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.tools.components.component.name"
+        value="ant-cyclonedx,extra-tool"/>
+  </target>
+
   <target name="testSupplierAndManufacturerInMeta">
     <cdx:organization name="Example" id="example"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
