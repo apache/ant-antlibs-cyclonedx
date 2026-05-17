@@ -25,7 +25,7 @@ public class ExternalReferenceSet extends DataType {
         externalReferences.add(ref.toCycloneDxExternalReference());
     }
 
-    Collection<org.cyclonedx.model.ExternalReference> getExternalReferences() {
+    public Collection<org.cyclonedx.model.ExternalReference> getExternalReferences() {
         if (isReference()) {
             return getRef().getExternalReferences();
         }

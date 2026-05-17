@@ -40,7 +40,7 @@ public class Organization extends DataType {
         urls.add(url.getURL().toExternalForm());
     }
 
-    OrganizationalEntity toOrganizationalEntity() {
+    public OrganizationalEntity toOrganizationalEntity() {
         if (isReference()) {
             return getRef().toOrganizationalEntity();
         }

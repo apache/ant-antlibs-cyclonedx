@@ -454,6 +454,9 @@ public class Component extends DataType {
         return Collections.emptyList();
     }
 
+    /**
+     * Creates a new "file" type component for a resource.
+     */
     public static Component createFileComponent(Project project, Resource r) {
         Component c = new Component();
         c.setProject(project);
@@ -463,7 +466,10 @@ public class Component extends DataType {
         return c;
     }
 
-    org.cyclonedx.model.Component toMainCycloneDxComponent(Version bomVersion)
+    /**
+     * Translates this component to a CycloneDX component suitable for the metadata.component.
+     */
+    public org.cyclonedx.model.Component toMainCycloneDxComponent(Version bomVersion)
         throws IOException {
         if (isReference()) {
             return getRef().toMainCycloneDxComponent(bomVersion);
@@ -477,7 +483,10 @@ public class Component extends DataType {
         return toCycloneDxComponent(bomVersion);
     }
 
-    org.cyclonedx.model.Component toAdditionalCycloneDxComponent(Version bomVersion)
+    /**
+     * Translates this component to a CycloneDX component suitable for the components.component.
+     */
+    public org.cyclonedx.model.Component toAdditionalCycloneDxComponent(Version bomVersion)
         throws IOException {
         if (isReference()) {
             return getRef().toAdditionalCycloneDxComponent(bomVersion);
@@ -490,7 +499,10 @@ public class Component extends DataType {
         return component;
     }
 
-    private org.cyclonedx.model.Component toCycloneDxComponent(Version bomVersion)
+    /**
+     * Maps all common data except for <code>scope</scop> and <scope>isExternal</code>.
+     */
+    protected org.cyclonedx.model.Component toCycloneDxComponent(Version bomVersion)
         throws IOException {
         dieOnCircularReference();
         if (name == null) {
@@ -700,7 +712,12 @@ public class Component extends DataType {
         }
     }
 
-    private void addHashes(org.cyclonedx.model.Component component, Version bomVersion)
+    /**
+     * If this component has a nested resource child, all hashes
+     * supported by the CycloneDX Core library for the spec version are
+     * created and added to the given component.
+     */
+    protected void addHashes(org.cyclonedx.model.Component component, Version bomVersion)
         throws IOException {
         if (resource == null) {
             return;
@@ -766,6 +783,9 @@ public class Component extends DataType {
             this.componentRef = componentRef;
         }
 
+        /**
+         * Looks up the bom-ref of the dependency.
+         */
         public String getBomRef() {
             if (bomRef == null && componentRef == null) {
                 throw new BuildException("bomRef or componentRef is required");
@@ -809,7 +829,10 @@ public class Component extends DataType {
             tag = text;
         }
 
-        String getTag() {
+        /**
+         * Obtains the tag.
+         */
+        public String getTag() {
             return tag;
         }
     }

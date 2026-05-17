@@ -28,7 +28,7 @@ public class ComponentType extends EnumeratedAttribute {
         return EnumUtils.valueOf(Type.class, getValue(), Type::getTypeName);
     }
 
-    static ComponentType from(Type type) {
+    public  static ComponentType from(Type type) {
         ComponentType t = new ComponentType();
         t.setValue(type.name());
         return t;

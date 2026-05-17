@@ -28,7 +28,7 @@ public class ComponentScope extends EnumeratedAttribute {
         return EnumUtils.valueOf(Scope.class, getValue(), Scope::getScopeName);
     }
 
-    static ComponentScope from(Scope scope) {
+    public static ComponentScope from(Scope scope) {
         ComponentScope s = new ComponentScope();
         s.setValue(scope.name());
         return s;

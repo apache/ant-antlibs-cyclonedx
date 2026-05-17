@@ -42,7 +42,7 @@ public class ExternalReference {
         this.type = type;
     }
 
-    org.cyclonedx.model.ExternalReference toCycloneDxExternalReference() {
+    public org.cyclonedx.model.ExternalReference toCycloneDxExternalReference() {
         if (url == null) {
             throw new BuildException("external references must have an url");
         }

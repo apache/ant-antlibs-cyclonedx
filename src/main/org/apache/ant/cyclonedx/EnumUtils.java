@@ -6,8 +6,12 @@ import java.util.stream.Stream;
 
 import org.apache.tools.ant.BuildException;
 
-class EnumUtils {
-    static <E extends Enum<E>> String[] valuesPlus(
+/**
+ * Helpers for the <code>EnumeratedAttribute<code>s wrapping enums in this package.
+ */
+public class EnumUtils {
+
+    public static <E extends Enum<E>> String[] valuesPlus(
         Class<E> clazz,
         Function<E, String> alternativeProvider) {
         return Arrays.stream(clazz.getEnumConstants())
@@ -15,7 +19,7 @@ class EnumUtils {
             .toArray(String[]::new);
     }
 
-    static <E extends Enum<E>> E valueOf(
+    public static <E extends Enum<E>> E valueOf(
         Class<E> clazz,
         String value,
         Function<E, String> alternativeProvider) throws BuildException {

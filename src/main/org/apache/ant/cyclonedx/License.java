@@ -58,7 +58,7 @@ public class License extends DataType {
         this.url = url.getURL().toExternalForm();
     }
 
-    org.cyclonedx.model.License toCycloneDxLicense() {
+    public org.cyclonedx.model.License toCycloneDxLicense() {
         if (isReference()) {
             return getRef().toCycloneDxLicense();
         }
