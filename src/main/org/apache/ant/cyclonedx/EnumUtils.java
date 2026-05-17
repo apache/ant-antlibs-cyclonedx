@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 import org.apache.tools.ant.BuildException;
 
 /**
- * Helpers for the <code>EnumeratedAttribute<code>s wrapping enums in this package.
+ * Helpers for the <code>EnumeratedAttribute</code>s wrapping enums in this package.
  */
 public class EnumUtils {
 

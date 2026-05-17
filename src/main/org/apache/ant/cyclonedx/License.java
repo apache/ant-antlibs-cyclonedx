@@ -30,6 +30,8 @@ public class License extends DataType {
      * <p>Must be a valid <a href="https://spdx.org/licenses/">SPDX</a>
      * identifier. This library doesn't enforce the SPDX identifier
      * but the CycloneDX Core library does.</p>
+     *
+     * @param id SPDX id of license
      */
     public void setLicenseId(String id) {
         checkAttributesAllowed();
@@ -38,6 +40,8 @@ public class License extends DataType {
 
     /**
      * Sets the name of the license.
+     *
+     * @param name license name
      */
     public void setName(String name) {
         checkAttributesAllowed();
@@ -49,6 +53,8 @@ public class License extends DataType {
      *
      * <p>Even though this is a nested element of the license element,
      * at most one child is allowed.</p>
+     *
+     * @param url url of license
      */
     public void addConfiguredUrl(URLResource url) {
         checkChildrenAllowed();
@@ -58,6 +64,11 @@ public class License extends DataType {
         this.url = url.getURL().toExternalForm();
     }
 
+    /**
+     * Maps the license to its CycloneDX counterpart.
+     *
+     * @return CycloneDX version of this instance
+     */
     public org.cyclonedx.model.License toCycloneDxLicense() {
         if (isReference()) {
             return getRef().toCycloneDxLicense();

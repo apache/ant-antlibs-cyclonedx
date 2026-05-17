@@ -22,12 +22,19 @@ public class ComponentScope extends EnumeratedAttribute {
     /**
      * Translates this instance to a {@link Scope}.
      *
+     * @return translated scope
      * @throws BuildException if the value can not be translated.
      */
     public Scope getScope() {
         return EnumUtils.valueOf(Scope.class, getValue(), Scope::getScopeName);
     }
 
+    /**
+     * Maps a CycloneDX scope.
+     *
+     * @param scope CycloneDX scope.
+     * @return translated scope
+     */
     public static ComponentScope from(Scope scope) {
         ComponentScope s = new ComponentScope();
         s.setValue(scope.name());

@@ -19,12 +19,19 @@ public class ExternalReferenceSet extends DataType {
 
     /**
      * Adds an external reference to this set.
+     *
+     * @param ref reference to add
      */
     public void addConfiguredExternalReference(ExternalReference ref) {
         checkChildrenAllowed();
         externalReferences.add(ref.toCycloneDxExternalReference());
     }
 
+    /**
+     * Return the external references contained in this set.
+     *
+     * @return external references contained in this set
+     */
     public Collection<org.cyclonedx.model.ExternalReference> getExternalReferences() {
         if (isReference()) {
             return getRef().getExternalReferences();

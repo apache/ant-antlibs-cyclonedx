@@ -26,6 +26,8 @@ public class Organization extends DataType {
 
     /**
      * Sets the name of the organization.
+     *
+     * @param name organization name
      */
     public void setName(String name) {
         checkAttributesAllowed();
@@ -34,12 +36,19 @@ public class Organization extends DataType {
 
     /**
      * Adds an url of the organization.
+     *
+     * @param url organization URI
      */
     public void addConfiguredUrl(URLResource url) {
         checkChildrenAllowed();
         urls.add(url.getURL().toExternalForm());
     }
 
+    /**
+     * Translates this organisation to its CycloneDX counterpart.
+     *
+     * @return the CycloneDX version of this instance.
+     */
     public OrganizationalEntity toOrganizationalEntity() {
         if (isReference()) {
             return getRef().toOrganizationalEntity();
@@ -57,6 +66,8 @@ public class Organization extends DataType {
 
     /**
      * Creates a new instance from the CycloneDX counterpart.
+     *
+     * @return the instance created
      */
     static Organization from(OrganizationalEntity oe) {
         Organization o = new Organization();

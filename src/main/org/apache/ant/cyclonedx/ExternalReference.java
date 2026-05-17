@@ -22,6 +22,8 @@ public class ExternalReference {
      *
      * <p>Required. This setter does not validate the value actually
      * follows the URI syntax.</p>
+     *
+     * @param url reference's URI
      */
     public void setUrl(String url) {
         this.url = url;
@@ -37,11 +39,18 @@ public class ExternalReference {
       Core (Java)</a>'s <a
       href="https://javadoc.io/static/org.cyclonedx/cyclonedx-core-java/12.2.0/org/cyclonedx/model/ExternalReference.Type.html">type
       enum</a> are accepted.</p>
+     *
+     * @param type reference's type
      */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     * Maps the instance to a CycloneDX ExternalReference.
+     *
+     * @return CycloneDX version of this instance.
+     */
     public org.cyclonedx.model.ExternalReference toCycloneDxExternalReference() {
         if (url == null) {
             throw new BuildException("external references must have an url");

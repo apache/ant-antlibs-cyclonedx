@@ -16,6 +16,9 @@ import org.cyclonedx.Version;
  */
 public class SpecVersion extends EnumeratedAttribute {
 
+    /**
+     * Default spec version.
+     */
     public static final SpecVersion DEFAULT;
 
     static {
@@ -32,6 +35,7 @@ public class SpecVersion extends EnumeratedAttribute {
      * Translates this instance to a {@link Version}.
      *
      * @throws BuildException if the value can not be translated.
+     * @return CycloneDX version of this instance
      */
     public Version getVersion() {
         Version version = Version.fromVersionString(getValue());

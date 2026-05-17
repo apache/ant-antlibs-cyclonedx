@@ -79,6 +79,8 @@ public class Component extends DataType {
      * <p>At most one resource can be set. Without a nested resource
      * the component will not have any "hashes" when written to the
      * SBOM.</p>
+     *
+     * @param resource the resource holding the component's content
      */
     public void add(Resource resource) {
         checkChildrenAllowed();
@@ -92,6 +94,8 @@ public class Component extends DataType {
      * Sets the type of the component.
      *
      * <p>Defaults to "library".</p>
+     *
+     * @param type component type
      */
     public void setType(ComponentType type) {
         checkAttributesAllowed();
@@ -100,6 +104,8 @@ public class Component extends DataType {
 
     /**
      * Sets the name of the component.
+     *
+     * @param name component name
      */
     public void setName(String name) {
         checkAttributesAllowed();
@@ -108,6 +114,8 @@ public class Component extends DataType {
 
     /**
      * Sets the group of the component.
+     *
+     * @param group component group
      */
     public void setGroup(String group) {
         checkAttributesAllowed();
@@ -116,6 +124,8 @@ public class Component extends DataType {
 
     /**
      * Sets the version of the component.
+     *
+     * @param version component version
      */
     public void setVersion(String version) {
         checkAttributesAllowed();
@@ -124,6 +134,8 @@ public class Component extends DataType {
 
     /**
      * Sets the Package-URL (purl) of the component.
+     *
+     * @param purl component Package URL
      */
     public void setPurl(String purl) {
         checkAttributesAllowed();
@@ -132,6 +144,8 @@ public class Component extends DataType {
 
     /**
      * Sets the bom-ref of the component.
+     *
+     * @param bomRef component bom-ref
      */
     public void setBomRef(String bomRef) {
         checkAttributesAllowed();
@@ -140,6 +154,8 @@ public class Component extends DataType {
 
     /**
      * Sets the decription of the component.
+     *
+     * @param description component description
      */
     public void setDescription(String description) {
         checkAttributesAllowed();
@@ -148,6 +164,8 @@ public class Component extends DataType {
 
     /**
      * Sets the publisher of the component.
+     *
+     * @param publisher component publisher
      */
     public void setPublisher(String publisher) {
         checkAttributesAllowed();
@@ -156,6 +174,8 @@ public class Component extends DataType {
 
     /**
      * Sets the copyright of the component.
+     *
+     * @param copyright component copyright
      */
     public void setCopyright(String copyright) {
         checkAttributesAllowed();
@@ -164,6 +184,8 @@ public class Component extends DataType {
 
     /**
      * Sets the mime-type of the component.
+     *
+     * @param mimeType component mime-type
      */
     public void setMimeType(String mimeType) {
         checkAttributesAllowed();
@@ -174,6 +196,8 @@ public class Component extends DataType {
      * Sets the manufacturer of the component.
      *
      * <p>At most one manufacturer can be set.</p>
+     *
+     * @param manufacturer component manufacturer
      */
     public void addManufacturer(Organization manufacturer) {
         checkChildrenAllowed();
@@ -187,6 +211,8 @@ public class Component extends DataType {
      * Sets the supplier of the component.
      *
      * <p>At most one supplier can be set.</p>
+     *
+     * @param supplier compoment supplier
      */
     public void addSupplier(Organization supplier) {
         checkChildrenAllowed();
@@ -198,6 +224,8 @@ public class Component extends DataType {
 
     /**
      * Adds an author to the component.
+     *
+     * @param author component author
      */
     public void addAuthor(OrganizationalContact author) {
         checkChildrenAllowed();
@@ -206,6 +234,8 @@ public class Component extends DataType {
 
     /**
      * Adds a tag to the component.
+     *
+     * @param tag component tag
      */
     public void addConfiguredTag(Tag tag) {
         checkChildrenAllowed();
@@ -214,6 +244,8 @@ public class Component extends DataType {
 
     /**
      * Adds a property to the component.
+     *
+     * @param property component property
      */
     public void addProperty(Property property) {
         checkChildrenAllowed();
@@ -223,6 +255,9 @@ public class Component extends DataType {
     /**
      * If set to {@code true} the manufacturer will also be used to
      * provide the supplier information.
+     *
+     * @param manufacturerIsSupplier whether to use manufacturer as
+     * supplier as well
      */
     public void setManufacturerIsSupplier(boolean manufacturerIsSupplier) {
         checkAttributesAllowed();
@@ -231,6 +266,8 @@ public class Component extends DataType {
 
     /**
      * Adds a license to this component.
+     *
+     * @param l compoment license
      */
     public void addConfiguredLicense(License l) {
         checkChildrenAllowed();
@@ -239,6 +276,8 @@ public class Component extends DataType {
 
     /**
      * Adds an external reference to the component.
+     *
+     * @param ref external reference of component
      */
     public void addConfiguredExternalReference(ExternalReference ref) {
         checkChildrenAllowed();
@@ -247,6 +286,8 @@ public class Component extends DataType {
 
     /**
      * Adds a set of external references to the component.
+     *
+     * @param set set of external references of component
      */
     public void addConfiguredExternalReferenceSet(ExternalReferenceSet set) {
         checkChildrenAllowed();
@@ -257,6 +298,8 @@ public class Component extends DataType {
      * Sets the scope of this component.
      *
      * <p>Must not be set for the main component of the SBOM.</p>
+     *
+     * @param scope component scope
      */
     public void setScope(ComponentScope scope) {
         checkAttributesAllowed();
@@ -276,6 +319,8 @@ public class Component extends DataType {
      *
      * <p>Right now this attribute has no effect until the CycloneDX
      * core library supports the specification version 1.7.</p>
+     *
+     * @param isExternal whether the component is external
      */
     public void setIsExternal(boolean isExternal) {
         checkAttributesAllowed();
@@ -284,6 +329,8 @@ public class Component extends DataType {
 
     /**
      * Adds a dependency to this component.
+     *
+     * @param d component dependency
      */
     public void addDependency(Dependency d) {
         checkChildrenAllowed();
@@ -296,6 +343,8 @@ public class Component extends DataType {
      * <p>This flag is needed to be able to tell dependencies with
      * unknown dependencies from components without any
      * dependencies.</p>
+     *
+     * @param unknownDependencies whether dependencies are unknown
      */
     public void setUnknownDependencies(boolean unknownDependencies) {
         checkAttributesAllowed();
@@ -304,6 +353,8 @@ public class Component extends DataType {
 
     /**
      * Adds a nested component.
+     *
+     * @param c nested component
      */
     public void addComponent(Component c) {
         checkChildrenAllowed();
@@ -312,6 +363,11 @@ public class Component extends DataType {
         setChecked(false);
     }
 
+    /**
+     * Container for SBOM link resource.
+     *
+     * @return container for SBOM link resource
+     */
     public Union createSbomLink() {
         checkChildrenAllowed();
         return sbomLink == null ? (sbomLink = new Union()) : sbomLink;
@@ -319,6 +375,8 @@ public class Component extends DataType {
 
     /**
      * Gets the name of the component.
+     *
+     * @return component name
      */
     public String getName() {
         if (isReference()) {
@@ -330,6 +388,8 @@ public class Component extends DataType {
 
     /**
      * Gets the group of the component.
+     *
+     * @return component group
      */
     public String getGroup() {
         if (isReference()) {
@@ -378,6 +438,8 @@ public class Component extends DataType {
 
     /**
      * Gets the dependencies of the component.
+     *
+     * @return component's dependencies
      */
     public Iterable<Dependency> getDependencies() {
         if (isReference()) {
@@ -388,6 +450,8 @@ public class Component extends DataType {
     }
 
     /**
+     * Whether dependencies are unknoown.
+     *
      * @return the value set with {@link #setUnknownDependencies}
      * or {@code false}.
      */
@@ -401,6 +465,8 @@ public class Component extends DataType {
 
     /**
      * Recursively returns the nested components of this component.
+     *
+     * @return nested components of this component
      */
     public List<Component> getNestedComponents() {
         if (isReference()) {
@@ -422,6 +488,7 @@ public class Component extends DataType {
      *
      * @return the "addtional" components defined in the linked SBOM
      * that are dependencies of this component.
+     * @throws IOException if reading the SBOM links fails
      */
     public synchronized Collection<Component> resolve() throws IOException {
         if (isReference()) {
@@ -456,6 +523,10 @@ public class Component extends DataType {
 
     /**
      * Creates a new "file" type component for a resource.
+     *
+     * @param project project to use when resolving paths
+     * @param r the resource holding the file
+     * @return the component
      */
     public static Component createFileComponent(Project project, Resource r) {
         Component c = new Component();
@@ -468,6 +539,10 @@ public class Component extends DataType {
 
     /**
      * Translates this component to a CycloneDX component suitable for the metadata.component.
+     *
+     * @param bomVersion specification version
+     * @return mapped component
+     * @throws IOException if calculating component hashes fails
      */
     public org.cyclonedx.model.Component toMainCycloneDxComponent(Version bomVersion)
         throws IOException {
@@ -485,6 +560,10 @@ public class Component extends DataType {
 
     /**
      * Translates this component to a CycloneDX component suitable for the components.component.
+     *
+     * @param bomVersion specification version
+     * @return mapped component
+     * @throws IOException if calculating component hashes fails
      */
     public org.cyclonedx.model.Component toAdditionalCycloneDxComponent(Version bomVersion)
         throws IOException {
@@ -500,7 +579,11 @@ public class Component extends DataType {
     }
 
     /**
-     * Maps all common data except for <code>scope</scop> and <scope>isExternal</code>.
+     * Maps all common data except for <code>scope</code> and <code>isExternal</code>.
+     *
+     * @param bomVersion specification version
+     * @return mapped component
+     * @throws IOException if calculating component hashes fails
      */
     protected org.cyclonedx.model.Component toCycloneDxComponent(Version bomVersion)
         throws IOException {
@@ -716,6 +799,10 @@ public class Component extends DataType {
      * If this component has a nested resource child, all hashes
      * supported by the CycloneDX Core library for the spec version are
      * created and added to the given component.
+     *
+     * @param component component to add hashes to
+     * @param bomVersion specification version
+     * @throws IOException if calculating component hashes fails
      */
     protected void addHashes(org.cyclonedx.model.Component component, Version bomVersion)
         throws IOException {
@@ -771,6 +858,8 @@ public class Component extends DataType {
 
         /**
          * Identifies the dependency by its bom-ref.
+         *
+         * @param bomRef dependency's bom-ref
          */
         public void setBomRef(String bomRef) {
             this.bomRef = bomRef;
@@ -778,6 +867,9 @@ public class Component extends DataType {
 
         /**
          * Identifies the dependency by its Ant {@code id} attribute.
+         *
+         * @param componentRef reference to component that constitutes
+         * the dependency
          */
         public void setComponentRef(Reference componentRef) {
             this.componentRef = componentRef;
@@ -785,6 +877,7 @@ public class Component extends DataType {
 
         /**
          * Looks up the bom-ref of the dependency.
+         * @return bom-ref of the dependency.
          */
         public String getBomRef() {
             if (bomRef == null && componentRef == null) {
@@ -824,6 +917,8 @@ public class Component extends DataType {
 
         /**
          * Sets the tag value.
+         *
+         * @param text the tag
          */
         public void addText(String text) {
             tag = text;
@@ -831,6 +926,8 @@ public class Component extends DataType {
 
         /**
          * Obtains the tag.
+         *
+         * @return tag
          */
         public String getTag() {
             return tag;

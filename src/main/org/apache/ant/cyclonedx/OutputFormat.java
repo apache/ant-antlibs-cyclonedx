@@ -26,6 +26,9 @@ public class OutputFormat extends EnumeratedAttribute {
 
     private static final String ALL = "ALL";
 
+    /**
+     * JSON output format.
+     */
     public static final OutputFormat JSON;
 
     static {
@@ -45,6 +48,8 @@ public class OutputFormat extends EnumeratedAttribute {
      * Translates this instance to {@link Format}s.
      *
      * @throws BuildException if the value can not be translated.
+     * @param version spec version
+     * @return all suported formats of version
      */
     public Iterable<Format> getCycloneDxFormats(Version version) {
         String value = getValue();

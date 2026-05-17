@@ -55,6 +55,8 @@ public class ComponentBomTask extends Task {
      * Specifies the CycloneDX version to use.
      *
      * <p>Defaults to 1.6.</p>
+     *
+     * @param specVersion specification version
      */
     public void setSpecVersion(SpecVersion specVersion) {
         this.specVersion = specVersion;
@@ -62,6 +64,8 @@ public class ComponentBomTask extends Task {
 
     /**
      * Which serialization format of CycloneDX SBOM to use.
+     *
+     * @param format output format
      */
     public void setFormat(OutputFormat format) {
         this.format = format;
@@ -72,6 +76,8 @@ public class ComponentBomTask extends Task {
      *
      * <p>The file name will be the base name plus the extension of
      * the {@see #setFormat format}.
+     *
+     * @param bomName base name of generated file
      */
     public void setBomName(String bomName) {
         this.bomName = bomName;
@@ -79,6 +85,8 @@ public class ComponentBomTask extends Task {
 
     /**
      * Sets the output directory for the generated SBOM.
+     *
+     * @param f output directory
      */
     public void setOutputDirectory(File f) {
         outputDirectory = f;
@@ -86,6 +94,8 @@ public class ComponentBomTask extends Task {
 
     /**
      * Whether to use the supplier of the main component as supplier for the BOM as well.
+     *
+     * @param useComponentSupplier whether to use supplier of component for the BOM
      */
     public void setUseComponentSupplier(boolean useComponentSupplier) {
         this.useComponentSupplier = useComponentSupplier;
@@ -93,6 +103,8 @@ public class ComponentBomTask extends Task {
 
     /**
      * Sets the component for the SBOM.
+     *
+     * @return container for main component
      */
     public Component createComponent() {
         if (component != null) {
@@ -103,9 +115,11 @@ public class ComponentBomTask extends Task {
     }
 
     /**
-     * Sets the manufacturer of the component.
+     * Sets the manufacturer of the SBOM.
      *
      * <p>At most one manufacturer can be set.</p>
+     *
+     * @return manufaturer of SBOM
      */
     public Organization createManufacturer() {
         if (manufacturer != null) {
@@ -116,9 +130,11 @@ public class ComponentBomTask extends Task {
     }
 
     /**
-     * Sets the supplier of the component.
+     * Sets the supplier of the SBOM.
      *
      * <p>At most one supplier can be set.</p>
+     *
+     * @return supplier of SBOM
      */
     public Organization createSupplier() {
         if (supplier != null) {
@@ -130,6 +146,8 @@ public class ComponentBomTask extends Task {
 
     /**
      * Adds a license to the SBOM's metadata.
+     *
+     * @param l SBOM's license
      */
     public void addConfiguredLicense(License l) {
         licenses.add(l.toCycloneDxLicense());
@@ -137,6 +155,8 @@ public class ComponentBomTask extends Task {
 
     /**
      * Adds another component to the SBOM.
+     *
+     * @param c component to be added to SBOM
      */
     public void addAdditionalComponent(Component c) {
         additionalComponents.add(c);
@@ -147,7 +167,9 @@ public class ComponentBomTask extends Task {
      * SBOM.
      *
      * <p>This is meant to be used by tools that have also taken part
-     * in the generation of thsi SBOM.</p>
+     * in the generation of this SBOM.</p>
+     *
+     * @param c component to be added to tools
      */
     public void addToolComponent(Component c) {
         toolComponents.add(c);
@@ -156,6 +178,8 @@ public class ComponentBomTask extends Task {
     /**
      * Accepts arbitrary file-system only resources that will be added
      * as components of type file.
+     *
+     * @return container for pure file components
      */
     public Union createPureFileComponents() {
         return pureFileComponents;

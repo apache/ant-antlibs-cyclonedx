@@ -23,11 +23,18 @@ public class ComponentType extends EnumeratedAttribute {
      * Translates this instance to a {@link Type}.
      *
      * @throws BuildException if the value can not be translated.
+     * @return CycloneDX type of this instance
      */
     public Type getType() {
         return EnumUtils.valueOf(Type.class, getValue(), Type::getTypeName);
     }
 
+    /**
+     * Maps a CycloneDX type.
+     *
+     * @param type CycloneDX type.
+     * @return translated type
+     */
     public  static ComponentType from(Type type) {
         ComponentType t = new ComponentType();
         t.setValue(type.name());
