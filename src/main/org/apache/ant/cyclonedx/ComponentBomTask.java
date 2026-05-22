@@ -366,6 +366,7 @@ public class ComponentBomTask extends Task {
 
     private void writeBom(Bom bom, Format format, File bomFile)
         throws IOException, GeneratorException {
+        log("creating CycloneDX SBOM " + bomFile);
         switch (format) {
         case JSON:
             writeJsonBom(bom, bomFile);
@@ -373,6 +374,8 @@ public class ComponentBomTask extends Task {
         case XML:
             writeXmlBom(bom, bomFile);
             break;
+        default:
+            throw new BuildException("unsupported format " + format);
         }
     }
 

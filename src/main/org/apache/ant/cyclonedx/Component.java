@@ -21,6 +21,7 @@ import org.apache.tools.ant.types.Reference;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.resources.FileProvider;
 import org.apache.tools.ant.types.resources.Union;
+import org.apache.tools.ant.types.resources.URLProvider;
 
 import org.cyclonedx.Version;
 import org.cyclonedx.exception.ParseException;
@@ -831,6 +832,7 @@ public class Component extends DataType {
             throw new BuildException("sbomLink requires exactly one nested resource");
         }
         Resource sbom = sbomLink.iterator().next();
+        logSbom(sbom);
         try (InputStream data = sbom.getInputStream();
              ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             byte[] buf = new byte[4096];
@@ -847,6 +849,20 @@ public class Component extends DataType {
                 throw new BuildException("failed to parse sbomlink " + sbom.getName(), ex);
             }
         }
+    }
+
+    private void logSbom(Resource r) {
+        String name = r.getName();
+        FileProvider fp = r.as(FileProvider.class);
+        if (fp != null) {
+            name = fp.getFile().getAbsolutePath();
+        } else {
+            URLProvider up = r.as(URLProvider.class);
+            if (up != null) {
+                name = up.getURL().toExternalForm();
+            }
+        }
+        log("reading SBOM from " + name, Project.MSG_VERBOSE);
     }
 
     /**
