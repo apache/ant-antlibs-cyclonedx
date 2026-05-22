@@ -26,8 +26,8 @@
              url="https://www.apache.org/licenses/LICENSE-2.0"/>
     <ivyauthor name="Apache Ant Development Team"
                url="https://ant.apache.org/"/>
-    <description homepage="YOUR-ANTLIB_HOMEPAGE">
-      YOUR_DESCRIPTION
+    <description homepage="https://ant.apache.org/antlibs/cyclonedx/">
+      Apache CycloneDX Antlib
     </description>
   </info>
   <configurations>
