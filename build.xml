@@ -109,11 +109,21 @@ under the License.
   </target>
 
   <target name="create-antlib-sbom" depends="define-cyclonedx-components">
+    <uptodate property="antlib-sbom-ok"
+              targetfile="${build.lib}/${artifact.stub}-cyclonedx.json">
+      <srcresources>
+        <file file="${jarname}"/>
+        <file file="ivy.xml"/>
+        <file file="build.xml"/>
+      </srcresources>
+    </uptodate>
     <cdx:componentbom
         bomName="${artifact.stub}-cyclonedx"
         outputdirectory="${build.lib}"
         format="all"
         useComponentSupplier="true"
+        unless:set="antlib-sbom-ok"
+        xmlns:unless="ant:unless"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component
           name="${artifact.name}"
