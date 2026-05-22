@@ -239,5 +239,101 @@ under the License.
     </cdx:componentbom>
   </target>
 
+  <target name="ready-for-bin-dist" depends="create-antlib-sbom,common.ready-for-bin-dist">
+    <resources id="additional-bin-patterns">
+      <fileset dir="${build.lib}">
+        <include name="${artifact.stub}-cyclonedx*"/>
+      </fileset>
+    </resources>
+  </target>
+
+  <target name="after-dist" depends="define-cyclonedx-components">
+    <macrodef name="create-tarball-bom">
+      <attribute name="distdir"/>
+      <attribute name="distbase"/>
+      <attribute name="binsrc"/>
+      <attribute name="binarysource"/>
+      <attribute name="ext"/>
+      <sequential>
+        <cdx:componentbom
+            bomName="${dist.name}-@{binsrc}.@{ext}.cyclonedx"
+            outputdirectory="@{distbase}"
+            format="all"
+            useComponentSupplier="true"
+            xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+          <component
+              version="${artifact.version}"
+              purl="https://archive.apache.org/dist/ant/antlibs/${dist.name}-@{binsrc}.@{ext}"
+              name="https://archive.apache.org/dist/ant/antlibs/${dist.name}-@{binsrc}.@{ext}"
+              description="Apache CycloneDX Antlib @{binarysource}"
+              publisher="The Apache Software Foundation"
+              type="FILE"
+              manufacturerIsSupplier="true">
+            <file file="@{distbase}/${dist.name}-@{binsrc}.@{ext}"/>
+            <manufacturer refid="ant-team"/>
+            <license refid="apache-2"/>
+            <externalReferenceSet refid="ant-common-refs"/>
+            <externalReferenceSet refid="antlib-ext-refs"/>
+          </component>
+          <pureFileComponents>
+            <fileset dir="@{distdir}/..">
+              <include name="${dist.name}/**"/>
+            </fileset>
+          </pureFileComponents>
+        </cdx:componentbom>
+      </sequential>
+    </macrodef>
+    <macrodef name="create-tarball-boms">
+      <attribute name="distdir"/>
+      <attribute name="distbase"/>
+      <attribute name="binsrc"/>
+      <attribute name="binarysource"/>
+      <sequential>
+        <create-tarball-bom
+            distdir="@{distdir}"
+            distbase="@{distbase}"
+            binsrc="@{binsrc}"
+            binarysource="@{binarysource}"
+            ext="tar.gz"/>
+        <create-tarball-bom
+            distdir="@{distdir}"
+            distbase="@{distbase}"
+            binsrc="@{binsrc}"
+            binarysource="@{binarysource}"
+            ext="tar.bz2"/>
+        <create-tarball-bom
+            distdir="@{distdir}"
+            distbase="@{distbase}"
+            binsrc="@{binsrc}"
+            binarysource="@{binarysource}"
+            ext="zip"/>
+      </sequential>
+    </macrodef>
+  </target>
+
+  <target name="after-src-dist" depends="after-dist">
+    <create-tarball-boms
+        distdir="${src.dist.dir}"
+        distbase="${dist.base}"
+        binsrc="src"
+        binarysource="Source Distribution"/>
+  </target>
+
+  <target name="after-bin-dist" depends="after-dist">
+    <create-tarball-boms
+        distdir="${bin.dist.dir}"
+        distbase="${dist.base}"
+        binsrc="bin"
+        binarysource="Binary Distribution"/>
+  </target>
+
+  <target name="after-fat-bin-dist" depends="after-dist">
+    <create-tarball-boms
+        distdir="${bin.dist.dir}"
+        distbase="${dist.base}"
+        binsrc="bin-withdeps"
+        binarysource="Binary Distribution Including Dependencies"/>
+  </target>
+
   <import file="common/build.xml"/>
 </project>
