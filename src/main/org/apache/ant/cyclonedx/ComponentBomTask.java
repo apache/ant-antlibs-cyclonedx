@@ -5,14 +5,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -216,7 +221,7 @@ public class ComponentBomTask extends Task {
 
         Metadata meta = createMetadata();
 
-        Set<String> knownComponents = new HashSet<>();
+        Map<String, String> knownComponents = new HashMap<>();
         List<Component> resolvedComponents = new ArrayList<>();
         visitAllComponents(c -> {
                 try {
@@ -224,9 +229,8 @@ public class ComponentBomTask extends Task {
                 } catch (IOException ex) {
                     throw new BuildException("failed to resolve component", ex);
                 }
-                knownComponents.add(getUnversionedCoordinates(c));
-            });
-        meta.setComponent(component.toMainCycloneDxComponent(specVersion.getVersion()));
+                knownComponents.put(getUnversionedCoordinates(c), c.getBomRef());
+            });        meta.setComponent(component.toMainCycloneDxComponent(specVersion.getVersion()));
 
         if (useComponentSupplier) {
             OrganizationalEntity componentSupplier = meta.getComponent().getSupplier();
@@ -245,8 +249,8 @@ public class ComponentBomTask extends Task {
 
         for (Component c : resolvedComponents) {
             String componentKey = getUnversionedCoordinates(c);
-            if (!knownComponents.contains(componentKey)) {
-                knownComponents.add(componentKey);
+            if (!knownComponents.containsKey(componentKey)) {
+                knownComponents.put(componentKey, c.getBomRef());
                 cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
             }
         }
@@ -257,7 +261,7 @@ public class ComponentBomTask extends Task {
         }
 
         bom.setComponents(cs);
-        addDependencies(bom);
+        addDependencies(bom, knownComponents);
 
         return bom;
     }
@@ -296,7 +300,7 @@ public class ComponentBomTask extends Task {
         return meta;
     }
 
-    private void addDependencies(Bom bom) {
+    private void addDependencies(Bom bom, Map<String, String> unversionedToVersioned) {
         final Set<String> bomRefs = new HashSet<>();
         visitAllBomComponents(bom, c -> {
                 String bomRef = c.getBomRef();
@@ -313,7 +317,15 @@ public class ComponentBomTask extends Task {
                     for (Component.Dependency d : c.getDependencies()) {
                         String br = d.getBomRef();
                         if (!bomRefs.contains(br)) {
-                            throw new BuildException("dependency '" + br + "' is unknown");
+                            String mappedRef = null;
+                            String unversionedKey = getUnversionedCoordinates(d);
+                            if (unversionedKey != null) {
+                                mappedRef = unversionedToVersioned.get(unversionedKey);
+                            }
+                            if (mappedRef == null) {
+                                throw new BuildException("dependency '" + br + "' is unknown");
+                            }
+                            br = mappedRef;
                         }
                         dep.addDependency(new Dependency(br));
                     }
@@ -397,5 +409,23 @@ public class ComponentBomTask extends Task {
 
     private static String getUnversionedCoordinates(Component c) {
         return c.getGroup() + ":" + c.getName();
+    }
+
+    private static String getUnversionedCoordinates(Component.Dependency d) {
+        Map.Entry<String, String> mavenCoordinates = extractMavenCoordinates(d.getBomRef());
+        if (mavenCoordinates == null) {
+            return null;
+        }
+        return mavenCoordinates.getKey() + ":" + mavenCoordinates.getValue();
+    }
+
+    private static Pattern MAVEN_PURL_PATTERN = Pattern.compile("pkg:maven/([^/]+)/([^/]+)@.+\\?type=jar");
+
+    private static Map.Entry<String, String> extractMavenCoordinates(String bomRef) {
+        Matcher m = MAVEN_PURL_PATTERN.matcher(bomRef);
+        if (m.matches()) {
+            return new AbstractMap.SimpleImmutableEntry(m.group(1), m.group(2));
+        }
+        return null;
     }
 }

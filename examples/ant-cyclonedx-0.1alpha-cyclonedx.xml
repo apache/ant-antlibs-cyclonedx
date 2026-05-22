@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bom serialNumber="urn:uuid:7c0ab6f6-7052-4231-93ff-25b95055c6a7" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+<bom serialNumber="urn:uuid:a4c2449e-5f9e-465b-bad7-bf68a9f84515" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
   <metadata>
-    <timestamp>2026-05-17T07:07:34Z</timestamp>
+    <timestamp>2026-05-22T11:52:46Z</timestamp>
     <lifecycles>
       <lifecycle>
         <phase>build</phase>
@@ -24,14 +24,14 @@
           <version>0.1alpha</version>
           <description>Apache CycloneDX Antlib</description>
           <hashes>
-            <hash alg="MD5">86d5fef8a9be04848a4395ec07f1719c</hash>
-            <hash alg="SHA-1">c3bfcbbcfb8450c7aa5dc3fa75e2aa4e316f43de</hash>
-            <hash alg="SHA-256">db18f91f149caa2420e2626c91350e113a637bf41f7b551d2d37daa126468bbe</hash>
-            <hash alg="SHA-512">aef67f374bd720faef1fbbc5346b53215bebb38400fbef08bfac7472c8ded37187cbfe05cc0639b90ad4e6bf065cb24afc923c0a0fa98e79b1b894c3e6dba722</hash>
-            <hash alg="SHA3-256">d4e0acd6e47c1e6751d35d0c5d2ea76ec50753b5133bfb363dfa9104a6f14d87</hash>
-            <hash alg="SHA3-512">9573d83be278ab33edbd0917bef3a5d4d2d8e7a8fd6d31c8f2d2ecf0402e77cdf6a87dba9d3b220531831e480cc2de8132be71648a41996fbaa4ff37486fc3de</hash>
-            <hash alg="SHA-384">59ec2553417e4d02c261e3ce19190752a70be0ca596e251de1416867c4ff72738736b171e0f39716b5affc1633dd7de9</hash>
-            <hash alg="SHA3-384">65fd5561a32266998aaa765b881c70250c7bed4fa56d91eddbe3b4a79127b8f1683aa520c918af177876135022e600e2</hash>
+            <hash alg="MD5">772a17a58e02edb9d704e864ed2e4ba5</hash>
+            <hash alg="SHA-1">e1b07fdb6acf04c197454f17427168e774ebce37</hash>
+            <hash alg="SHA-256">6aeaac13e9dcd8dec680044874393a180c1fe25e7dc7d557cbb56139aa924545</hash>
+            <hash alg="SHA-512">fe6dae6882c67a1470f3f003e188718e197d1a523a522243dbe8df7ca6e0ffaeb51fd8200ef522fa167a00cd0aa74b6e346a5a317f6fd77605877342c447a68a</hash>
+            <hash alg="SHA3-256">12c71d7e50ab96e5ea0b1e31cb308eb6d457e10008da77c775ab1f4638450214</hash>
+            <hash alg="SHA3-512">7b899ae425682d66b467346daabf04077d67032dc9ab4157067bc6afbfd082d6bd400f3305c7a81e425b46417fc7bab39bd0f6cc2edbc75dd142452fa22292db</hash>
+            <hash alg="SHA-384">14efc435b46fc8e6df7af6b27a86ff51f6334f2d29bd91af5a124f088c21c5a0e5501ec37a3a6d1cb1ff158f665be6b1</hash>
+            <hash alg="SHA3-384">688764c623ed8ab9ee35619a3529b15b6e23cec725e680471acae21f844532e76f1e8910e8a50bf77026e279ebbf6fcb</hash>
           </hashes>
           <licenses>
             <license>
@@ -87,14 +87,14 @@
       <version>0.1alpha</version>
       <description>Apache CycloneDX Antlib</description>
       <hashes>
-        <hash alg="MD5">86d5fef8a9be04848a4395ec07f1719c</hash>
-        <hash alg="SHA-1">c3bfcbbcfb8450c7aa5dc3fa75e2aa4e316f43de</hash>
-        <hash alg="SHA-256">db18f91f149caa2420e2626c91350e113a637bf41f7b551d2d37daa126468bbe</hash>
-        <hash alg="SHA-512">aef67f374bd720faef1fbbc5346b53215bebb38400fbef08bfac7472c8ded37187cbfe05cc0639b90ad4e6bf065cb24afc923c0a0fa98e79b1b894c3e6dba722</hash>
-        <hash alg="SHA3-256">d4e0acd6e47c1e6751d35d0c5d2ea76ec50753b5133bfb363dfa9104a6f14d87</hash>
-        <hash alg="SHA3-512">9573d83be278ab33edbd0917bef3a5d4d2d8e7a8fd6d31c8f2d2ecf0402e77cdf6a87dba9d3b220531831e480cc2de8132be71648a41996fbaa4ff37486fc3de</hash>
-        <hash alg="SHA-384">59ec2553417e4d02c261e3ce19190752a70be0ca596e251de1416867c4ff72738736b171e0f39716b5affc1633dd7de9</hash>
-        <hash alg="SHA3-384">65fd5561a32266998aaa765b881c70250c7bed4fa56d91eddbe3b4a79127b8f1683aa520c918af177876135022e600e2</hash>
+        <hash alg="MD5">772a17a58e02edb9d704e864ed2e4ba5</hash>
+        <hash alg="SHA-1">e1b07fdb6acf04c197454f17427168e774ebce37</hash>
+        <hash alg="SHA-256">6aeaac13e9dcd8dec680044874393a180c1fe25e7dc7d557cbb56139aa924545</hash>
+        <hash alg="SHA-512">fe6dae6882c67a1470f3f003e188718e197d1a523a522243dbe8df7ca6e0ffaeb51fd8200ef522fa167a00cd0aa74b6e346a5a317f6fd77605877342c447a68a</hash>
+        <hash alg="SHA3-256">12c71d7e50ab96e5ea0b1e31cb308eb6d457e10008da77c775ab1f4638450214</hash>
+        <hash alg="SHA3-512">7b899ae425682d66b467346daabf04077d67032dc9ab4157067bc6afbfd082d6bd400f3305c7a81e425b46417fc7bab39bd0f6cc2edbc75dd142452fa22292db</hash>
+        <hash alg="SHA-384">14efc435b46fc8e6df7af6b27a86ff51f6334f2d29bd91af5a124f088c21c5a0e5501ec37a3a6d1cb1ff158f665be6b1</hash>
+        <hash alg="SHA3-384">688764c623ed8ab9ee35619a3529b15b6e23cec725e680471acae21f844532e76f1e8910e8a50bf77026e279ebbf6fcb</hash>
       </hashes>
       <licenses>
         <license>
@@ -355,11 +355,11 @@
         </reference>
       </externalReferences>
     </component>
-    <component type="library" bom-ref="pkg:maven/commons-codec/commons-codec@1.21.1?type=jar">
+    <component type="library" bom-ref="pkg:maven/commons-codec/commons-codec@1.21.0?type=jar">
       <publisher>The Apache Software Foundation</publisher>
       <group>commons-codec</group>
       <name>commons-codec</name>
-      <version>1.21.1</version>
+      <version>1.21.0</version>
       <description>The Apache Commons Codec component contains encoders and decoders for various formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these widely used encoders and decoders, the codec package also maintains a collection of phonetic encoding utilities.</description>
       <scope>required</scope>
       <licenses>
@@ -368,7 +368,7 @@
           <url>https://www.apache.org/licenses/LICENSE-2.0</url>
         </license>
       </licenses>
-      <purl>pkg:maven/commons-codec/commons-codec@1.21.1?type=jar</purl>
+      <purl>pkg:maven/commons-codec/commons-codec@1.21.0?type=jar</purl>
       <externalReferences>
         <reference type="website">
           <url>https://commons.apache.org/proper/commons-codec/</url>
@@ -432,7 +432,7 @@
       <dependency ref="pkg:maven/org.cyclonedx/cyclonedx-core-java@12.2.0?type=jar"/>
     </dependency>
     <dependency ref="pkg:maven/org.cyclonedx/cyclonedx-core-java@12.2.0?type=jar">
-      <dependency ref="pkg:maven/commons-codec/commons-codec@1.21.1?type=jar"/>
+      <dependency ref="pkg:maven/commons-codec/commons-codec@1.21.0?type=jar"/>
       <dependency ref="pkg:maven/commons-io/commons-io@2.21.0?type=jar"/>
       <dependency ref="pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar"/>
       <dependency ref="pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar"/>

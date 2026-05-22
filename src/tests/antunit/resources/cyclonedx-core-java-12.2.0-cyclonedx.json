@@ -262,7 +262,7 @@
       "publisher" : "The Apache Software Foundation",
       "group" : "commons-codec",
       "name" : "commons-codec",
-      "version" : "1.21.1",
+      "version" : "1.21.0",
       "description" : "The Apache Commons Codec component contains encoders and decoders for various formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these widely used encoders and decoders, the codec package also maintains a collection of phonetic encoding utilities.",
       "scope" : "required",
       "licenses" : [
@@ -273,7 +273,7 @@
           }
         }
       ],
-      "purl" : "pkg:maven/commons-codec/commons-codec@1.21.1?type=jar",
+      "purl" : "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar",
       "externalReferences" : [
         {
           "type" : "website",
@@ -301,7 +301,7 @@
         }
       ],
       "type" : "library",
-      "bom-ref" : "pkg:maven/commons-codec/commons-codec@1.21.1?type=jar"
+      "bom-ref" : "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar"
     },
     {
       "publisher" : "The Apache Software Foundation",
@@ -353,7 +353,7 @@
     {
       "ref" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@12.2.0?type=jar",
       "dependsOn" : [
-        "pkg:maven/commons-codec/commons-codec@1.21.1?type=jar",
+        "pkg:maven/commons-codec/commons-codec@1.21.0?type=jar",
         "pkg:maven/commons-io/commons-io@2.21.0?type=jar",
         "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
         "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",

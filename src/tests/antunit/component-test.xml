@@ -353,7 +353,7 @@
         name="bom.metadata.component.manufacturer.url"
         value="https://example.com/"/>
     <au:fail message="expected bom.metadata.components.component.supplier.name to not be set"
-        xmlns:au="antlib:org.apache.ant.antunit">
+             xmlns:au="antlib:org.apache.ant.antunit">
       <not>
         <isset property="bom.metadata.component.supplier.name"/>
       </not>
@@ -390,7 +390,7 @@
 
   <target name="testManufacturerIsSupplierMustNotBeTrueWhenSupplierIsPresent">
     <au:expectfailure expectedMessage="component with supplier can't use manufacturer as supplier"
-        xmlns:au="antlib:org.apache.ant.antunit">
+                      xmlns:au="antlib:org.apache.ant.antunit">
       <cdx:componentbom outputdirectory="${output}" format="xml"
                         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
         <component name="foo" manufacturerIsSupplier="true">
@@ -500,7 +500,7 @@
 
   <target name="testDependenciesRequireEitherBomRefOrComponentRef">
     <au:expectfailure expectedMessage="bomRef or componentRef is required"
-        xmlns:au="antlib:org.apache.ant.antunit">
+                      xmlns:au="antlib:org.apache.ant.antunit">
       <cdx:componentbom outputdirectory="${output}" format="json"
                         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
         <component name="foo" bomRef="foo">
@@ -514,7 +514,7 @@
     <cdx:component name="bar" bomRef="bar" id="bar"
                    xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
     <au:expectfailure expectedMessage="only one of bomRef and componentRef are permitted"
-        xmlns:au="antlib:org.apache.ant.antunit">
+                      xmlns:au="antlib:org.apache.ant.antunit">
       <cdx:componentbom outputdirectory="${output}" format="json"
                         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
         <component name="foo" bomRef="foo">
@@ -528,7 +528,7 @@
     <cdx:component name="bar" bomRef="bar"
                    xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
     <au:expectfailure expectedMessage="Reference bar not found."
-        xmlns:au="antlib:org.apache.ant.antunit">
+                      xmlns:au="antlib:org.apache.ant.antunit">
       <cdx:componentbom outputdirectory="${output}" format="json"
                         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
         <component name="foo" bomRef="foo">
@@ -546,7 +546,7 @@
       <url url="https://www.apache.org/licenses/LICENSE-2.0.txt"/>
     </cdx:license>
     <au:expectfailure expectedMessage="componentRef 'bar' doesn't refer to a component"
-        xmlns:au="antlib:org.apache.ant.antunit">
+                      xmlns:au="antlib:org.apache.ant.antunit">
       <cdx:componentbom outputdirectory="${output}" format="json"
                         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
         <component name="foo" bomRef="foo">
@@ -560,7 +560,7 @@
     <cdx:component name="bar" id="bar"
                    xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
     <au:expectfailure expectedMessage="component with id 'bar' doesn't provide a bomRef"
-        xmlns:au="antlib:org.apache.ant.antunit">
+                      xmlns:au="antlib:org.apache.ant.antunit">
       <cdx:componentbom outputdirectory="${output}" format="json"
                         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
         <component name="foo" bomRef="foo">
@@ -572,7 +572,7 @@
 
   <target name="testDependeesRequireABomRef">
     <au:expectfailure expectedMessage="components without bomRef cannot have dependencies"
-        xmlns:au="antlib:org.apache.ant.antunit">
+                      xmlns:au="antlib:org.apache.ant.antunit">
       <cdx:componentbom outputdirectory="${output}" format="json"
                         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
         <component name="foo">
@@ -1106,5 +1106,47 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.dependencies.dependency.dependency(ref)"
         value="my-own-dependency"/>
+  </target>
+
+  <target name="testReMappingOfLinkedDependencies">
+    <cdx:componentbom
+        outputdirectory="${output}"
+        format="json"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component
+          name="testname"
+          group="org.example"
+          version="1.0">
+        <dependency bomRef="pkg:maven/commons-codec/commons-codec@1.21.0?type=jar"/>
+      </component>
+      <additionalComponent
+          name="commons-codec"
+          group="commons-codec"
+          version="1.21.0"/>
+    </cdx:componentbom>
+    <cdx:componentbom
+        outputdirectory="${output}"
+        bomName="merged"
+        format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component>
+        <sbomLink>
+          <file file="${output}/bom.json"/>
+        </sbomLink>
+      </component>
+      <additionalComponent
+          name="commons-codec"
+          group="commons-codec"
+          version="1.22.0"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/merged.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.dependencies.dependency(ref)"
+        value="pkg:maven/org.example/testname@1.0?type=jar,pkg:maven/commons-codec/commons-codec@1.22.0?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.dependencies.dependency.dependency(ref)"
+        value="pkg:maven/commons-codec/commons-codec@1.22.0?type=jar"/>
   </target>
 </project>
