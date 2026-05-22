@@ -52,6 +52,14 @@
               e:classifier="ivy"/>
     <artifact name="${artifact.name}" type="ivy.asc" ext="xml.asc"
               e:classifier="ivy"/>
+    <artifact name="${artifact.name}" type="cyclonedx.xml" ext="xml"
+              e:classifier="cyclonedx"/>
+    <artifact name="${artifact.name}" type="cyclonedx.xml.asc" ext="xml.asc"
+              e:classifier="cyclonedx"/>
+    <artifact name="${artifact.name}" type="cyclonedx.json" ext="json"
+              e:classifier="cyclonedx"/>
+    <artifact name="${artifact.name}" type="cyclonedx.json.asc" ext="json.asc"
+              e:classifier="cyclonedx"/>
   </publications>
   <dependencies>
     <dependency org="org.cyclonedx" name="cyclonedx-core-java" rev="12.2.0" conf="default"/>
