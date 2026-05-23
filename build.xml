@@ -273,6 +273,7 @@ under the License.
         <file file="${lib.dir.compile}/json-schema-validator.jar"/>
         <license refid="apache-2"/>
       </additionalComponent>
+      <license refid="apache-2"/>
     </cdx:componentbom>
   </target>
 
@@ -314,6 +315,9 @@ under the License.
               <include name="${dist.name}/**"/>
             </fileset>
           </archiveContent>
+          <additionalBomContent>
+            <license refid="apache-2"/>
+          </additionalBomContent>
         </cdx:distributionbom>
       </sequential>
     </macrodef>
