@@ -311,7 +311,9 @@ public class ComponentBomTask extends Task {
         visitAllBomComponents(bom, c -> {
                 String bomRef = c.getBomRef();
                 if (bomRef != null) {
-                    bomRefs.add(bomRef);
+                    if (!bomRefs.add(bomRef)) {
+                        throw new BuildException("BOM contains multiple components with bom-ref " + bomRef);
+                    }
                 }
             });
 

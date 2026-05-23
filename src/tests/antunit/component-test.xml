@@ -43,6 +43,26 @@
     </au:expectfailure>
   </target>
 
+  <target name="testComponentBomRefsMustBeUnique">
+    <au:expectfailure expectedMessage="BOM contains multiple components with bom-ref 1"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom outputdirectory="${output}" format="xml"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="c1" bomref="1"/>
+        <additionalComponent name="c2" bomref="1"/>
+      </cdx:componentbom>
+    </au:expectfailure>
+    <au:expectfailure expectedMessage="BOM contains multiple components with bom-ref 1"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom outputdirectory="${output}" format="xml"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="c1" bomref="1">
+          <component name="c2" bomref="1"/>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
   <target name="testMinimalComponentData">
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
