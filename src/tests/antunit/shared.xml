@@ -39,4 +39,51 @@
     <delete dir="${input}"/>
     <delete dir="${output}"/>
   </target>
+
+  <target name="commonReferences" depends="setUp">
+    <cdx:organization
+        name="Apache Ant Development Team"
+        id="ant-team"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <url url="https://ant.apache.org/"/>
+    </cdx:organization>
+    <cdx:license
+        licenseId="Apache-2.0"
+        id="apache-2"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <url url="https://www.apache.org/licenses/LICENSE-2.0.txt"/>
+    </cdx:license>
+    <cdx:externalreferenceset
+        id="antlib-ext-refs"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <externalReference
+          type="VCS"
+          url="https://github.com/apache/ant-antlibs-cyclonedx"/>
+      <externalReference
+          type="LICENSE"
+          url="https://www.apache.org/licenses/LICENSE-2.0.txt"/>
+      <externalReference
+          type="BUILD_SYSTEM"
+          url="https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/"/>
+      <externalReference
+          type="MAILING_LIST"
+          url="https://ant.apache.org/mail.html"/>
+      <externalReference
+          type="ISSUE_TRACKER"
+          url="https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&amp;product=Ant"/>
+      <externalReference
+          type="WEBSITE"
+          url="https://ant.apache.org/antlibs/cyclonedx/"/>
+      <externalReference
+          type="DISTRIBUTION"
+          url="https://ant.apache.org/antlibs/bindownload.cgi"/>
+      <externalReference
+          type="SOURCE_DISTRIBUTION"
+          url="https://ant.apache.org/antlibs/srcdownload.cgi"/>
+      <externalReference
+          type="SECURITY_CONTACT"
+          url="https://www.apache.org/security/"/>
+    </cdx:externalreferenceset>
+  </target>
+
 </project>

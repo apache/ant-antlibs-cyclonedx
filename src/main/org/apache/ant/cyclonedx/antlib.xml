@@ -33,7 +33,7 @@ under the License.
     <attribute name="version"/>
     <attribute name="archiveName"/>
     <attribute name="archiveUrl"/>
-    <attribute name="archiveLocation"/>
+    <attribute name="archiveLocation" default=""/>
     <attribute name="outputDirectory"/>
     <attribute name="description"/>
     <attribute name="publisher"/>
@@ -58,7 +58,8 @@ under the License.
             publisher="@{publisher}"
             type="@{componentType}"
             manufacturerIsSupplier="@{manufacturerIsSupplier}">
-          <file file="@{archiveLocation}"/>
+          <file file="@{archiveLocation}"
+                unless:blank="@{archiveLocation}" xmlns:unless="ant:unless"/>
           <componentChildren/>
         </component>
         <pureFileComponents>
