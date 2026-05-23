@@ -170,7 +170,7 @@ under the License.
           version="12.2.0"
           description="The CycloneDX core module provides a model representation of the BOM along with utilities to assist in creating, parsing, and validating BOMs."
           id="cyclonedx-core">
-        <file file="${lib.dir.compile}/cyclonedx-core-java.jar"/>
+        <file file="${lib.dir.compile}/cyclonedx-core-java-12.2.0.jar"/>
         <license refid="apache-2"/>
         <externalReference
             type="website"
@@ -199,25 +199,25 @@ under the License.
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/commons-codec/commons-codec/1.21.0/commons-codec-1.21.0-cyclonedx.json"/>
         </sbomLink>
-        <file file="${lib.dir.compile}/commons-codec.jar"/>
+        <file file="${lib.dir.compile}/commons-codec-1.21.0.jar"/>
       </additionalComponent>
       <additionalComponent id="commons-io">
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/commons-io/commons-io/2.21.0/commons-io-2.21.0-cyclonedx.json"/>
         </sbomLink>
-        <file file="${lib.dir.compile}/commons-io.jar"/>
+        <file file="${lib.dir.compile}/commons-io-2.21.0.jar"/>
       </additionalComponent>
       <additionalComponent id="commons-lang3">
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.20.0/commons-lang3-3.20.0-cyclonedx.json"/>
         </sbomLink>
-        <file file="${lib.dir.compile}/commons-lang3.jar"/>
+        <file file="${lib.dir.compile}/commons-lang3-3.20.0.jar"/>
       </additionalComponent>
       <additionalComponent id="commons-collections4">
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/org/apache/commons/commons-collections4/4.5.0/commons-collections4-4.5.0-cyclonedx.json"/>
         </sbomLink>
-        <file file="${lib.dir.compile}/commons-collections4.jar"/>
+        <file file="${lib.dir.compile}/commons-collections4-4.5.0.jar"/>
       </additionalComponent>
       <additionalComponent
           group="com.github.package-url"
@@ -225,7 +225,7 @@ under the License.
           version="1.5.0"
           description='The official Java implementation of the PackageURL specification. PackageURL (purl) is a minimal specification for describing a package via a "mostly universal" URL'
           id="packageurl-java">
-        <file file="${lib.dir.compile}/packageurl-java.jar"/>
+        <file file="${lib.dir.compile}/packageurl-java-1.5.0.jar"/>
         <license licenseId="MIT">
           <url url="https://opensource.org/licenses/MIT"/>
         </license>
@@ -234,25 +234,25 @@ under the License.
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.21.1/jackson-dataformat-xml-2.21.1-sbom-cyclonedx.json"/>
         </sbomLink>
-        <file file="${lib.dir.compile}/jackson-dataformat-xml.jar"/>
+        <file file="${lib.dir.compile}/jackson-dataformat-xml-2.21.1.jar"/>
       </additionalComponent>
       <additionalComponent>
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.21.1/jackson-core-2.21.1-sbom-cyclonedx.json"/>
         </sbomLink>
-        <file file="${lib.dir.compile}/jackson-core.jar"/>
+        <file file="${lib.dir.compile}/jackson-core-2.21.1.jar"/>
       </additionalComponent>
       <additionalComponent>
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.21/jackson-annotations-2.21-sbom-cyclonedx.json"/>
         </sbomLink>
-        <file file="${lib.dir.compile}/jackson-annotations.jar"/>
+        <file file="${lib.dir.compile}/jackson-annotations-2.21.jar"/>
       </additionalComponent>
       <additionalComponent>
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.21.1/jackson-databind-2.21.1-sbom-cyclonedx.json"/>
         </sbomLink>
-        <file file="${lib.dir.compile}/jackson-databind.jar"/>
+        <file file="${lib.dir.compile}/jackson-databind-2.21.1.jar"/>
       </additionalComponent>
       <additionalComponent
           group="com.fasterxml.woodstox"
@@ -260,7 +260,7 @@ under the License.
           version="7.1.1"
           description='Woodstox is a high-performance XML processor that implements Stax (JSR-173), SAX2 and Stax2 APIs'
           unknownDependencies="true">
-        <file file="${lib.dir.compile}/woodstox-core.jar"/>
+        <file file="${lib.dir.compile}/woodstox-core-7.1.1.jar"/>
         <license refid="apache-2"/>
       </additionalComponent>
       <additionalComponent
@@ -270,7 +270,7 @@ under the License.
           description='A json schema validator that supports draft v4, v6, v7, v2019-09 and v2020-12'
           unknownDependencies="true"
           id="json-schema-validator">
-        <file file="${lib.dir.compile}/json-schema-validator.jar"/>
+        <file file="${lib.dir.compile}/json-schema-validator-2.0.1.jar"/>
         <license refid="apache-2"/>
       </additionalComponent>
       <license refid="apache-2"/>
