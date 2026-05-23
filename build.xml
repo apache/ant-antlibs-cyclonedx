@@ -291,33 +291,30 @@ under the License.
       <attribute name="binsrc"/>
       <attribute name="binarysource"/>
       <attribute name="ext"/>
+      <element name="moreComponentChildren" implicit="true" optional="true"/>
       <sequential>
-        <cdx:componentbom
-            bomName="${dist.name}-@{binsrc}.@{ext}.cyclonedx"
+        <cdx:distributionbom
             outputdirectory="@{distbase}"
-            format="all"
-            useComponentSupplier="true"
+            version="${artifact.version}"
+            archiveName="${dist.name}-@{binsrc}.@{ext}"
+            archiveUrl="https://archive.apache.org/dist/ant/antlibs/${dist.name}-@{binsrc}.@{ext}"
+            archiveLocation="@{distbase}/${dist.name}-@{binsrc}.@{ext}"
+            description="Apache CycloneDX Antlib @{binarysource}"
+            publisher="The Apache Software Foundation"
             xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-          <component
-              version="${artifact.version}"
-              purl="https://archive.apache.org/dist/ant/antlibs/${dist.name}-@{binsrc}.@{ext}"
-              name="https://archive.apache.org/dist/ant/antlibs/${dist.name}-@{binsrc}.@{ext}"
-              description="Apache CycloneDX Antlib @{binarysource}"
-              publisher="The Apache Software Foundation"
-              type="FILE"
-              manufacturerIsSupplier="true">
-            <file file="@{distbase}/${dist.name}-@{binsrc}.@{ext}"/>
+          <componentChildren>
             <manufacturer refid="ant-team"/>
             <license refid="apache-2"/>
             <externalReferenceSet refid="ant-common-refs"/>
             <externalReferenceSet refid="antlib-ext-refs"/>
-          </component>
-          <pureFileComponents>
+            <moreComponentChildren/>
+          </componentChildren>
+          <archiveContent>
             <fileset dir="@{distdir}/..">
               <include name="${dist.name}/**"/>
             </fileset>
-          </pureFileComponents>
-        </cdx:componentbom>
+          </archiveContent>
+        </cdx:distributionbom>
       </sequential>
     </macrodef>
     <macrodef name="create-tarball-boms">
@@ -325,25 +322,32 @@ under the License.
       <attribute name="distbase"/>
       <attribute name="binsrc"/>
       <attribute name="binarysource"/>
+      <element name="componentChildren" implicit="true" optional="true"/>
       <sequential>
         <create-tarball-bom
             distdir="@{distdir}"
             distbase="@{distbase}"
             binsrc="@{binsrc}"
             binarysource="@{binarysource}"
-            ext="tar.gz"/>
+            ext="tar.gz">
+          <componentChildren/>
+        </create-tarball-bom>
         <create-tarball-bom
             distdir="@{distdir}"
             distbase="@{distbase}"
             binsrc="@{binsrc}"
             binarysource="@{binarysource}"
-            ext="tar.bz2"/>
+            ext="tar.bz2">
+          <componentChildren/>
+        </create-tarball-bom>
         <create-tarball-bom
             distdir="@{distdir}"
             distbase="@{distbase}"
             binsrc="@{binsrc}"
             binarysource="@{binarysource}"
-            ext="zip"/>
+            ext="zip">
+          <componentChildren/>
+        </create-tarball-bom>
       </sequential>
     </macrodef>
   </target>

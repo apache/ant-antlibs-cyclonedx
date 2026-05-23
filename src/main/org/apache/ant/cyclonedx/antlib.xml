@@ -17,7 +17,7 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<antlib xmlns:au="ant:current">
+<antlib xmlns:cdx="ant:current">
   <taskdef name="componentbom"
     classname="org.apache.ant.cyclonedx.ComponentBomTask"/>
   <typedef name="component"
@@ -28,4 +28,44 @@ under the License.
     classname="org.apache.ant.cyclonedx.License"/>
   <typedef name="externalreferenceset"
     classname="org.apache.ant.cyclonedx.ExternalReferenceSet"/>
+
+  <macrodef name="distributionbom" backtrace="false">
+    <attribute name="version"/>
+    <attribute name="archiveName"/>
+    <attribute name="archiveUrl"/>
+    <attribute name="archiveLocation"/>
+    <attribute name="outputDirectory"/>
+    <attribute name="description"/>
+    <attribute name="publisher"/>
+    <attribute name="componentType" default="file"/>
+    <attribute name="format" default="all"/>
+    <attribute name="useComponentSupplier" default="true"/>
+    <attribute name="manufacturerIsSupplier" default="true"/>
+    <element name="archiveContent"/>
+    <element name="componentChildren" optional="true"/>
+    <element name="additionalBomContent" optional="true"/>
+    <sequential>
+      <cdx:componentbom
+          bomName="@{archiveName}.cyclonedx"
+          outputdirectory="@{outputDirectory}"
+          format="@{format}"
+          useComponentSupplier="@{useComponentSupplier}">
+        <component
+            version="@{version}"
+            purl="@{archiveUrl}"
+            name="@{archiveUrl}"
+            description="@{description}"
+            publisher="@{publisher}"
+            type="@{componentType}"
+            manufacturerIsSupplier="@{manufacturerIsSupplier}">
+          <file file="@{archiveLocation}"/>
+          <componentChildren/>
+        </component>
+        <pureFileComponents>
+          <archiveContent/>
+        </pureFileComponents>
+        <additionalBomContent/>
+      </cdx:componentbom>
+    </sequential>
+  </macrodef>
 </antlib>
