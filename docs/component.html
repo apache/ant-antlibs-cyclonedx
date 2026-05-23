@@ -190,7 +190,9 @@
         group as one read from the linked SBOM, the linked component
         will be ignored. Here the version is ignored, it is assumed
         the component explicitly specified is the result of a process
-        that resolved conflicts in dependency versions.
+        that resolved conflicts in dependency versions. Currently this
+        only applies to Components with <code>pkg:maven/</code> Package-URLs
+        as bom-ref.
       </li>
     </ul>
 

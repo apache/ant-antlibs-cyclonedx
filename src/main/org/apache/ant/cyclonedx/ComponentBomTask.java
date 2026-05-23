@@ -229,8 +229,12 @@ public class ComponentBomTask extends Task {
                 } catch (IOException ex) {
                     throw new BuildException("failed to resolve component", ex);
                 }
-                knownComponents.put(getUnversionedCoordinates(c), c.getBomRef());
-            });        meta.setComponent(component.toMainCycloneDxComponent(specVersion.getVersion()));
+                String unversionedKey = getUnversionedCoordinates(c);
+                if (unversionedKey != null) {
+                    knownComponents.put(unversionedKey, c.getBomRef());
+                }
+            });
+        meta.setComponent(component.toMainCycloneDxComponent(specVersion.getVersion()));
 
         if (useComponentSupplier) {
             OrganizationalEntity componentSupplier = meta.getComponent().getSupplier();
@@ -248,9 +252,11 @@ public class ComponentBomTask extends Task {
         }
 
         for (Component c : resolvedComponents) {
-            String componentKey = getUnversionedCoordinates(c);
-            if (!knownComponents.containsKey(componentKey)) {
-                knownComponents.put(componentKey, c.getBomRef());
+            String unversionedKey = getUnversionedCoordinates(c);
+            if (unversionedKey == null) {
+                cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
+            } else if (!knownComponents.containsKey(unversionedKey)) {
+                knownComponents.put(unversionedKey, c.getBomRef());
                 cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
             }
         }
@@ -408,7 +414,11 @@ public class ComponentBomTask extends Task {
     }
 
     private static String getUnversionedCoordinates(Component c) {
-        return c.getGroup() + ":" + c.getName();
+        Map.Entry<String, String> mavenCoordinates = extractMavenCoordinates(c.getBomRef());
+        if (mavenCoordinates == null) {
+            return null;
+        }
+        return mavenCoordinates.getKey() + ":" + mavenCoordinates.getValue();
     }
 
     private static String getUnversionedCoordinates(Component.Dependency d) {
@@ -422,6 +432,9 @@ public class ComponentBomTask extends Task {
     private static Pattern MAVEN_PURL_PATTERN = Pattern.compile("pkg:maven/([^/]+)/([^/]+)@.+\\?type=jar");
 
     private static Map.Entry<String, String> extractMavenCoordinates(String bomRef) {
+        if (bomRef == null) {
+            return null;
+        }
         Matcher m = MAVEN_PURL_PATTERN.matcher(bomRef);
         if (m.matches()) {
             return new AbstractMap.SimpleImmutableEntry(m.group(1), m.group(2));
