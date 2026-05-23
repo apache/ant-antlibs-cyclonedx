@@ -365,7 +365,14 @@ under the License.
         distdir="${bin.dist.dir}"
         distbase="${dist.base}"
         binsrc="bin"
-        binarysource="Binary Distribution"/>
+        binarysource="Binary Distribution">
+      <component>
+        <sbomLink>
+          <file file="${bin.dist.dir}/${artifact.stub}-cyclonedx.json"/>
+        </sbomLink>
+        <file file="${bin.dist.dir}/${artifact.stub}.jar"/>
+      </component>
+    </create-tarball-boms>
   </target>
 
   <target name="after-fat-bin-dist" depends="after-dist">
@@ -373,7 +380,14 @@ under the License.
         distdir="${bin.dist.dir}"
         distbase="${dist.base}"
         binsrc="bin-withdeps"
-        binarysource="Binary Distribution Including Dependencies"/>
+        binarysource="Binary Distribution Including Dependencies">
+      <component>
+        <sbomLink>
+          <file file="${bin.dist.dir}/${artifact.stub}-cyclonedx.json"/>
+        </sbomLink>
+        <file file="${bin.dist.dir}/${artifact.stub}.jar"/>
+      </component>
+    </create-tarball-boms>
   </target>
 
   <import file="common/build.xml"/>
