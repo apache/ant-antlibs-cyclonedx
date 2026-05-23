@@ -236,6 +236,33 @@ under the License.
         </sbomLink>
         <file file="${lib.dir.compile}/jackson-dataformat-xml.jar"/>
       </additionalComponent>
+      <additionalComponent>
+        <sbomLink>
+          <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.21.1/jackson-core-2.21.1-sbom-cyclonedx.json"/>
+        </sbomLink>
+        <file file="${lib.dir.compile}/jackson-core.jar"/>
+      </additionalComponent>
+      <additionalComponent>
+        <sbomLink>
+          <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.21/jackson-annotations-2.21-sbom-cyclonedx.json"/>
+        </sbomLink>
+        <file file="${lib.dir.compile}/jackson-annotations.jar"/>
+      </additionalComponent>
+      <additionalComponent>
+        <sbomLink>
+          <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.21.1/jackson-databind-2.21.1-sbom-cyclonedx.json"/>
+        </sbomLink>
+        <file file="${lib.dir.compile}/jackson-databind.jar"/>
+      </additionalComponent>
+      <additionalComponent
+          group="com.fasterxml.woodstox"
+          name="woodstox-core"
+          version="7.1.1"
+          description='Woodstox is a high-performance XML processor that implements Stax (JSR-173), SAX2 and Stax2 APIs'
+          unknownDependencies="true">
+        <file file="${lib.dir.compile}/woodstox-core.jar"/>
+        <license refid="apache-2"/>
+      </additionalComponent>
       <additionalComponent
           group="com.networknt"
           name="json-schema-validator"
