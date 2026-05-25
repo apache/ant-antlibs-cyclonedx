@@ -51,7 +51,7 @@
     <au:assertResourceContains
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.json"
-        value='"url" : "https://github.com/apache/ant-antlibs-cyclonedx"'/>
+        value='"url" : "https://gitbox.apache.org/repos/asf/ant-antlibs-cyclonedx.git"'/>
   </target>
 
   <target name="testToolMetadataInXmlFormat">
@@ -115,7 +115,7 @@
     <au:assertResourceContains
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.xml"
-        value='&lt;url&gt;https://github.com/apache/ant-antlibs-cyclonedx&lt;/url&gt;'/>
+        value='&lt;url&gt;https://gitbox.apache.org/repos/asf/ant-antlibs-cyclonedx.git&lt;/url&gt;'/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.tools.components.component.publisher"

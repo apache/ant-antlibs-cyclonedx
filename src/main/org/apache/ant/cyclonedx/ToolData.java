@@ -58,7 +58,7 @@ class ToolData {
 
         antlibComponent.addConfiguredExternalReference(
            createExternalReference(ExternalReference.Type.VCS,
-                                   "https://github.com/apache/ant-antlibs-cyclonedx"));
+                                   "https://gitbox.apache.org/repos/asf/ant-antlibs-cyclonedx.git"));
         antlibComponent.addConfiguredExternalReference(
            createExternalReference(ExternalReference.Type.LICENSE,
                                    "https://www.apache.org/licenses/LICENSE-2.0.txt"));

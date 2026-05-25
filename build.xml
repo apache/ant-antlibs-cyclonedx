@@ -67,7 +67,7 @@ under the License.
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <externalReference
           type="VCS"
-          url="https://github.com/apache/ant-antlibs-cyclonedx"/>
+          url="https://gitbox.apache.org/repos/asf/ant-antlibs-cyclonedx.git"/>
       <externalReference
           type="BUILD_SYSTEM"
           url="https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/"/>
@@ -89,7 +89,7 @@ under the License.
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <externalReference
           type="VCS"
-          url="https://github.com/apache/ant"/>
+          url="https://gitbox.apache.org/repos/asf/ant.git"/>
       <externalReference
           type="BUILD_SYSTEM"
           url="https://ci-builds.apache.org/job/Ant/"/>
