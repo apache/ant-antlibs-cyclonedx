@@ -123,12 +123,15 @@
   </target>
 
   <target name="testMulipleTools">
-    <cdx:componentbom outputdirectory="${output}" format="xml"
-                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+    <cdx:componentbom
+        bomName="multi"
+        outputdirectory="${output}"
+        format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="test"/>
       <toolComponent name="extra-tool"/>
     </cdx:componentbom>
-    <xmlproperty file="${output}/bom.xml"/>
+    <xmlproperty file="${output}/multi.xml"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.tools.components.component.name"
