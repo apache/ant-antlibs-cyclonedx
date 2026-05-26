@@ -22,3 +22,6 @@ Right now the library is in an early stage of development and the main
 audience is Ant itself. This doesn't mean it couldn't be used for
 other projects and of course we are open to extend it to make things
 easier.
+
+Both the Java API as well as the Ant build-file API (attributes and
+nested elements) may change with future releases.
