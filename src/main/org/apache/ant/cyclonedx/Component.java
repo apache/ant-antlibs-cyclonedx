@@ -57,7 +57,7 @@ public class Component extends DataType {
     private String copyright;
     private Organization manufacturer = null;
     private Organization supplier = null;
-    private boolean manufacturerIsSupplier = false;
+    private boolean supplierIsManufacturer = false;
     private List<org.cyclonedx.model.License> licenses = new ArrayList<>();
     private String purl;
     private String bomRef;
@@ -254,15 +254,15 @@ public class Component extends DataType {
     }
 
     /**
-     * If set to {@code true} the manufacturer will also be used to
-     * provide the supplier information.
+     * If set to {@code true} the supplier will also be used to
+     * provide the manufacturer information.
      *
-     * @param manufacturerIsSupplier whether to use manufacturer as
-     * supplier as well
+     * @param supplierIsManufacturer whether to use supplier as
+     * manufacturer as well
      */
-    public void setManufacturerIsSupplier(boolean manufacturerIsSupplier) {
+    public void setSupplierIsManufacturer(boolean supplierIsManufacturer) {
         checkAttributesAllowed();
-        this.manufacturerIsSupplier = manufacturerIsSupplier;
+        this.supplierIsManufacturer = supplierIsManufacturer;
     }
 
     /**
@@ -595,12 +595,12 @@ public class Component extends DataType {
         if (!dependencies.isEmpty() && getBomRef() == null) {
             throw new BuildException("components without bomRef cannot have dependencies");
         }
-        if (manufacturerIsSupplier) {
-            if (manufacturer == null) {
-                throw new BuildException("component without manufacturer can't use manufacturer as supplier");
+        if (supplierIsManufacturer) {
+            if (supplier == null) {
+                throw new BuildException("component without supplier can't use supplier as manufacturer");
             }
-            if (supplier != null) {
-                throw new BuildException("component with supplier can't use manufacturer as supplier");
+            if (manufacturer != null) {
+                throw new BuildException("component with manufacturer can't use supplier as manufacturer");
             }
         }
 
@@ -630,15 +630,15 @@ public class Component extends DataType {
         if (mimeType != null) {
             component.setMimeType(mimeType);
         }
-        if (manufacturer != null) {
-            OrganizationalEntity oe = manufacturer.toOrganizationalEntity();
-            component.setManufacturer(oe);
-            if (manufacturerIsSupplier) {
-                component.setSupplier(oe);
+        if (supplier != null) {
+            OrganizationalEntity oe = supplier.toOrganizationalEntity();
+            component.setSupplier(oe);
+            if (supplierIsManufacturer) {
+                component.setManufacturer(oe);
             }
         }
-        if (supplier != null) {
-            component.setSupplier(supplier.toOrganizationalEntity());
+        if (manufacturer != null) {
+            component.setManufacturer(manufacturer.toOrganizationalEntity());
         }
         String purl = getPurl();
         if (purl != null) {
@@ -726,16 +726,16 @@ public class Component extends DataType {
         if (mimeType == null) {
             setMimeType(real.getMimeType());
         }
-        if (manufacturer == null) {
-            OrganizationalEntity realManufacturer = real.getManufacturer();
-            if (realManufacturer != null) {
-                manufacturer = Organization.from(realManufacturer);
-            }
-        }
-        if (supplier == null && !manufacturerIsSupplier) {
+        if (supplier == null) {
             OrganizationalEntity realSupplier = real.getSupplier();
             if (realSupplier != null) {
                 supplier = Organization.from(realSupplier);
+            }
+        }
+        if (manufacturer == null && !supplierIsManufacturer) {
+            OrganizationalEntity realManufacturer = real.getManufacturer();
+            if (realManufacturer != null) {
+                manufacturer = Organization.from(realManufacturer);
             }
         }
         if (licenses.isEmpty()) {

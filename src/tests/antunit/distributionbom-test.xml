@@ -30,7 +30,7 @@
         outputdirectory="${output}"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <componentChildren>
-        <manufacturer refid="ant-team"/>
+        <supplier refid="ant-team"/>
         <license refid="apache-2"/>
         <externalReferenceSet refid="antlib-ext-refs"/>
       </componentChildren>

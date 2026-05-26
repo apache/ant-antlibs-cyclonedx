@@ -125,13 +125,13 @@
         <td>No</td>
       </tr>
       <tr>
-        <td>manufacturerIsSupplier</td>
+        <td>supplierIsManufacturer</td>
         <td>Whether the
-          nested <a href="#manufacturer">manufacturer</a> shall be used
-          as supplier as well.</td>
+          nested <a href="#supplier">supplier</a> shall be used
+          as manufacturer as well.</td>
         <td>No - defaults to <code>false</code>. Must not
           be <code>true</code> if a
-          nested <a href="#supplier">supplier</a> exists.</td>
+          nested <a href="#manufacturer">manufacturer</a> exists.</td>
       </tr>
       <tr>
         <td>unknownDependencies</td>
@@ -166,7 +166,7 @@
         <code>mimeType</code> and <code>manufacturer</code> are taken
         from the SBOM's metadata component unless they are explicitly
         specified on the component element itself.</li>
-      <li><code>supplier</code> is taken from the SBOM's metadata
+      <li><code>manufacturer</code> is taken from the SBOM's metadata
         component unless it is explicitly specified on the component
         element itself or <code>manufacturerissupplier</code>
         is <code>true</code>.</li>
@@ -347,7 +347,7 @@
           unknownDependencies="true"
           id="ant"
           xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-        &lt;manufacturer refid="ant-team"/>
+        &lt;supplier refid="ant-team"/>
         &lt;license refid="apache-2"/>
         &lt;externalReference
             type="VCS"
@@ -362,10 +362,10 @@
           version="0.1"
           description="Apache CycloneDX Antlib"
           publisher="The Apache Software Foundation"
-          manufacturerIsSupplier="true"
+          supplierIsManufacturer="true"
           xmlns:cdx="antlib:org.apache.ant.cyclonedx">
         &lt;file file="ant-antlibs-cyclonedx-0.1.jar"/>
-        &lt;manufacturer refid="ant-team"/>
+        &lt;supplier refid="ant-team"/>
         &lt;license refid="apache-2"/>
         &lt;externalReferenceSet refid="antlib-ext-refs"/>
         &lt;dependency componentRef="ant"/>

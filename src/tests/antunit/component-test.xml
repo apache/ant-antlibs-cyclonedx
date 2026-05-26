@@ -354,39 +354,39 @@
         value="some-dependency"/>
   </target>
 
-  <target name="testManufacturerIsNotCopiedToSupplierByDefault">
+  <target name="testSupplierIsNotCopiedToManufacturerByDefault">
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="foo">
-        <manufacturer name="Example">
+        <supplier name="Example">
           <url url="https://example.com/"/>
-        </manufacturer>
+        </supplier>
       </component>
     </cdx:componentbom>
     <xmlproperty file="${output}/bom.xml"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
-        name="bom.metadata.component.manufacturer.name"
+        name="bom.metadata.component.supplier.name"
         value="Example"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
-        name="bom.metadata.component.manufacturer.url"
+        name="bom.metadata.component.supplier.url"
         value="https://example.com/"/>
-    <au:fail message="expected bom.metadata.components.component.supplier.name to not be set"
+    <au:fail message="expected bom.metadata.components.component.manufacturer.name to not be set"
              xmlns:au="antlib:org.apache.ant.antunit">
       <not>
-        <isset property="bom.metadata.component.supplier.name"/>
+        <isset property="bom.metadata.component.manufacturer.name"/>
       </not>
     </au:fail>
   </target>
 
-  <target name="testManufacturerIsCopiedToSupplierWhenRequested">
+  <target name="testSupplierIsCopiedToManufacturerWhenRequested">
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <component name="foo" manufacturerIsSupplier="true">
-        <manufacturer name="Example">
+      <component name="foo" supplierIsManufacturer="true">
+        <supplier name="Example">
           <url url="https://example.com/"/>
-        </manufacturer>
+        </supplier>
       </component>
     </cdx:componentbom>
     <xmlproperty file="${output}/bom.xml"/>
@@ -408,12 +408,12 @@
         value="https://example.com/"/>
   </target>
 
-  <target name="testManufacturerIsSupplierMustNotBeTrueWhenSupplierIsPresent">
-    <au:expectfailure expectedMessage="component with supplier can't use manufacturer as supplier"
+  <target name="testSupplierIsManufacturerMustNotBeTrueWhenSupplierIsPresent">
+    <au:expectfailure expectedMessage="component with manufacturer can't use supplier as manufacturer"
                       xmlns:au="antlib:org.apache.ant.antunit">
       <cdx:componentbom outputdirectory="${output}" format="xml"
                         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-        <component name="foo" manufacturerIsSupplier="true">
+        <component name="foo" supplierIsManufacturer="true">
           <manufacturer name="Example">
             <url url="https://example.com/"/>
           </manufacturer>
@@ -687,7 +687,7 @@
     <au:expectfailure
         expectedMessage='You must not specify more than one attribute when using refid'
         xmlns:au="antlib:org.apache.ant.antunit">
-      <cdx:component manufacturerIsSupplier="false" refid="foo"
+      <cdx:component supplierIsManufacturer="false" refid="foo"
                      xmlns:cdx="antlib:org.apache.ant.cyclonedx"/>
     </au:expectfailure>
   </target>
@@ -934,14 +934,14 @@
   </target>
 
   <target
-      name="testSbomLinkDoesNotUseLinkedSupplierIfManufacturerIsSupplier"
+      name="testSbomLinkDoesNotUseLinkedManufacturerIfSupplierIsManufacturer"
       depends="createMaximalComponentData">
     <cdx:componentbom
         bomName="merged"
         outputdirectory="${output}"
         format="xml"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <component manufacturerIsSupplier="true">
+      <component supplierIsManufacturer="true">
         <sbomLink>
           <file file="${output}/bom.json"/>
         </sbomLink>
@@ -951,23 +951,23 @@
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.component.manufacturer.name"
-        value="Example"/>
+        value="Example 2"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.component.manufacturer.url"
-        value="https://example.org/"/>
+        value="https://example.com/"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.component.supplier.name"
-        value="Example"/>
+        value="Example 2"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.component.supplier.url"
-        value="https://example.org/"/>
+        value="https://example.com/"/>
   </target>
 
   <target
-      name="testDataFromLinkedSbomCanBeOverwerittenOrMerged"
+      name="testDataFromLinkedSbomCanBeOverwrittenOrMerged"
       depends="createMaximalComponentData">
     <cdx:componentbom
         bomName="merged"
