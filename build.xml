@@ -38,8 +38,8 @@ under the License.
     </typedef>
     <!-- common definitions for SBOMs -->
     <cdx:organization
-        name="Apache Ant Development Team"
-        id="ant-team"
+        name="Apache Ant Project Management Committee"
+        id="ant-pmc"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <url url="https://ant.apache.org/"/>
     </cdx:organization>
@@ -133,7 +133,7 @@ under the License.
           publisher="The Apache Software Foundation"
           manufacturerIsSupplier="true">
         <file file="${jarname}"/>
-        <manufacturer refid="ant-team"/>
+        <manufacturer refid="ant-pmc"/>
         <license refid="apache-2"/>
         <externalReferenceSet refid="ant-common-refs"/>
         <externalReferenceSet refid="antlib-ext-refs"/>
@@ -146,7 +146,7 @@ under the License.
           version="1.10.17"
           isExternal="true"
           id="ant">
-        <manufacturer refid="ant-team"/>
+        <manufacturer refid="ant-pmc"/>
         <license refid="apache-2"/>
         <externalReferenceSet refid="ant-common-refs"/>
         <externalReferenceSet refid="ant-ext-refs"/>
@@ -158,7 +158,7 @@ under the License.
           version="1.10.17"
           isExternal="true"
           id="ant-launcher">
-        <manufacturer refid="ant-team"/>
+        <manufacturer refid="ant-pmc"/>
         <license refid="apache-2"/>
         <externalReferenceSet refid="ant-common-refs"/>
         <externalReferenceSet refid="ant-ext-refs"/>
@@ -304,7 +304,7 @@ under the License.
             publisher="The Apache Software Foundation"
             xmlns:cdx="antlib:org.apache.ant.cyclonedx">
           <componentChildren>
-            <manufacturer refid="ant-team"/>
+            <manufacturer refid="ant-pmc"/>
             <license refid="apache-2"/>
             <externalReferenceSet refid="ant-common-refs"/>
             <externalReferenceSet refid="antlib-ext-refs"/>

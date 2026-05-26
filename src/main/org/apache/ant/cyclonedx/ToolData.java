@@ -46,7 +46,7 @@ class ToolData {
         antlibComponent.setPublisher("The Apache Software Foundation");
 
         Organization manufacturer = new Organization();
-        manufacturer.setName("Apache Ant Development Team");
+        manufacturer.setName("Apache Ant Project Management Committee");
         manufacturer.addConfiguredUrl(new URLResource("https://ant.apache.org/"));
         antlibComponent.addManufacturer(manufacturer);
         antlibComponent.setManufacturerIsSupplier(true);

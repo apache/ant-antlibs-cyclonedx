@@ -91,7 +91,7 @@
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.tools.components.component.manufacturer.name"
-        value="Apache Ant Development Team"/>
+        value="Apache Ant Project Management Committee"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.tools.components.component.manufacturer.url"
@@ -99,7 +99,7 @@
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.tools.components.component.supplier.name"
-        value="Apache Ant Development Team"/>
+        value="Apache Ant Project Management Committee"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.tools.components.component.supplier.url"
