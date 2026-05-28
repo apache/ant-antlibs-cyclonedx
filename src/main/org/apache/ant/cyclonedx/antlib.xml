@@ -28,45 +28,4 @@ under the License.
     classname="org.apache.ant.cyclonedx.License"/>
   <typedef name="externalreferenceset"
     classname="org.apache.ant.cyclonedx.ExternalReferenceSet"/>
-
-  <macrodef name="distributionbom" backtrace="false">
-    <attribute name="version"/>
-    <attribute name="archiveName"/>
-    <attribute name="archiveUrl"/>
-    <attribute name="archiveLocation" default=""/>
-    <attribute name="outputDirectory"/>
-    <attribute name="description"/>
-    <attribute name="publisher"/>
-    <attribute name="componentType" default="file"/>
-    <attribute name="format" default="all"/>
-    <attribute name="useComponentSupplier" default="true"/>
-    <attribute name="supplierIsManufacturer" default="true"/>
-    <element name="archiveContent"/>
-    <element name="componentChildren" optional="true"/>
-    <element name="additionalBomContent" optional="true"/>
-    <sequential>
-      <cdx:componentbom
-          bomName="@{archiveName}.cyclonedx"
-          outputdirectory="@{outputDirectory}"
-          format="@{format}"
-          useComponentSupplier="@{useComponentSupplier}">
-        <component
-            version="@{version}"
-            purl="@{archiveUrl}"
-            name="@{archiveUrl}"
-            description="@{description}"
-            publisher="@{publisher}"
-            type="@{componentType}"
-            supplierIsManufacturer="@{supplierIsManufacturer}">
-          <file file="@{archiveLocation}"
-                unless:blank="@{archiveLocation}" xmlns:unless="ant:unless"/>
-          <componentChildren/>
-        </component>
-        <pureFileComponents>
-          <archiveContent/>
-        </pureFileComponents>
-        <additionalBomContent/>
-      </cdx:componentbom>
-    </sequential>
-  </macrodef>
 </antlib>

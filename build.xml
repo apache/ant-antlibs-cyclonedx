@@ -286,6 +286,47 @@ under the License.
   </target>
 
   <target name="after-dist" depends="define-cyclonedx-components">
+    <macrodef name="distributionbom" backtrace="false">
+      <attribute name="version"/>
+      <attribute name="archiveName"/>
+      <attribute name="archiveUrl"/>
+      <attribute name="archiveLocation" default=""/>
+      <attribute name="outputDirectory"/>
+      <attribute name="description"/>
+      <attribute name="publisher"/>
+      <attribute name="componentType" default="file"/>
+      <attribute name="format" default="all"/>
+      <attribute name="useComponentSupplier" default="true"/>
+      <attribute name="supplierIsManufacturer" default="true"/>
+      <element name="archiveContent"/>
+      <element name="componentChildren" optional="true"/>
+      <element name="additionalBomContent" optional="true"/>
+      <sequential
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <cdx:componentbom
+            bomName="@{archiveName}.cyclonedx"
+            outputdirectory="@{outputDirectory}"
+            format="@{format}"
+            useComponentSupplier="@{useComponentSupplier}">
+          <component
+              version="@{version}"
+              purl="@{archiveUrl}"
+              name="@{archiveUrl}"
+              description="@{description}"
+              publisher="@{publisher}"
+              type="@{componentType}"
+              supplierIsManufacturer="@{supplierIsManufacturer}">
+            <file file="@{archiveLocation}"
+                  unless:blank="@{archiveLocation}" xmlns:unless="ant:unless"/>
+            <componentChildren/>
+          </component>
+          <pureFileComponents>
+            <archiveContent/>
+          </pureFileComponents>
+          <additionalBomContent/>
+        </cdx:componentbom>
+      </sequential>
+    </macrodef>
     <macrodef name="create-tarball-bom">
       <attribute name="distdir"/>
       <attribute name="distbase"/>
@@ -294,7 +335,7 @@ under the License.
       <attribute name="ext"/>
       <element name="moreComponentChildren" implicit="true" optional="true"/>
       <sequential>
-        <cdx:distributionbom
+        <distributionbom
             outputdirectory="@{distbase}"
             version="${artifact.version}"
             archiveName="${dist.name}-@{binsrc}.@{ext}"
@@ -318,7 +359,7 @@ under the License.
           <additionalBomContent>
             <license refid="apache-2"/>
           </additionalBomContent>
-        </cdx:distributionbom>
+        </distributionbom>
       </sequential>
     </macrodef>
     <macrodef name="create-tarball-boms">

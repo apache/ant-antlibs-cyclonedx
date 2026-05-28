@@ -19,16 +19,60 @@
 
   <import file="shared.xml" />
 
+  <target name="setUp" depends="shared.setUp">
+    <!-- this is a candidate for becoming a atask of the Antlib but
+         things are a bit unstable right now -->
+    <macrodef name="distributionbom" backtrace="false">
+      <attribute name="version"/>
+      <attribute name="archiveName"/>
+      <attribute name="archiveUrl"/>
+      <attribute name="archiveLocation" default=""/>
+      <attribute name="outputDirectory"/>
+      <attribute name="description"/>
+      <attribute name="publisher"/>
+      <attribute name="componentType" default="file"/>
+      <attribute name="format" default="all"/>
+      <attribute name="useComponentSupplier" default="true"/>
+      <attribute name="supplierIsManufacturer" default="true"/>
+      <element name="archiveContent"/>
+      <element name="componentChildren" optional="true"/>
+      <element name="additionalBomContent" optional="true"/>
+      <sequential
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <cdx:componentbom
+            bomName="@{archiveName}.cyclonedx"
+            outputdirectory="@{outputDirectory}"
+            format="@{format}"
+            useComponentSupplier="@{useComponentSupplier}">
+          <component
+              version="@{version}"
+              purl="@{archiveUrl}"
+              name="@{archiveUrl}"
+              description="@{description}"
+              publisher="@{publisher}"
+              type="@{componentType}"
+              supplierIsManufacturer="@{supplierIsManufacturer}">
+            <file file="@{archiveLocation}"
+                  unless:blank="@{archiveLocation}" xmlns:unless="ant:unless"/>
+            <componentChildren/>
+          </component>
+          <pureFileComponents>
+            <archiveContent/>
+          </pureFileComponents>
+          <additionalBomContent/>
+        </cdx:componentbom>
+      </sequential>
+    </macrodef>
+  </target>
 
   <target name="testAntlibsSourceTarball" depends="commonReferences">
-    <cdx:distributionbom
+    <distributionbom
         version="${artifact.version}"
         archiveName="ant-cyclonedx-${artifact.version}-src.tar"
         archiveUrl="ant-cyclonedx-src.tar"
         description="Apache CycloneDX Antlib Source Distribution"
         publisher="The Apache Software Foundation"
-        outputdirectory="${output}"
-        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        outputdirectory="${output}">
       <componentChildren>
         <supplier refid="ant-team"/>
         <license refid="apache-2"/>
@@ -47,7 +91,7 @@
       <additionalBomContent>
         <license refid="apache-2"/>
       </additionalBomContent>
-    </cdx:distributionbom>
+    </distributionbom>
     <copy todir="${java.io.tmpdir}">
       <fileset dir="${output}" includes="ant-cyclonedx*"/>
     </copy>
