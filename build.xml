@@ -438,5 +438,11 @@ under the License.
     </create-tarball-boms>
   </target>
 
+  <target name="fetch-dependencies" depends="ivy.xml" xmlns:ivy="antlib:org.apache.ivy.ant">
+    <ivy:resolve file="${target.ivy.xml}"/>
+    <ivy:retrieve type="jar" conf="default"
+                  pattern="${build.deps}/[artifact]-[revision].[ext]"/>
+  </target>
+
   <import file="common/build.xml"/>
 </project>
