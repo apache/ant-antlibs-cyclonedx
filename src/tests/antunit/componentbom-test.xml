@@ -189,6 +189,26 @@
         name="bom.metadata.supplier.url"
         value="https://example.com/"/>
 
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      bomname="manufacturer"
+                      useComponentManufacturer="true"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <manufacturer name="Example 2">
+          <url url="https://example.com/"/>
+        </manufacturer>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/manufacturer.xml" prefix="m"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="m.bom.metadata.manufacturer.name"
+        value="Example 2"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="m.bom.metadata.manufacturer.url"
+        value="https://example.com/"/>
+
     <au:expectfailure expectedMessage="useComponentSupplier is true but component supplier is null"
         xmlns:au="antlib:org.apache.ant.antunit">
       <cdx:componentbom format="xml"
@@ -207,6 +227,27 @@
           <supplier name="Foo"/>
         </component>
         <supplier name="Foo"/>
+      </cdx:componentbom>
+    </au:expectfailure>
+
+    <au:expectfailure expectedMessage="useComponentManufacturer is true but component manufacturer is null"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom format="xml"
+                        useComponentManufacturer="true"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname"/>
+      </cdx:componentbom>
+    </au:expectfailure>
+
+    <au:expectfailure expectedMessage="can't use component's manufacturer when there is an explicit manufacturer"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom format="xml"
+                        useComponentManufacturer="true"
+                        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname">
+          <manufacturer name="Foo"/>
+        </component>
+        <manufacturer name="Foo"/>
       </cdx:componentbom>
     </au:expectfailure>
   </target>
@@ -429,6 +470,7 @@
         outputdirectory="${output}"
         format="all"
         useComponentSupplier="true"
+        useComponentManufacturer="true"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component
           name="ant-cyclonedx"

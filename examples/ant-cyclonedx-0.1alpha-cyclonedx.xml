@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bom serialNumber="urn:uuid:20a5b58d-c382-4a84-9331-c16ba27d9396" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
+<bom serialNumber="urn:uuid:0d622622-e6dc-44ac-90b1-8c389a6dbc52" version="1" xmlns="http://cyclonedx.org/schema/bom/1.6">
   <metadata>
-    <timestamp>2026-05-25T11:00:50Z</timestamp>
+    <timestamp>2026-05-29T12:18:45Z</timestamp>
     <lifecycles>
       <lifecycle>
         <phase>build</phase>
@@ -11,11 +11,11 @@
       <components>
         <component type="library">
           <supplier>
-            <name>Apache Ant Development Team</name>
+            <name>Apache Ant Project Management Committee</name>
             <url>https://ant.apache.org/</url>
           </supplier>
           <manufacturer>
-            <name>Apache Ant Development Team</name>
+            <name>Apache Ant Project Management Committee</name>
             <url>https://ant.apache.org/</url>
           </manufacturer>
           <publisher>The Apache Software Foundation</publisher>
@@ -24,14 +24,14 @@
           <version>0.1alpha</version>
           <description>Apache CycloneDX Antlib</description>
           <hashes>
-            <hash alg="MD5">89011dd36ba1b9595bd899c25b48d2ae</hash>
-            <hash alg="SHA-1">0a503cecd6a8411d354a3834d3d9b554df6fd9a9</hash>
-            <hash alg="SHA-256">7a3134499a89f3f576f9da304fcde6b6382b881c4095318835eb71f6c7c2c634</hash>
-            <hash alg="SHA-512">28ec15a61bd3bda68faa7ea970fa29d4acfafbbaf167663d4307b3a1527d85bcde007336bc96b0e32e58b0daa2530817456930134a4ba668c0095343009af6b7</hash>
-            <hash alg="SHA3-256">7103c70b3de942b02b20e3169ab193d31a4af74b4048b3432c01f1a76365df04</hash>
-            <hash alg="SHA3-512">233592e04675f6efa56069f15fe7cdafddcacce44de7788c6b4aee3cde5b14a81c3055dc18a54ea849a3529b8cb51b7f12fcc269ae4c041d86129578374bc77d</hash>
-            <hash alg="SHA-384">466fa92d45027a903b85774751478de77c89559d2ce92f8d997e19fb0356e32c97463f758c2c844660c9d089a808ca98</hash>
-            <hash alg="SHA3-384">230e8e8d03b7f2515a6b21196e4cc9e61bdd115c5d1092c8d5181644f77d2c4d44e7d2e20d047ce37c4357a1e41c3d5b</hash>
+            <hash alg="MD5">9f29330c5cf96352687192641e114e83</hash>
+            <hash alg="SHA-1">eee32443ed487e07efc2e57281d57fb0ea841943</hash>
+            <hash alg="SHA-256">e77e86169b03f98821a6954c107fd251a06d0efd07984c3b7b51f0a931cc63eb</hash>
+            <hash alg="SHA-512">49e5832e57227ddc3385d14609507ac91e247934ff37073dacc6d884e862c5c363ee56a111ca8d759d13e203d1c0e410b969c8303e6d73c7caf000310c834161</hash>
+            <hash alg="SHA3-256">206d9ebdb42212aef5142ec086521a1f82dcd9553d78c971a9bf1a073f26f0ed</hash>
+            <hash alg="SHA3-512">d05fa960d28e6b55856ddab6967ae29afe83fcea85a0c7e31d7bc17edd935e2392493f05dfaa702ddb726b8624589c645478869c5c6bb64a41f1eaa8b834978a</hash>
+            <hash alg="SHA-384">f3afb09973931d333007fdc91e4bf372b66be456d73ab5b6dfe1ac3084309cb148dfd4ce1c63542197071c6deb92f6e6</hash>
+            <hash alg="SHA3-384">ba4c07ce8eefa9dc9cffd2195d5658166e2c404a3af4337fb2eb6e3d61e0c89f5970fafb30de13c022eaa38e79d6ddba</hash>
           </hashes>
           <licenses>
             <license>
@@ -87,14 +87,14 @@
       <version>0.1alpha</version>
       <description>Apache CycloneDX Antlib</description>
       <hashes>
-        <hash alg="MD5">89011dd36ba1b9595bd899c25b48d2ae</hash>
-        <hash alg="SHA-1">0a503cecd6a8411d354a3834d3d9b554df6fd9a9</hash>
-        <hash alg="SHA-256">7a3134499a89f3f576f9da304fcde6b6382b881c4095318835eb71f6c7c2c634</hash>
-        <hash alg="SHA-512">28ec15a61bd3bda68faa7ea970fa29d4acfafbbaf167663d4307b3a1527d85bcde007336bc96b0e32e58b0daa2530817456930134a4ba668c0095343009af6b7</hash>
-        <hash alg="SHA3-256">7103c70b3de942b02b20e3169ab193d31a4af74b4048b3432c01f1a76365df04</hash>
-        <hash alg="SHA3-512">233592e04675f6efa56069f15fe7cdafddcacce44de7788c6b4aee3cde5b14a81c3055dc18a54ea849a3529b8cb51b7f12fcc269ae4c041d86129578374bc77d</hash>
-        <hash alg="SHA-384">466fa92d45027a903b85774751478de77c89559d2ce92f8d997e19fb0356e32c97463f758c2c844660c9d089a808ca98</hash>
-        <hash alg="SHA3-384">230e8e8d03b7f2515a6b21196e4cc9e61bdd115c5d1092c8d5181644f77d2c4d44e7d2e20d047ce37c4357a1e41c3d5b</hash>
+        <hash alg="MD5">9f29330c5cf96352687192641e114e83</hash>
+        <hash alg="SHA-1">eee32443ed487e07efc2e57281d57fb0ea841943</hash>
+        <hash alg="SHA-256">e77e86169b03f98821a6954c107fd251a06d0efd07984c3b7b51f0a931cc63eb</hash>
+        <hash alg="SHA-512">49e5832e57227ddc3385d14609507ac91e247934ff37073dacc6d884e862c5c363ee56a111ca8d759d13e203d1c0e410b969c8303e6d73c7caf000310c834161</hash>
+        <hash alg="SHA3-256">206d9ebdb42212aef5142ec086521a1f82dcd9553d78c971a9bf1a073f26f0ed</hash>
+        <hash alg="SHA3-512">d05fa960d28e6b55856ddab6967ae29afe83fcea85a0c7e31d7bc17edd935e2392493f05dfaa702ddb726b8624589c645478869c5c6bb64a41f1eaa8b834978a</hash>
+        <hash alg="SHA-384">f3afb09973931d333007fdc91e4bf372b66be456d73ab5b6dfe1ac3084309cb148dfd4ce1c63542197071c6deb92f6e6</hash>
+        <hash alg="SHA3-384">ba4c07ce8eefa9dc9cffd2195d5658166e2c404a3af4337fb2eb6e3d61e0c89f5970fafb30de13c022eaa38e79d6ddba</hash>
       </hashes>
       <licenses>
         <license>
@@ -133,6 +133,10 @@
         </reference>
       </externalReferences>
     </component>
+    <manufacturer>
+      <name>Apache Ant Development Team</name>
+      <url>https://ant.apache.org/</url>
+    </manufacturer>
     <supplier>
       <name>Apache Ant Development Team</name>
       <url>https://ant.apache.org/</url>

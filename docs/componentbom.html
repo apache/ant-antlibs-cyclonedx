@@ -100,6 +100,16 @@
           <code>true</code>.</td>
         <td>No, defaults to <code>false</code>.</td>
       </tr>
+      <tr>
+        <td>useComponentManufacturer</td>
+        <td>If set to <code>true</code> the manufacturer of the SBOM's
+          main component will be used for the SBOM itself.<br/>
+          If this is <code>true</code> the main component must specify
+          a manufacturer. Also you must not use a
+          nested <code>manufacturer</code> child for this task if this is
+          <code>true</code>.</td>
+        <td>No, defaults to <code>false</code>.</td>
+      </tr>
     </table>
 
     <h3>Nested elements</h3>
@@ -119,6 +129,9 @@
 
     <p>At most one nested <a href="organization.html">organization</a>
       specifies the manufacturer of the SBOM.</p>
+
+    <p>This is prohibited if the <code>useComponentManufacturer</code>
+      attribute is set to <code>true</code>.</p>
 
     <h4 id="supplier">supplier</h4>
 
@@ -174,6 +187,7 @@
         outputdirectory="${output}"
         format="all"
         useComponentSupplier="true"
+        useComponentManufacturer="true"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       &lt;component
           name="ant-cyclonedx-src.tar"

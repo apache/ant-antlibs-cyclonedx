@@ -122,6 +122,7 @@ under the License.
         outputdirectory="${build.lib}"
         format="all"
         useComponentSupplier="true"
+        useComponentManufacturer="true"
         unless:set="antlib-sbom-ok"
         xmlns:unless="ant:unless"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
@@ -296,6 +297,7 @@ under the License.
       <attribute name="publisher"/>
       <attribute name="componentType" default="file"/>
       <attribute name="format" default="all"/>
+      <attribute name="useComponentManufacturer" default="true"/>
       <attribute name="useComponentSupplier" default="true"/>
       <attribute name="supplierIsManufacturer" default="true"/>
       <element name="archiveContent"/>
@@ -307,6 +309,7 @@ under the License.
             bomName="@{archiveName}.cyclonedx"
             outputdirectory="@{outputDirectory}"
             format="@{format}"
+            useComponentManufacturer="@{useComponentManufacturer}"
             useComponentSupplier="@{useComponentSupplier}">
           <component
               version="@{version}"

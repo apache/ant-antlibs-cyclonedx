@@ -53,6 +53,7 @@ public class ComponentBomTask extends Task {
     private Organization manufacturer = null;
     private Organization supplier = null;
     private boolean useComponentSupplier = false;
+    private boolean useComponentManufacturer = false;
     private Union pureFileComponents = new Union();
     private List<org.cyclonedx.model.License> licenses = new ArrayList<>();
 
@@ -104,6 +105,15 @@ public class ComponentBomTask extends Task {
      */
     public void setUseComponentSupplier(boolean useComponentSupplier) {
         this.useComponentSupplier = useComponentSupplier;
+    }
+
+    /**
+     * Whether to use the manufacturer of the main component as manufacturer for the BOM as well.
+     *
+     * @param useComponentManufacturer whether to use manufacturer of component for the BOM
+     */
+    public void setUseComponentManufacturer(boolean useComponentManufacturer) {
+        this.useComponentManufacturer = useComponentManufacturer;
     }
 
     /**
@@ -194,6 +204,9 @@ public class ComponentBomTask extends Task {
         if (supplier != null && useComponentSupplier) {
             throw new BuildException("can't use component's supplier when there is an explicit supplier");
         }
+        if (manufacturer != null && useComponentManufacturer) {
+            throw new BuildException("can't use component's manufacturer when there is an explicit manufacturer");
+        }
         if (outputDirectory != null && !outputDirectory.isDirectory()) {
             throw new BuildException("outputDirectory must point to a directory");
         }
@@ -242,6 +255,14 @@ public class ComponentBomTask extends Task {
                 throw new BuildException("useComponentSupplier is true but component supplier is null");
             }
             meta.setSupplier(componentSupplier);
+        }
+
+        if (useComponentManufacturer) {
+            OrganizationalEntity componentManufacturer = meta.getComponent().getManufacturer();
+            if (componentManufacturer == null) {
+                throw new BuildException("useComponentManufacturer is true but component manufacturer is null");
+            }
+            meta.setManufacturer(componentManufacturer);
         }
 
         bom.setMetadata(meta);

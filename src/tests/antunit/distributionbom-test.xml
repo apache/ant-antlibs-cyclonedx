@@ -33,6 +33,7 @@
       <attribute name="componentType" default="file"/>
       <attribute name="format" default="all"/>
       <attribute name="useComponentSupplier" default="true"/>
+      <attribute name="useComponentManufacturer" default="true"/>
       <attribute name="supplierIsManufacturer" default="true"/>
       <element name="archiveContent"/>
       <element name="componentChildren" optional="true"/>
@@ -43,7 +44,8 @@
             bomName="@{archiveName}.cyclonedx"
             outputdirectory="@{outputDirectory}"
             format="@{format}"
-            useComponentSupplier="@{useComponentSupplier}">
+            useComponentSupplier="@{useComponentSupplier}"
+            useComponentManufacturer="@{useComponentManufacturer}">
           <component
               version="@{version}"
               purl="@{archiveUrl}"
