@@ -54,7 +54,7 @@
         value='"url" : "https://gitbox.apache.org/repos/asf/ant-antlibs-cyclonedx.git"'/>
   </target>
 
-  <target name="testToolMetadataInXmlFormat">
+  <target name="testToolMetadataInXmlFormat" depends="testMulipleTools">
     <cdx:component name="testname" id="test"
                    xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <file file="${antlib.location}"/>
@@ -131,10 +131,10 @@
       <component name="test"/>
       <toolComponent name="extra-tool"/>
     </cdx:componentbom>
-    <xmlproperty file="${output}/multi.xml"/>
+    <xmlproperty file="${output}/multi.xml" prefix="multi"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
-        name="bom.metadata.tools.components.component.name"
+        name="multi.bom.metadata.tools.components.component.name"
         value="ant-cyclonedx,extra-tool"/>
   </target>
 

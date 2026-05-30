@@ -37,6 +37,7 @@ import org.cyclonedx.model.LifecycleChoice;
 import org.cyclonedx.model.Lifecycles;
 import org.cyclonedx.model.Metadata;
 import org.cyclonedx.model.OrganizationalEntity;
+import org.cyclonedx.model.metadata.ToolInformation;
 
 /**
  * Task that creates CycloneDX BOMs for a single component.
@@ -296,14 +297,19 @@ public class ComponentBomTask extends Task {
     private Metadata createMetadata() throws IOException {
         Metadata meta = new Metadata();
         meta.setTimestamp(new Date());
-        meta.setToolChoice(ToolData.getToolInformation(specVersion.getVersion()));
+        ToolInformation antlibToolInformation = ToolData.getToolInformation(specVersion.getVersion());
         if (!toolComponents.isEmpty()) {
             List<org.cyclonedx.model.Component> tools =
-                new ArrayList(meta.getToolChoice().getComponents());
+                new ArrayList(antlibToolInformation.getComponents());
             for (Component c : toolComponents) {
-                tools .add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
+                tools.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
             }
-            meta.getToolChoice().setComponents(tools);
+            ToolInformation ti = new ToolInformation();
+            ti.setComponents(tools);
+            ti.setServices(antlibToolInformation.getServices());
+            meta.setToolChoice(ti);
+        } else {
+            meta.setToolChoice(antlibToolInformation);
         }
         if (!licenses.isEmpty()) {
             LicenseChoice lc = new LicenseChoice();
