@@ -70,10 +70,6 @@
         value="build"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
-        name="bom.metadata.tools.components.component(type)"
-        value="library"/>
-    <au:assertPropertyEquals
-        xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.tools.components.component.name"
         value="ant-cyclonedx"/>
     <au:assertPropertyEquals
@@ -84,6 +80,10 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.tools.components.component.version"
         value="${artifact.version}"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.tools.components.component(type)"
+        value="library"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.tools.components.component.description"
