@@ -342,7 +342,7 @@ under the License.
             outputdirectory="@{distbase}"
             version="${artifact.version}"
             archiveName="${dist.name}-@{binsrc}.@{ext}"
-            archiveUrl="https://archive.apache.org/dist/ant/antlibs/${dist.name}-@{binsrc}.@{ext}"
+            archiveUrl="https://archive.apache.org/dist/ant/antlibs/cyclonedx/${dist.name}-@{binsrc}.@{ext}"
             archiveLocation="@{distbase}/${dist.name}-@{binsrc}.@{ext}"
             description="Apache CycloneDX Antlib @{binarysource}"
             publisher="The Apache Software Foundation"
