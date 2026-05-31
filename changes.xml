@@ -37,6 +37,9 @@
     <title>Apache CycloneDX Antlib</title>
   </properties>
 
-  <release version="0.1" date="unreleased">
+  <release version="0.2" date="unreleased">
+  </release>
+
+  <release version="0.1" date="2026-06-03" description="initial release">
   </release>
 </document>
