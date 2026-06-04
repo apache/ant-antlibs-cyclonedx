@@ -4,13 +4,16 @@ This is a library of Ant tasks and types providing ways to create
 [CycloneDX](https://cyclonedx.org]) SBOMs for Apache Ant built
 artifacts.
 
+[Homepage](https://ant.apache.org/antlibs/cyclonedx/),
+[Binary Releases](https://ant.apache.org/antlibs/bindownload.cgi).
+
 This library provides the basic infrastructure that should be good
 enough to create SBOMs for projects that use manual management of
 dependencies (or don't have any dependencies at all). An extension for
 projects that use Ivy and can reduce the manual work is planned.
 
 The library provides types for licenses, organizations and external
-references that can be reused in multiple components as well a atype
+references that can be reused in multiple components as well a a type
 for components that may be referenced from multiple entries. A task
 allows the creation of CycloneDX SBOMs based on these types in JSON
 and XML format.
