@@ -333,6 +333,7 @@ under the License.
     <macrodef name="create-tarball-bom">
       <attribute name="distdir"/>
       <attribute name="distbase"/>
+      <attribute name="subdir"/>
       <attribute name="binsrc"/>
       <attribute name="binarysource"/>
       <attribute name="ext"/>
@@ -342,7 +343,7 @@ under the License.
             outputdirectory="@{distbase}"
             version="${artifact.version}"
             archiveName="${dist.name}-@{binsrc}.@{ext}"
-            archiveUrl="https://archive.apache.org/dist/ant/antlibs/cyclonedx/${dist.name}-@{binsrc}.@{ext}"
+            archiveUrl="https://archive.apache.org/dist/ant/antlibs/cyclonedx/@{subdir}/${dist.name}-@{binsrc}.@{ext}"
             archiveLocation="@{distbase}/${dist.name}-@{binsrc}.@{ext}"
             description="Apache CycloneDX Antlib @{binarysource}"
             publisher="The Apache Software Foundation"
@@ -368,6 +369,7 @@ under the License.
     <macrodef name="create-tarball-boms">
       <attribute name="distdir"/>
       <attribute name="distbase"/>
+      <attribute name="subdir"/>
       <attribute name="binsrc"/>
       <attribute name="binarysource"/>
       <element name="componentChildren" implicit="true" optional="true"/>
@@ -375,6 +377,7 @@ under the License.
         <create-tarball-bom
             distdir="@{distdir}"
             distbase="@{distbase}"
+            subdir="@{subdir}"
             binsrc="@{binsrc}"
             binarysource="@{binarysource}"
             ext="tar.gz">
@@ -383,6 +386,7 @@ under the License.
         <create-tarball-bom
             distdir="@{distdir}"
             distbase="@{distbase}"
+            subdir="@{subdir}"
             binsrc="@{binsrc}"
             binarysource="@{binarysource}"
             ext="tar.bz2">
@@ -391,6 +395,7 @@ under the License.
         <create-tarball-bom
             distdir="@{distdir}"
             distbase="@{distbase}"
+            subdir="@{subdir}"
             binsrc="@{binsrc}"
             binarysource="@{binarysource}"
             ext="zip">
@@ -404,6 +409,7 @@ under the License.
     <create-tarball-boms
         distdir="${src.dist.dir}"
         distbase="${dist.base}"
+        subdir="source"
         binsrc="src"
         binarysource="Source Distribution"/>
   </target>
@@ -412,6 +418,7 @@ under the License.
     <create-tarball-boms
         distdir="${bin.dist.dir}"
         distbase="${dist.base}"
+        subdir="binaries"
         binsrc="bin"
         binarysource="Binary Distribution">
       <component>
@@ -427,6 +434,7 @@ under the License.
     <create-tarball-boms
         distdir="${bin.dist.dir}"
         distbase="${dist.base}"
+        subdir="binaries"
         binsrc="bin-withdeps"
         binarysource="Binary Distribution Including Dependencies">
       <component>
