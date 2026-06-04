@@ -46,6 +46,12 @@
       A new type "propertyset" can be used to group properties and
       reuse common sets of properties for multiple components.
     </action>
+    <action type="add">
+      When using sbomLink for a component, the link is an URL and the
+      component-elemen doesn't define a "bom"-type external reference
+      itself a "bom" externalreference with the URL as value is added
+      to the component.
+    </action>
   </release>
 
   <release version="0.1" date="2026-06-03" description="initial release">

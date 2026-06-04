@@ -524,6 +524,17 @@ public class Component extends DataType {
             }
             List<org.cyclonedx.model.Dependency> allDependencies = bom.getDependencies();
             fillFromBomLink(real, allDependencies);
+            if (!externalReferences.stream()
+                .anyMatch(e -> e.getType().equals(org.cyclonedx.model.ExternalReference.Type.BOM))) {
+                Resource sbom = sbomLink.iterator().next();
+                URLProvider up = sbom.as(URLProvider.class);
+                if (up != null) {
+                    ExternalReference e = new ExternalReference();
+                    e.setUrl(up.getURL().toExternalForm());
+                    e.setType(org.cyclonedx.model.ExternalReference.Type.BOM.name());
+                    addConfiguredExternalReference(e);
+                }
+            }
 
             if (!areDependenciesUnknown() && !dependencies.isEmpty()) {
                 List<org.cyclonedx.model.Component> additionalComponents = bom.getComponents();
