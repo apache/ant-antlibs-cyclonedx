@@ -248,9 +248,23 @@ public class Component extends DataType {
      *
      * @param property component property
      */
-    public void addProperty(Property property) {
+    public void addConfiguredProperty(Property property) {
         checkChildrenAllowed();
+        if (property.getName() == null) {
+            throw new BuildException("properties must have a name");
+        }
         properties.add(property);
+    }
+
+    /**
+     * Adds a set of properties to the component.
+     *
+     * @param set set of properties of component
+     * @since CycloneDX Antlib 0.2
+     */
+    public void addConfiguredPropertySet(PropertySet set) {
+        checkChildrenAllowed();
+        properties.addAll(set.getProperties());
     }
 
     /**

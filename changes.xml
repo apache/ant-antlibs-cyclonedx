@@ -38,6 +38,14 @@
   </properties>
 
   <release version="0.2" date="unreleased">
+    <action type="fix" breaks-bwc="true">
+      The name attribute of properties is required by the spec and
+      this is now enforced.
+    </action>
+    <action type="add">
+      A new type "propertyset" can be used to group properties and
+      reuse common sets of properties for multiple components.
+    </action>
   </release>
 
   <release version="0.1" date="2026-06-03" description="initial release">
