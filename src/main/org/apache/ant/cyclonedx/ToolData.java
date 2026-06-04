@@ -83,6 +83,9 @@ class ToolData {
         antlibComponent.addConfiguredExternalReference(
            createExternalReference(ExternalReference.Type.SECURITY_CONTACT,
                                    "https://www.apache.org/security/"));
+        antlibComponent.addConfiguredExternalReference(
+           createExternalReference(ExternalReference.Type.RFC_9116,
+                                   "https://ant.apache.org/.well-known/security.txt"));
 
         File antlib = findAntlib();
         if (antlib != null) {
