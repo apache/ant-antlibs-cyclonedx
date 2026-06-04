@@ -61,6 +61,9 @@ under the License.
       <externalReference
           type="SECURITY_CONTACT"
           url="https://www.apache.org/security/"/>
+      <externalReference
+          type="rfc-9116"
+          url="https://ant.apache.org/.well-known/security.txt"/>
     </cdx:externalreferenceset>
     <cdx:externalreferenceset
         id="antlib-ext-refs"
