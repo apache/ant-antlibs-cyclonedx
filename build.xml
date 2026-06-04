@@ -118,6 +118,19 @@ under the License.
           type="RELEASE_NOTES"
           url="https://github.com/apache/ant/blob/master/WHATSNEW"/>
     </cdx:externalreferenceset>
+    <cdx:propertyset
+        id="jar-props"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <property
+          name="bsi:component:executable"
+          value="non-executable"/>
+      <property
+          name="bsi:component:archive"
+          value="archive"/>
+      <property
+          name="bsi:component:structured"
+          value="structured"/>
+    </cdx:propertyset>
   </target>
 
   <target name="create-antlib-sbom" depends="define-cyclonedx-components">
@@ -150,6 +163,8 @@ under the License.
         <license refid="apache-2"/>
         <externalReferenceSet refid="ant-common-refs"/>
         <externalReferenceSet refid="antlib-ext-refs"/>
+        <propertySet refid="jar-props"/>
+        <property name="bsi:component:filename" value="${artifact.stub}.jar"/>
         <dependency componentRef="ant"/>
         <dependency componentRef="cyclonedx-core"/>
       </component>
@@ -163,6 +178,7 @@ under the License.
         <license refid="apache-2"/>
         <externalReferenceSet refid="ant-common-refs"/>
         <externalReferenceSet refid="ant-ext-refs"/>
+        <propertySet refid="jar-props"/>
         <dependency componentRef="ant-launcher"/>
       </additionalComponent>
       <additionalComponent
@@ -175,6 +191,9 @@ under the License.
         <license refid="apache-2"/>
         <externalReferenceSet refid="ant-common-refs"/>
         <externalReferenceSet refid="ant-ext-refs"/>
+        <property name="bsi:component:executable" value="executable"/>
+        <property name="bsi:component:archive" value="archive"/>
+        <property name="bsi:component:structured" value="structured"/>
       </additionalComponent>
       <additionalComponent
           publisher="OWASP Foundation"
@@ -207,30 +226,35 @@ under the License.
         <dependency componentRef="packageurl-java"/>
         <dependency componentRef="jackson-dataformat-xml"/>
         <dependency componentRef="json-schema-validator"/>
+        <propertySet refid="jar-props"/>
       </additionalComponent>
       <additionalComponent id="commons-codec">
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/commons-codec/commons-codec/1.21.0/commons-codec-1.21.0-cyclonedx.json"/>
         </sbomLink>
         <file file="${lib.dir.compile}/commons-codec-1.21.0.jar"/>
+        <propertySet refid="jar-props"/>
       </additionalComponent>
       <additionalComponent id="commons-io">
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/commons-io/commons-io/2.21.0/commons-io-2.21.0-cyclonedx.json"/>
         </sbomLink>
         <file file="${lib.dir.compile}/commons-io-2.21.0.jar"/>
+        <propertySet refid="jar-props"/>
       </additionalComponent>
       <additionalComponent id="commons-lang3">
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.20.0/commons-lang3-3.20.0-cyclonedx.json"/>
         </sbomLink>
         <file file="${lib.dir.compile}/commons-lang3-3.20.0.jar"/>
+        <propertySet refid="jar-props"/>
       </additionalComponent>
       <additionalComponent id="commons-collections4">
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/org/apache/commons/commons-collections4/4.5.0/commons-collections4-4.5.0-cyclonedx.json"/>
         </sbomLink>
         <file file="${lib.dir.compile}/commons-collections4-4.5.0.jar"/>
+        <propertySet refid="jar-props"/>
       </additionalComponent>
       <additionalComponent
           group="com.github.package-url"
@@ -242,30 +266,35 @@ under the License.
         <license licenseId="MIT">
           <url url="https://opensource.org/licenses/MIT"/>
         </license>
+        <propertySet refid="jar-props"/>
       </additionalComponent>
       <additionalComponent id="jackson-dataformat-xml">
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.21.1/jackson-dataformat-xml-2.21.1-sbom-cyclonedx.json"/>
         </sbomLink>
         <file file="${lib.dir.compile}/jackson-dataformat-xml-2.21.1.jar"/>
+        <propertySet refid="jar-props"/>
       </additionalComponent>
       <additionalComponent>
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.21.1/jackson-core-2.21.1-sbom-cyclonedx.json"/>
         </sbomLink>
         <file file="${lib.dir.compile}/jackson-core-2.21.1.jar"/>
+        <propertySet refid="jar-props"/>
       </additionalComponent>
       <additionalComponent>
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.21/jackson-annotations-2.21-sbom-cyclonedx.json"/>
         </sbomLink>
         <file file="${lib.dir.compile}/jackson-annotations-2.21.jar"/>
+        <propertySet refid="jar-props"/>
       </additionalComponent>
       <additionalComponent>
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.21.1/jackson-databind-2.21.1-sbom-cyclonedx.json"/>
         </sbomLink>
         <file file="${lib.dir.compile}/jackson-databind-2.21.1.jar"/>
+        <propertySet refid="jar-props"/>
       </additionalComponent>
       <additionalComponent
           group="com.fasterxml.woodstox"
@@ -275,6 +304,7 @@ under the License.
           unknownDependencies="true">
         <file file="${lib.dir.compile}/woodstox-core-7.1.1.jar"/>
         <license refid="apache-2"/>
+        <propertySet refid="jar-props"/>
       </additionalComponent>
       <additionalComponent
           group="com.networknt"
@@ -285,6 +315,7 @@ under the License.
           id="json-schema-validator">
         <file file="${lib.dir.compile}/json-schema-validator-2.0.1.jar"/>
         <license refid="apache-2"/>
+        <propertySet refid="jar-props"/>
       </additionalComponent>
       <license refid="apache-2"/>
     </cdx:componentbom>
@@ -334,6 +365,18 @@ under the License.
             <file file="@{archiveLocation}"
                   unless:blank="@{archiveLocation}" xmlns:unless="ant:unless"/>
             <componentChildren/>
+            <property
+                name="bsi:component:executable"
+                value="non-executable"/>
+            <property
+                name="bsi:component:archive"
+                value="archive"/>
+            <property
+                name="bsi:component:structured"
+                value="structured"/>
+            <property
+                name="bsi:component:filename"
+                value="@{archiveName}"/>
           </component>
           <pureFileComponents>
             <archiveContent/>
