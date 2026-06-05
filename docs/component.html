@@ -172,11 +172,18 @@
         is <code>true</code>.</li>
       <li>Tags are merged wiht those of the SBOM's metadata
         component.</li>
-      <li><code>author</code>s, <code>license</code>s, <code>exteranlReference</code>s,
+      <li><code>author</code>s, <code>license</code>s, <code>externalReference</code>s,
         <code>dependency</code>s and nested <code>components</code>
         are taken from the SBOM's metadata component if and only if
         there is no corresponding element in this component
         element.</li>
+      <li>a "bom"-type <code>externalReference</code> is added to the
+        enclosing component if the nested resource provides an URL,
+        the enclosing component doesn't already
+        contain <code>externalReference</code>s, the parsed SBOM
+        doesn't already contain such an <code>externalReference</code>
+        and this element's <code>createBomExternalReference</code> is
+        not <code>false</code>.</li>
       <li>Hashes of the linked SBOM are ignored completely.</li>
       <li>Other components specified in the linked SBOM are also added
         to the SBOM created by the compomentbom task if they are
@@ -198,6 +205,23 @@
 
     <p>The <a hre="https://github.com/CycloneDX/cyclonedx-core-java">CycloneDX
         Core (Java) library</a> is used to read the linked SBOM.</p>
+
+    <h5>Attributes</h5>
+
+    <table class="attr">
+      <tr>
+        <th scope="col">Attribute</th>
+        <th scope="col">Description</th>
+        <th scope="col">Required</th>
+      </tr>
+      <tr>
+        <td>createBomExternalReference</td>
+        <td>Whether to create a bom-Type external reference in the
+          resolved compoment based on the nested resource's URI.<br>
+          <em>since CycloneDX Antlib 0.2</em></td>
+        <td>No, defaults to <code>true</code></td>
+      </tr>
+    </table>
 
     <h4 id="manufacturer">manufacturer</h4>
 

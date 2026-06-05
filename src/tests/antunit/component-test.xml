@@ -956,7 +956,26 @@
         value="https://www.apache.org/licenses/LICENSE-2.0.txt,https://ant.apache.org/mail.html,https://www.apache.org/security/,https://gitbox.apache.org/repos/asf/ant-antlibs-cyclonedx.git,https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/,https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&amp;product=Ant,https://ant.apache.org/antlibs/cyclonedx/,https://ant.apache.org/antlibs/bindownload.cgi,https://ant.apache.org/antlibs/srcdownload.cgi,https://repo1.maven.org/maven2/org/apache/ant/ant-cyclonedx/0.1/ant-cyclonedx-0.1-cyclonedx.json"/>
   </target>
 
-  <target name="testSbomLinkAddsDoesntOverrideExistingBomExternalLink" depends="createMaximalComponentData">
+  <target name="testSbomLinkDoesntAddBomExternalLinkWhenDisabled" depends="createMaximalComponentData">
+    <cdx:componentbom
+        bomName="merged"
+        outputdirectory="${output}"
+        format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component>
+        <sbomLink createBomExternalReference="false">
+          <url url="https://repo1.maven.org/maven2/org/apache/ant/ant-cyclonedx/0.1/ant-cyclonedx-0.1-cyclonedx.json"/>
+        </sbomLink>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/merged.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.externalReferences.reference(type)"
+        value="license,mailing-list,security-contact,vcs,build-system,issue-tracker,website,distribution,source-distribution"/>
+  </target>
+
+  <target name="testSbomLinkDoesntOverrideExistingBomExternalLink" depends="createMaximalComponentData">
     <cdx:componentbom
         bomName="merged"
         outputdirectory="${output}"

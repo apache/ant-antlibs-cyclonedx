@@ -480,7 +480,7 @@ under the License.
         binsrc="bin"
         binarysource="Binary Distribution">
       <component>
-        <sbomLink>
+        <sbomLink createBomExternalReference="false">
           <file file="${bin.dist.dir}/${artifact.stub}-cyclonedx.json"/>
         </sbomLink>
         <file file="${bin.dist.dir}/${artifact.stub}.jar"/>
@@ -496,7 +496,7 @@ under the License.
         binsrc="bin-withdeps"
         binarysource="Binary Distribution Including Dependencies">
       <component>
-        <sbomLink>
+        <sbomLink createBomExternalReference="false">
           <file file="${bin.dist.dir}/${artifact.stub}-cyclonedx.json"/>
         </sbomLink>
         <file file="${bin.dist.dir}/${artifact.stub}.jar"/>

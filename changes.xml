@@ -48,9 +48,11 @@
     </action>
     <action type="add">
       When using sbomLink for a component, the link is an URL and the
-      component-elemen doesn't define a "bom"-type external reference
+      component-element doesn't define a "bom"-type external reference
       itself a "bom" externalreference with the URL as value is added
       to the component.
+
+      This behavior can be suppressed by an attribute.
     </action>
   </release>
 

@@ -72,7 +72,7 @@ public class Component extends DataType {
     private Set<String> tags = new HashSet<>();
     private List<Property> properties = new ArrayList<>();
     private String mimeType;
-    private Union sbomLink;
+    private SbomLink sbomLink;
 
     /**
      * Sets the resource the component is about.
@@ -383,9 +383,9 @@ public class Component extends DataType {
      *
      * @return container for SBOM link resource
      */
-    public Union createSbomLink() {
+    public SbomLink createSbomLink() {
         checkChildrenAllowed();
-        return sbomLink == null ? (sbomLink = new Union()) : sbomLink;
+        return sbomLink == null ? (sbomLink = new SbomLink(getProject())) : sbomLink;
     }
 
     /**
@@ -524,7 +524,8 @@ public class Component extends DataType {
             }
             List<org.cyclonedx.model.Dependency> allDependencies = bom.getDependencies();
             fillFromBomLink(real, allDependencies);
-            if (!externalReferences.stream()
+            if (sbomLink.getCreateBomExternalReference()
+                && !externalReferences.stream()
                 .anyMatch(e -> e.getType().equals(org.cyclonedx.model.ExternalReference.Type.BOM))) {
                 Resource sbom = sbomLink.iterator().next();
                 URLProvider up = sbom.as(URLProvider.class);
@@ -997,6 +998,42 @@ public class Component extends DataType {
                 pushAndInvokeCircularReferenceCheck(c, stk, p);
             }
             setChecked(true);
+        }
+    }
+
+    /**
+     * @since CycloneDX Antlib 0.2
+     */
+    public static class SbomLink extends Union {
+        private boolean createBomExternalReference = true;
+
+        public SbomLink(Project project) {
+            super(project);
+        }
+
+        /**
+         * Whether to create a bom-Type external reference in the
+         * resolved compoment based on the nested resource's URI.
+         *
+         * <p>Will not create an external reference of there are
+         * already external references om the component or the
+         * resolved SBOM already contains a bom-type reference.</p>
+         *
+         * <p>Defaults to <code>true</code>.
+         *
+         * @param create whether to create a bom-Type external reference
+         */
+        public void setCreateBomExternalReference(boolean create) {
+            createBomExternalReference = create;
+        }
+
+        /**
+         * Whether to create a bom-Type external reference in the
+         * resolved compoment based on the nested resource's URI.
+         * @return create whether to create a bom-Type external reference
+         */
+        public boolean getCreateBomExternalReference() {
+            return createBomExternalReference;
         }
     }
 }
