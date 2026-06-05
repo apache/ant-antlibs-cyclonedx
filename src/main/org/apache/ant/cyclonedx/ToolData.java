@@ -75,6 +75,9 @@ class ToolData {
            createExternalReference(ExternalReference.Type.WEBSITE,
                                    "https://ant.apache.org/antlibs/cyclonedx/"));
         antlibComponent.addConfiguredExternalReference(
+           createExternalReference(ExternalReference.Type.DOCUMENTATION,
+                                   "https://ant.apache.org/antlibs/cyclonedx/manual/"));
+        antlibComponent.addConfiguredExternalReference(
            createExternalReference(ExternalReference.Type.DISTRIBUTION,
                                    "https://ant.apache.org/antlibs/bindownload.cgi"));
         antlibComponent.addConfiguredExternalReference(
