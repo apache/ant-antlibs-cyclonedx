@@ -121,7 +121,7 @@ class ToolData {
             return null;
         }
         URL location = antlibSource.getLocation();
-        if (location.getProtocol() == "file") {
+        if ("file".equals(location.getProtocol())) {
             return new File(location.getPath());
         }
         return null;
