@@ -3,13 +3,12 @@ package org.apache.ant.cyclonedx;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
-import java.security.CodeSource;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.tools.ant.launch.Locator;
 import org.apache.tools.ant.types.resources.FileResource;
 import org.apache.tools.ant.types.resources.URLResource;
 
@@ -116,13 +115,9 @@ class ToolData {
     }
 
     private static File findAntlib() {
-        CodeSource antlibSource = ToolData.class.getProtectionDomain().getCodeSource();
-        if (antlibSource == null) {
-            return null;
-        }
-        URL location = antlibSource.getLocation();
-        if ("file".equals(location.getProtocol())) {
-            return new File(location.getPath());
+        File f = Locator.getClassSource(ToolData.class);
+        if (f != null && f.isFile()) {
+            return f;
         }
         return null;
     }
