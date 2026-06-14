@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<project name="fsonlymappedresources-test" default="antunit">
+
+  <import file="shared.xml" />
+
+  <target
+      name="testFsonlyMappedResourcesDoesntAllowMultipleMappers">
+    <au:expectfailure
+        expectedMessage='Cannot define more than one mapper'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:fsonlymappedresources
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <identitymapper/>
+        <identitymapper/>
+      </cdx:fsonlymappedresources>
+    </au:expectfailure>
+  </target>
+
+  <target
+      name="testFsonlyMappedResourcesDoesntAllowNonFilesystemResources">
+    <au:expectfailure
+        expectedMessage='only file-system resources allowed as children'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:fsonlymappedresources
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <url url="https://example.org/"/>
+      </cdx:fsonlymappedresources>
+    </au:expectfailure>
+  </target>
+
+  <target
+      name="testFsonlyMappedResourcesWithRefIdDoesntAllowNestedChildren">
+    <cdx:fsonlymappedresources
+        id="test-fsonlymappedresources"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <file file="${ant.file}"/>
+    </cdx:fsonlymappedresources>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:fsonlymappedresources
+          refid="test-fsonlymappedresources"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <file file="${ant.file}"/>
+      </cdx:fsonlymappedresources>
+    </au:expectfailure>
+    <au:expectfailure
+        expectedMessage='You must not specify nested elements when using refid'
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:fsonlymappedresources
+          refid="test-fsonlymappedresources"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <identitymapper/>
+      </cdx:fsonlymappedresources>
+    </au:expectfailure>
+  </target>
+
+  <target name="testFsonlyMappedResourcesAddsFileComponentsWithoutMapper">
+    <checksum property="ant.file.sha256" file="${ant.file}" algorithm="SHA-256"/>
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname"/>
+      <pureFileComponents>
+        <cdx:fsonlymappedresources
+            xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+          <file file="${ant.file}"/>
+        </cdx:fsonlymappedresources>
+      </pureFileComponents>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.name"
+        value="fsonlymappedresources-test.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component(type)"
+        value="file"/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.xml"
+        value='&lt;hash alg="SHA-256"&gt;${ant.file.sha256}&lt;/hash&gt;'/>
+  </target>
+
+  <target name="testFsonlyMappedResourcesAddsFileComponentsWithMapper">
+    <checksum property="ant.file.sha256" file="${ant.file}" algorithm="SHA-256"/>
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname"/>
+      <pureFileComponents>
+        <cdx:fsonlymappedresources
+            xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+          <file file="${ant.file}"/>
+          <globmapper from="*" to="foo/*"/>
+        </cdx:fsonlymappedresources>
+      </pureFileComponents>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.name"
+        value="foo/fsonlymappedresources-test.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component(type)"
+        value="file"/>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.xml"
+        value='&lt;hash alg="SHA-256"&gt;${ant.file.sha256}&lt;/hash&gt;'/>
+  </target>
+</project>

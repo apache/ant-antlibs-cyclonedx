@@ -30,4 +30,6 @@ under the License.
     classname="org.apache.ant.cyclonedx.ExternalReferenceSet"/>
   <typedef name="propertyset"
     classname="org.apache.ant.cyclonedx.PropertySet"/>
+  <typedef name="fsonlymappedresources"
+    classname="org.apache.ant.cyclonedx.FilesystemOnlyMappedResourceCollection"/>
 </antlib>

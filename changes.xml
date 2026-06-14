@@ -58,6 +58,16 @@
       metadata.tools.component of generated SBOMs now contains hashes
       of ant-cyclonedx as has been intended originally.
     </action>
+    <action type="add">
+      A new resource collection "fsonlymappedresources" has been added
+      that decorates file-system-only resource collections modifying
+      the names of the resources just like Ant's built-in
+      mappedresources but still allows tasks to access the original
+      files.
+      This should only be used with componentbom's purefileresources
+      nested element. Other tasks and types may bypass the mapped name
+      if they can go to the underlying files directly.
+    </action>
   </release>
 
   <release version="0.1" date="2026-06-03" description="initial release">
