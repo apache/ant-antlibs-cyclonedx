@@ -154,6 +154,7 @@ under the License.
         <externalReferenceSet refid="ant-common-refs"/>
         <externalReferenceSet refid="antlib-ext-refs"/>
         <dependency componentRef="ant"/>
+        <dependency componentRef="ant-launcher"/>
         <dependency componentRef="cyclonedx-core"/>
       </component>
       <additionalComponent
