@@ -22,16 +22,6 @@
   <property file="../../../version.properties"/>
 
   <target name="setUp">
-    <typedef uri="antlib:org.apache.ant.antunit"
-      resource="org/apache/ant/antunit/antlib.xml"
-      classpathref="classpath.test"/>
-    <typedef uri="antlib:org.apache.ant.cyclonedx"
-      resource="org/apache/ant/cyclonedx/antlib.xml">
-      <classpath>
-        <path refid="classpath.test"/>
-        <pathelement location="${antlib.location}"/>
-      </classpath>
-    </typedef>
     <mkdir dir="${output}"/>
   </target>
 
