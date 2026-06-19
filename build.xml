@@ -28,7 +28,7 @@ under the License.
     </copy>
   </target>
 
-  <target name="define-cyclonedx-components" depends="antlib">
+  <target name="fetch-cyclonedx" depends="antlib">
     <typedef uri="antlib:org.apache.ant.cyclonedx"
       resource="org/apache/ant/cyclonedx/antlib.xml">
       <classpath>
@@ -36,35 +36,10 @@ under the License.
         <pathelement location="${jarname}"/>
       </classpath>
     </typedef>
-    <!-- common definitions for SBOMs -->
-    <cdx:organization
-        name="Apache Ant Project Management Committee"
-        id="ant-pmc"
-        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <url url="https://ant.apache.org/"/>
-    </cdx:organization>
-    <cdx:license
-        licenseId="Apache-2.0"
-        id="apache-2"
-        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <url url="https://www.apache.org/licenses/LICENSE-2.0.txt"/>
-    </cdx:license>
-    <cdx:externalreferenceset
-        id="ant-common-refs"
-        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <externalReference
-          type="LICENSE"
-          url="https://www.apache.org/licenses/LICENSE-2.0.txt"/>
-      <externalReference
-          type="MAILING_LIST"
-          url="https://ant.apache.org/mail.html"/>
-      <externalReference
-          type="SECURITY_CONTACT"
-          url="https://www.apache.org/security/"/>
-      <externalReference
-          type="rfc-9116"
-          url="https://ant.apache.org/.well-known/security.txt"/>
-    </cdx:externalreferenceset>
+  </target>
+
+  <target name="define-cyclonedx-components"
+          depends="define-core-ant-components">
     <cdx:externalreferenceset
         id="antlib-ext-refs"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
@@ -78,48 +53,8 @@ under the License.
           type="ISSUE_TRACKER"
           url="https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&amp;product=Ant"/>
       <externalReference
-          type="WEBSITE"
-          url="https://ant.apache.org/antlibs/cyclonedx/"/>
-      <externalReference
           type="DOCUMENTATION"
           url="https://ant.apache.org/antlibs/cyclonedx/manual/"/>
-      <externalReference
-          type="DISTRIBUTION"
-          url="https://ant.apache.org/antlibs/bindownload.cgi"/>
-      <externalReference
-          type="SOURCE_DISTRIBUTION"
-          url="https://ant.apache.org/antlibs/srcdownload.cgi"/>
-    </cdx:externalreferenceset>
-    <cdx:externalreferenceset
-        id="ant-ext-refs"
-        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-      <externalReference
-          type="VCS"
-          url="https://gitbox.apache.org/repos/asf/ant.git"/>
-      <externalReference
-          type="BUILD_SYSTEM"
-          url="https://ci-builds.apache.org/job/Ant/"/>
-      <externalReference
-          type="ISSUE_TRACKER"
-          url="https://bz.apache.org/bugzilla/buglist.cgi?product=Ant"/>
-      <externalReference
-          type="WEBSITE"
-          url="https://ant.apache.org/"/>
-      <externalReference
-          type="ADVISORIES"
-          url="https://ant.apache.org/security.html#Apache%20Ant%20Security%20Vulnerabilities"/>
-      <externalReference
-          type="DOCUMENTATION"
-          url="https://ant.apache.org/manual/"/>
-      <externalReference
-          type="DISTRIBUTION"
-          url="https://ant.apache.org/bindownload.cgi"/>
-      <externalReference
-          type="SOURCE_DISTRIBUTION"
-          url="https://ant.apache.org/srcdownload.cgi"/>
-      <externalReference
-          type="RELEASE_NOTES"
-          url="https://github.com/apache/ant/blob/master/WHATSNEW"/>
     </cdx:externalreferenceset>
   </target>
 
@@ -152,34 +87,14 @@ under the License.
         <supplier refid="ant-pmc"/>
         <license refid="apache-2"/>
         <externalReferenceSet refid="ant-common-refs"/>
+        <externalReferenceSet refid="antlibs-common-ext-refs"/>
         <externalReferenceSet refid="antlib-ext-refs"/>
         <dependency componentRef="ant"/>
         <dependency componentRef="ant-launcher"/>
         <dependency componentRef="cyclonedx-core"/>
       </component>
-      <additionalComponent
-          name="ant"
-          group="org.apache.ant"
-          version="1.10.17"
-          isExternal="true"
-          id="ant">
-        <supplier refid="ant-pmc"/>
-        <license refid="apache-2"/>
-        <externalReferenceSet refid="ant-common-refs"/>
-        <externalReferenceSet refid="ant-ext-refs"/>
-        <dependency componentRef="ant-launcher"/>
-      </additionalComponent>
-      <additionalComponent
-          name="ant-launcher"
-          group="org.apache.ant"
-          version="1.10.17"
-          isExternal="true"
-          id="ant-launcher">
-        <supplier refid="ant-pmc"/>
-        <license refid="apache-2"/>
-        <externalReferenceSet refid="ant-common-refs"/>
-        <externalReferenceSet refid="ant-ext-refs"/>
-      </additionalComponent>
+      <additionalComponent refid="ant"/>
+      <additionalComponent refid="ant-launcher"/>
       <additionalComponent
           publisher="OWASP Foundation"
           group="org.cyclonedx"
@@ -368,6 +283,7 @@ under the License.
             <supplier refid="ant-pmc"/>
             <license refid="apache-2"/>
             <externalReferenceSet refid="ant-common-refs"/>
+            <externalReferenceSet refid="antlibs-common-ext-refs"/>
             <externalReferenceSet refid="antlib-ext-refs"/>
             <moreComponentChildren/>
           </componentChildren>
