@@ -60,7 +60,7 @@ under the License.
 
   <target name="create-antlib-sbom" depends="define-cyclonedx-components">
     <uptodate property="antlib-sbom-ok"
-              targetfile="${build.lib}/${artifact.stub}-cyclonedx.json">
+              targetfile="${build.lib}/${artifact.stub}.cdx.json">
       <srcresources>
         <file file="${jarname}"/>
         <file file="ivy.xml"/>
@@ -68,7 +68,7 @@ under the License.
       </srcresources>
     </uptodate>
     <cdx:componentbom
-        bomName="${artifact.stub}-cyclonedx"
+        bomName="${artifact.stub}.cdx"
         outputdirectory="${build.lib}"
         format="all"
         useComponentSupplier="true"
@@ -212,7 +212,7 @@ under the License.
   <target name="ready-for-bin-dist" depends="create-antlib-sbom,common.ready-for-bin-dist">
     <resources id="additional-bin-patterns">
       <fileset dir="${build.lib}">
-        <include name="${artifact.stub}-cyclonedx*"/>
+        <include name="${artifact.stub}.cdx*"/>
       </fileset>
     </resources>
   </target>
@@ -237,7 +237,7 @@ under the License.
       <sequential
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
         <cdx:componentbom
-            bomName="@{archiveName}.cyclonedx"
+            bomName="@{archiveName}.cdx"
             outputdirectory="@{outputDirectory}"
             format="@{format}"
             useComponentManufacturer="@{useComponentManufacturer}"
@@ -355,7 +355,7 @@ under the License.
         binarysource="Binary Distribution">
       <component>
         <sbomLink createBomExternalReference="false">
-          <file file="${bin.dist.dir}/${artifact.stub}-cyclonedx.json"/>
+          <file file="${bin.dist.dir}/${artifact.stub}.cdx.json"/>
         </sbomLink>
         <file file="${bin.dist.dir}/${artifact.stub}.jar"/>
       </component>
@@ -371,7 +371,7 @@ under the License.
         binarysource="Binary Distribution Including Dependencies">
       <component>
         <sbomLink createBomExternalReference="false">
-          <file file="${bin.dist.dir}/${artifact.stub}-cyclonedx.json"/>
+          <file file="${bin.dist.dir}/${artifact.stub}.cdx.json"/>
         </sbomLink>
         <file file="${bin.dist.dir}/${artifact.stub}.jar"/>
       </component>
