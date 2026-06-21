@@ -68,6 +68,10 @@
       nested element. Other tasks and types may bypass the mapped name
       if they can go to the underlying files directly.
     </action>
+    <action type="add">
+      A new specialized task "archivebom" simplifies creation of SBOMs
+      for distribution zips/tarballs by providing a few defaults.
+    </action>
   </release>
 
   <release version="0.1" date="2026-06-03" description="initial release">

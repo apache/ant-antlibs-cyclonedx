@@ -17,7 +17,7 @@ KIND, either express or implied.  See the License for the
 specific language governing permissions and limitations
 under the License.
 -->
-<antlib xmlns:cdx="ant:current">
+<antlib xmlns:cdx="ant:current" xmlns:unless="ant:unless">
   <taskdef name="componentbom"
     classname="org.apache.ant.cyclonedx.ComponentBomTask"/>
   <typedef name="component"
@@ -32,4 +32,53 @@ under the License.
     classname="org.apache.ant.cyclonedx.PropertySet"/>
   <typedef name="fsonlymappedresources"
     classname="org.apache.ant.cyclonedx.FilesystemOnlyMappedResourceCollection"/>
+
+  <!-- extracted after writing very similar macros for antlibs, Ivy
+       and Ant itself -->
+  <macrodef name="archivebom" backtrace="false">
+    <attribute name="specVersion" default="1.6"/>
+    <attribute name="format" default="json"/>
+    <attribute name="bomName" default="bom"/>
+    <attribute name="outputDirectory" default="${basedir}"/>
+    <attribute name="useComponentManufacturer" default="true"/>
+    <attribute name="useComponentSupplier" default="true"/>
+
+    <attribute name="componentType" default="file"/>
+    <attribute name="archiveVersion"/>
+    <attribute name="purl"/>
+    <attribute name="description"/>
+    <attribute name="publisher"/>
+    <attribute name="supplierIsManufacturer" default="true"/>
+
+    <attribute name="archiveLocation" default=""/>
+
+    <element name="archiveContent"/>
+    <element name="additionalComponentChildren" optional="true"/>
+    <element name="additionalBomContent" optional="true"/>
+    <sequential>
+      <cdx:componentbom
+          specVersion="@{specVersion}"
+          bomName="@{bomName}"
+          outputdirectory="@{outputDirectory}"
+          format="@{format}"
+          useComponentManufacturer="@{useComponentManufacturer}"
+          useComponentSupplier="@{useComponentSupplier}">
+        <component
+            version="@{archiveVersion}"
+            purl="@{purl}"
+            name="@{purl}"
+            description="@{description}"
+            publisher="@{publisher}"
+            type="@{componentType}"
+            supplierIsManufacturer="@{supplierIsManufacturer}">
+          <file file="@{archiveLocation}" unless:blank="@{archiveLocation}"/>
+          <additionalComponentChildren/>
+        </component>
+        <pureFileComponents>
+          <archiveContent/>
+        </pureFileComponents>
+        <additionalBomContent/>
+      </cdx:componentbom>
+    </sequential>
+  </macrodef>
 </antlib>

@@ -212,49 +212,6 @@ under the License.
   <target name="ready-for-bin-dist" depends="create-antlib-sbom,common.ready-for-bin-dist"/>
 
   <target name="after-dist" depends="define-cyclonedx-components">
-    <macrodef name="distributionbom" backtrace="false">
-      <attribute name="version"/>
-      <attribute name="archiveName"/>
-      <attribute name="archiveUrl"/>
-      <attribute name="archiveLocation" default=""/>
-      <attribute name="outputDirectory"/>
-      <attribute name="description"/>
-      <attribute name="publisher"/>
-      <attribute name="componentType" default="file"/>
-      <attribute name="format" default="all"/>
-      <attribute name="useComponentManufacturer" default="true"/>
-      <attribute name="useComponentSupplier" default="true"/>
-      <attribute name="supplierIsManufacturer" default="true"/>
-      <element name="archiveContent"/>
-      <element name="componentChildren" optional="true"/>
-      <element name="additionalBomContent" optional="true"/>
-      <sequential
-        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-        <cdx:componentbom
-            bomName="@{archiveName}.cdx"
-            outputdirectory="@{outputDirectory}"
-            format="@{format}"
-            useComponentManufacturer="@{useComponentManufacturer}"
-            useComponentSupplier="@{useComponentSupplier}">
-          <component
-              version="@{version}"
-              purl="@{archiveUrl}"
-              name="@{archiveUrl}"
-              description="@{description}"
-              publisher="@{publisher}"
-              type="@{componentType}"
-              supplierIsManufacturer="@{supplierIsManufacturer}">
-            <file file="@{archiveLocation}"
-                  unless:blank="@{archiveLocation}" xmlns:unless="ant:unless"/>
-            <componentChildren/>
-          </component>
-          <pureFileComponents>
-            <archiveContent/>
-          </pureFileComponents>
-          <additionalBomContent/>
-        </cdx:componentbom>
-      </sequential>
-    </macrodef>
     <macrodef name="create-tarball-bom">
       <attribute name="distdir"/>
       <attribute name="distbase"/>
@@ -264,23 +221,23 @@ under the License.
       <attribute name="ext"/>
       <element name="moreComponentChildren" implicit="true" optional="true"/>
       <sequential>
-        <distributionbom
+        <cdx:archivebom
             outputdirectory="@{distbase}"
-            version="${artifact.version}"
-            archiveName="${dist.name}-@{binsrc}.@{ext}"
-            archiveUrl="https://archive.apache.org/dist/ant/antlibs/cyclonedx/@{subdir}/${dist.name}-@{binsrc}.@{ext}"
+            archiveVersion="${artifact.version}"
+            bomName="${dist.name}-@{binsrc}.@{ext}.cdx"
+            purl="https://archive.apache.org/dist/ant/antlibs/cyclonedx/@{subdir}/${dist.name}-@{binsrc}.@{ext}"
             archiveLocation="@{distbase}/${dist.name}-@{binsrc}.@{ext}"
             description="Apache CycloneDX Antlib @{binarysource}"
             publisher="The Apache Software Foundation"
             xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-          <componentChildren>
+          <additionalComponentChildren>
             <supplier refid="ant-pmc"/>
             <license refid="apache-2"/>
             <externalReferenceSet refid="ant-common-refs"/>
             <externalReferenceSet refid="antlibs-common-ext-refs"/>
             <externalReferenceSet refid="antlib-ext-refs"/>
             <moreComponentChildren/>
-          </componentChildren>
+          </additionalComponentChildren>
           <archiveContent>
             <fileset dir="@{distdir}/..">
               <include name="${dist.name}/**"/>
@@ -289,7 +246,7 @@ under the License.
           <additionalBomContent>
             <license refid="apache-2"/>
           </additionalBomContent>
-        </distributionbom>
+        </cdx:archivebom>
       </sequential>
     </macrodef>
     <macrodef name="create-tarball-boms">

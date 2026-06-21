@@ -1,0 +1,236 @@
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       https://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<html>
+  <head>
+    <meta http-equiv="Content-Language" content="en-us"></meta>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Apache CycloneDX Ant Library - archivebom Task</title>
+  </head>
+
+  <body>
+    <h2 id="archivebom">archivebom Task</h2>
+
+    <p><em>since CycloneDX Antlib 0.2</em></p>
+
+    <p>The <code>archivebom</code> task is a speciailization of the
+      <a href="componentbom.html"><code>componentbom</code></a> task
+      tailored to SBOMs created for zips or tarballs of software
+      distributions. It creates a nested component of the SBOM based
+      on some extra attibutes and expects contents that are turned
+      into <a href="componentbom.html#pureFileComponents">componentbom's
+      pureFileComponents</a>.</p>
+
+    <p>Some defaults differ from those of <code>componentbom</code>,
+      the component type will by "file" for example. The task also
+      assumes you will at least specify a <code>supplier</code> of the
+      archive component via the nested
+      <a href="#additionalComponentChildren"><code>additionalComponentChildren</code></a>
+      element and want to use that as manufacturer of the component as
+      well as both the supplier and manufacturer of the SBOM
+      itself. If this is not what you intend, you may need to
+      explicitly
+      set <code>useComponentSupplier</code>, <code>useComponentManufacturer</code>
+      or <code>supplierIsManufacturer</code>.</p>
+
+    <p>The component of the SBOM requires
+      <code>archiveVersion</code> as well as <code>purl</code> - the
+      later is also used as the component's name. The group of the
+      archive component will not be set.</p>
+
+    <h3>Attributes</h3>
+
+    <table class="attr">
+      <tr>
+        <th scope="col">Attribute</th>
+        <th scope="col">Description</th>
+        <th scope="col">Required</th>
+      </tr>
+      <tr>
+        <td>specVersion</td>
+        <td>Version of the CycloneDX specification for the generated
+          SBOM. This can be specified as number (like "1.6") or one of
+          the enum constants of the <code>org.cyclonedx.Version</code>
+          type (i.e. like "VERSION_16").<br/>
+          The supported values depend on the CycloneDX Core (Java)
+          library version used.
+        </td>
+        <td>No, defaults to "1.6" in the current version of the Ant
+          library but this may change in future versions.</td>
+      </tr>
+      <tr>
+        <td>format</td>
+        <td>The format of the SBOM(s) to write. May be "json", "xml"
+          (or rather the enum constants of
+          the <code>org.cyclonedx.Format</code> type and their file
+          extensions) or the special value "all". <br/>
+          For spec version 1.2 and later "all" means both "json" and
+          "xml" (so the task will create two files), for "1.0" and
+          "1.1" it is equivalent to "xml".<br/>
+          The supported values depend on the CycloneDX Core (Java)
+          library version used.
+        </td>
+        <td>No, defaults to "json".</td>
+      </tr>
+      <tr>
+        <td>bomName</td>
+        <td>The base name of the generated SBOM file. The full file
+          name will be <em>bomName</em>.<em>format</em>.</td>
+        <td>No, defaults to "bom".</td>
+      </tr>
+      <tr>
+        <td>outputDirectory</td>
+        <td>Sets the directory where the SBOM file(s) will be written
+          to. Relative paths are relative to the project's base
+          directory</td>
+        <td>No, defaults to the project's <code>basedir</code>.</td>
+      </tr>
+      <tr>
+        <td>componentType</td>
+        <td>The type of the component. Valid types are defined by the
+          <a href="https://cyclonedx.org/docs/1.7/json/#metadata_tools_oneOf_i0_components_items_type">CycloneDX
+          specification</a>.</td>
+        <td>No, the default is "file"</td>
+      </tr>
+      <tr>
+        <td>archiveVersion</td>
+        <td>The version of the component.</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td>purl</td>
+        <td>The <a href="https://github.com/package-url/purl-spec">Package-URL
+            (purl)</a> of the component. Will also be used as the
+            component's name.</td>
+        <td>Yes.</td>
+      </tr>
+      <tr>
+        <td>description</td>
+        <td>The description of the component.</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td>publisher</td>
+        <td>The publisher of the component.</td>
+        <td>Yes</td>
+      </tr>
+      <tr>
+        <td>archiveLocation</td>
+        <td>File location of the archive that the SBOM is created
+          for. Will be used to calculate hashes.</td>
+        <td>No</td>
+      </tr>
+      <tr>
+        <td>useComponentSupplier</td>
+        <td>If set to <code>true</code> the supplier of the SBOM's
+          main component will be used for the SBOM itself.<br/>  If
+          this is <code>true</code> the main component must specify a
+          supplier. Also you must not use a
+          nested <code>additionalBomContent/supplier</code> child for
+          this task if this is
+          <code>true</code>.</td>
+        <td>No, defaults to <code>true</code>.</td>
+      </tr>
+      <tr>
+        <td>useComponentManufacturer</td>
+        <td>If set to <code>true</code> the manufacturer of the SBOM's
+          main component will be used for the SBOM itself.<br/>  If
+          this is <code>true</code> the main component must specify a
+          manufacturer. Also you must not use a
+          nested <code>additionalBomContent/manufacturer</code> child
+          for this task if this is
+          <code>true</code>.</td>
+        <td>No, defaults to <code>true</code>.</td>
+      </tr>
+      <tr>
+        <td>supplierIsManufacturer</td>
+        <td>Whether the nested component's <code>supplier</code> shall
+          be used as manufacturer as well.</td>
+        <td>No - defaults to <code>true</code>. Must not
+          be <code>true</code> if a
+          nested <code>additionalComponentChildren/manufacturer</code>
+          exists.</td>
+      </tr>
+    </table>
+
+    <h3>Nested elements</h3>
+
+    <h4 id="archiveContent">archiveContent</h4>
+
+    <p>At least one nested <code>archiveContent</code> nested element
+    is required.</p>
+
+    <p><code>archiveContent</code> is a container for arbitrary
+      resources or resource collections. Only file-system resources
+      are allowed.</p>
+
+    <p>Each file contained in the nested children will be added as
+      component of type <code>file</code> to the SBOM. The name will
+      be the (relative) file name and hashes are calculated.</p>
+
+    <p>This maps
+    to <code>componentbom</code>'s <a href="componentbom.html#pureFileComponents">pureFileComponents</a>.</p>
+
+    <h4 id="additionalComponentChildren">additionalComponentChildren</h4>
+
+    <p>Is a container for arbitrary nested elements
+      a <a href="component.html">component</a> supports. The nested
+      element specified here are added to the SBOM's main
+      component.</p>
+
+    <h4 id="additionalBomContent">additionalBomContent</h4>
+
+    <p>Is a container for arbitrary nested elements
+      the <a href="componentbom.html">componentbom</a> task
+      supports..</p>
+
+    <h3>Examples</h3>
+
+    <p>The following task could be used to create the SBOM of the
+      source tarball of this Ant library:</p>
+
+    <pre>
+    &lt;cdx:archivebom
+        bomName="ant-cyclonedx-${artifact.version}-src.tar.cdx"
+        outputdirectory="${output}"
+        format="all"
+        purl="ant-cyclonedx-src.tar"
+        archiveVersion="${artifact.version}"
+        description="Apache CycloneDX Antlib Source Distribution"
+        publisher="The Apache Software Foundation"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      &lt;additionalComponentChildren>
+        &lt;manufacturer refid="ant-team"/>
+        &lt;license refid="apache-2"/>
+        &lt;externalReferenceSet refid="antlib-ext-refs"/>
+      &lt;/additionalComponentChildren>
+      &lt;archiveContent>
+        &lt;fileset dir="../../..">
+          &lt;exclude name="build/"/>
+          &lt;exclude name="docs/style.css"/>
+          &lt;exclude name="ivy/"/>
+          &lt;exclude name="lib/"/>
+          &lt;exclude name="target/"/>
+          &lt;exclude name="examples/"/>
+        &lt;/fileset>
+      &lt;/archiveContent>
+      &lt;additionalBomContent>
+        &lt;license refid="apache-2"/>
+      &lt;/additionalBomContent>
+    &lt;/cdx:archivebom>
+    </pre>
+  </body>
+</html>
