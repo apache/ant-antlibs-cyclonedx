@@ -19,7 +19,7 @@ import org.apache.tools.ant.util.MergingMapper;
  * A variant of {@link MappedResourceCollection} that only accepts
  * file-system resource collections as children and which returns
  * resources that provide access to the underlying files (unlike
- * {@link MappedResourceCollection} which prevents direct access.</p>
+ * {@link MappedResourceCollection} which prevents direct access.
  *
  * <p>It wraps another resource collection and maps their names using
  * the provided mapper when returning the resources.</p>
