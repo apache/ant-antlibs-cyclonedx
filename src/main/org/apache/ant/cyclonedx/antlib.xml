@@ -38,6 +38,7 @@ under the License.
   <macrodef name="archivebom" backtrace="false">
     <attribute name="specVersion" default="1.6"/>
     <attribute name="format" default="json"/>
+    <attribute name="serialNumber" default="random"/>
     <attribute name="bomName" default="bom"/>
     <attribute name="outputDirectory" default="${basedir}"/>
     <attribute name="useComponentManufacturer" default="true"/>
@@ -58,6 +59,7 @@ under the License.
     <sequential>
       <cdx:componentbom
           specVersion="@{specVersion}"
+          serialNumber="@{serialNumber}"
           bomName="@{bomName}"
           outputdirectory="@{outputDirectory}"
           format="@{format}"

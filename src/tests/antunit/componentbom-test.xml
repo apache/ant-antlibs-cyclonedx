@@ -122,6 +122,56 @@
         value="The Apache Software Foundation"/>
   </target>
 
+  <target name="testSerialNumberCanBeSet">
+    <cdx:componentbom
+        serialNumber="urn:uuid:65f1b136-0b2f-4cf0-a526-74b8c9f03da5"
+        outputdirectory="${output}"
+        format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom(serialNumber)"
+        value="urn:uuid:65f1b136-0b2f-4cf0-a526-74b8c9f03da5"/>
+
+    <cdx:componentbom
+        serialNumber="urn:uuid:64C9AC6B-6B00-4F73-971A-B6CAEA994179"
+        outputdirectory="${output}"
+        format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml" prefix="2"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="2.bom(serialNumber)"
+        value="urn:uuid:64c9ac6b-6b00-4f73-971a-b6caea994179"/>
+  </target>
+
+  <target name="testThrowsIfSerialNumberIsNotAnUuidUrn">
+    <au:expectfailure expectedMessage="serial number 'foo' is not a value UUID URN"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom
+          serialNumber="foo"
+          outputdirectory="${output}"
+          format="xml"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname"/>
+      </cdx:componentbom>
+    </au:expectfailure>
+
+    <!-- "random" is fine -->
+    <cdx:componentbom
+        serialNumber="random"
+        outputdirectory="${output}"
+        format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname"/>
+    </cdx:componentbom>
+  </target>
+
   <target name="testMulipleTools">
     <cdx:componentbom
         bomName="multi"

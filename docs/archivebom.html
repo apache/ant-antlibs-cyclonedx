@@ -86,6 +86,23 @@
         <td>No, defaults to "json".</td>
       </tr>
       <tr>
+        <td>serialNumber</td>
+        <td>Serial Number of the BOM created. Value must be a valid
+          <a href="https://www.ietf.org/rfc/rfc4122.html">RFC 4122 UUID URN</a>.<br/>
+          The spec recommends each BOM generated to have a unique serial
+          number, even if the rest of the content doesn't
+          change. This is what this task does by default (i.e. when
+          the attribute is not set).<br/>
+          In the context of reproducible builds you may want to have
+          more control and this is a way to set a fixed serial
+          number.<br/>
+          The special value "random" can be used to explicitly trigger
+          the task's default behavior.<br/>
+        </td>
+        <td>No, defaults to a random UUID URN. Don't set this
+          attribute unless you know why.</td>
+      </tr>
+      <tr>
         <td>bomName</td>
         <td>The base name of the generated SBOM file. The full file
           name will be <em>bomName</em>.<em>format</em>.</td>

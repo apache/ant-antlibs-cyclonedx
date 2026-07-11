@@ -72,6 +72,11 @@
       A new specialized task "archivebom" simplifies creation of SBOMs
       for distribution zips/tarballs by providing a few defaults.
     </action>
+    <action type="add">
+      A new attribute "serialNumber" of the componentbom task allows
+      the serial number of the generated SBOM to be set to a fixed
+      value for reproducible builds.
+    </action>
   </release>
 
   <release version="0.1" date="2026-06-03" description="initial release">

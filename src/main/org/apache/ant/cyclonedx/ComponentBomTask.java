@@ -12,6 +12,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -44,7 +45,12 @@ import org.cyclonedx.model.metadata.ToolInformation;
  */
 public class ComponentBomTask extends Task {
 
+    private static final String RANDOM_SERIAL_NUMBER = "random";
+    private static Pattern RFC4122_URN_PATTERN =
+        Pattern.compile("^urn:uuid:[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$");
+
     private File outputDirectory;
+    private String serialNumber = null;
     private String bomName = "bom";
     private SpecVersion specVersion = SpecVersion.DEFAULT;
     private OutputFormat format = OutputFormat.JSON;
@@ -67,6 +73,28 @@ public class ComponentBomTask extends Task {
      */
     public void setSpecVersion(SpecVersion specVersion) {
         this.specVersion = specVersion;
+    }
+
+    /**
+     * Specifies the serial number of the BOM.
+     *
+     * <p>The default behavior is to generate a new random serial number for each BOM generated like the spec
+     * recommends. This default behavior can be specified explicitly be setting the value to "random".</p>
+     *
+     * @param serialNumber serial number for the SBOM. Must be a valid RFC 4122 UUID URN or the literal String "random".
+     * @since CycloneDX Antlib 0.2
+     */
+    public void setSerialNumber(String serialNumber) {
+        if (serialNumber == null || RANDOM_SERIAL_NUMBER.equalsIgnoreCase(serialNumber)) {
+            this.serialNumber = null;
+        } else {
+            serialNumber = serialNumber.toLowerCase(Locale.US);
+            Matcher m = RFC4122_URN_PATTERN.matcher(serialNumber);
+            if (!m.matches()) {
+                throw new BuildException("serial number '" + serialNumber + "' is not a value UUID URN");
+            }
+            this.serialNumber = serialNumber;
+        }
     }
 
     /**
@@ -231,7 +259,11 @@ public class ComponentBomTask extends Task {
 
     private Bom createBom() throws IOException {
         Bom bom = new Bom();
-        bom.setSerialNumber("urn:uuid:" + UUID.randomUUID());
+        if (serialNumber != null) {
+            bom.setSerialNumber(serialNumber);
+        } else {
+            bom.setSerialNumber("urn:uuid:" + UUID.randomUUID());
+        }
 
         Metadata meta = createMetadata();
 

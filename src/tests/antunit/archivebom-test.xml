@@ -138,4 +138,25 @@
                           xmlns:au="antlib:org.apache.ant.antunit"/>
   </target>
 
+  <target name="testSerialNumberCanBeSet" depends="commonReferences">
+    <cdx:archivebom
+        archiveVersion="1.0"
+        purl="foo.tar.gz"
+        description="test"
+        publisher="test"
+        serialNumber="urn:uuid:d4662514-a7ef-498a-8451-8261eca2de15"
+        outputdirectory="${output}"
+        format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <archivecontent/>
+      <additionalComponentChildren>
+        <supplier refid="ant-team"/>
+      </additionalComponentChildren>
+    </cdx:archivebom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom(serialNumber)"
+        value="urn:uuid:d4662514-a7ef-498a-8451-8261eca2de15"/>
+  </target>
 </project>
