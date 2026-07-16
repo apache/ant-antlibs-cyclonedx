@@ -97,9 +97,7 @@
           <cite>An external component is one that is not part of an
             assembly, but is expected to be provided by the
             environment, regardless of the component's
-            scope.</cite><br/>
-          This attribute doesn't have any effect as long as CycloneDX
-          Core doesn't support version 1.7 of the specification.
+            scope.</cite>
         </td>
         <td>No, <code>isExternal</code> must not be <code>true</code>
           for the main component of the SBOM.</td>
@@ -400,7 +398,7 @@
         &lt;license refid="apache-2"/>
         &lt;externalReferenceSet refid="antlib-ext-refs"/>
         &lt;dependency componentRef="ant"/>
-        &lt;dependency bomRef="pkg:maven/org.cyclonedx/cyclonedx-core-java@12.2.0?type=jar"/>
+        &lt;dependency bomRef="pkg:maven/org.cyclonedx/cyclonedx-core-java@13.0.0?type=jar"/>
       &lt;/cdx:component>
     </pre>
   </body>

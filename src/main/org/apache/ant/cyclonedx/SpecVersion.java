@@ -10,8 +10,8 @@ import org.cyclonedx.Version;
 /**
  * CycloneDX specification version to use for the SBOM.
  *
- * <p>Accepts the enum constants like {@code VERSION_16} as well as
- * the human readable version {@code 1.6}. The values are directly
+ * <p>Accepts the enum constants like {@code VERSION_17} as well as
+ * the human readable version {@code 1.7}. The values are directly
  * provided by CycloneDX Core's enum.</p>
  */
 public class SpecVersion extends EnumeratedAttribute {
@@ -23,7 +23,7 @@ public class SpecVersion extends EnumeratedAttribute {
 
     static {
         DEFAULT = new SpecVersion();
-        DEFAULT.setValue(Version.VERSION_16.name());
+        DEFAULT.setValue(Version.VERSION_17.name());
     }
 
     @Override

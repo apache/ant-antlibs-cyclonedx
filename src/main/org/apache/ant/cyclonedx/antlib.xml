@@ -36,7 +36,7 @@ under the License.
   <!-- extracted after writing very similar macros for antlibs, Ivy
        and Ant itself -->
   <macrodef name="archivebom" backtrace="false">
-    <attribute name="specVersion" default="1.6"/>
+    <attribute name="specVersion" default="1.7"/>
     <attribute name="format" default="json"/>
     <attribute name="serialNumber" default="random"/>
     <attribute name="bomName" default="bom"/>

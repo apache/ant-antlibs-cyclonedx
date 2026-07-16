@@ -99,10 +99,10 @@ under the License.
           publisher="OWASP Foundation"
           group="org.cyclonedx"
           name="cyclonedx-core-java"
-          version="12.2.0"
+          version="13.0.0"
           description="The CycloneDX core module provides a model representation of the BOM along with utilities to assist in creating, parsing, and validating BOMs."
           id="cyclonedx-core">
-        <file file="${lib.dir.compile}/cyclonedx-core-java-12.2.0.jar"/>
+        <file file="${lib.dir.compile}/cyclonedx-core-java-13.0.0.jar"/>
         <license refid="apache-2"/>
         <externalReference
             type="website"

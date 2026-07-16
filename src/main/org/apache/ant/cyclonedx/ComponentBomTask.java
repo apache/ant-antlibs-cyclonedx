@@ -67,7 +67,7 @@ public class ComponentBomTask extends Task {
     /**
      * Specifies the CycloneDX version to use.
      *
-     * <p>Defaults to 1.6.</p>
+     * <p>Defaults to 1.7.</p>
      *
      * @param specVersion specification version
      */

@@ -332,9 +332,6 @@ public class Component extends DataType {
      * <p>Must not be set to {@code true} for the main component of
      * the SBOM.</p>
      *
-     * <p>Right now this attribute has no effect until the CycloneDX
-     * core library supports the specification version 1.7.</p>
-     *
      * @param isExternal whether the component is external
      */
     public void setIsExternal(boolean isExternal) {
@@ -601,7 +598,9 @@ public class Component extends DataType {
         if (scope != null) {
             component.setScope(scope);
         }
-        // add isExternal once VERSION_17 is supported by cyclonedx-java-core
+        if (isExternal) {
+            component.setIsExternal(true);
+        }
         return component;
     }
 
@@ -739,7 +738,9 @@ public class Component extends DataType {
         if (scope == null && real.getScope() != null) {
             setScope(ComponentScope.from(real.getScope()));
         }
-        // copy isExternal once CycloneDX Core supports it
+        if (!isExternal) {
+            setIsExternal(Boolean.TRUE.equals(real.getIsExternal()));
+        }
         if (description == null) {
             setDescription(real.getDescription());
         }

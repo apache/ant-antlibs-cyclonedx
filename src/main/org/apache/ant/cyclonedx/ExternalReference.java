@@ -37,7 +37,7 @@ public class ExternalReference {
      * <p>Types defined by the specification or the enum names of <a
       href="https://github.com/CycloneDX/cyclonedx-core-java">CycloneDX
       Core (Java)</a>'s <a
-      href="https://javadoc.io/static/org.cyclonedx/cyclonedx-core-java/12.2.0/org/cyclonedx/model/ExternalReference.Type.html">type
+      href="https://javadoc.io/static/org.cyclonedx/cyclonedx-core-java/13.0.0/org/cyclonedx/model/ExternalReference.Type.html">type
       enum</a> are accepted.</p>
      *
      * @param type reference's type
