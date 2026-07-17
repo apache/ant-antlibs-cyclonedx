@@ -129,15 +129,15 @@ under the License.
       </additionalComponent>
       <additionalComponent id="commons-codec">
         <sbomLink>
-          <url url="https://repo1.maven.org/maven2/commons-codec/commons-codec/1.21.0/commons-codec-1.21.0-cyclonedx.json"/>
+          <url url="https://repo1.maven.org/maven2/commons-codec/commons-codec/1.22.0/commons-codec-1.22.0-cyclonedx.json"/>
         </sbomLink>
-        <file file="${lib.dir.compile}/commons-codec-1.21.0.jar"/>
+        <file file="${lib.dir.compile}/commons-codec-1.22.0.jar"/>
       </additionalComponent>
       <additionalComponent id="commons-io">
         <sbomLink>
-          <url url="https://repo1.maven.org/maven2/commons-io/commons-io/2.21.0/commons-io-2.21.0-cyclonedx.json"/>
+          <url url="https://repo1.maven.org/maven2/commons-io/commons-io/2.22.0/commons-io-2.22.0-cyclonedx.json"/>
         </sbomLink>
-        <file file="${lib.dir.compile}/commons-io-2.21.0.jar"/>
+        <file file="${lib.dir.compile}/commons-io-2.22.0.jar"/>
       </additionalComponent>
       <additionalComponent id="commons-lang3">
         <sbomLink>
@@ -164,45 +164,55 @@ under the License.
       </additionalComponent>
       <additionalComponent id="jackson-dataformat-xml">
         <sbomLink>
-          <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.21.1/jackson-dataformat-xml-2.21.1-sbom-cyclonedx.json"/>
+          <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.22.1/jackson-dataformat-xml-2.22.1-sbom-cyclonedx.json"/>
         </sbomLink>
-        <file file="${lib.dir.compile}/jackson-dataformat-xml-2.21.1.jar"/>
+        <file file="${lib.dir.compile}/jackson-dataformat-xml-2.22.1.jar"/>
       </additionalComponent>
       <additionalComponent>
         <sbomLink>
-          <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.21.1/jackson-core-2.21.1-sbom-cyclonedx.json"/>
+          <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.22.1/jackson-core-2.22.1-sbom-cyclonedx.json"/>
         </sbomLink>
-        <file file="${lib.dir.compile}/jackson-core-2.21.1.jar"/>
+        <file file="${lib.dir.compile}/jackson-core-2.22.1.jar"/>
       </additionalComponent>
       <additionalComponent>
         <sbomLink>
-          <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.21/jackson-annotations-2.21-sbom-cyclonedx.json"/>
+          <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.22/jackson-annotations-2.22-sbom-cyclonedx.json"/>
         </sbomLink>
-        <file file="${lib.dir.compile}/jackson-annotations-2.21.jar"/>
+        <file file="${lib.dir.compile}/jackson-annotations-2.22.jar"/>
       </additionalComponent>
       <additionalComponent>
         <sbomLink>
-          <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.21.1/jackson-databind-2.21.1-sbom-cyclonedx.json"/>
+          <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.22.1/jackson-databind-2.22.1-sbom-cyclonedx.json"/>
         </sbomLink>
-        <file file="${lib.dir.compile}/jackson-databind-2.21.1.jar"/>
+        <file file="${lib.dir.compile}/jackson-databind-2.22.1.jar"/>
       </additionalComponent>
       <additionalComponent
           group="com.fasterxml.woodstox"
           name="woodstox-core"
-          version="7.1.1"
+          version="7.2.0"
           description='Woodstox is a high-performance XML processor that implements Stax (JSR-173), SAX2 and Stax2 APIs'
           unknownDependencies="true">
-        <file file="${lib.dir.compile}/woodstox-core-7.1.1.jar"/>
+        <file file="${lib.dir.compile}/woodstox-core-7.2.0.jar"/>
         <license refid="apache-2"/>
+      </additionalComponent>
+      <additionalComponent
+          group="org.codehaus.woodstox"
+          name="stax2-api"
+          version="4.3.0"
+          description='Stax2 API is an extension to basic Stax 1.0 API that adds significant new functionality, such as full-featured bi-direction validation interface and high-performance Typed Access API.'>
+        <file file="${lib.dir.compile}/stax2-api-4.3.0.jar"/>
+        <license licenseId="BSD-2-Clause">
+          <url url="http://www.opensource.org/licenses/bsd-license.php"/>
+        </license>
       </additionalComponent>
       <additionalComponent
           group="com.networknt"
           name="json-schema-validator"
-          version="2.0.1"
+          version="2.0.4"
           description='A json schema validator that supports draft v4, v6, v7, v2019-09 and v2020-12'
           unknownDependencies="true"
           id="json-schema-validator">
-        <file file="${lib.dir.compile}/json-schema-validator-2.0.1.jar"/>
+        <file file="${lib.dir.compile}/json-schema-validator-2.0.4.jar"/>
         <license refid="apache-2"/>
       </additionalComponent>
       <license refid="apache-2"/>
