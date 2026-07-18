@@ -949,11 +949,11 @@
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.component.externalReferences.reference(type)"
-        value="license,mailing-list,security-contact,vcs,build-system,issue-tracker,website,distribution,source-distribution,bom"/>
+        value="vcs,issue-tracker,website,bom,mailing-list,source-distribution,distribution,license,build-system,security-contact"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.component.externalReferences.reference.url"
-        value="https://www.apache.org/licenses/LICENSE-2.0.txt,https://ant.apache.org/mail.html,https://www.apache.org/security/,https://gitbox.apache.org/repos/asf/ant-antlibs-cyclonedx.git,https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/,https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&amp;product=Ant,https://ant.apache.org/antlibs/cyclonedx/,https://ant.apache.org/antlibs/bindownload.cgi,https://ant.apache.org/antlibs/srcdownload.cgi,https://repo1.maven.org/maven2/org/apache/ant/ant-cyclonedx/0.1/ant-cyclonedx-0.1-cyclonedx.json"/>
+        value="https://gitbox.apache.org/repos/asf/ant-antlibs-cyclonedx.git,https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&amp;product=Ant,https://ant.apache.org/antlibs/cyclonedx/,https://repo1.maven.org/maven2/org/apache/ant/ant-cyclonedx/0.1/ant-cyclonedx-0.1-cyclonedx.json,https://ant.apache.org/mail.html,https://ant.apache.org/antlibs/srcdownload.cgi,https://ant.apache.org/antlibs/bindownload.cgi,https://www.apache.org/licenses/LICENSE-2.0.txt,https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/,https://www.apache.org/security/"/>
   </target>
 
   <target name="testSbomLinkDoesntAddBomExternalLinkWhenDisabled" depends="createMaximalComponentData">
@@ -972,7 +972,7 @@
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.component.externalReferences.reference(type)"
-        value="license,mailing-list,security-contact,vcs,build-system,issue-tracker,website,distribution,source-distribution"/>
+        value="vcs,issue-tracker,website,mailing-list,source-distribution,distribution,license,build-system,security-contact"/>
   </target>
 
   <target name="testSbomLinkDoesntOverrideExistingBomExternalLink" depends="createMaximalComponentData">
@@ -1187,7 +1187,7 @@
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.dependencies.dependency(ref)"
-        value="pkg:maven/org.example2/testname2@2.0?type=jar,my-own-dependency"/>
+        value="my-own-dependency,pkg:maven/org.example2/testname2@2.0?type=jar"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.dependencies.dependency.dependency(ref)"
@@ -1229,7 +1229,7 @@
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.dependencies.dependency(ref)"
-        value="pkg:maven/org.example/testname@1.0?type=jar,pkg:maven/commons-codec/commons-codec@1.22.0?type=jar"/>
+        value="pkg:maven/commons-codec/commons-codec@1.22.0?type=jar,pkg:maven/org.example/testname@1.0?type=jar"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.dependencies.dependency.dependency(ref)"

@@ -24,6 +24,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -90,6 +91,42 @@ public class Component extends DataType {
     private List<Property> properties = new ArrayList<>();
     private String mimeType;
     private SbomLink sbomLink;
+
+    /**
+     * Comparator for components.
+     *
+     * <p>Sorts by bom-ref (if present) and falls back to sorting by
+     * name, then by group (if present) and version (if present).</p>
+     *
+     * @since CycloneDX Antlib 0.2
+     */
+    public static final Comparator<Component> ComponentComparator =
+        Comparator.comparing(Component::getBomRef, Comparator.nullsLast(Comparator.naturalOrder()))
+        .thenComparing(Component::getName)
+        .thenComparing(Component::getGroup, Comparator.nullsLast(Comparator.naturalOrder()))
+        .thenComparing(Component::getVersion, Comparator.nullsLast(Comparator.naturalOrder()));
+
+
+    /**
+     * Comparator for CycloneDX components.
+     *
+     * <p>Sorts by bom-ref (if present) and falls back to sorting by
+     * name, then by group (if present) and version (if present).</p>
+     *
+     * @since CycloneDX Antlib 0.2
+     */
+    public static final Comparator<org.cyclonedx.model.Component> CycloneDxComponentComparator
+        = (c1, c2) -> ComponentComparator.compare(from(c1, Collections.emptyList()),
+                                                  from(c2, Collections.emptyList()));
+
+    private static final Comparator<OrganizationalContact> CycloneDxOrganizationalContactComparator =
+        Comparator.comparing(OrganizationalContact::getBomRef, Comparator.nullsLast(Comparator.naturalOrder()))
+        .thenComparing(OrganizationalContact::getName, Comparator.nullsLast(Comparator.naturalOrder()))
+        .thenComparing(OrganizationalContact::getEmail, Comparator.nullsLast(Comparator.naturalOrder()));
+
+    private static final Comparator<Property> CycloneDxPropertyComparator =
+        Comparator.comparing(Property::getName)
+        .thenComparing(Property::getValue, Comparator.nullsLast(Comparator.naturalOrder()));
 
     /**
      * Sets the resource the component is about.
@@ -429,6 +466,20 @@ public class Component extends DataType {
     }
 
     /**
+     * Gets the version of the component.
+     *
+     * @return component version
+     * @since CycloneDX Antlib 0.2
+     */
+    public String getVersion() {
+        if (isReference()) {
+            return getRef().getVersion();
+        }
+        dieOnCircularReference();
+        return version;
+    }
+
+    /**
      * Gets the Package-URL (purl) of the component.
      *
      * @return the value set with {@see #setPurl} or a Maven purl
@@ -475,7 +526,7 @@ public class Component extends DataType {
             return getRef().getDependencies();
         }
         dieOnCircularReference();
-        return dependencies;
+        return dependencies.stream().sorted(Dependency.DependencyComparator).collect(Collectors.toList());
     }
 
     /**
@@ -508,6 +559,7 @@ public class Component extends DataType {
                       .stream()
                       .flatMap(c -> c.getNestedComponents().stream())
                       .collect(Collectors.toList()));
+        result.sort(ComponentComparator);
         return result;
     }
 
@@ -692,14 +744,22 @@ public class Component extends DataType {
         } else if (!dependencies.isEmpty()) {
             throw new BuildException("a component with dependencies must provide a bomRef");
         }
-        component.setAuthors(authors);
-        component.setProperties(properties);
+        component.setAuthors(authors.stream()
+                             .sorted(CycloneDxOrganizationalContactComparator)
+                             .collect(Collectors.toList()));
+        component.setProperties(properties.stream()
+                                .sorted(CycloneDxPropertyComparator)
+                                .collect(Collectors.toList()));
         component.setTags(new Tags(tags.stream().sorted().collect(Collectors.toList())));
-        component.setExternalReferences(externalReferences);
+        component.setExternalReferences(externalReferences.stream()
+                                        .sorted(ExternalReference.CycloneDxExternalReferenceComparator)
+                                        .collect(Collectors.toList()));
         if (!licenses.isEmpty()) {
             // would create an empty licenses node otherwise
             LicenseChoice lc = new LicenseChoice();
-            lc.setLicenses(licenses);
+            lc.setLicenses(licenses.stream()
+                           .sorted(License.CycloneDxLicenseComparator)
+                           .collect(Collectors.toList()));
             component.setLicenses(lc);
         }
         for (Component c : nestedComponents) {
@@ -915,6 +975,15 @@ public class Component extends DataType {
     public static class Dependency {
         private String bomRef;
         private Reference componentRef;
+
+        /**
+         * Comparator for dependencies.
+         *
+         * <p>Sorts by bom-ref.</p>
+         *
+         * @since CycloneDX Antlib 0.2
+         */
+        public static final Comparator<Dependency> DependencyComparator = Comparator.comparing(Dependency::getBomRef);
 
         /**
          * Identifies the dependency by its bom-ref.

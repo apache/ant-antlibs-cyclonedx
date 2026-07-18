@@ -85,6 +85,10 @@
       default still is to use the current point in time as timestamp.
     </action>
     <action type="update">
+      The array valued parts of the generated SBOM now have a stable
+      sort order to support reproducible builds.
+    </action>
+    <action type="update">
       Updated cyclonedx-java-core library dependency to 13.0.0.
     </action>
     <action type="update">

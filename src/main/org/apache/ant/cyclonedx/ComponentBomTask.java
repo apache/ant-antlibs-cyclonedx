@@ -25,6 +25,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -36,6 +37,7 @@ import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
@@ -337,6 +339,7 @@ public class ComponentBomTask extends Task {
             cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
         }
 
+        cs.sort(Component.CycloneDxComponentComparator);
         bom.setComponents(cs);
         addDependencies(bom, knownComponents);
 
@@ -354,7 +357,10 @@ public class ComponentBomTask extends Task {
                 tools.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
             }
             ToolInformation ti = new ToolInformation();
-            ti.setComponents(tools);
+            ti.setComponents(tools
+                             .stream()
+                             .sorted(Component.CycloneDxComponentComparator)
+                             .collect(Collectors.toList()));
             ti.setServices(antlibToolInformation.getServices());
             meta.setToolChoice(ti);
         } else {
@@ -362,7 +368,9 @@ public class ComponentBomTask extends Task {
         }
         if (!licenses.isEmpty()) {
             LicenseChoice lc = new LicenseChoice();
-            lc.setLicenses(licenses);
+            lc.setLicenses(licenses.stream()
+                           .sorted(License.CycloneDxLicenseComparator)
+                           .collect(Collectors.toList()));
             meta.setLicenses(lc);
         }
 
@@ -417,6 +425,7 @@ public class ComponentBomTask extends Task {
                 }
             });
 
+        dependencies.sort(Comparator.comparing(Dependency::getRef));
         bom.setDependencies(dependencies);
     }
 

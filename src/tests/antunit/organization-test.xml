@@ -59,7 +59,7 @@
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.component.manufacturer.url"
-        value="https://example.org/,https://example.com/"/>
+        value="https://example.com/,https://example.org/"/>
   </target>
 
   <target name="testOrganizationWorksViaReference">

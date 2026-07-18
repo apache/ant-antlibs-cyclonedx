@@ -17,6 +17,8 @@
  */
 package org.apache.ant.cyclonedx;
 
+import java.util.Comparator;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.DataType;
 import org.apache.tools.ant.types.resources.URLResource;
@@ -40,6 +42,18 @@ public class License extends DataType {
     private String id;
     private String name;
     private String url;
+
+    /**
+     * Comparator for CycloneDX license.
+     *
+     * <p>Sorts by id (if present) and falls back to sorting by name
+     * (if present).</p>
+     *
+     * @since CycloneDX Antlib 0.2
+     */
+    public static final Comparator<org.cyclonedx.model.License> CycloneDxLicenseComparator =
+        Comparator.comparing(org.cyclonedx.model.License::getId, Comparator.nullsLast(Comparator.naturalOrder()))
+        .thenComparing(org.cyclonedx.model.License::getName, Comparator.nullsLast(Comparator.naturalOrder()));
 
     /**
      * Sets the {@code id} of the license.

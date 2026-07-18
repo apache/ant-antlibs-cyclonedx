@@ -19,6 +19,7 @@ package org.apache.ant.cyclonedx;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.tools.ant.types.DataType;
 import org.apache.tools.ant.types.resources.URLResource;
@@ -76,7 +77,7 @@ public class Organization extends DataType {
             oe.setName(name);
         }
         if (!urls.isEmpty()) {
-            oe.setUrls(urls);
+            oe.setUrls(urls.stream().sorted().collect(Collectors.toList()));
         }
         return oe;
     }
