@@ -345,7 +345,7 @@ public class ComponentBomTask extends Task {
 
     private Metadata createMetadata() throws IOException {
         Metadata meta = new Metadata();
-        meta.setTimestamp(new Date());
+        meta.setTimestamp(DateUtils.getNow(getProject()).getKey());
         ToolInformation antlibToolInformation = ToolData.getToolInformation(specVersion.getVersion());
         if (!toolComponents.isEmpty()) {
             List<org.cyclonedx.model.Component> tools =

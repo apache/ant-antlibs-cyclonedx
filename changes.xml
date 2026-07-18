@@ -78,6 +78,13 @@
       value for reproducible builds.
     </action>
     <action type="update">
+      The componentbom and archivebom tasks honor the
+      SOURCE_DATE_EPOCH environment variable as well as Ant's magic
+      properties ant.tstamp.now.iso and ant.tstamp.now and use either
+      as timestamp for the generated SBOM for reproducible builds. The
+      default still is to use the current point in time as timestamp.
+    </action>
+    <action type="update">
       Updated cyclonedx-java-core library dependency to 13.0.0.
     </action>
     <action type="update">

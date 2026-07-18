@@ -22,12 +22,19 @@
   <checksum property="sha256hash" file="${antlib.location}" algorithm="SHA-256"/>
 
   <target name="testToolMetadataInJsonFormat">
+    <tstamp>
+      <format timezone="UTC" pattern="yyyy-MM-dd" property="day"/>
+    </tstamp>
     <cdx:componentbom outputdirectory="${output}"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname">
         <file file="${antlib.location}"/>
       </component>
     </cdx:componentbom>
+    <au:assertResourceContains
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.json"
+        value='"timestamp" : "${day}T'/>
     <au:assertResourceContains
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.json"
@@ -170,6 +177,24 @@
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component name="testname"/>
     </cdx:componentbom>
+  </target>
+
+  <target name="testTimestampCanBeSet">
+    <local name="ant.tstamp.now.iso"/>
+    <property name="ant.tstamp.now.iso" value="1972-04-17T08:07:00Z"/>
+    <cdx:component name="testname" id="test"
+                   xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <file file="${antlib.location}"/>
+    </cdx:component>
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component refid="test"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.timestamp"
+        value="${ant.tstamp.now.iso}"/>
   </target>
 
   <target name="testMulipleTools">
