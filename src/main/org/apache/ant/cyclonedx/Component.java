@@ -17,10 +17,8 @@
  */
 package org.apache.ant.cyclonedx;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -39,18 +37,13 @@ import org.apache.tools.ant.types.Reference;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.resources.FileProvider;
 import org.apache.tools.ant.types.resources.Union;
-import org.apache.tools.ant.types.resources.URLProvider;
 
 import org.cyclonedx.Version;
-import org.cyclonedx.exception.ParseException;
-import org.cyclonedx.model.Bom;
 import org.cyclonedx.model.LicenseChoice;
 import org.cyclonedx.model.OrganizationalContact;
 import org.cyclonedx.model.OrganizationalEntity;
 import org.cyclonedx.model.Property;
 import org.cyclonedx.model.component.Tags;
-import org.cyclonedx.parsers.BomParserFactory;
-import org.cyclonedx.parsers.Parser;
 import org.cyclonedx.util.BomUtils;
 
 /**
@@ -564,6 +557,20 @@ public class Component extends DataType {
     }
 
     /**
+     * Gets the dependencies of the component.
+     *
+     * @return component's dependencies
+     * @since CycloneDX Antlib 0.2
+     */
+    Collection<org.cyclonedx.model.ExternalReference> getExternalReferences() {
+        if (isReference()) {
+            return getRef().getExternalReferences();
+        }
+        dieOnCircularReference();
+        return externalReferences;
+    }
+
+    /**
      * Read the linked SBOM (if any) and merge its content with the
      * one already defined for this component.
      *
@@ -580,35 +587,8 @@ public class Component extends DataType {
         if (sbomLink != null && !sbomLinkResolved) {
             sbomLinkResolved = true;
 
-            Bom bom = readLinkedSbom();
-            if (bom.getMetadata() == null) {
-                throw new BuildException("referenced SBOM file lacks metadata");
-            }
-            org.cyclonedx.model.Component real = bom.getMetadata().getComponent();
-            if (real == null) {
-                throw new BuildException("referenced SBOM file lacks component");
-            }
-            List<org.cyclonedx.model.Dependency> allDependencies = bom.getDependencies();
-            fillFromBomLink(real, allDependencies);
-            if (sbomLink.getCreateBomExternalReference()
-                && !externalReferences.stream()
-                .anyMatch(e -> e.getType().equals(org.cyclonedx.model.ExternalReference.Type.BOM))) {
-                Resource sbom = sbomLink.iterator().next();
-                URLProvider up = sbom.as(URLProvider.class);
-                if (up != null) {
-                    ExternalReference e = new ExternalReference();
-                    e.setUrl(up.getURL().toExternalForm());
-                    e.setType(org.cyclonedx.model.ExternalReference.Type.BOM.name());
-                    addConfiguredExternalReference(e);
-                }
-            }
-
-            if (!areDependenciesUnknown() && !dependencies.isEmpty()) {
-                List<org.cyclonedx.model.Component> additionalComponents = bom.getComponents();
-                if (additionalComponents != null) {
-                    return extractComponentsThatAreDirectDependencies(additionalComponents);
-                }
-            }
+            SbomLinkComponentResolver resolver = new SbomLinkComponentResolver(getProject(), sbomLink);
+            return resolver.resolve(this);
         }
 
         return Collections.emptyList();
@@ -769,31 +749,16 @@ public class Component extends DataType {
         return component;
     }
 
-    private List<Component> extractComponentsThatAreDirectDependencies(List<org.cyclonedx.model.Component> cs) {
-        List<Component> toReturn = new ArrayList<>();
-        for (org.cyclonedx.model.Component c : cs) {
-            Component dep = from(c, Collections.emptyList());
-            if (dependencies.stream().anyMatch(d -> Objects.equals(dep.getBomRef(), d.getBomRef()))) {
-                // only include "additional components" this component depends on directly.
-                // we don't want to resolve transitive dependencies automatically
-                dep.setUnknownDependencies(true);
-                toReturn.add(dep);
-            }
-        }
-        return toReturn;
-    }
-
-    private static Component from(
+    static Component from(
         org.cyclonedx.model.Component real,
         List<org.cyclonedx.model.Dependency> dependencies) {
         Component c = new Component();
-        c.fillFromBomLink(real, dependencies);
+        c.fillFrom(real, dependencies);
         return c;
     }
 
-    private void fillFromBomLink(
-        org.cyclonedx.model.Component real,
-        List<org.cyclonedx.model.Dependency> allDependencies) {
+    void fillFrom(org.cyclonedx.model.Component real,
+                  List<org.cyclonedx.model.Dependency> allDependencies) {
         if (type == null) {
             setType(ComponentType.from(real.getType()));
         }
@@ -878,13 +843,15 @@ public class Component extends DataType {
                                         .collect(Collectors.toList()));
             }
         }
-        if (dependencies.isEmpty() && allDependencies != null) {
-            fillDependenciesFromBomLink(allDependencies);
+        if (!areDependenciesUnknown()) {
+            fillDependencies(allDependencies);
         }
     }
 
-    private void fillDependenciesFromBomLink(List<org.cyclonedx.model.Dependency> allDependencies) {
-        setUnknownDependencies(true);
+    private void fillDependencies(List<org.cyclonedx.model.Dependency> allDependencies) {
+        if (dependencies.isEmpty()) {
+            setUnknownDependencies(true);
+        }
         org.cyclonedx.model.Dependency myDependencies = allDependencies
             .stream()
             .filter(d -> Objects.equals(d.getRef(), getBomRef()))
@@ -929,44 +896,6 @@ public class Component extends DataType {
         }
 
         component.setHashes(BomUtils.calculateHashes(file, bomVersion));
-    }
-
-    private Bom readLinkedSbom() throws IOException {
-        if (sbomLink.size() != 1) {
-            throw new BuildException("sbomLink requires exactly one nested resource");
-        }
-        Resource sbom = sbomLink.iterator().next();
-        logSbom(sbom);
-        try (InputStream data = sbom.getInputStream();
-             ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-            byte[] buf = new byte[4096];
-            int count = data.read(buf, 0, buf.length);
-            while (count >= 0) {
-                baos.write(buf, 0, count);
-                count = data.read(buf, 0, buf.length);
-            }
-            byte[] content = baos.toByteArray();
-            try {
-                Parser parser = BomParserFactory.createParser(content);
-                return parser.parse(content);
-            } catch (ParseException ex) {
-                throw new BuildException("failed to parse sbomlink " + sbom.getName(), ex);
-            }
-        }
-    }
-
-    private void logSbom(Resource r) {
-        String name = r.getName();
-        FileProvider fp = r.as(FileProvider.class);
-        if (fp != null) {
-            name = fp.getFile().getAbsolutePath();
-        } else {
-            URLProvider up = r.as(URLProvider.class);
-            if (up != null) {
-                name = up.getURL().toExternalForm();
-            }
-        }
-        log("reading SBOM from " + name, Project.MSG_VERBOSE);
     }
 
     /**
