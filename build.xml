@@ -215,6 +215,12 @@ under the License.
         <file file="${lib.dir.compile}/json-schema-validator-2.0.4.jar"/>
         <license refid="apache-2"/>
       </additionalComponent>
+      <additionalComponent>
+        <sbomLink>
+          <url url="https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.6.0/ivy-2.6.0.cdx.json"/>
+        </sbomLink>
+        <file file="${lib.dir.compile}/ivy-2.6.0.jar"/>
+      </additionalComponent>
       <license refid="apache-2"/>
     </cdx:componentbom>
   </target>
