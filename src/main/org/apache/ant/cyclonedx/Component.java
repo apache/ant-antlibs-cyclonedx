@@ -79,12 +79,13 @@ public class Component extends DataType {
     private List<Component> nestedComponents = new ArrayList<>();
     private List<Dependency> dependencies = new ArrayList<>();
     private boolean unknownDependencies = false;
-    private boolean sbomLinkResolved = false;
+    private boolean resolved = false;
     private List<OrganizationalContact> authors = new ArrayList<>();
     private Set<String> tags = new HashSet<>();
     private List<Property> properties = new ArrayList<>();
     private String mimeType;
     private SbomLink sbomLink;
+    private IvyModule ivyModule;
 
     /**
      * Comparator for components.
@@ -430,7 +431,24 @@ public class Component extends DataType {
      */
     public SbomLink createSbomLink() {
         checkChildrenAllowed();
+        if (ivyModule != null) {
+            throw new BuildException("sbomLink and ivyModule are mutually exclusive");
+        }
         return sbomLink == null ? (sbomLink = new SbomLink(getProject())) : sbomLink;
+    }
+
+    /**
+     * Container for Ivy module configuration.
+     *
+     * @return container for Ivy module configuration
+     * @since CycloneDX Antlib 0.2
+     */
+    public IvyModule createIvyModule() {
+        checkChildrenAllowed();
+        if (sbomLink != null) {
+            throw new BuildException("sbomLink and ivyModule are mutually exclusive");
+        }
+        return ivyModule == null ? (ivyModule = new IvyModule()) : ivyModule;
     }
 
     /**
@@ -571,6 +589,20 @@ public class Component extends DataType {
     }
 
     /**
+     * Gets whether any licenses have been explicitly configured for this component.
+     *
+     * @return whether any licenses have been explicitly configured
+     * @since CycloneDX Antlib 0.2
+     */
+    boolean hasLicenses() {
+        if (isReference()) {
+            return getRef().hasLicenses();
+        }
+        dieOnCircularReference();
+        return !licenses.isEmpty();
+    }
+
+    /**
      * Read the linked SBOM (if any) and merge its content with the
      * one already defined for this component.
      *
@@ -584,11 +616,19 @@ public class Component extends DataType {
         }
         dieOnCircularReference();
 
-        if (sbomLink != null && !sbomLinkResolved) {
-            sbomLinkResolved = true;
+        if (!resolved) {
+            resolved = true;
 
-            SbomLinkComponentResolver resolver = new SbomLinkComponentResolver(getProject(), sbomLink);
-            return resolver.resolve(this);
+            if (sbomLink != null) {
+                SbomLinkComponentResolver resolver = new SbomLinkComponentResolver(getProject(), sbomLink);
+                return resolver.resolve(this);
+            }
+
+            if (ivyModule != null) {
+                IvyModuleComponentResolver resolver = new IvyModuleComponentResolver(ivyModule, getProject());
+
+                return resolver.resolve(this);
+            }
         }
 
         return Collections.emptyList();
@@ -1057,5 +1097,67 @@ public class Component extends DataType {
         public boolean getCreateBomExternalReference() {
             return createBomExternalReference;
         }
+    }
+
+    /**
+     * Configuration for Ivy module resolution.
+     *
+     * <p>This nested element allows a Component to be populated from
+     * an Ivy module descriptor. The Ivy file should already be resolved
+     * (i.e., ivy:resolve should have been run).</p>
+     *
+     * @since CycloneDX Antlib 0.3
+     */
+    public static class IvyModule {
+        private String conf;
+        private String resolveId;
+        private Reference antIvyEngineRef;
+
+        /**
+         * Sets the configurations to take into consideration.
+         *
+         * <p>Defaults to the configurations resolved by the last resolve call, or {@code *} if no resolve was
+         * explicitly called</p>
+         *
+         * @param comma separated list of the configurations to retrieve or {@code *}.
+         */
+        public void setConf(String conf) {
+            this.conf = conf;
+        }
+
+        String getConf() {
+            return conf;
+        }
+
+        /**
+         * Sets the id which was used for a previous resolve.
+         *
+         * <p>Defaults to {@code [org].[module]}.</p>
+         *
+         * @param id which was used for a previous resolve
+         */
+        public void setResolveId(String resolveId) {
+            this.resolveId = resolveId;
+        }
+
+        String getResolveId() {
+            return resolveId;
+        }
+
+        /**
+         * Sets a reference is a different Ivy settings file than the default shall be used.
+         *
+         * <p>Defaults to {@code ivy.instance}.</p>
+         *
+         * @param ref A reference to Ivy settings that must be used by this component
+         */
+        public void setSettingsRef(Reference ref) {
+            antIvyEngineRef = ref;
+        }
+
+        Reference getSettingsRef() {
+            return antIvyEngineRef;
+        }
+
     }
 }

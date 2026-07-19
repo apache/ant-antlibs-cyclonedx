@@ -325,13 +325,16 @@ public class ComponentBomTask extends Task {
             cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
         }
 
+        List<Component> resolvedComponentsAdded = new ArrayList<>();
         for (Component c : resolvedComponents) {
             String unversionedKey = getUnversionedCoordinates(c);
             if (unversionedKey == null) {
                 cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
+                resolvedComponentsAdded.add(c);
             } else if (!knownComponents.containsKey(unversionedKey)) {
                 knownComponents.put(unversionedKey, c.getBomRef());
                 cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
+                resolvedComponentsAdded.add(c);
             }
         }
 
@@ -342,7 +345,7 @@ public class ComponentBomTask extends Task {
 
         cs.sort(Component.CycloneDxComponentComparator);
         bom.setComponents(cs);
-        addDependencies(bom, knownComponents);
+        addDependencies(bom, knownComponents, resolvedComponentsAdded);
 
         return bom;
     }
@@ -428,7 +431,8 @@ public class ComponentBomTask extends Task {
         return meta;
     }
 
-    private void addDependencies(Bom bom, Map<String, String> unversionedToVersioned) {
+    private void addDependencies(Bom bom, Map<String, String> unversionedToVersioned,
+                                 List<Component> resolvedComponentsAdded) {
         final Set<String> bomRefs = new HashSet<>();
         visitAllBomComponents(bom, c -> {
                 String bomRef = c.getBomRef();
@@ -440,7 +444,7 @@ public class ComponentBomTask extends Task {
             });
 
         final List<Dependency> dependencies = new ArrayList<>();
-        visitAllComponents(c -> {
+        visitAllComponentsWithExtra(resolvedComponentsAdded, c -> {
                 String bomRef = c.getBomRef();
                 if (bomRef != null && !c.areDependenciesUnknown()) {
                     Dependency dep = new Dependency(bomRef);
@@ -468,8 +472,13 @@ public class ComponentBomTask extends Task {
     }
 
     private void visitAllComponents(Consumer<Component> visitor) {
+        visitAllComponentsWithExtra(Collections.emptyList(), visitor);
+    }
+
+    private void visitAllComponentsWithExtra(List<Component> extraComponents, Consumer<Component> visitor) {
         visitAllComponents(component, visitor);
         visitAllComponents(additionalComponents, visitor);
+        visitAllComponents(extraComponents, visitor);
     }
 
     private void visitAllComponents(Component c,

@@ -28,6 +28,19 @@ under the License.
     </copy>
   </target>
 
+  <target name="compile" depends="ready-to-compile,resolve">
+    <javac
+      srcdir="src/main"
+      destdir="${build.classes}"
+      debug="${javac.debug}"
+      source="${javac.-source}"
+      target="${javac.-target}"
+      includeantruntime="true">
+      <classpath refid="ivy.lib.path"/>
+      <classpath refid="classpath.compile"/>
+    </javac>
+  </target>
+
   <target name="fetch-cyclonedx" depends="antlib">
     <condition property="can.use.cyclonedx">
       <isset property="jdk9+"/>
@@ -36,12 +49,19 @@ under the License.
       <isset property="jdk9+"/>
     </condition>
     <typedef uri="antlib:org.apache.ant.cyclonedx"
-      resource="org/apache/ant/cyclonedx/antlib.xml">
+             resource="org/apache/ant/cyclonedx/antlib.xml"
+             loaderRef="cdx.loader">
       <classpath>
+        <path refid="ivy.lib.path"/>
         <path refid="classpath.compile"/>
         <pathelement location="${jarname}"/>
       </classpath>
     </typedef>
+    <taskdef resource="org/apache/ivy/ant/antlib.xml"
+             uri="antlib:org.apache.ivy.ant"
+             loaderRef="cdx.loader"/>
+    <ivy:resolve file="ivy.xml" xmlns:ivy="antlib:org.apache.ivy.ant"
+                 conf="default" resolveId="default-only"/>
   </target>
 
   <target name="define-cyclonedx-components"
@@ -60,6 +80,44 @@ under the License.
           type="DOCUMENTATION"
           url="https://ant.apache.org/antlibs/cyclonedx/manual/"/>
     </cdx:externalreferenceset>
+  </target>
+
+  <target name="create-antlib-sbom-ivy"
+          depends="define-cyclonedx-components"
+          if="can.use.cyclonedx">
+    <uptodate property="antlib-sbom-ok"
+              targetfile="${build.lib}/${artifact.stub}.ivy.cdx.json">
+      <srcresources>
+        <file file="${jarname}"/>
+        <file file="ivy.xml"/>
+        <file file="build.xml"/>
+      </srcresources>
+    </uptodate>
+    <cdx:componentbom
+        bomName="${artifact.stub}.ivy.cdx"
+        outputdirectory="${build.lib}"
+        format="all"
+        useComponentSupplier="true"
+        useComponentManufacturer="true"
+        unless:set="antlib-sbom-ok"
+        xmlns:unless="ant:unless"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component
+          description="Apache CycloneDX Antlib"
+          publisher="The Apache Software Foundation"
+          supplierIsManufacturer="true">
+        <ivymodule conf="default" resolveId="default-only"/>
+        <file file="${jarname}"/>
+        <supplier refid="ant-pmc"/>
+        <license refid="apache-2"/>
+        <externalReferenceSet refid="ant-common-refs"/>
+        <externalReferenceSet refid="antlibs-common-ext-refs"/>
+        <externalReferenceSet refid="antlib-ext-refs"/>
+      </component>
+      <additionalComponent refid="ant"/>
+      <additionalComponent refid="ant-launcher"/>
+      <license refid="apache-2"/>
+    </cdx:componentbom>
   </target>
 
   <target name="create-antlib-sbom"
