@@ -44,6 +44,8 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.ResourceCollection;
 import org.apache.tools.ant.types.resources.Union;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 
 import org.cyclonedx.Format;
 import org.cyclonedx.exception.GeneratorException;
@@ -278,13 +280,11 @@ public class ComponentBomTask extends Task {
 
     private Bom createBom() throws IOException {
         Bom bom = new Bom();
-        if (serialNumber != null) {
-            bom.setSerialNumber(serialNumber);
-        } else {
-            bom.setSerialNumber("urn:uuid:" + UUID.randomUUID());
-        }
+        Map.Entry<Date, Boolean> currentTimeAndReproducibleBuildsFlag = DateUtils.getNow(getProject());
+        bom.setSerialNumber(getSerialNumber(currentTimeAndReproducibleBuildsFlag.getKey(),
+                                            Boolean.TRUE.equals(currentTimeAndReproducibleBuildsFlag.getValue())));
 
-        Metadata meta = createMetadata();
+        Metadata meta = createMetadata(currentTimeAndReproducibleBuildsFlag.getKey());
 
         Map<String, String> knownComponents = new HashMap<>();
         List<Component> resolvedComponents = new ArrayList<>();
@@ -346,9 +346,45 @@ public class ComponentBomTask extends Task {
         return bom;
     }
 
-    private Metadata createMetadata() throws IOException {
+    private String getSerialNumber(Date timestamp, boolean reproducibleBuild) {
+        if (serialNumber != null) {
+            return serialNumber;
+        } else {
+            UUID uuid = reproducibleBuild ? getReproducibleUuid(timestamp) : UUID.randomUUID();
+            return "urn:uuid:" + uuid;
+        }
+    }
+
+    // https://www.rfc-editor.org/info/rfc9562/#section-5.1
+    private UUID getReproducibleUuid(Date timestamp) {
+        long timestampMillis = timestamp.getTime();
+        long timeLow = (timestampMillis & 0xFFFFFFFFL) << 32;
+        long timeMid = ((timestampMillis >> 32) & 0xFFFF) << 16;
+        long version = 1l << 12;
+        long timeHigh = ((timestampMillis >> 48) & 0x0FFF);
+        long msb = timeLow | timeMid | version | timeHigh;
+
+        long variant = 1l << 63;
+        // for clock_seq and node we create a hash of the main compoment's bom-ref (or something close)
+        String componentId = component.getBomRef();
+        if (componentId == null) {
+            componentId = component.getName()
+                + ":" + (component.getGroup() == null ? "group" : component.getGroup())
+                + ":" + (component.getVersion() == null ? "group" : component.getVersion());
+        }
+        byte[] componentIdHash = new DigestUtils(MessageDigestAlgorithms.MD5).digest(componentId);
+        long clockseq = ((long)(componentIdHash[0] & 0x3F) << 56) | ((long)(componentIdHash[1] & 0xFF) << 48);
+        long nodeLow = ((long)(componentIdHash[2] & 0xFFl) << 40) | ((long)(componentIdHash[3] & 0xFF) << 32);
+        long nodeHigh = ((long)(componentIdHash[4] & 0xFFl) << 24) | ((componentIdHash[5] & 0xFF) << 16)
+            | ((componentIdHash[6] & 0xFF) << 8) | (componentIdHash[5] & 0xFF);
+        long lsb = variant | clockseq | nodeLow | nodeHigh;
+
+        return new UUID(msb, lsb);
+    }
+
+    private Metadata createMetadata(Date timestamp) throws IOException {
         Metadata meta = new Metadata();
-        meta.setTimestamp(DateUtils.getNow(getProject()).getKey());
+        meta.setTimestamp(timestamp);
         ToolInformation antlibToolInformation = ToolData.getToolInformation(specVersion.getVersion());
         if (!toolComponents.isEmpty()) {
             List<org.cyclonedx.model.Component> tools =

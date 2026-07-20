@@ -72,17 +72,20 @@
       A new specialized task "archivebom" simplifies creation of SBOMs
       for distribution zips/tarballs by providing a few defaults.
     </action>
-    <action type="add">
-      A new attribute "serialNumber" of the componentbom task allows
-      the serial number of the generated SBOM to be set to a fixed
-      value for reproducible builds.
-    </action>
     <action type="update">
       The componentbom and archivebom tasks honor the
       SOURCE_DATE_EPOCH environment variable as well as Ant's magic
       properties ant.tstamp.now.iso and ant.tstamp.now and use either
       as timestamp for the generated SBOM for reproducible builds. The
       default still is to use the current point in time as timestamp.
+    </action>
+    <action type="add">
+      A new attribute "serialNumber" of the componentbom task allows
+      the serial number of the generated SBOM to be set to a fixed
+      value for reproducible builds.
+      If the attribute is not set but SOURCE_DATE_EPOCH is defined the
+      serial number will be calculated from SOURCE_DATE_EPOCH and the
+      main component's coordinates.
     </action>
     <action type="update">
       The array valued parts of the generated SBOM now have a stable

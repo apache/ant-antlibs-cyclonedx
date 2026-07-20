@@ -85,9 +85,12 @@
           number, even if the rest of the content doesn't
           change. This is what this task does by default (i.e. when
           the attribute is not set).<br/>
-          In the context of reproducible builds you may want to have
-          more control and this is a way to set a fixed serial
-          number.<br/>
+          For reproducible builds if the attribute is not set but the
+          environment variable <code>SOURCE_DATE_EPOCH</code> is set,
+          the task will generate a stable value that takes the
+          timestamp and the main component's coordinates into
+          account.<br/>
+          Another option for reproducible builds is to set this value explicitly.<br/>
           The special value "random" can be used to explicitly trigger
           the task's default behavior.<br/>
           <em>since CycloneDX Antlib 0.2</em>
