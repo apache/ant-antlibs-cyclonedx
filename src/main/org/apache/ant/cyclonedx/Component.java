@@ -552,7 +552,6 @@ public class Component extends DataType {
                       .stream()
                       .flatMap(c -> c.getNestedComponents().stream())
                       .collect(Collectors.toList()));
-        result.sort(ComponentComparator);
         return result;
     }
 
@@ -742,7 +741,9 @@ public class Component extends DataType {
                            .collect(Collectors.toList()));
             component.setLicenses(lc);
         }
-        for (Component c : nestedComponents) {
+        for (Component c : nestedComponents.stream()
+                 .sorted(ComponentComparator)
+                 .collect(Collectors.toList())) {
             component.addComponent(c.toAdditionalCycloneDxComponent(bomVersion));
         }
         addHashes(component, bomVersion);
