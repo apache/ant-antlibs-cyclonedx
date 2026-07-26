@@ -29,6 +29,12 @@ under the License.
   </target>
 
   <target name="fetch-cyclonedx" depends="antlib">
+    <condition property="can.use.cyclonedx">
+      <isset property="jdk9+"/>
+    </condition>
+    <condition property="add.ant.core.component">
+      <isset property="jdk9+"/>
+    </condition>
     <typedef uri="antlib:org.apache.ant.cyclonedx"
       resource="org/apache/ant/cyclonedx/antlib.xml">
       <classpath>
@@ -39,7 +45,8 @@ under the License.
   </target>
 
   <target name="define-cyclonedx-components"
-          depends="define-core-ant-components">
+          depends="define-core-ant-components"
+          if="can.use.cyclonedx">
     <cdx:externalreferenceset
         id="antlib-ext-refs"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
@@ -55,7 +62,9 @@ under the License.
     </cdx:externalreferenceset>
   </target>
 
-  <target name="create-antlib-sbom" depends="define-cyclonedx-components">
+  <target name="create-antlib-sbom"
+          depends="define-cyclonedx-components"
+          if="can.use.cyclonedx">
     <uptodate property="antlib-sbom-ok"
               targetfile="${build.lib}/${artifact.stub}.cdx.json">
       <srcresources>
@@ -224,7 +233,9 @@ under the License.
 
   <target name="ready-for-bin-dist" depends="create-antlib-sbom,common.ready-for-bin-dist"/>
 
-  <target name="after-dist" depends="define-cyclonedx-components">
+  <target name="after-dist"
+          depends="define-cyclonedx-components"
+          if="can.use.cyclonedx">
     <macrodef name="create-tarball-bom">
       <attribute name="distdir"/>
       <attribute name="distbase"/>
@@ -301,7 +312,7 @@ under the License.
     </macrodef>
   </target>
 
-  <target name="after-src-dist" depends="after-dist">
+  <target name="after-src-dist" depends="after-dist" if="can.use.cyclonedx">
     <create-tarball-boms
         distdir="${src.dist.dir}"
         distbase="${dist.base}"
@@ -310,7 +321,7 @@ under the License.
         binarysource="Source Distribution"/>
   </target>
 
-  <target name="after-bin-dist" depends="after-dist">
+  <target name="after-bin-dist" depends="after-dist" if="can.use.cyclonedx">
     <create-tarball-boms
         distdir="${bin.dist.dir}"
         distbase="${dist.base}"
@@ -326,7 +337,7 @@ under the License.
     </create-tarball-boms>
   </target>
 
-  <target name="after-fat-bin-dist" depends="after-dist">
+  <target name="after-fat-bin-dist" depends="after-dist" if="can.use.cyclonedx">
     <create-tarball-boms
         distdir="${bin.dist.dir}"
         distbase="${dist.base}"
