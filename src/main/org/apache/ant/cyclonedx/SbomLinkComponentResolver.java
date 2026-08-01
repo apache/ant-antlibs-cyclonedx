@@ -58,7 +58,7 @@ class SbomLinkComponentResolver {
      * @param parent component the link applies to
      * @return Components that are direct dependencies of the parent component
      */
-    Collection<Component> resolve(Component parent) throws IOException {
+    Collection<Component> resolve(Component parent) throws IOException, BuildException {
         Bom bom = readLinkedSbom();
         if (bom.getMetadata() == null) {
             throw new BuildException("referenced SBOM file lacks metadata");
