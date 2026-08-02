@@ -25,8 +25,8 @@ import org.cyclonedx.model.Component.Scope;
 /**
  * CycloneDX component type.
  *
- * <p>Accepts the enum constants like {@code LIBRARY} as well as the
- * lowercase version {@code library}. The values are directly provided
+ * <p>Accepts the enum constants like {@code OPTIONAL} as well as the
+ * lowercase version {@code optional}. The values are directly provided
  * by CycloneDX Core's enum.</p>
  */
 public class ComponentScope extends EnumeratedAttribute {
