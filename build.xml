@@ -60,8 +60,7 @@ under the License.
     <taskdef resource="org/apache/ivy/ant/antlib.xml"
              uri="antlib:org.apache.ivy.ant"
              loaderRef="cdx.loader"/>
-    <ivy:resolve file="ivy.xml" xmlns:ivy="antlib:org.apache.ivy.ant"
-                 conf="default,provided" resolveId="compile-and-runtime"/>
+    <ivy:resolve file="ivy.xml" xmlns:ivy="antlib:org.apache.ivy.ant"/>
   </target>
 
   <target name="define-cyclonedx-components"
@@ -106,7 +105,7 @@ under the License.
           description="Apache CycloneDX Antlib"
           publisher="The Apache Software Foundation"
           supplierIsManufacturer="true">
-        <ivymodule conf="default,provided" resolveId="compile-and-runtime"/>
+        <ivymodule conf="default,provided" externalConf="provided"/>
         <file file="${jarname}"/>
         <supplier refid="ant-pmc"/>
         <license refid="apache-2"/>

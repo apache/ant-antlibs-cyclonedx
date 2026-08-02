@@ -1110,11 +1110,13 @@ public class Component extends DataType {
      */
     public static class IvyModule {
         private String conf;
+        private String optionalConf;
+        private String externalConf;
         private String resolveId;
         private Reference antIvyEngineRef;
 
         /**
-         * Sets the configurations to take into consideration.
+         * Sets the configurations to include in the SBOM.
          *
          * <p>Defaults to the configurations resolved by the last resolve call, or {@code *} if no resolve was
          * explicitly called</p>
@@ -1159,5 +1161,40 @@ public class Component extends DataType {
             return antIvyEngineRef;
         }
 
+        /**
+         * Marks configurations as optional.
+         *
+         * <p>Any module that is included in the SBOM because it is required by on of the configurations given in {@link
+         * #setConf} and only is included because of configurations listed here is marked optional. Including
+         * configurations that are not part of {@link #setConf} doesn't have any effect. {@code *} is no supported. The
+         * default is to have no optional compoments.</p>
+         *
+         * @param comma separated list of the configurations to mark optional.
+         */
+        public void setOptionalConf(String optionalConf) {
+            this.optionalConf = optionalConf;
+        }
+
+        String getOptionalConf() {
+            return optionalConf;
+        }
+
+        /**
+         * Marks configurations as external.
+         *
+         * <p>Any module that is included in the SBOM because it is required by on of the configurations given in {@link
+         * #setConf} and only is included because of configurations listed here is marked external. Including
+         * configurations that are not part of {@link #setConf} doesn't have any effect. {@code *} is no supported. The
+         * default is to have no external compoments.</p>
+         *
+         * @param comma separated list of the configurations to mark external.
+         */
+        public void setExternalConf(String externalConf) {
+            this.externalConf = externalConf;
+        }
+
+        String getExternalConf() {
+            return externalConf;
+        }
     }
 }

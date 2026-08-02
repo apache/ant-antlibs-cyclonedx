@@ -18,14 +18,17 @@
 package org.apache.ant.cyclonedx;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.ivy.Ivy;
 import org.apache.ivy.ant.IvyAntSettings;
@@ -40,6 +43,8 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Reference;
 import org.apache.tools.ant.types.resources.URLResource;
+
+import org.cyclonedx.model.Component.Scope;
 
 /**
  * Resolver that populates a Component from Ivy module data.
@@ -56,6 +61,10 @@ class IvyModuleComponentResolver {
 
     private final Component.IvyModule ivyModule;
     private final Project project;
+    private boolean includeAllConfigurations;
+    private Set<String> includedConfigurations;
+    private Set<String> optionalConfigurations;
+    private Set<String> externalConfigurations;
 
     IvyModuleComponentResolver(Component.IvyModule ivyModule, Project project) {
         this.ivyModule = ivyModule;
@@ -73,16 +82,21 @@ class IvyModuleComponentResolver {
         Ivy ivy = createIvyInstance(component);
         IvySettings settings = ivy.getSettings();
 
+        parseConfigurations(settings);
+
         ResolveReport report = loadResolveReport(settings);
         ModuleDescriptor root = report.getModuleDescriptor();
 
-        Map<ModuleRevisionId, Set<IvyNode>> dependencyTree = populateDependencyTree(settings, report);
+        Set<ModuleRevisionId> optionalModules = new HashSet<>();
+        Set<ModuleRevisionId> externalModules = new HashSet<>();
+        Map<ModuleRevisionId, Set<IvyNode>> dependencyTree =
+            populateDependencyTree(settings, report, optionalModules, externalModules);
         fillFromModuleDescriptor(component, root, dependencyTree);
 
         Collection<ModuleDescriptor> allDependencies = getDependencies(dependencyTree, root);
 
         return allDependencies.stream()
-            .map(d -> toComponent(d, dependencyTree))
+            .map(d -> toComponent(d, dependencyTree, optionalModules, externalModules))
             .collect(Collectors.toList());
     }
 
@@ -96,6 +110,24 @@ class IvyModuleComponentResolver {
             engine = settingRef.getReferencedObject(project);
         }
         return engine.getConfiguredIvyInstance(component);
+    }
+
+    private void parseConfigurations(IvySettings settings) {
+        String conf = ivyModule.getConf();
+        if (conf == null || "*".equals(conf)) {
+            conf = settings.getVariable("ivy.resolved.configurations");
+        }
+        if (conf == null) {
+            throw new BuildException("no conf provided, you need to call to <resolve/> before using this task");
+        }
+        includeAllConfigurations = "*".equals(conf);
+        if (includeAllConfigurations) {
+            includedConfigurations = new HashSet<>();
+        } else {
+            includedConfigurations = confAsSet(conf);
+        }
+        optionalConfigurations = confAsSet(ivyModule.getOptionalConf());
+        externalConfigurations = confAsSet(ivyModule.getExternalConf());
     }
 
     private ResolveReport loadResolveReport(IvySettings settings) {
@@ -132,15 +164,24 @@ class IvyModuleComponentResolver {
         return report;
     }
 
-    private Component toComponent(ModuleDescriptor md, Map<ModuleRevisionId,
-                                  Set<IvyNode>> dependencyTree) {
+    private Component toComponent(ModuleDescriptor md,
+                                  Map<ModuleRevisionId, Set<IvyNode>> dependencyTree,
+                                  Set<ModuleRevisionId> optionalModules,
+                                  Set<ModuleRevisionId> externalModules) {
         Component c = new Component();
         c.setProject(project);
         fillFromModuleDescriptor(c, md, dependencyTree);
+
+        ModuleRevisionId mrid = md.getModuleRevisionId();
+        if (optionalModules.contains(mrid)) {
+            c.setScope(ComponentScope.from(Scope.OPTIONAL));
+        }
+        c.setIsExternal(externalModules.contains(mrid));
         return c;
     }
 
-    private static void fillFromModuleDescriptor(Component component, ModuleDescriptor md,
+    private static void fillFromModuleDescriptor(Component component,
+                                                 ModuleDescriptor md,
                                                  Map<ModuleRevisionId, Set<IvyNode>> dependencyTree) {
         ModuleRevisionId mrid = md.getModuleRevisionId();
         if (component.getName() == null) {
@@ -152,7 +193,7 @@ class IvyModuleComponentResolver {
         if (component.getVersion() == null) {
             component.setVersion(mrid.getRevision());
         }
-        if (component.getDescription() == null && md.getDescription() != null) {
+        if (component.getDescription() == null && md.getDescription() != null && md.getDescription().length() > 0) {
             component.setDescription(md.getDescription());
         }
 
@@ -192,28 +233,33 @@ class IvyModuleComponentResolver {
         }
     }
 
-    private Map<ModuleRevisionId, Set<IvyNode>> populateDependencyTree(IvySettings settings, ResolveReport report) {
-        String conf = ivyModule.getConf();
-        if (conf == null || "*".equals(conf)) {
-            conf = settings.getVariable("ivy.resolved.configurations");
-        }
-        if (conf == null) {
-            throw new BuildException("no conf provided, you need to call to <resolve/> before using this task");
-        }
-
+    private Map<ModuleRevisionId, Set<IvyNode>> populateDependencyTree(IvySettings settings,
+                                                                       ResolveReport report,
+                                                                       Set<ModuleRevisionId> optionalModules,
+                                                                       Set<ModuleRevisionId> externalModules) {
         Map<ModuleRevisionId, Set<IvyNode>> tree = new HashMap<>();
         for (IvyNode dependency : report.getDependencies()) {
-            populateDependencyTree(dependency, tree, conf);
+            populateDependencyTree(dependency, tree, optionalModules, externalModules);
         }
         return tree;
     }
 
-    private void populateDependencyTree(IvyNode node, Map<ModuleRevisionId, Set<IvyNode>> tree, String conf) {
-        if (node.isEvicted(conf)) {
+    private void populateDependencyTree(IvyNode node,
+                                        Map<ModuleRevisionId, Set<IvyNode>> tree,
+                                        Set<ModuleRevisionId> optionalModules,
+                                        Set<ModuleRevisionId> externalModules) {
+        if (!isIncluded(node)) {
             return;
         }
+        ModuleRevisionId mrid = node.getId();
+        if (isOptional(node)) {
+            optionalModules.add(mrid);
+        }
+        if (isExternal(node)) {
+            externalModules.add(mrid);
+        }
 
-        tree.computeIfAbsent(node.getId(), _ignored -> new HashSet<>());
+        tree.computeIfAbsent(mrid, _ignored -> new HashSet<>());
         for (Caller caller : node.getAllCallers()) {
             addDependency(caller.getModuleRevisionId(), node, tree);
         }
@@ -247,6 +293,39 @@ class IvyModuleComponentResolver {
                 }
             }
         }
+    }
+
+    private Set<String> confAsSet(String conf) {
+        if (conf == null) {
+            return Collections.emptySet();
+        }
+        return Arrays.stream(conf.split(","))
+            .map(c -> c.trim())
+            .filter(c -> c.length() > 0)
+            .collect(Collectors.toSet());
+    }
+
+    private boolean isIncluded(IvyNode node) {
+        return includeAllConfigurations
+            || node.getRootModuleConfigurationsSet().stream().anyMatch(c -> includedConfigurations.contains(c));
+    }
+
+    private boolean isOptional(IvyNode node) {
+        return isSpecial(node, optionalConfigurations);
+    }
+
+    private boolean isExternal(IvyNode node) {
+        return isSpecial(node, externalConfigurations);
+    }
+
+    private boolean isSpecial(IvyNode node, Set<String> specialConfigurations) {
+        if (specialConfigurations.isEmpty()) {
+            return false;
+        }
+        Set<String> rootConfs = node.getRootModuleConfigurationsSet();
+        Stream<String> includedBecauseOf = includeAllConfigurations ? rootConfs.stream()
+            : rootConfs.stream().filter(c -> includedConfigurations.contains(c));
+        return includedBecauseOf.allMatch(c -> specialConfigurations.contains(c));
     }
 
     private static String getBomRef(IvyNode n) {
