@@ -1114,6 +1114,7 @@ public class Component extends DataType {
         private String externalConf;
         private String resolveId;
         private Reference antIvyEngineRef;
+        private String pattern;
 
         /**
          * Sets the configurations to include in the SBOM.
@@ -1195,6 +1196,19 @@ public class Component extends DataType {
 
         String getExternalConf() {
             return externalConf;
+        }
+
+        /**
+         * The retrieve pattern usde for retrieving the dependnecy artifacts.
+         *
+         * <p>Defaults to {@code ${ivy.retrieve.pattern}}.</p>
+         */
+        public void setPattern(String pattern) {
+            this.pattern = pattern;
+        }
+
+        String getPattern() {
+            return pattern;
         }
     }
 }

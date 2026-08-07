@@ -17,7 +17,9 @@
  */
 package org.apache.ant.cyclonedx;
 
+import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,16 +34,21 @@ import java.util.stream.Stream;
 
 import org.apache.ivy.Ivy;
 import org.apache.ivy.ant.IvyAntSettings;
+import org.apache.ivy.core.module.descriptor.Artifact;
 import org.apache.ivy.core.module.descriptor.License;
 import org.apache.ivy.core.module.descriptor.ModuleDescriptor;
 import org.apache.ivy.core.module.id.ModuleRevisionId;
+import org.apache.ivy.core.report.ArtifactDownloadReport;
 import org.apache.ivy.core.report.ResolveReport;
 import org.apache.ivy.core.resolve.IvyNode;
 import org.apache.ivy.core.resolve.IvyNodeCallers.Caller;
+import org.apache.ivy.core.retrieve.RetrieveEngine;
+import org.apache.ivy.core.retrieve.RetrieveOptions;
 import org.apache.ivy.core.settings.IvySettings;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Reference;
+import org.apache.tools.ant.types.resources.FileResource;
 import org.apache.tools.ant.types.resources.URLResource;
 
 import org.cyclonedx.model.Component.Scope;
@@ -93,10 +100,11 @@ class IvyModuleComponentResolver {
             populateDependencyTree(settings, report, optionalModules, externalModules);
         fillFromModuleDescriptor(component, root, dependencyTree);
 
+        Map<ModuleRevisionId, File> componentFiles = findDownloadedArtifacts(ivy, settings, root.getModuleRevisionId());
         Collection<ModuleDescriptor> allDependencies = getDependencies(dependencyTree, root);
 
         return allDependencies.stream()
-            .map(d -> toComponent(d, dependencyTree, optionalModules, externalModules))
+            .map(d -> toComponent(d, dependencyTree, optionalModules, externalModules, componentFiles))
             .collect(Collectors.toList());
     }
 
@@ -167,7 +175,8 @@ class IvyModuleComponentResolver {
     private Component toComponent(ModuleDescriptor md,
                                   Map<ModuleRevisionId, Set<IvyNode>> dependencyTree,
                                   Set<ModuleRevisionId> optionalModules,
-                                  Set<ModuleRevisionId> externalModules) {
+                                  Set<ModuleRevisionId> externalModules,
+                                  Map<ModuleRevisionId, File> componentFiles) {
         Component c = new Component();
         c.setProject(project);
         fillFromModuleDescriptor(c, md, dependencyTree);
@@ -177,6 +186,10 @@ class IvyModuleComponentResolver {
             c.setScope(ComponentScope.from(Scope.OPTIONAL));
         }
         c.setIsExternal(externalModules.contains(mrid));
+        File f = componentFiles.get(mrid);
+        if (f != null) {
+            c.add(new FileResource(f));
+        }
         return c;
     }
 
@@ -292,6 +305,52 @@ class IvyModuleComponentResolver {
                     appendDependencies(tree, depId, deps, seen);
                 }
             }
+        }
+    }
+
+    private Map<ModuleRevisionId, File> findDownloadedArtifacts(Ivy ivy,
+                                                                IvySettings settings,
+                                                                ModuleRevisionId mrid) {
+        String pattern = ivyModule.getPattern();
+        if (pattern == null) {
+            pattern = settings.getVariable("ivy.retrieve.pattern");
+        }
+        if (pattern == null) {
+            project.log("no retrieve pattern, won't look for dependency artifact files");
+            return Collections.emptyMap();
+        }
+
+        RetrieveEngine retrieveEngine = ivy.getRetrieveEngine();
+        if (retrieveEngine == null) {
+            project.log("no RetrieveEngine, won't look for dependency artifact files");
+            return Collections.emptyMap();
+        }
+
+        RetrieveOptions opts = new RetrieveOptions();
+        String[] confs = includedConfigurations.isEmpty()
+            ? new String[] { "*" }
+            : includedConfigurations.toArray(new String[includedConfigurations.size()]);
+        opts.setConfs(confs);
+        String resolveId = ivyModule.getResolveId();
+        if (resolveId != null) {
+            opts.setResolveId(resolveId);
+        }
+
+        try {
+            Map<ArtifactDownloadReport, Set<String>> artifacts =
+                retrieveEngine.determineArtifactsToCopy(mrid, pattern, opts);
+            Map<ModuleRevisionId, File> result = new HashMap<>();
+            for (ArtifactDownloadReport ar : artifacts.keySet()) {
+                File f = ar.getLocalFile();
+                if (f != null) {
+                    Artifact a = ar.getArtifact();
+                    result.put(a.getModuleRevisionId(), f);
+                }
+            }
+            return result;
+        } catch (ParseException | IOException e) {
+            project.log(e.getMessage(), Project.MSG_ERR);
+            throw new BuildException("syntax errors in ivy file: " + e, e);
         }
     }
 
