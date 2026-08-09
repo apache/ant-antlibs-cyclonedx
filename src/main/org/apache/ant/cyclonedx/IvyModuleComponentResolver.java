@@ -162,9 +162,9 @@ class IvyModuleComponentResolver {
         String resolveId = ivyModule.getResolveId();
         ResolveReport report;
         if (resolveId != null) {
-            report = project.getReference("ivy.resolved.report."+ org + "." + resolveId);
+            report = project.getReference("ivy.resolved.report." + resolveId);
         } else {
-            report = project.getReference("ivy.resolved.report."+ org + "." + module);
+            report = project.getReference("ivy.resolved.report." + org + "." + module);
         }
         if (report == null) {
             report = project.getReference("ivy.resolved.report");
