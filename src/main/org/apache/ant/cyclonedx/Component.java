@@ -603,6 +603,20 @@ public class Component extends DataType {
     }
 
     /**
+     * Gets whether any description been explicitly configured for this component.
+     *
+     * @return whether any description has been explicitly configured
+     * @since CycloneDX Antlib 0.2
+     */
+    boolean hasDescription() {
+        if (isReference()) {
+            return getRef().hasDescription();
+        }
+        dieOnCircularReference();
+        return description != null;
+    }
+
+    /**
      * Read the linked SBOM (if any) and merge its content with the
      * one already defined for this component.
      *

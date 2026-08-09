@@ -206,7 +206,7 @@ class IvyModuleComponentResolver {
         if (component.getVersion() == null) {
             component.setVersion(mrid.getRevision());
         }
-        if (component.getDescription() == null && md.getDescription() != null && md.getDescription().length() > 0) {
+        if (!component.hasDescription() && md.getDescription() != null && md.getDescription().length() > 0) {
             component.setDescription(md.getDescription());
         }
 
