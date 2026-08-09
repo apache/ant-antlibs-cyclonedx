@@ -76,4 +76,37 @@
     </cdx:externalreferenceset>
   </target>
 
+  <target name="createMaximalComponentData" depends="setUp">
+    <checksum property="ant.file.sha256" file="${ant.file}" algorithm="SHA-256"/>
+    <cdx:componentbom outputdirectory="${output}" format="all"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component
+          name="testname"
+          group="org.example"
+          version="1.0"
+          description="My Test Library"
+          publisher="test publisher"
+          copyright="Copyright 2026 ACME Com"
+          mimeType="text/plain"
+          >
+        <file file="${ant.file}"/>
+        <manufacturer name="Example">
+          <url url="https://example.org/"/>
+        </manufacturer>
+        <supplier name="Example 2">
+          <url url="https://example.com/"/>
+        </supplier>
+        <license name="My License"/>
+        <externalReference type="WEBSITE" url="https://example.com/"/>
+        <component name="other-test" group="org.example" version="1.1"
+                   unknownDependencies="true"/>
+        <author name="Author" email="author@example.org"/>
+        <tag>label</tag>
+        <property name="foo" value="bar"/>
+        <dependency bomRef="some-dependency"/>
+      </component>
+      <additionalComponent name="dep" bomRef="some-dependency"/>
+    </cdx:componentbom>
+  </target>
+
 </project>
