@@ -280,11 +280,11 @@ public class ComponentBomTask extends Task {
 
     private Bom createBom() throws IOException {
         Bom bom = new Bom();
-        Map.Entry<Date, Boolean> currentTimeAndReproducibleBuildsFlag = DateUtils.getNow(getProject());
-        bom.setSerialNumber(getSerialNumber(currentTimeAndReproducibleBuildsFlag.getKey(),
-                                            Boolean.TRUE.equals(currentTimeAndReproducibleBuildsFlag.getValue())));
+        Date currentTime = DateUtils.getBuildDate(getProject());
+        bom.setSerialNumber(getSerialNumber(currentTime,
+                                            System.getenv(DateUtils.ENV_SOURCE_DATE_EPOCH) != null));
 
-        Metadata meta = createMetadata(currentTimeAndReproducibleBuildsFlag.getKey());
+        Metadata meta = createMetadata(currentTime);
 
         Map<String, String> knownComponents = new HashMap<>();
         List<Component> resolvedComponents = new ArrayList<>();

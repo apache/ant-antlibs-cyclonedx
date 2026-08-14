@@ -17,10 +17,8 @@
  */
 package org.apache.ant.cyclonedx;
 
-import java.util.AbstractMap;
 import java.time.Instant;
 import java.util.Date;
-import java.util.Map;
 import java.util.Optional;
 import java.util.TimeZone;
 import java.util.function.Function;
@@ -31,35 +29,36 @@ import org.apache.tools.ant.Project;
 
 final class DateUtils {
 
-    private static final String ENV_SOURCE_DATE_EPOCH = "SOURCE_DATE_EPOCH";
+    static final String ENV_SOURCE_DATE_EPOCH = "SOURCE_DATE_EPOCH";
 
     /**
-     * Consults the magic properties {@link MagicNames.TSTAMP_NOW_ISO} and {@link MagicNames.TSTAMP_NOW} as well as the
-     * environment variable {@code SOURCE_DATE_EPOCH} for predefined values of "now" and falls back to {@code new
-     * Date()} if neiter is set.
+     * Consults {@linkplain #ENV_SOURCE_DATE_EPOCH SOURCE_DATE_EPOCH} environment variable and
+     * the magic properties {@link MagicNames#TSTAMP_NOW_ISO} and {@link MagicNames#TSTAMP_NOW}
+     * for predefined values of the build date and falls back to {@code new Date()} if neither is set.
      *
-     * <p>{@code SOURCE_DATE_EPOCH} takes precendence over {@link MagicNames.TSTAMP_NOW_ISO} which in turn takes precendence over {@link MagicNames.TSTAMP_NOW}.</p>
+     * <p>{@code SOURCE_DATE_EPOCH} takes precedence over {@link MagicNames#TSTAMP_NOW_ISO} which
+     * in turn takes precedence over {@link MagicNames#TSTAMP_NOW}.</p>
      *
      * @param project Project instance to use when looking up the magic properties.
-     * @return a tuple of "now" and a boolean flag that indicates whether {@code SOURCE_DATE_EPOCH} has been set.
+     * @return "build date" as explained above
      * @since CycloneDX Antlib 0.2
      */
     // stolen from Ant 1.10.18
-    static Map.Entry<Date, Boolean> getNow(Project project) {
+    static Date getBuildDate(Project project) {
         final String epoch = System.getenv(ENV_SOURCE_DATE_EPOCH);
         if (epoch != null) {
             // Value of SOURCE_DATE_EPOCH will be an integer, representing seconds.
             try {
                 Date d = new Date(Long.parseLong(epoch) * 1000L);
                 project.log("Honouring environment variable " + ENV_SOURCE_DATE_EPOCH + " which has been set to " + epoch);
-                return new AbstractMap.SimpleImmutableEntry(d, true);
+                return d;
             } catch(NumberFormatException e) {
                 // ignore
                 project.log("Ignoring invalid value '" + epoch + "' for " + ENV_SOURCE_DATE_EPOCH
                             + " environment variable", Project.MSG_DEBUG);
             }
         }
-        return new AbstractMap.SimpleImmutableEntry(getNowAsDate(project), false);
+        return getNowAsDate(project);
     }
 
     private static Date getNowAsDate(Project p) {
