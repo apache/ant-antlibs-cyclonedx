@@ -1120,7 +1120,7 @@ public class Component extends DataType {
      * an Ivy module descriptor. The Ivy file should already be resolved
      * (i.e., ivy:resolve should have been run).</p>
      *
-     * @since CycloneDX Antlib 0.3
+     * @since CycloneDX Antlib 0.2
      */
     public static class IvyModule {
         private String conf;
