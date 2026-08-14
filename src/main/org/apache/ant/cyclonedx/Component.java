@@ -40,6 +40,7 @@ import org.apache.tools.ant.types.resources.Union;
 
 import org.cyclonedx.Version;
 import org.cyclonedx.model.LicenseChoice;
+import org.cyclonedx.model.LicenseItem;
 import org.cyclonedx.model.OrganizationalContact;
 import org.cyclonedx.model.OrganizationalEntity;
 import org.cyclonedx.model.Property;
@@ -736,9 +737,10 @@ public class Component extends DataType {
         if (!licenses.isEmpty()) {
             // would create an empty licenses node otherwise
             LicenseChoice lc = new LicenseChoice();
-            lc.setLicenses(licenses.stream()
-                           .sorted(License.CycloneDxLicenseComparator)
-                           .collect(Collectors.toList()));
+            lc.setItems(licenses.stream()
+                        .sorted(License.CycloneDxLicenseComparator)
+                        .map(LicenseItem::ofLicense)
+                        .collect(Collectors.toList()));
             component.setLicenses(lc);
         }
         for (Component c : nestedComponents.stream()
@@ -811,7 +813,10 @@ public class Component extends DataType {
         if (licenses.isEmpty()) {
             LicenseChoice realLicenses = real.getLicenses();
             if (realLicenses != null) {
-                licenses.addAll(realLicenses.getLicenses());
+                licenses.addAll(realLicenses.getItems().stream()
+                                .filter(i -> LicenseItem.LicenseItemType.LICENSE.equals(i.getType()))
+                                .map(LicenseItem::getLicense)
+                                .collect(Collectors.toList()));
             }
         }
         if (externalReferences.isEmpty()) {

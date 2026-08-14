@@ -55,6 +55,7 @@ import org.cyclonedx.generators.xml.BomXmlGenerator;
 import org.cyclonedx.model.Bom;
 import org.cyclonedx.model.Dependency;
 import org.cyclonedx.model.LicenseChoice;
+import org.cyclonedx.model.LicenseItem;
 import org.cyclonedx.model.LifecycleChoice;
 import org.cyclonedx.model.Lifecycles;
 import org.cyclonedx.model.Metadata;
@@ -404,9 +405,10 @@ public class ComponentBomTask extends Task {
         }
         if (!licenses.isEmpty()) {
             LicenseChoice lc = new LicenseChoice();
-            lc.setLicenses(licenses.stream()
-                           .sorted(License.CycloneDxLicenseComparator)
-                           .collect(Collectors.toList()));
+            lc.setItems(licenses.stream()
+                        .sorted(License.CycloneDxLicenseComparator)
+                        .map(LicenseItem::ofLicense)
+                        .collect(Collectors.toList()));
             meta.setLicenses(lc);
         }
 
