@@ -388,7 +388,7 @@ public class ComponentBomTask extends Task {
         ToolInformation antlibToolInformation = ToolData.getToolInformation(specVersion.getVersion());
         if (!toolComponents.isEmpty()) {
             List<org.cyclonedx.model.Component> tools =
-                new ArrayList(antlibToolInformation.getComponents());
+                new ArrayList<>(antlibToolInformation.getComponents());
             for (Component c : toolComponents) {
                 tools.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
             }
@@ -560,7 +560,7 @@ public class ComponentBomTask extends Task {
         }
         Matcher m = MAVEN_PURL_PATTERN.matcher(bomRef);
         if (m.matches()) {
-            return new AbstractMap.SimpleImmutableEntry(m.group(1), m.group(2));
+            return new AbstractMap.SimpleImmutableEntry<>(m.group(1), m.group(2));
         }
         return null;
     }
