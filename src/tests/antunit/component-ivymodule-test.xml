@@ -252,7 +252,7 @@
         value="https://example.org/"/>
   </target>
 
-  <target name="XtestComponentDataFromDependencyCanBeOverwrittenOrMerged">
+  <target name="testComponentDataFromDependencyIsReplacedByExplicitComponent">
     <ivy:resolve file="resources/foo-bar.ivy.xml"
                  xmlns:ivy="antlib:org.apache.ivy.ant"/>
     <cdx:componentbom outputdirectory="${output}" format="xml"
@@ -309,13 +309,13 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.dependencies.dependency(ref)"
         value="pkg:maven/foo/bar@1.0?type=jar,pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar,pkg:maven/org.apache.ant/ant@1.10.17?type=jar"/>
+    <!-- additionalComponent hasn't got any dependencies -->
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.dependencies.dependency.dependency(ref)"
-        value="pkg:maven/org.apache.ant/ant@1.10.17?type=jar,pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar"/>
-    <!-- SHA1 of ant.jar, see
-         https://repo1.maven.org/maven2/org/apache/ant/ant/1.10.17/ant-1.10.17.jar.sha1 -->
-    <au:assertResourceContains
+        value="pkg:maven/org.apache.ant/ant@1.10.17?type=jar"/>
+    <!-- additionalComponent hasn't got any artifact resource -->
+    <au:assertResourceDoesntContain
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.xml"
         value='&lt;hash alg="SHA-1"&gt;fa8a13422ac460563171d10a37c3f28340a953f6&lt;/hash&gt;'/>

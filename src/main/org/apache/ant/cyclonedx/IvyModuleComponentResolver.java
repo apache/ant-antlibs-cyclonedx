@@ -146,7 +146,7 @@ class IvyModuleComponentResolver {
         }
 
         String module = settings.getVariable("ivy.module");
-        if (organisation == null) {
+        if (module == null) {
             throw new BuildException("no module provided, you need to call to <resolve/> before using this task");
         }
 

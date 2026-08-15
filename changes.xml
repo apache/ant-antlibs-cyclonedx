@@ -98,6 +98,13 @@
       The default SBOM version now is 1.7 and the isExternal attribute
       of component now also sets the attribute in the generated SBOM.
     </action>
+    <action type="add">
+      The component type now supports a new nested element "ivymodule"
+      which uses Apache Ivy to fill in the details of a component and
+      its dependencies.
+      This adds Ivy as a new dependency which is only required if you
+      want to use this feature.
+    </action>
   </release>
 
   <release version="0.1" date="2026-06-03" description="initial release">

@@ -204,6 +204,10 @@
     <p>The <a hre="https://github.com/CycloneDX/cyclonedx-core-java">CycloneDX
         Core (Java) library</a> is used to read the linked SBOM.</p>
 
+    <p>The <code>sbomLink</code> and <code>ivyModule</code> elements
+      can not both be used as nested elements of the same
+      component.</p>
+
     <h5>Attributes</h5>
 
     <table class="attr">
@@ -218,6 +222,98 @@
           resolved compoment based on the nested resource's URI.<br>
           <em>since CycloneDX Antlib 0.2</em></td>
         <td>No, defaults to <code>true</code></td>
+      </tr>
+    </table>
+
+    <h4 id="ivyModule">ivyModule</h4>
+
+    <p><em>since CycloneDX Antlib 0.2</em>. The optional Ivy
+      dependency is required when using an <code>ivyModule</code>
+      element.</p>
+
+    <p>Using a nesed <code>ivyModule</code> you can use Apache Ivy to
+      fill in fields from an <code>ivy.xml</code> file and have Ivy
+      provide all (transitive) dependencies of this module to the
+      SBOM.</p>
+
+    <p>The <code>ivyModule</code> element is similar to
+      a <a href="https://ant.apache.org/ivy/history/2.6.0/use/postresolvetask.html">post
+      resolve task</a> and expects the Ivy module used for the current
+      component to be "resolved" already.</p>
+
+    <p>When present the Ivy module wll be used and</p>
+
+    <ul>
+      <li><code>name</code>, <code>group</code>, <code>version</code>,
+        <code>decription</code> are directly taken from the Ivy module
+        unless the compoment already specifies it explicitly.</li>
+      <li><code>license</code> and
+        "website"-type <code>externalReference</code> are taken from
+        the module's license and homePage if and only if there is no
+        corresponding element in this component element.</li>
+      <li>Dependencies of the given module that are included because
+        of the configurations given by the <code>conf</code> attribute
+        are added to the SBOM by the compomentbom task with data taken
+        from their module descriptors. This includes transitive
+        dependencies. The components will have hashes if an Ivy
+        retrieve operation has retrieved them and local files are
+        available prior to running the componentbom task.<br/>
+        Components specified explicitly in the SBOM take precedence
+        over those found by parsing the module. If there already
+        exists a component as part of the SBOM with the same name and
+        group as one read from the module, the dependencies will be
+        ignored. Here the version is ignored, it is assumed the
+        component explicitly specified is the result of a process that
+        resolved conflicts in dependency versions and is unknown to
+        Ivy. Currently this only applies to Components
+        with <code>pkg:maven/</code> Package-URLs as bom-ref.
+      </li>
+    </ul>
+
+    <p>Not all parts of an SBOM component you may want to provide are
+      part of an Ivy module definition and you may want to provide
+      them explicitly, supplier and manufacturer information, more
+      external references or the publisher for example.</p>
+
+    <p>The <code>sbomLink</code> and <code>ivyModule</code> elements
+      can not both be used as nested elements of the same
+      component.</p>
+
+    <h5>Attributes</h5>
+
+    <table class="attr">
+      <tr>
+        <th scope="col">Attribute</th>
+        <th scope="col">Description</th>
+        <th scope="col">Required</th>
+      </tr>
+      <tr>
+        <td>conf</td>
+        <td>comma-separated list of configurations that will be
+          consulted for dependencies of this component.</td>
+        <td>No, defaults to <code>*</code></td>
+      </tr>
+      <tr>
+        <td>optionalconf</td>
+        <td>comma-separated list of configurations. Any dependency
+          that is only included because of configurations specified in
+          this list will be marked with <code>scope</code>
+          optional.</td>
+        <td>No, by default no dependency is marked as optional.</td>
+      </tr>
+      <tr>
+        <td>externalconf</td>
+        <td>comma-separated list of configurations. Any dependency
+          that is only included because of configurations specified in
+          this list will have their <code>isExternal</code> flag set
+          to true.</td>
+        <td>No, by default no dependency is marked as external.</td>
+      </tr>
+      <tr>
+        <td>resolveId</td>
+        <td>The id which was used for a previous resolve.</td>
+        <td>No, defaults to <code>[org]-[module]</code> of the last
+          <code>ivy:resolve</code> task.</td>
       </tr>
     </table>
 

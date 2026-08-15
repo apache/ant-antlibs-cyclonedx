@@ -1213,7 +1213,7 @@ public class Component extends DataType {
         }
 
         /**
-         * The retrieve pattern usde for retrieving the dependnecy artifacts.
+         * The retrieve pattern used for retrieving the dependency artifacts.
          *
          * <p>Defaults to {@code ${ivy.retrieve.pattern}}.</p>
          */
