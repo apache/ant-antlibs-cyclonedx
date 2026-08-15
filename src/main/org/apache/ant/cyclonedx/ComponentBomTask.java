@@ -282,8 +282,6 @@ public class ComponentBomTask extends Task {
     private Bom createBom() throws IOException {
         Bom bom = new Bom();
         Date currentTime = DateUtils.getBuildDate(getProject());
-        bom.setSerialNumber(getSerialNumber(currentTime,
-                                            System.getenv(DateUtils.ENV_SOURCE_DATE_EPOCH) != null));
 
         Metadata meta = createMetadata(currentTime);
 
@@ -301,6 +299,8 @@ public class ComponentBomTask extends Task {
                 }
             });
         meta.setComponent(component.toMainCycloneDxComponent(specVersion.getVersion()));
+        // reproducible serial number uses metadata component's coordinates which may need to be resolved
+        bom.setSerialNumber(getSerialNumber(currentTime));
 
         if (useComponentSupplier) {
             OrganizationalEntity componentSupplier = meta.getComponent().getSupplier();
@@ -350,10 +350,11 @@ public class ComponentBomTask extends Task {
         return bom;
     }
 
-    private String getSerialNumber(Date timestamp, boolean reproducibleBuild) {
+    private String getSerialNumber(Date timestamp) {
         if (serialNumber != null) {
             return serialNumber;
         } else {
+            boolean reproducibleBuild = System.getenv(DateUtils.ENV_SOURCE_DATE_EPOCH) != null;
             UUID uuid = reproducibleBuild ? getReproducibleUuid(timestamp) : UUID.randomUUID();
             return "urn:uuid:" + uuid;
         }
