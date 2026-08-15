@@ -177,17 +177,20 @@ class IvyModuleComponentResolver {
                                   Set<ModuleRevisionId> optionalModules,
                                   Set<ModuleRevisionId> externalModules,
                                   Map<ModuleRevisionId, File> componentFiles) {
-        Component c = new Component();
+        ModuleRevisionId mrid = md.getModuleRevisionId();
+        Component template = ivyModule.getTemplateComponents().get(mrid.getOrganisation() + ":" + mrid.getName());
+        Component c = template == null ? new Component() : new Component(template);
         c.setProject(project);
         fillFromModuleDescriptor(c, md, dependencyTree);
 
-        ModuleRevisionId mrid = md.getModuleRevisionId();
         if (optionalModules.contains(mrid)) {
             c.setScope(ComponentScope.from(Scope.OPTIONAL));
         }
-        c.setIsExternal(externalModules.contains(mrid));
+        if (!c.getIsExternal()) {
+            c.setIsExternal(externalModules.contains(mrid));
+        }
         File f = componentFiles.get(mrid);
-        if (f != null) {
+        if (f != null && c.getVersion().equals(mrid.getRevision())) {
             c.add(new FileResource(f));
         }
         return c;

@@ -25,9 +25,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.Stack;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.apache.tools.ant.BuildException;
@@ -122,6 +124,48 @@ public class Component extends DataType {
     private static final Comparator<Property> CycloneDxPropertyComparator =
         Comparator.comparing(Property::getName)
         .thenComparing(Property::getValue, Comparator.nullsLast(Comparator.naturalOrder()));
+
+    /**
+     * Default constructor.
+     */
+    public Component() {
+    }
+
+    /**
+     * Copy constructor creating a shallow copy.
+     *
+     * @param other component to copy data from
+     * @since CycloneDX Antlib 0.2
+     */
+    protected Component(Component other) {
+        this.resource = other.resource;
+        this.type = other.type;
+        this.name = other.name;
+        this.group = other.group;
+        this.publisher = other.publisher;
+        this.version = other.version;
+        this.description = other.description;
+        this.copyright = other.copyright;
+        this.manufacturer = other.manufacturer;
+        this.supplier = other.supplier;
+        this.supplierIsManufacturer = other.supplierIsManufacturer;
+        this.licenses = new ArrayList<>(other.licenses);
+        this.purl = other.purl;
+        this.bomRef = other.bomRef;
+        this.externalReferences = new ArrayList<>(other.externalReferences);
+        this.scope = other.scope;
+        this.isExternal = other.isExternal;
+        this.nestedComponents = new ArrayList<>(other.nestedComponents);
+        this.dependencies = new ArrayList<>(other.dependencies);
+        this.unknownDependencies = other.unknownDependencies;
+        this.resolved = other.resolved;
+        this.authors = new ArrayList<>(other.authors);
+        this.tags = new HashSet<>(other.tags);
+        this.properties = new ArrayList<>(other.properties);
+        this.mimeType = other.mimeType;
+        this.sbomLink = other.sbomLink;
+        this.ivyModule = other.ivyModule;
+    }
 
     /**
      * Sets the resource the component is about.
@@ -586,6 +630,20 @@ public class Component extends DataType {
         }
         dieOnCircularReference();
         return externalReferences;
+    }
+
+    /**
+     * Gets whether the isExternal flag is true.
+     *
+     * @return whether the isExternal flag is true
+     * @since CycloneDX Antlib 0.2
+     */
+    boolean getIsExternal() {
+        if (isReference()) {
+            return getRef().getIsExternal();
+        }
+        dieOnCircularReference();
+        return isExternal;
     }
 
     /**
@@ -1129,6 +1187,7 @@ public class Component extends DataType {
         private String resolveId;
         private Reference antIvyEngineRef;
         private String pattern;
+        private List<Component> templateComponents = new ArrayList<>();
 
         /**
          * Sets the configurations to include in the SBOM.
@@ -1223,6 +1282,32 @@ public class Component extends DataType {
 
         String getPattern() {
             return pattern;
+        }
+
+        /**
+         * Adds a nested template component.
+         *
+         * @param c nested template component
+         */
+        public void addTemplateComponent(Component c) {
+            templateComponents.add(c);
+        }
+
+        Map<String, Component> getTemplateComponents() {
+            return templateComponents.stream()
+                .collect(Collectors.toMap(IvyModule::getTemplateComponentKey, Function.identity()));
+        }
+
+        static String getTemplateComponentKey(Component c) {
+            String group = c.getGroup();
+            if (group == null) {
+                group = "";
+            }
+            String name = c.getName();
+            if (name == null) {
+                name = "";
+            }
+            return group + ":" + name;
         }
     }
 }

@@ -139,7 +139,10 @@ under the License.
           description="Apache CycloneDX Antlib"
           publisher="The Apache Software Foundation"
           supplierIsManufacturer="true">
-        <ivymodule conf="default,provided" externalConf="provided"/>
+        <ivymodule conf="default,provided" externalConf="provided">
+          <templateComponent refid="ant"/>
+          <templateComponent refid="ant-launcher"/>
+        </ivymodule>
         <file file="${jarname}"/>
         <supplier refid="ant-pmc"/>
         <license refid="apache-2"/>
@@ -147,8 +150,6 @@ under the License.
         <externalReferenceSet refid="antlibs-common-ext-refs"/>
         <externalReferenceSet refid="antlib-ext-refs"/>
       </component>
-      <additionalComponent refid="ant"/>
-      <additionalComponent refid="ant-launcher"/>
       <license refid="apache-2"/>
     </cdx:componentbom>
   </target>

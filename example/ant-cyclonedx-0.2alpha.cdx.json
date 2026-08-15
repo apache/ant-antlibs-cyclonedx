@@ -1,10 +1,10 @@
 {
   "bomFormat" : "CycloneDX",
   "specVersion" : "1.7",
-  "serialNumber" : "urn:uuid:46b215d3-5bd4-4619-92bf-4dd0883c885d",
+  "serialNumber" : "urn:uuid:068b13c8-01a0-1000-9297-150796a001fc",
   "version" : 1,
   "metadata" : {
-    "timestamp" : "2026-08-07T14:14:06Z",
+    "timestamp" : "2026-08-15T17:49:33Z",
     "lifecycles" : [
       {
         "phase" : "build"
@@ -34,35 +34,35 @@
           "hashes" : [
             {
               "alg" : "MD5",
-              "content" : "d325f6c7629142693fd8b9012f4ad22c"
+              "content" : "93377dd0fcea7a2d943bde92bdb2056d"
             },
             {
               "alg" : "SHA-1",
-              "content" : "e96723969081ffd5efbaa87c4378b7545f4fabe2"
+              "content" : "25394ae9ad3888e7e3634099cce4d75b2f2e6862"
             },
             {
               "alg" : "SHA-256",
-              "content" : "209f8ba54603780c2f0180494961c33439381dc0e35d3dbf85d55bd4dba93c81"
+              "content" : "ddab2702eeda163f45f2171c4ede688e2f009bb3c69491f7a60b7d95d425eaa2"
             },
             {
               "alg" : "SHA-512",
-              "content" : "5e40d417a70385d1bf492e24bd0e82d3bf99402a404e5a71634c1a5e0ba4d19ec0a4ff21b87e31ce42a0960af51b091dcfd44b2b9e2ceffb07e7f91a3403bd96"
+              "content" : "4fe694b6825907a148eff248d8610fb11ce6458104c7d5b734d9143a01df86fea019209ed8197850bdb84f1244365e05f689ace02355473008d1fc8866f8547f"
             },
             {
               "alg" : "SHA3-256",
-              "content" : "ff1bdad8b6fda462fd3a54110c7f01007d4bd99a99404a20abea045a2f21f6bd"
+              "content" : "daa143aa46e4bc6a5116227deb0236b99aaa3d15e213db19b83e358aa9aca434"
             },
             {
               "alg" : "SHA3-512",
-              "content" : "69067b921a6e07932e247dcddbf7f67b5f8e9aee4e9f603b6fa466f57da3b411e2639e932ef940a66666e0fde7ba16f2b84d7348ebacced9b573d5be274455ff"
+              "content" : "2656e4e335c95aaf2a531182d47f911218cb4f372cd676ea43437292e0a6a6f5c9a4581126e3ef2e1f2d2cb7a5ac928a8db7bc27fff8bcfd3a7c0b709d97d906"
             },
             {
               "alg" : "SHA-384",
-              "content" : "ea6d1749e734eb73788e2c427a3cc98af197fc141228d79fda7e3e440a0bb9d3724cc8f3e318368e0ec922b187cb7e21"
+              "content" : "f4d9f57cd6a5f17ae04201b6fa123572c1fa4552e3a61633bec3f598f1f3cf52eaad4d23560262af6a6c63e9d701801d"
             },
             {
               "alg" : "SHA3-384",
-              "content" : "8664a9d92721b1c7104cd4a6a9e4f785ffcd225bfabb6a911a3f4780e749acfc7afbc5ae3b873709e057e0e9dfae7b07"
+              "content" : "b3ba3c9d1206fa7cf3d1a90f12f145ce742ace71446cce5dc4ab3e98480933b55d8fc7c9d00cf19bc2d8faf88c3607a1"
             }
           ],
           "licenses" : [
@@ -146,35 +146,35 @@
       "hashes" : [
         {
           "alg" : "MD5",
-          "content" : "d325f6c7629142693fd8b9012f4ad22c"
+          "content" : "93377dd0fcea7a2d943bde92bdb2056d"
         },
         {
           "alg" : "SHA-1",
-          "content" : "e96723969081ffd5efbaa87c4378b7545f4fabe2"
+          "content" : "25394ae9ad3888e7e3634099cce4d75b2f2e6862"
         },
         {
           "alg" : "SHA-256",
-          "content" : "209f8ba54603780c2f0180494961c33439381dc0e35d3dbf85d55bd4dba93c81"
+          "content" : "ddab2702eeda163f45f2171c4ede688e2f009bb3c69491f7a60b7d95d425eaa2"
         },
         {
           "alg" : "SHA-512",
-          "content" : "5e40d417a70385d1bf492e24bd0e82d3bf99402a404e5a71634c1a5e0ba4d19ec0a4ff21b87e31ce42a0960af51b091dcfd44b2b9e2ceffb07e7f91a3403bd96"
+          "content" : "4fe694b6825907a148eff248d8610fb11ce6458104c7d5b734d9143a01df86fea019209ed8197850bdb84f1244365e05f689ace02355473008d1fc8866f8547f"
         },
         {
           "alg" : "SHA3-256",
-          "content" : "ff1bdad8b6fda462fd3a54110c7f01007d4bd99a99404a20abea045a2f21f6bd"
+          "content" : "daa143aa46e4bc6a5116227deb0236b99aaa3d15e213db19b83e358aa9aca434"
         },
         {
           "alg" : "SHA3-512",
-          "content" : "69067b921a6e07932e247dcddbf7f67b5f8e9aee4e9f603b6fa466f57da3b411e2639e932ef940a66666e0fde7ba16f2b84d7348ebacced9b573d5be274455ff"
+          "content" : "2656e4e335c95aaf2a531182d47f911218cb4f372cd676ea43437292e0a6a6f5c9a4581126e3ef2e1f2d2cb7a5ac928a8db7bc27fff8bcfd3a7c0b709d97d906"
         },
         {
           "alg" : "SHA-384",
-          "content" : "ea6d1749e734eb73788e2c427a3cc98af197fc141228d79fda7e3e440a0bb9d3724cc8f3e318368e0ec922b187cb7e21"
+          "content" : "f4d9f57cd6a5f17ae04201b6fa123572c1fa4552e3a61633bec3f598f1f3cf52eaad4d23560262af6a6c63e9d701801d"
         },
         {
           "alg" : "SHA3-384",
-          "content" : "8664a9d92721b1c7104cd4a6a9e4f785ffcd225bfabb6a911a3f4780e749acfc7afbc5ae3b873709e057e0e9dfae7b07"
+          "content" : "b3ba3c9d1206fa7cf3d1a90f12f145ce742ace71446cce5dc4ab3e98480933b55d8fc7c9d00cf19bc2d8faf88c3607a1"
         }
       ],
       "licenses" : [
@@ -818,44 +818,44 @@
     },
     {
       "type" : "library",
-      "bom-ref" : "pkg:maven/commons-codec/commons-codec@1.22.0?type=jar",
+      "bom-ref" : "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
       "publisher" : "The Apache Software Foundation",
       "group" : "commons-codec",
       "name" : "commons-codec",
-      "version" : "1.22.0",
+      "version" : "1.22.1",
       "description" : "The Apache Commons Codec component contains encoders and decoders for formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these widely used encoders and decoders, the codec package also maintains a collection of phonetic encoding utilities.",
       "hashes" : [
         {
           "alg" : "MD5",
-          "content" : "f14b9146cd553f4e8c5c3f5c9e2be611"
+          "content" : "7bfd10447817907ffd7f14fbc6493940"
         },
         {
           "alg" : "SHA-1",
-          "content" : "6b3eb4beb7058c2a638f5f17bcb388649fd339dd"
+          "content" : "da09bcdb330deef7cfee70f30c6889fda70d5ebf"
         },
         {
           "alg" : "SHA-256",
-          "content" : "d164fe79f262c32d9b18a0b5b2d317d1c27653d5e98fd2b998c24bf901c72ce4"
+          "content" : "78a5d732fbd715e2d10bd7150d2f8030bae57267f8aacc5c88f642cb6c2e5d3f"
         },
         {
           "alg" : "SHA-512",
-          "content" : "5b67a5abf63948323101920fec10140d4370b841cc3c522a2b5e9864782640222c3094442861015494ddbc30bb7ef275722a54455c7c8333084842a26d8755da"
+          "content" : "1e2023b6e7715339a309226c94635db77fd3d8d7f6fc1048e0138dc4b4ff27540e1e1ff2238a41b94029a9497b2935af6e8b05eeeed69b76600c2f4eed3e36ed"
         },
         {
           "alg" : "SHA3-256",
-          "content" : "566a61c3b928e33c5332e4fbb53283411c9f3d88810e84692a72664e711c8c9e"
+          "content" : "70d7c377536c088c88d043b4f3297cb58ea9bd7d8374514f16060ca62977253e"
         },
         {
           "alg" : "SHA3-512",
-          "content" : "d300b773cd81403333626ce99a80a79febcf7e3bc4465c1bbd3e65fc8ad5fe04c07e0a4ab8ca51a61d515c7a095d786c78e8a8b657f7696703a6cc751e9d2421"
+          "content" : "7885692a52215d8ea620afc25b22719c835d9079265592a9b790e4c13b1cd5cbb023eb9cf39a304e463cf280dd7931ca966528c9bb14b58c400018699c058ec7"
         },
         {
           "alg" : "SHA-384",
-          "content" : "1cbfa58c62c4c3fad79f3a808e5d7fca87f4a96d2762f11243011ecf3ea0596638d00163b7fee20bab018a924cafa09f"
+          "content" : "29f01c913caa51660ff4a8623255f819961ee63b20b125a1c3e5f061b4a75864c1a349420f6d314009b4cf12524aecfb"
         },
         {
           "alg" : "SHA3-384",
-          "content" : "1c0b65c0a1ab43e76dab19e4e0a622840dfcd603924f27bbd09c2261955047f1dd33e5c09a372badaa020f13a0b0124a"
+          "content" : "de7a0317378663055c9a2f80d30bc543549924e994a27c683ee1ff405587395d00b13d277dd39ceb09fa64a9f110d09e"
         }
       ],
       "licenses" : [
@@ -866,7 +866,7 @@
           }
         }
       ],
-      "purl" : "pkg:maven/commons-codec/commons-codec@1.22.0?type=jar",
+      "purl" : "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
       "externalReferences" : [
         {
           "type" : "vcs",
@@ -882,7 +882,7 @@
         },
         {
           "type" : "bom",
-          "url" : "https://repo1.maven.org/maven2/commons-codec/commons-codec/1.22.0/commons-codec-1.22.0-cyclonedx.json"
+          "url" : "https://repo1.maven.org/maven2/commons-codec/commons-codec/1.22.1/commons-codec-1.22.1-cyclonedx.json"
         },
         {
           "type" : "mailing-list",
@@ -1549,44 +1549,44 @@
     },
     {
       "type" : "library",
-      "bom-ref" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@13.0.0?type=jar",
+      "bom-ref" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@13.1.0?type=jar",
       "publisher" : "OWASP Foundation",
       "group" : "org.cyclonedx",
       "name" : "cyclonedx-core-java",
-      "version" : "13.0.0",
+      "version" : "13.1.0",
       "description" : "The CycloneDX core module provides a model representation of the BOM along with utilities to assist in creating, parsing, and validating BOMs.",
       "hashes" : [
         {
           "alg" : "MD5",
-          "content" : "1fe4b7cc2f01f52aef5544d73be07533"
+          "content" : "2a1f9504d12d4dda17ee5c99b9403600"
         },
         {
           "alg" : "SHA-1",
-          "content" : "d29aec05c781badba0ad5a589c37a1ff8b7fb583"
+          "content" : "7e386c72d52b61db961ca3e0dadb55015e8bb296"
         },
         {
           "alg" : "SHA-256",
-          "content" : "8c2bc1cccb4e2c6c0bcc2b0bacc4da0a110aad2a05791b750caf281e7769ce82"
+          "content" : "bae52da4a65d5e085c935a1c31f31d511ab499f4bf6526b568c12fb724f26363"
         },
         {
           "alg" : "SHA-512",
-          "content" : "92cd61fe5a21044d60fdf87e5a14c1655065601370e7c739db5ac5f803bd5282061c86ab6f38146d690309f8058cf09381806ad09e899a85dcf417e1d3b366c5"
+          "content" : "30271282daab9f49f3fd9cfbf38bb6c108f4a3c3888256dcb7e830b2d6b7459c561e261ca4555a20da24b27d7780886fcd3243b6f260bf04f684ba862db43521"
         },
         {
           "alg" : "SHA3-256",
-          "content" : "4e2b3a5800ef8cdf7b50d926d4c18261ad54074173b1bf02079ea83ab1d1b3a2"
+          "content" : "f731996247ea9149e4918473f894af24901ede63d6565d2be446c827994aedd3"
         },
         {
           "alg" : "SHA3-512",
-          "content" : "b63d4b54f84ec0071bd7263fbc190017fa28f15db7bee318fea9588d6b4063a408a7177410cfaa0d0fa9dbb34a5e0fb1ef5d63195f66014c64495cf5f46590db"
+          "content" : "f287f67e2510ec886385665f2790ce4c675c2a7ea175991660167825fd6e9fa3c3d867e74865081be91f0690bba215e5d010888e43c468e462dddba7dea9d108"
         },
         {
           "alg" : "SHA-384",
-          "content" : "81d28eeb136fd1751a4ba4ebbe20025e528b1c329804c164e540fd9ddd7da09c5752428a18120fdbccfd9d6f67750292"
+          "content" : "b9a088c711e4f3d99f07f4c4fada8fe40cff9fcfc83bd447f3eecde38f002d1d47dac98002645e3c43169ad3a333b1e0"
         },
         {
           "alg" : "SHA3-384",
-          "content" : "dce70366596f8075dc6530a3e038b3bb43427b6ff6928483901309ddefd3840927da18e9f65176201187e4c420cbed7e"
+          "content" : "5f45b1ecfda645f548e9e4a0fcc906f17178745835e640d127fae37cf981da7b26ab60c540d6ad99bab56a946b9b2f9e"
         }
       ],
       "licenses" : [
@@ -1597,7 +1597,7 @@
           }
         }
       ],
-      "purl" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@13.0.0?type=jar",
+      "purl" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@13.1.0?type=jar",
       "externalReferences" : [
         {
           "type" : "vcs",
@@ -1671,7 +1671,7 @@
       "dependsOn" : [ ]
     },
     {
-      "ref" : "pkg:maven/commons-codec/commons-codec@1.22.0?type=jar",
+      "ref" : "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
       "dependsOn" : [ ]
     },
     {
@@ -1683,7 +1683,7 @@
       "dependsOn" : [
         "pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar",
         "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
-        "pkg:maven/org.cyclonedx/cyclonedx-core-java@13.0.0?type=jar"
+        "pkg:maven/org.cyclonedx/cyclonedx-core-java@13.1.0?type=jar"
       ]
     },
     {
@@ -1699,7 +1699,7 @@
     {
       "ref" : "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
       "dependsOn" : [
-        "pkg:maven/commons-codec/commons-codec@1.22.0?type=jar"
+        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar"
       ]
     },
     {
@@ -1728,12 +1728,12 @@
       "dependsOn" : [ ]
     },
     {
-      "ref" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@13.0.0?type=jar",
+      "ref" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@13.1.0?type=jar",
       "dependsOn" : [
         "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-xml@2.22.1?type=jar",
         "pkg:maven/com.github.package-url/packageurl-java@1.5.0?type=jar",
         "pkg:maven/com.networknt/json-schema-validator@2.0.4?type=jar",
-        "pkg:maven/commons-codec/commons-codec@1.22.0?type=jar",
+        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
         "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
         "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
         "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar"

@@ -272,8 +272,15 @@
 
     <p>Not all parts of an SBOM component you may want to provide are
       part of an Ivy module definition and you may want to provide
-      them explicitly, supplier and manufacturer information, more
-      external references or the publisher for example.</p>
+      them explicitly. Supplier and manufacturer information, more
+      external references or the publisher are missing for
+      example. The <code>type</code> defaults to "library" and
+      the <code>scope</code> to "required". For the component that
+      contains the <code>ivyModule</code> child element itself, you
+      can use the "normal" attributes and nested element of the
+      component to augment data - for the dependencies identified by
+      the Ivy module you can provide extra data
+      as <code>templateComponent</code> child elements.</p>
 
     <p>The <code>sbomLink</code> and <code>ivyModule</code> elements
       can not both be used as nested elements of the same
@@ -327,6 +334,119 @@
         <td>No, defaults to <code>ivy.retrieve.pattern</code>.</td>
       </tr>
     </table>
+
+    <h5>Nested elements</h5>
+
+    <h6>templateComponent</h6>
+
+    <p>A nested <code>templateComponent</code> element supports all
+      attributes and nested elements of a component, but
+      neither <code>sbomLink</code> nor <code>ivyModule</code> have
+      any effect.</p>
+
+    <p>A <code>templateComponent</code> can be used to enrich a
+      component detected by Ivy as a dependency of the current
+      component. For example by adding more external references or a
+      manufacturer. Template components take precedence over a data
+      detected by Ivy, they are matched to a detected dependency by
+      name and group only, the version is ignored. If
+      the <code>templateComponent</code> has a <code>version</code>
+      attribute, no hashes will be calculated from the resolved
+      file.</p>
+
+    <p>The combination
+      of <code>ivyModule</code>, <code>templateComponent</code> and
+      an <code>additionalComponent</code> specified in
+      a <code>compomentbom</code> may be a bit
+      confusing. An <code>additionalComponent</code> is always added
+      to the generated SBOM and any <code>ivyModule</code> dependency
+      or <code>templateComponent</code> that matches the name and
+      group of an <code>additionalComponent</code> is ignored. Apart
+      from that a <code>templateComponent</code> will only show up in
+      the SBOM if a matching dependency is detected
+      by <code>ivyModule</code>. <code>templateComponent</code> and
+      Ivy module dependencies are merged
+      while <code>additionalComponent</code>s completely replace Ivy
+      module dependencies.</p>
+
+    <p>As an example, assume the <code>ivyModule</code> resolves a
+      module with group "org.example", name "module" and version "1"
+      which has a dependency on a component with group "com.example",
+      name "dependency", version "2" and description "my
+      description".</p>
+
+    <p>The following snippet adds two components to the SBOM with
+      bom-refs "pkg:maven/org.example/module@1?type=jar" and
+      "pkg:maven/com.example/dependency@2?type=jar" where the later has a
+      description of "my description" and hashes if the dependency has
+      been retrieved:</p>
+
+    <pre>
+      &lt;cdx:componentbom
+        &lt;cdx:component>
+          &lt;ivyModule/>
+        &lt;/cdx:component>
+      &lt;/cdx:componentbom>
+    </pre>
+
+    <p>The following snippet adds two components to the SBOM with
+      bom-refs "pkg:maven/org.example/module@1?type=jar" and
+      "pkg:maven/com.example/dependency@3?type=jar" where the later has
+      a no description at all and no hashes either.</p>
+
+    <pre>
+      &lt;cdx:componentbom
+        &lt;cdx:component>
+          &lt;ivyModule/>
+        &lt;/cdx:component>
+        &lt;cdx:additionalComponent
+            name="dependency"
+            group="com.example"
+            version="3"
+          />
+      &lt;/cdx:componentbom>
+    </pre>
+
+    <p>The following snippet adds two components to the SBOM with
+      bom-refs "pkg:maven/org.example/module@1?type=jar" and
+      "pkg:maven/com.example/dependency@2?type=jar" where the later
+      has a description "my description" a publisher "example" and
+      hashes if the dependency has been retrieved.</p>
+
+    <pre>
+      &lt;cdx:componentbom
+        &lt;cdx:component>
+          &lt;ivyModule>
+            &lt;cdx:templateComponent
+                name="dependency"
+                group="com.example"
+                publisher="Example"
+              />
+          &lt;/ivyModule>
+        &lt;/cdx:component>
+      &lt;/cdx:componentbom>
+    </pre>
+
+    <p>The following snippet adds two components to the SBOM with
+      bom-refs "pkg:maven/org.example/module@1?type=jar" and
+      "pkg:maven/com.example/dependency@3?type=jar" where the later has
+      a description "another description" but no hashes (as the
+      version doesn't match).</p>
+
+    <pre>
+      &lt;cdx:componentbom
+        &lt;cdx:component>
+          &lt;ivyModule>
+            &lt;cdx:templateComponent
+                name="dependency"
+                group="com.example"
+                version="3"
+                description="another description"
+              />
+          &lt;/ivyModule>
+        &lt;/cdx:component>
+      &lt;/cdx:componentbom>
+    </pre>
 
     <h4 id="manufacturer">manufacturer</h4>
 
@@ -505,7 +625,7 @@
         &lt;license refid="apache-2"/>
         &lt;externalReferenceSet refid="antlib-ext-refs"/>
         &lt;dependency componentRef="ant"/>
-        &lt;dependency bomRef="pkg:maven/org.cyclonedx/cyclonedx-core-java@13.0.0?type=jar"/>
+        &lt;dependency bomRef="pkg:maven/org.cyclonedx/cyclonedx-core-java@13.1.0?type=jar"/>
       &lt;/cdx:component>
     </pre>
   </body>

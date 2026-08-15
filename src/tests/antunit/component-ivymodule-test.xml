@@ -252,7 +252,9 @@
         value="https://example.org/"/>
   </target>
 
-  <target name="testComponentDataFromDependencyIsReplacedByExplicitComponent">
+  <target
+      name="testComponentDataFromDependencyIsReplacedByExplicitComponent"
+      depends="commonReferences">
     <ivy:resolve file="resources/foo-bar.ivy.xml"
                  xmlns:ivy="antlib:org.apache.ivy.ant"/>
     <cdx:componentbom outputdirectory="${output}" format="xml"
@@ -266,7 +268,9 @@
         version="1.10.17"
         isExternal="true"
         description="Apache Ant Core"
-        id="ant"/>
+        id="ant">
+        <manufacturer refid="ant-team"/>
+      </additionalComponent>
     </cdx:componentbom>
     <copy todir="/tmp" file="${output}/bom.xml"/>
     <xmlproperty file="${output}/bom.xml"/>
@@ -309,6 +313,14 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.dependencies.dependency(ref)"
         value="pkg:maven/foo/bar@1.0?type=jar,pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar,pkg:maven/org.apache.ant/ant@1.10.17?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.manufacturer.name"
+        value="Apache Ant Development Team"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.manufacturer.url"
+        value="https://ant.apache.org/"/>
     <!-- additionalComponent hasn't got any dependencies -->
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
@@ -316,6 +328,84 @@
         value="pkg:maven/org.apache.ant/ant@1.10.17?type=jar"/>
     <!-- additionalComponent hasn't got any artifact resource -->
     <au:assertResourceDoesntContain
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.xml"
+        value='&lt;hash alg="SHA-1"&gt;fa8a13422ac460563171d10a37c3f28340a953f6&lt;/hash&gt;'/>
+  </target>
+
+  <target name="testComponentDataFromDependencyIsAugmentedByTemplateComponent"
+          depends="commonReferences">
+    <ivy:resolve file="resources/foo-bar.ivy.xml"
+                 xmlns:ivy="antlib:org.apache.ivy.ant"/>
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component>
+        <ivymodule>
+          <templateComponent
+              name="ant"
+              group="org.apache.ant"
+              isExternal="true"
+              description="Apache Ant Core"
+              id="ant">
+            <manufacturer refid="ant-team"/>
+          </templateComponent>
+        </ivymodule>
+      </component>
+    </cdx:componentbom>
+    <copy todir="/tmp" file="${output}/bom.xml"/>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.name"
+        value="ant-launcher,ant"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component(type)"
+        value="library,library"/>
+    <au:assertPropertyNotSet
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.scope"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component(isExternal)"
+        value="true"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.description"
+        value="Apache Ant Core"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.group"
+        value="org.apache.ant,org.apache.ant"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.version"
+        value="1.10.17,1.10.17"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.purl"
+        value="pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar,pkg:maven/org.apache.ant/ant@1.10.17?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component(bom-ref)"
+        value="pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar,pkg:maven/org.apache.ant/ant@1.10.17?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.dependencies.dependency(ref)"
+        value="pkg:maven/foo/bar@1.0?type=jar,pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar,pkg:maven/org.apache.ant/ant@1.10.17?type=jar"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.manufacturer.name"
+        value="Apache Ant Development Team"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.components.component.manufacturer.url"
+        value="https://ant.apache.org/"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.dependencies.dependency.dependency(ref)"
+        value="pkg:maven/org.apache.ant/ant@1.10.17?type=jar,pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar"/>
+    <au:assertResourceContains
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/bom.xml"
         value='&lt;hash alg="SHA-1"&gt;fa8a13422ac460563171d10a37c3f28340a953f6&lt;/hash&gt;'/>
