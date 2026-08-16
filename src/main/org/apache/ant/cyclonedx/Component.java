@@ -23,13 +23,13 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.Stack;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import org.apache.tools.ant.BuildException;
@@ -1190,7 +1190,7 @@ public class Component extends DataType {
         private String resolveId;
         private Reference antIvyEngineRef;
         private String pattern;
-        private List<Component> templateComponents = new ArrayList<>();
+        private Map<String, Component> templateComponents = new HashMap<>();
 
         /**
          * Sets the configurations to include in the SBOM.
@@ -1292,16 +1292,15 @@ public class Component extends DataType {
          *
          * @param c nested template component
          */
-        public void addTemplateComponent(Component c) {
-            templateComponents.add(c);
+        public void addConfiguredTemplateComponent(Component c) {
+            templateComponents.put(getTemplateComponentKey(c), c);
         }
 
         Map<String, Component> getTemplateComponents() {
-            return templateComponents.stream()
-                .collect(Collectors.toMap(IvyModule::getTemplateComponentKey, Function.identity()));
+            return templateComponents;
         }
 
-        static String getTemplateComponentKey(Component c) {
+        private static String getTemplateComponentKey(Component c) {
             String group = c.getGroup();
             if (group == null) {
                 group = "";
