@@ -1,6 +1,6 @@
---- ant-cyclonedx-0.2alpha.cdx.json	2026-08-16 09:31:45.900940846 +0200
-+++ ant-cyclonedx-0.2alpha.ivy.cdx.json	2026-08-16 09:31:48.698014904 +0200
-@@ -253,36 +253,64 @@
+--- ant-cyclonedx-0.2alpha.cdx.json	2026-08-16 12:54:15.035134147 +0200
++++ ant-cyclonedx-0.2alpha.ivy.cdx.json	2026-08-16 12:54:22.467055136 +0200
+@@ -253,36 +253,68 @@
    "components" : [
      {
        "type" : "library",
@@ -65,11 +65,14 @@
          {
 -          "type" : "vcs",
 -          "url" : "https://github.com/wrandelshofer/FastDoubleParser/tree/master"
--        },
--        {
-           "type" : "website",
--          "url" : "https://github.com/wrandelshofer/FastDoubleParser"
++          "type" : "website",
 +          "url" : "https://github.com/ethlo/itu"
+         },
+         {
+-          "type" : "website",
+-          "url" : "https://github.com/wrandelshofer/FastDoubleParser"
++          "type" : "license",
++          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
          }
        ]
      },
@@ -80,7 +83,7 @@
        "group" : "com.fasterxml.jackson.core",
        "name" : "jackson-annotations",
        "version" : "2.22",
-@@ -324,38 +352,22 @@
+@@ -324,38 +356,26 @@
        "licenses" : [
          {
            "license" : {
@@ -103,14 +106,16 @@
 -        {
            "type" : "website",
            "url" : "https://github.com/FasterXML/jackson"
--        },
--        {
+         },
+         {
 -          "type" : "bom",
 -          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.22/jackson-annotations-2.22-sbom-cyclonedx.json"
 -        },
 -        {
 -          "type" : "distribution-intake",
 -          "url" : "https://central.sonatype.com/api/v1/publisher"
++          "type" : "license",
++          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
          }
        ]
      },
@@ -121,7 +126,7 @@
        "group" : "com.fasterxml.jackson.core",
        "name" : "jackson-core",
        "version" : "2.22.1",
-@@ -397,38 +409,22 @@
+@@ -397,38 +417,26 @@
        "licenses" : [
          {
            "license" : {
@@ -144,14 +149,16 @@
 -        {
            "type" : "website",
            "url" : "https://github.com/FasterXML/jackson-core"
--        },
--        {
+         },
+         {
 -          "type" : "bom",
 -          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.22.1/jackson-core-2.22.1-sbom-cyclonedx.json"
 -        },
 -        {
 -          "type" : "distribution-intake",
 -          "url" : "https://central.sonatype.com/api/v1/publisher"
++          "type" : "license",
++          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
          }
        ]
      },
@@ -162,7 +169,7 @@
        "group" : "com.fasterxml.jackson.core",
        "name" : "jackson-databind",
        "version" : "2.22.1",
-@@ -470,38 +466,22 @@
+@@ -470,38 +478,26 @@
        "licenses" : [
          {
            "license" : {
@@ -185,14 +192,16 @@
 -        {
            "type" : "website",
            "url" : "https://github.com/FasterXML/jackson"
--        },
--        {
+         },
+         {
 -          "type" : "bom",
 -          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.22.1/jackson-databind-2.22.1-sbom-cyclonedx.json"
 -        },
 -        {
 -          "type" : "distribution-intake",
 -          "url" : "https://central.sonatype.com/api/v1/publisher"
++          "type" : "license",
++          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
          }
        ]
      },
@@ -203,7 +212,7 @@
        "group" : "com.fasterxml.jackson.dataformat",
        "name" : "jackson-dataformat-xml",
        "version" : "2.22.1",
-@@ -543,31 +523,73 @@
+@@ -543,31 +539,81 @@
        "licenses" : [
          {
            "license" : {
@@ -220,6 +229,12 @@
 -          "url" : "http://github.com/FasterXML/jackson-dataformat-xml"
 +          "type" : "website",
 +          "url" : "https://github.com/FasterXML/jackson-dataformat-xml"
+         },
+         {
+-          "type" : "issue-tracker",
+-          "url" : "https://github.com/FasterXML/jackson-dataformat-xml/issues"
++          "type" : "license",
++          "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
 +        }
 +      ]
 +    },
@@ -236,38 +251,34 @@
 +          "content" : "8348dc064a58fb2ae67371764b634812"
          },
          {
--          "type" : "issue-tracker",
--          "url" : "https://github.com/FasterXML/jackson-dataformat-xml/issues"
-+          "alg" : "SHA-1",
-+          "content" : "af5fde2414e4a8d2617e7890f7068c26b5b66a33"
-         },
-         {
 -          "type" : "website",
 -          "url" : "https://github.com/FasterXML/jackson-dataformat-xml"
++          "alg" : "SHA-1",
++          "content" : "af5fde2414e4a8d2617e7890f7068c26b5b66a33"
++        },
++        {
 +          "alg" : "SHA-256",
 +          "content" : "cc3a0e540791a9a1cbcd7584767b84572ffda0b72823856558f47dea69ae8ed1"
-         },
-         {
--          "type" : "bom",
--          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.22.1/jackson-dataformat-xml-2.22.1-sbom-cyclonedx.json"
++        },
++        {
 +          "alg" : "SHA-512",
 +          "content" : "12398c493aa3b54716813a6297b72104fa52ab324bae54512e41a1285ac756fcbb800084c088f8e9d3aceae2e698ca164bc547421d5fe2fb62ed2dadf1d3d000"
 +        },
 +        {
 +          "alg" : "SHA3-256",
 +          "content" : "2d33856e0e0aa27571950d57227a66ab78f22c5cecf7c07afc3ad4dbe3b4b4ae"
-         },
-         {
--          "type" : "distribution-intake",
--          "url" : "https://central.sonatype.com/api/v1/publisher"
++        },
++        {
 +          "alg" : "SHA3-512",
 +          "content" : "47bdf965089a1949286216aed3b286d8990a3b9169dacb15f0a6f36df07ee397d0ecbcc1294228479068cdbff4b1d8a11718ad5efa744952c34eb092e62cf644"
 +        },
 +        {
 +          "alg" : "SHA-384",
 +          "content" : "2f20d92e2fc1932406055a055e0602c9d0a96d7c19b75aeb7dca7c19b30e65bd126677a9bb855ef493be8f4be1feaf62"
-+        },
-+        {
+         },
+         {
+-          "type" : "bom",
+-          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.22.1/jackson-dataformat-xml-2.22.1-sbom-cyclonedx.json"
 +          "alg" : "SHA3-384",
 +          "content" : "e0bc342c2bcd8d91b674657a28e0a762d68232729d7a53d0c04ba63807a1f6bc458bfb64c422408f0cb701ce753ff7cd"
 +        }
@@ -285,10 +296,16 @@
 +        {
 +          "type" : "website",
 +          "url" : "https://github.com/FasterXML/jackson-dataformats-text"
+         },
+         {
+-          "type" : "distribution-intake",
+-          "url" : "https://central.sonatype.com/api/v1/publisher"
++          "type" : "license",
++          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
          }
        ]
      },
-@@ -616,11 +638,17 @@
+@@ -616,11 +662,21 @@
          {
            "license" : {
              "id" : "Apache-2.0",
@@ -303,12 +320,16 @@
 +        {
 +          "type" : "website",
 +          "url" : "https://github.com/FasterXML/woodstox"
++        },
++        {
++          "type" : "license",
++          "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
 +        }
 +      ]
      },
      {
        "type" : "library",
-@@ -628,7 +656,7 @@
+@@ -628,7 +684,7 @@
        "group" : "com.github.package-url",
        "name" : "packageurl-java",
        "version" : "1.5.0",
@@ -317,7 +338,7 @@
        "hashes" : [
          {
            "alg" : "MD5",
-@@ -671,97 +699,11 @@
+@@ -671,97 +727,15 @@
            }
          }
        ],
@@ -410,14 +431,17 @@
 -      ],
 -      "purl" : "pkg:maven/com.jcraft/jsch@0.1.55?type=jar",
 -      "externalReferences" : [
--        {
++          "url" : "https://github.com/package-url/packageurl-java"
++        },
+         {
 -          "type" : "website",
 -          "url" : "http://www.jcraft.com/"
-+          "url" : "https://github.com/package-url/packageurl-java"
++          "type" : "license",
++          "url" : "https://opensource.org/licenses/MIT"
          }
        ]
      },
-@@ -810,16 +752,21 @@
+@@ -810,16 +784,25 @@
          {
            "license" : {
              "id" : "Apache-2.0",
@@ -432,6 +456,10 @@
 +        {
 +          "type" : "website",
 +          "url" : "https://github.com/networknt/json-schema-validator"
++        },
++        {
++          "type" : "license",
++          "url" : "https://www.apache.org/licenses/LICENSE-2.0"
 +        }
 +      ]
      },
@@ -442,7 +470,7 @@
        "group" : "commons-codec",
        "name" : "commons-codec",
        "version" : "1.22.1",
-@@ -862,46 +809,21 @@
+@@ -862,46 +845,25 @@
          {
            "license" : {
              "id" : "Apache-2.0",
@@ -464,8 +492,8 @@
 -        {
            "type" : "website",
            "url" : "https://commons.apache.org/proper/commons-codec/"
--        },
--        {
+         },
+         {
 -          "type" : "bom",
 -          "url" : "https://repo1.maven.org/maven2/commons-codec/commons-codec/1.22.1/commons-codec-1.22.1-cyclonedx.json"
 -        },
@@ -480,6 +508,8 @@
 -        {
 -          "type" : "build-system",
 -          "url" : "https://github.com/apache/commons-codec/actions"
++          "type" : "license",
++          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
          }
        ]
      },
@@ -490,7 +520,7 @@
        "group" : "commons-io",
        "name" : "commons-io",
        "version" : "2.22.0",
-@@ -944,39 +866,15 @@
+@@ -944,39 +906,19 @@
          {
            "license" : {
              "id" : "Apache-2.0",
@@ -512,8 +542,8 @@
 -        {
            "type" : "website",
            "url" : "https://commons.apache.org/proper/commons-io/"
--        },
--        {
+         },
+         {
 -          "type" : "bom",
 -          "url" : "https://repo1.maven.org/maven2/commons-io/commons-io/2.22.0/commons-io-2.22.0-cyclonedx.json"
 -        },
@@ -528,10 +558,12 @@
 -        {
 -          "type" : "build-system",
 -          "url" : "https://github.com/apache/commons-io/actions"
++          "type" : "license",
++          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
          }
        ]
      },
-@@ -993,6 +891,40 @@
+@@ -993,6 +935,40 @@
        "group" : "org.apache.ant",
        "name" : "ant-launcher",
        "version" : "1.10.17",
@@ -572,7 +604,7 @@
        "licenses" : [
          {
            "license" : {
-@@ -1066,6 +998,40 @@
+@@ -1066,6 +1042,40 @@
        "group" : "org.apache.ant",
        "name" : "ant",
        "version" : "1.10.17",
@@ -613,7 +645,7 @@
        "licenses" : [
          {
            "license" : {
-@@ -1128,24 +1094,7 @@
+@@ -1128,24 +1138,7 @@
      },
      {
        "type" : "library",
@@ -638,7 +670,7 @@
        "group" : "org.apache.commons",
        "name" : "commons-collections4",
        "version" : "4.5.0",
-@@ -1188,62 +1137,21 @@
+@@ -1188,62 +1181,25 @@
          {
            "license" : {
              "id" : "Apache-2.0",
@@ -660,8 +692,8 @@
 -        {
            "type" : "website",
            "url" : "https://commons.apache.org/proper/commons-collections/"
--        },
--        {
+         },
+         {
 -          "type" : "bom",
 -          "url" : "https://repo1.maven.org/maven2/org/apache/commons/commons-collections4/4.5.0/commons-collections4-4.5.0-cyclonedx.json"
 -        },
@@ -676,6 +708,8 @@
 -        {
 -          "type" : "build-system",
 -          "url" : "https://github.com/apache/commons-parent/actions"
++          "type" : "license",
++          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
          }
        ]
      },
@@ -702,7 +736,7 @@
        "group" : "org.apache.commons",
        "name" : "commons-lang3",
        "version" : "3.20.0",
-@@ -1286,77 +1194,22 @@
+@@ -1286,77 +1242,26 @@
          {
            "license" : {
              "id" : "Apache-2.0",
@@ -724,8 +758,8 @@
 -        {
            "type" : "website",
            "url" : "https://commons.apache.org/proper/commons-lang/"
--        },
--        {
+         },
+         {
 -          "type" : "bom",
 -          "url" : "https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.20.0/commons-lang3-3.20.0-cyclonedx.json"
 -        },
@@ -740,6 +774,8 @@
 -        {
 -          "type" : "build-system",
 -          "url" : "https://github.com/apache/commons-lang/actions"
++          "type" : "license",
++          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
          }
        ]
      },
@@ -782,7 +818,7 @@
        "supplier" : {
          "name" : "Apache Ant Project Management Committee",
          "url" : [
-@@ -1428,17 +1281,13 @@
+@@ -1428,17 +1333,13 @@
          },
          {
            "type" : "website",
@@ -801,7 +837,7 @@
            "type" : "mailing-list",
            "url" : "https://ant.apache.org/ivy/mailing-lists.html"
          },
-@@ -1455,46 +1304,14 @@
+@@ -1455,46 +1356,14 @@
            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
          },
          {
@@ -852,7 +888,7 @@
      },
      {
        "type" : "library",
-@@ -1545,12 +1362,17 @@
+@@ -1545,12 +1414,21 @@
            }
          }
        ],
@@ -862,6 +898,10 @@
 +        {
 +          "type" : "website",
 +          "url" : "http://github.com/FasterXML/stax2-api"
++        },
++        {
++          "type" : "license",
++          "url" : "http://www.opensource.org/licenses/bsd-license.php"
 +        }
 +      ]
      },
@@ -872,7 +912,7 @@
        "group" : "org.cyclonedx",
        "name" : "cyclonedx-core-java",
        "version" : "13.1.0",
-@@ -1593,61 +1415,145 @@
+@@ -1593,61 +1471,157 @@
          {
            "license" : {
              "id" : "Apache-2.0",
@@ -888,6 +928,12 @@
 -          "url" : "https://github.com/CycloneDX/cyclonedx-core-java.git"
 +          "type" : "website",
 +          "url" : "https://github.com/CycloneDX/cyclonedx-core-java"
+         },
+         {
+-          "type" : "issue-tracker",
+-          "url" : "https://github.com/CycloneDX/cyclonedx-core-java/issues"
++          "type" : "license",
++          "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
 +        }
 +      ]
 +    },
@@ -904,14 +950,12 @@
 +          "content" : "b6480d114a23683498ac3f746f959d2f"
          },
          {
--          "type" : "issue-tracker",
--          "url" : "https://github.com/CycloneDX/cyclonedx-core-java/issues"
-+          "alg" : "SHA-1",
-+          "content" : "d9e58ac9c7779ba3bf8142aff6c830617a7fe60f"
-         },
-         {
 -          "type" : "website",
 -          "url" : "https://github.com/CycloneDX/cyclonedx-core-java"
++          "alg" : "SHA-1",
++          "content" : "d9e58ac9c7779ba3bf8142aff6c830617a7fe60f"
++        },
++        {
 +          "alg" : "SHA-256",
 +          "content" : "7b751d952061954d5abfed7181c1f645d336091b679891591d63329c622eb832"
          },
@@ -924,10 +968,8 @@
 +        {
 +          "alg" : "SHA3-256",
 +          "content" : "00559b4f4066b4917ba4fe2a6f23111eaeada321112d030910d218ced9084b5e"
-         },
-         {
--          "type" : "build-system",
--          "url" : "https://github.com/CycloneDX/cyclonedx-core-java/actions"
++        },
++        {
 +          "alg" : "SHA3-512",
 +          "content" : "9579c2f7e7516e177c2d493ccc9eb8150978cf19f6f09b28d116f6935239fd56dc6af2b62b3336f79b0b462445550cd1fb5377a07001a6f44aaab6a32fa2fa47"
 +        },
@@ -953,6 +995,12 @@
 +        {
 +          "type" : "website",
 +          "url" : "http://www.slf4j.org"
+         },
+         {
+-          "type" : "build-system",
+-          "url" : "https://github.com/CycloneDX/cyclonedx-core-java/actions"
++          "type" : "license",
++          "url" : "https://opensource.org/license/mit"
          }
        ]
      },
@@ -1016,6 +1064,10 @@
 +        {
 +          "type" : "website",
 +          "url" : "https://bitbucket.org/snakeyaml/snakeyaml"
++        },
++        {
++          "type" : "license",
++          "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
 +        }
 +      ]
      }
@@ -1038,7 +1090,7 @@
      },
      {
        "ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.1?type=jar",
-@@ -1667,10 +1573,33 @@
+@@ -1667,10 +1641,33 @@
        ]
      },
      {
@@ -1072,7 +1124,7 @@
        "ref" : "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
        "dependsOn" : [ ]
      },
-@@ -1700,9 +1629,7 @@
+@@ -1700,9 +1697,7 @@
      },
      {
        "ref" : "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
@@ -1083,7 +1135,7 @@
      },
      {
        "ref" : "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
-@@ -1710,20 +1637,7 @@
+@@ -1710,20 +1705,7 @@
      },
      {
        "ref" : "pkg:maven/org.apache.ivy/ivy@2.6.0?type=jar",
@@ -1105,7 +1157,7 @@
      },
      {
        "ref" : "pkg:maven/org.codehaus.woodstox/stax2-api@4.3.0?type=jar",
-@@ -1740,6 +1654,14 @@
+@@ -1740,6 +1722,14 @@
          "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
          "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar"
        ]

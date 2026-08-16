@@ -213,9 +213,15 @@ class IvyModuleComponentResolver {
             component.setDescription(md.getDescription());
         }
 
+        String licenseUrl = null;
         if (!component.hasLicenses()) {
             License[] ivyLicenses = md.getLicenses();
             if (ivyLicenses != null) {
+
+                if (ivyLicenses.length == 1) {
+                    licenseUrl = ivyLicenses[0].getUrl();
+                }
+
                 for (License ivyLicense : ivyLicenses) {
                     org.apache.ant.cyclonedx.License license = new org.apache.ant.cyclonedx.License();
                     license.setName(ivyLicense.getName());
@@ -245,6 +251,14 @@ class IvyModuleComponentResolver {
             ExternalReference e = new ExternalReference();
             e.setUrl(homePage);
             e.setType(org.cyclonedx.model.ExternalReference.Type.WEBSITE.name());
+            component.addConfiguredExternalReference(e);
+        }
+
+        if (licenseUrl != null && !component.getExternalReferences().stream()
+            .anyMatch(e -> e.getType().equals(org.cyclonedx.model.ExternalReference.Type.LICENSE))) {
+            ExternalReference e = new ExternalReference();
+            e.setUrl(licenseUrl);
+            e.setType(org.cyclonedx.model.ExternalReference.Type.LICENSE.name());
             component.addConfiguredExternalReference(e);
         }
     }
