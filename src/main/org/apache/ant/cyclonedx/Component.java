@@ -138,6 +138,9 @@ public class Component extends DataType {
      * @since CycloneDX Antlib 0.2
      */
     protected Component(Component other) {
+        if (other.isReference()) {
+            other = other.getRef();
+        }
         this.resource = other.resource;
         this.type = other.type;
         this.name = other.name;

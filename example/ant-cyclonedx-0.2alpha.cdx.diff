@@ -1,5 +1,5 @@
---- ant-cyclonedx-0.2alpha.cdx.json	2026-08-15 20:25:55.771468081 +0200
-+++ ant-cyclonedx-0.2alpha.ivy.cdx.json	2026-08-15 20:25:49.100344456 +0200
+--- ant-cyclonedx-0.2alpha.cdx.json	2026-08-16 07:37:00.362354025 +0200
++++ ant-cyclonedx-0.2alpha.ivy.cdx.json	2026-08-16 07:36:53.586777324 +0200
 @@ -253,36 +253,64 @@
    "components" : [
      {
@@ -246,18 +246,18 @@
 -          "url" : "https://github.com/FasterXML/jackson-dataformat-xml"
 +          "alg" : "SHA-256",
 +          "content" : "cc3a0e540791a9a1cbcd7584767b84572ffda0b72823856558f47dea69ae8ed1"
-+        },
-+        {
+         },
+         {
+-          "type" : "bom",
+-          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.22.1/jackson-dataformat-xml-2.22.1-sbom-cyclonedx.json"
 +          "alg" : "SHA-512",
 +          "content" : "12398c493aa3b54716813a6297b72104fa52ab324bae54512e41a1285ac756fcbb800084c088f8e9d3aceae2e698ca164bc547421d5fe2fb62ed2dadf1d3d000"
 +        },
 +        {
 +          "alg" : "SHA3-256",
 +          "content" : "2d33856e0e0aa27571950d57227a66ab78f22c5cecf7c07afc3ad4dbe3b4b4ae"
-         },
-         {
--          "type" : "bom",
--          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.22.1/jackson-dataformat-xml-2.22.1-sbom-cyclonedx.json"
++        },
++        {
 +          "alg" : "SHA3-512",
 +          "content" : "47bdf965089a1949286216aed3b286d8990a3b9169dacb15f0a6f36df07ee397d0ecbcc1294228479068cdbff4b1d8a11718ad5efa744952c34eb092e62cf644"
 +        },
@@ -347,10 +347,9 @@
 -        }
 -      ],
 -      "purl" : "pkg:maven/com.jcraft/jsch.agentproxy.connector-factory@0.0.9?type=jar",
-+      "purl" : "pkg:maven/com.github.package-url/packageurl-java@1.5.0?type=jar",
-       "externalReferences" : [
-         {
-           "type" : "website",
+-      "externalReferences" : [
+-        {
+-          "type" : "website",
 -          "url" : "http://www.jcraft.com/"
 -        }
 -      ]
@@ -417,9 +416,10 @@
 -        }
 -      ],
 -      "purl" : "pkg:maven/com.jcraft/jsch@0.1.55?type=jar",
--      "externalReferences" : [
--        {
--          "type" : "website",
++      "purl" : "pkg:maven/com.github.package-url/packageurl-java@1.5.0?type=jar",
+       "externalReferences" : [
+         {
+           "type" : "website",
 -          "url" : "http://www.jcraft.com/"
 +          "url" : "https://github.com/package-url/packageurl-java"
          }
@@ -545,19 +545,96 @@
          }
        ]
      },
-@@ -984,168 +882,119 @@
-       "type" : "library",
-       "bom-ref" : "pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar",
-       "isExternal" : true,
--      "supplier" : {
--        "name" : "Apache Ant Project Management Committee",
--        "url" : [
--          "https://ant.apache.org/"
--        ]
--      },
+@@ -993,6 +891,40 @@
        "group" : "org.apache.ant",
        "name" : "ant-launcher",
        "version" : "1.10.17",
++      "hashes" : [
++        {
++          "alg" : "MD5",
++          "content" : "6f03c0937a15756fd7bc7bb98d6ee360"
++        },
++        {
++          "alg" : "SHA-1",
++          "content" : "a65884e1ff214f724a6e9c089365c71935c488e4"
++        },
++        {
++          "alg" : "SHA-256",
++          "content" : "f6e3de06dc0ea396638004f1a003f55fdbd20c3e7ccfb9b7a524f49fd0ae8568"
++        },
++        {
++          "alg" : "SHA-512",
++          "content" : "73fef113f238f6fcfe94e7d58824207ea6557626262f27d3bd20ab3bbba6af848ee5998ad915a7fa3999e0e368bb1f7ae1bf90888295989a15236a73c7d08709"
++        },
++        {
++          "alg" : "SHA3-256",
++          "content" : "80ef280b77fd566dde6c6438a974f993db7540dc7a99ea89e43557df769a7f17"
++        },
++        {
++          "alg" : "SHA3-512",
++          "content" : "b9700c9f92513d503c806ed1ce2fed1d351a79f609ac8b30d4ec27580b0976d67cbecbe040647c7602f549f18ef8ac4fa37cc54d47a577e5046f0f86ff21de39"
++        },
++        {
++          "alg" : "SHA-384",
++          "content" : "3cfaf78d72581170b94df32d7b069bab2e10fa8ae56d2973de3a750ec45aaeb194d89714dacc77af8f9892802a4a7ec6"
++        },
++        {
++          "alg" : "SHA3-384",
++          "content" : "447a649c728ffc652a3676904a3001e41cd10387dafe90df97fa121c8e824822a98a00b9a3de3cbd93b19355ad51d7a7"
++        }
++      ],
+       "licenses" : [
+         {
+           "license" : {
+@@ -1066,6 +998,40 @@
+       "group" : "org.apache.ant",
+       "name" : "ant",
+       "version" : "1.10.17",
++      "hashes" : [
++        {
++          "alg" : "MD5",
++          "content" : "7deb57aad47476c63e707ea57533e43b"
++        },
++        {
++          "alg" : "SHA-1",
++          "content" : "fa8a13422ac460563171d10a37c3f28340a953f6"
++        },
++        {
++          "alg" : "SHA-256",
++          "content" : "8be692e02837f41a47a3d21cde6655792142fdf42fe23bcb16d7129cad9b2284"
++        },
++        {
++          "alg" : "SHA-512",
++          "content" : "f1cc1a82e1abcf613d4ccf080f83fcd51acd7d4a2f1c2841cca90dd1ebaa96fab2df6411abd2cf97e2ec74231b1540a5d15c12117ba777ab1538b61f9f2b5fa9"
++        },
++        {
++          "alg" : "SHA3-256",
++          "content" : "540a9cc40d8c9c4e004b04bd6af4a590e18d2077e93d441a9dcbdf90798b31b6"
++        },
++        {
++          "alg" : "SHA3-512",
++          "content" : "7a65837340a624a8f9eb68a56c78b6891ddf95cd617ccbc227e2fe88b53f59c2cea7d856b4d803898f2bb2317dbc8f8124d3c35154e3cee555d97fe064a8739d"
++        },
++        {
++          "alg" : "SHA-384",
++          "content" : "2af275805479b9cfcfdae25f19cce911922207bc2fb77c2c44caf8633c56cd7d772ab30134bac68aacf0ea6e444fa50c"
++        },
++        {
++          "alg" : "SHA3-384",
++          "content" : "71205d360f909df37fef5b427538c22977e01801108a1cb37387d1f72e784509796a915c2069a12762a78b990d0aa207"
++        }
++      ],
+       "licenses" : [
+         {
+           "license" : {
+@@ -1128,24 +1094,7 @@
+     },
+     {
+       "type" : "library",
+-      "bom-ref" : "pkg:maven/org.apache.commons/commons-codec@1.18.0?type=jar",
+-      "group" : "org.apache.commons",
+-      "name" : "commons-codec",
+-      "version" : "1.18.0",
 -      "licenses" : [
 -        {
 -          "license" : {
@@ -566,211 +643,16 @@
 -          }
 -        }
 -      ],
--      "purl" : "pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar",
--      "externalReferences" : [
--        {
--          "type" : "vcs",
--          "url" : "https://gitbox.apache.org/repos/asf/ant.git"
--        },
--        {
--          "type" : "issue-tracker",
--          "url" : "https://bz.apache.org/bugzilla/buglist.cgi?product=Ant"
--        },
--        {
--          "type" : "website",
--          "url" : "https://ant.apache.org/"
--        },
--        {
--          "type" : "advisories",
--          "url" : "https://ant.apache.org/security.html#Apache%20Ant%20Security%20Vulnerabilities"
--        },
-+      "hashes" : [
-         {
--          "type" : "mailing-list",
--          "url" : "https://ant.apache.org/mail.html"
-+          "alg" : "MD5",
-+          "content" : "6f03c0937a15756fd7bc7bb98d6ee360"
-         },
-         {
--          "type" : "documentation",
--          "url" : "https://ant.apache.org/manual/"
-+          "alg" : "SHA-1",
-+          "content" : "a65884e1ff214f724a6e9c089365c71935c488e4"
-         },
-         {
--          "type" : "source-distribution",
--          "url" : "https://ant.apache.org/srcdownload.cgi"
-+          "alg" : "SHA-256",
-+          "content" : "f6e3de06dc0ea396638004f1a003f55fdbd20c3e7ccfb9b7a524f49fd0ae8568"
-         },
-         {
--          "type" : "distribution",
--          "url" : "https://ant.apache.org/bindownload.cgi"
-+          "alg" : "SHA-512",
-+          "content" : "73fef113f238f6fcfe94e7d58824207ea6557626262f27d3bd20ab3bbba6af848ee5998ad915a7fa3999e0e368bb1f7ae1bf90888295989a15236a73c7d08709"
-         },
-         {
--          "type" : "license",
--          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
-+          "alg" : "SHA3-256",
-+          "content" : "80ef280b77fd566dde6c6438a974f993db7540dc7a99ea89e43557df769a7f17"
-         },
-         {
--          "type" : "release-notes",
--          "url" : "https://github.com/apache/ant/blob/master/WHATSNEW"
-+          "alg" : "SHA3-512",
-+          "content" : "b9700c9f92513d503c806ed1ce2fed1d351a79f609ac8b30d4ec27580b0976d67cbecbe040647c7602f549f18ef8ac4fa37cc54d47a577e5046f0f86ff21de39"
-         },
-         {
--          "type" : "security-contact",
--          "url" : "https://www.apache.org/security/"
-+          "alg" : "SHA-384",
-+          "content" : "3cfaf78d72581170b94df32d7b069bab2e10fa8ae56d2973de3a750ec45aaeb194d89714dacc77af8f9892802a4a7ec6"
-         },
-         {
--          "type" : "rfc-9116",
--          "url" : "https://ant.apache.org/.well-known/security.txt"
-+          "alg" : "SHA3-384",
-+          "content" : "447a649c728ffc652a3676904a3001e41cd10387dafe90df97fa121c8e824822a98a00b9a3de3cbd93b19355ad51d7a7"
-         }
--      ]
--    },
--    {
--      "type" : "library",
--      "bom-ref" : "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
--      "isExternal" : true,
--      "supplier" : {
--        "name" : "Apache Ant Project Management Committee",
--        "url" : [
--          "https://ant.apache.org/"
--        ]
--      },
--      "group" : "org.apache.ant",
--      "name" : "ant",
--      "version" : "1.10.17",
-+      ],
-       "licenses" : [
-         {
-           "license" : {
--            "id" : "Apache-2.0",
-+            "name" : "The Apache Software License, Version 2.0",
-             "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
-           }
-         }
-       ],
--      "purl" : "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
-+      "purl" : "pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar",
-       "externalReferences" : [
-         {
--          "type" : "vcs",
--          "url" : "https://gitbox.apache.org/repos/asf/ant.git"
--        },
--        {
--          "type" : "issue-tracker",
--          "url" : "https://bz.apache.org/bugzilla/buglist.cgi?product=Ant"
--        },
--        {
-           "type" : "website",
-           "url" : "https://ant.apache.org/"
--        },
--        {
--          "type" : "advisories",
--          "url" : "https://ant.apache.org/security.html#Apache%20Ant%20Security%20Vulnerabilities"
--        },
-+        }
-+      ]
-+    },
-+    {
-+      "type" : "library",
-+      "bom-ref" : "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
-+      "isExternal" : true,
-+      "group" : "org.apache.ant",
-+      "name" : "ant",
-+      "version" : "1.10.17",
-+      "hashes" : [
-         {
--          "type" : "mailing-list",
--          "url" : "https://ant.apache.org/mail.html"
-+          "alg" : "MD5",
-+          "content" : "7deb57aad47476c63e707ea57533e43b"
-         },
-         {
--          "type" : "documentation",
--          "url" : "https://ant.apache.org/manual/"
-+          "alg" : "SHA-1",
-+          "content" : "fa8a13422ac460563171d10a37c3f28340a953f6"
-         },
-         {
--          "type" : "source-distribution",
--          "url" : "https://ant.apache.org/srcdownload.cgi"
-+          "alg" : "SHA-256",
-+          "content" : "8be692e02837f41a47a3d21cde6655792142fdf42fe23bcb16d7129cad9b2284"
-         },
-         {
--          "type" : "distribution",
--          "url" : "https://ant.apache.org/bindownload.cgi"
-+          "alg" : "SHA-512",
-+          "content" : "f1cc1a82e1abcf613d4ccf080f83fcd51acd7d4a2f1c2841cca90dd1ebaa96fab2df6411abd2cf97e2ec74231b1540a5d15c12117ba777ab1538b61f9f2b5fa9"
-         },
-         {
--          "type" : "license",
--          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
-+          "alg" : "SHA3-256",
-+          "content" : "540a9cc40d8c9c4e004b04bd6af4a590e18d2077e93d441a9dcbdf90798b31b6"
-         },
-         {
--          "type" : "release-notes",
--          "url" : "https://github.com/apache/ant/blob/master/WHATSNEW"
-+          "alg" : "SHA3-512",
-+          "content" : "7a65837340a624a8f9eb68a56c78b6891ddf95cd617ccbc227e2fe88b53f59c2cea7d856b4d803898f2bb2317dbc8f8124d3c35154e3cee555d97fe064a8739d"
-         },
-         {
--          "type" : "security-contact",
--          "url" : "https://www.apache.org/security/"
-+          "alg" : "SHA-384",
-+          "content" : "2af275805479b9cfcfdae25f19cce911922207bc2fb77c2c44caf8633c56cd7d772ab30134bac68aacf0ea6e444fa50c"
-         },
-         {
--          "type" : "rfc-9116",
--          "url" : "https://ant.apache.org/.well-known/security.txt"
-+          "alg" : "SHA3-384",
-+          "content" : "71205d360f909df37fef5b427538c22977e01801108a1cb37387d1f72e784509796a915c2069a12762a78b990d0aa207"
-         }
--      ]
--    },
--    {
--      "type" : "library",
--      "bom-ref" : "pkg:maven/org.apache.commons/commons-codec@1.18.0?type=jar",
--      "group" : "org.apache.commons",
--      "name" : "commons-codec",
--      "version" : "1.18.0",
-+      ],
-       "licenses" : [
-         {
-           "license" : {
--            "id" : "Apache-2.0",
-+            "name" : "The Apache Software License, Version 2.0",
-             "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
-           }
-         }
-       ],
 -      "purl" : "pkg:maven/org.apache.commons/commons-codec@1.18.0?type=jar"
-+      "purl" : "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
-+      "externalReferences" : [
-+        {
-+          "type" : "website",
-+          "url" : "https://ant.apache.org/"
-+        }
-+      ]
-     },
-     {
-       "type" : "library",
+-    },
+-    {
+-      "type" : "library",
        "bom-ref" : "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
 -      "publisher" : "The Apache Software Foundation",
        "group" : "org.apache.commons",
        "name" : "commons-collections4",
        "version" : "4.5.0",
-@@ -1187,63 +1036,22 @@
+@@ -1187,63 +1136,22 @@
        "licenses" : [
          {
            "license" : {
@@ -836,7 +718,7 @@
        "group" : "org.apache.commons",
        "name" : "commons-lang3",
        "version" : "3.20.0",
-@@ -1285,95 +1093,26 @@
+@@ -1285,95 +1193,26 @@
        "licenses" : [
          {
            "license" : {
@@ -935,7 +817,7 @@
        "hashes" : [
          {
            "alg" : "MD5",
-@@ -1411,93 +1150,21 @@
+@@ -1411,93 +1250,21 @@
        "licenses" : [
          {
            "license" : {
@@ -1032,7 +914,7 @@
        "bom-ref" : "pkg:maven/org.codehaus.woodstox/stax2-api@4.3.0?type=jar",
        "group" : "org.codehaus.woodstox",
        "name" : "stax2-api",
-@@ -1540,17 +1207,22 @@
+@@ -1540,17 +1307,22 @@
        "licenses" : [
          {
            "license" : {
@@ -1058,7 +940,7 @@
        "group" : "org.cyclonedx",
        "name" : "cyclonedx-core-java",
        "version" : "13.1.0",
-@@ -1592,62 +1264,146 @@
+@@ -1592,62 +1364,146 @@
        "licenses" : [
          {
            "license" : {
@@ -1106,14 +988,14 @@
 +        {
 +          "alg" : "SHA-512",
 +          "content" : "9a3e79db6666a6096a3021bb2e1d918f30f589d8de51d6b600f8ebd92515a510ae2d8f87919cc2dfa8365d64f10194cac8dfa0fb950160eef0e9da06f6caaeb9"
-+        },
-+        {
-+          "alg" : "SHA3-256",
-+          "content" : "00559b4f4066b4917ba4fe2a6f23111eaeada321112d030910d218ced9084b5e"
          },
          {
 -          "type" : "distribution-intake",
 -          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
++          "alg" : "SHA3-256",
++          "content" : "00559b4f4066b4917ba4fe2a6f23111eaeada321112d030910d218ced9084b5e"
++        },
++        {
 +          "alg" : "SHA3-512",
 +          "content" : "9579c2f7e7516e177c2d493ccc9eb8150978cf19f6f09b28d116f6935239fd56dc6af2b62b3336f79b0b462445550cd1fb5377a07001a6f44aaab6a32fa2fa47"
          },
@@ -1227,7 +1109,7 @@
      },
      {
        "ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.1?type=jar",
-@@ -1667,10 +1423,33 @@
+@@ -1667,10 +1523,33 @@
        ]
      },
      {
@@ -1261,7 +1143,7 @@
        "ref" : "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
        "dependsOn" : [ ]
      },
-@@ -1681,8 +1460,10 @@
+@@ -1681,8 +1560,10 @@
      {
        "ref" : "pkg:maven/org.apache.ant/ant-cyclonedx@0.2alpha?type=jar",
        "dependsOn" : [
@@ -1272,7 +1154,7 @@
          "pkg:maven/org.cyclonedx/cyclonedx-core-java@13.1.0?type=jar"
        ]
      },
-@@ -1698,9 +1479,7 @@
+@@ -1698,9 +1579,7 @@
      },
      {
        "ref" : "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
@@ -1283,7 +1165,7 @@
      },
      {
        "ref" : "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
-@@ -1708,20 +1487,7 @@
+@@ -1708,20 +1587,7 @@
      },
      {
        "ref" : "pkg:maven/org.apache.ivy/ivy@2.6.0?type=jar",
@@ -1305,7 +1187,7 @@
      },
      {
        "ref" : "pkg:maven/org.codehaus.woodstox/stax2-api@4.3.0?type=jar",
-@@ -1738,6 +1504,14 @@
+@@ -1738,6 +1604,14 @@
          "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
          "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar"
        ]
