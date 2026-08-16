@@ -34,35 +34,35 @@
           "hashes" : [
             {
               "alg" : "MD5",
-              "content" : "72e87679cb7b25f3b1849c157a006428"
+              "content" : "768f4a65e486384ef8211bcb1a845a66"
             },
             {
               "alg" : "SHA-1",
-              "content" : "bad777295cc811815c2f82cf554978eabd06908c"
+              "content" : "c6ec42e0b9f8e668085d45917c02efc3d5ebfeaa"
             },
             {
               "alg" : "SHA-256",
-              "content" : "6cef1fafc36b884f4be609c20695bf111fc0c4970bb98744f71b6221473026a5"
+              "content" : "0dec3274326d38a8ac989ecb304710d33dcbb7a2b4445b0bd573af775963972b"
             },
             {
               "alg" : "SHA-512",
-              "content" : "eda3b3c30bc628bfab0421548c2b8a8b37fbc79d02723156344bdf4f0c054594ba8bc7a6d6e8776b70af39c89b523513cac7e562741eebdf2ec2fec19983df3f"
+              "content" : "961e02a351f61ec04109e1b42088f92697cfb2fa1eccc50a9f27c1bd6bf08242b6b0a175222408a77ad34271d33b8b16b69c38d8c6d1fb7b9f6fbcb2e158690b"
             },
             {
               "alg" : "SHA3-256",
-              "content" : "0fca4ccbb30b9a434a7d862e4338429a0ccee1fb48c83f499bbd55a694e43ac2"
+              "content" : "5dd9dc9ad4bf54773f0f57595e5738fb33e25c21f9b40e85b64fedc6985e1041"
             },
             {
               "alg" : "SHA3-512",
-              "content" : "e4cecfe5fae3fae96a08417a5999cea4170984c03ac35a720b07eef4ddf53ff64edf84e31d3b01020c46ea0e45cf0ee1870121d0a5935fff5a7edc839f452071"
+              "content" : "dc2de9b50227a6ccd95dce5bd6195e4124d7a8c99ffec7716c45cd24f715cd7d559c1a1588e0e252af935ba8f8534d157abab1ce8846eb01c92ee4051d7e64b4"
             },
             {
               "alg" : "SHA-384",
-              "content" : "f4e5814675b5dbd572abb5a07de3e52d26a30c70e756039d7276d5ec88aa240d63e93f73e04e94ea2fd26ec33e71396a"
+              "content" : "678cf2de597f950bb18d3700253cfe36a9bb696eab257cd771a58252ccba80fc76d2736adda5b3e5857aef01b2b3674f"
             },
             {
               "alg" : "SHA3-384",
-              "content" : "4f4f28ff6b84c8b1993d96b985d68bc52993d2e93f6c40dcc2bb33a9bc0b22c2a60fc5f888dcaa0ebf2f6752ead7302f"
+              "content" : "56fe98f060613c2c7cdfe558a00459e409149a85fc996ca8f50161487c5c9f775c1d7b748ee0991cfc1bc38d8af8f5c7"
             }
           ],
           "licenses" : [
@@ -146,35 +146,35 @@
       "hashes" : [
         {
           "alg" : "MD5",
-          "content" : "72e87679cb7b25f3b1849c157a006428"
+          "content" : "768f4a65e486384ef8211bcb1a845a66"
         },
         {
           "alg" : "SHA-1",
-          "content" : "bad777295cc811815c2f82cf554978eabd06908c"
+          "content" : "c6ec42e0b9f8e668085d45917c02efc3d5ebfeaa"
         },
         {
           "alg" : "SHA-256",
-          "content" : "6cef1fafc36b884f4be609c20695bf111fc0c4970bb98744f71b6221473026a5"
+          "content" : "0dec3274326d38a8ac989ecb304710d33dcbb7a2b4445b0bd573af775963972b"
         },
         {
           "alg" : "SHA-512",
-          "content" : "eda3b3c30bc628bfab0421548c2b8a8b37fbc79d02723156344bdf4f0c054594ba8bc7a6d6e8776b70af39c89b523513cac7e562741eebdf2ec2fec19983df3f"
+          "content" : "961e02a351f61ec04109e1b42088f92697cfb2fa1eccc50a9f27c1bd6bf08242b6b0a175222408a77ad34271d33b8b16b69c38d8c6d1fb7b9f6fbcb2e158690b"
         },
         {
           "alg" : "SHA3-256",
-          "content" : "0fca4ccbb30b9a434a7d862e4338429a0ccee1fb48c83f499bbd55a694e43ac2"
+          "content" : "5dd9dc9ad4bf54773f0f57595e5738fb33e25c21f9b40e85b64fedc6985e1041"
         },
         {
           "alg" : "SHA3-512",
-          "content" : "e4cecfe5fae3fae96a08417a5999cea4170984c03ac35a720b07eef4ddf53ff64edf84e31d3b01020c46ea0e45cf0ee1870121d0a5935fff5a7edc839f452071"
+          "content" : "dc2de9b50227a6ccd95dce5bd6195e4124d7a8c99ffec7716c45cd24f715cd7d559c1a1588e0e252af935ba8f8534d157abab1ce8846eb01c92ee4051d7e64b4"
         },
         {
           "alg" : "SHA-384",
-          "content" : "f4e5814675b5dbd572abb5a07de3e52d26a30c70e756039d7276d5ec88aa240d63e93f73e04e94ea2fd26ec33e71396a"
+          "content" : "678cf2de597f950bb18d3700253cfe36a9bb696eab257cd771a58252ccba80fc76d2736adda5b3e5857aef01b2b3674f"
         },
         {
           "alg" : "SHA3-384",
-          "content" : "4f4f28ff6b84c8b1993d96b985d68bc52993d2e93f6c40dcc2bb33a9bc0b22c2a60fc5f888dcaa0ebf2f6752ead7302f"
+          "content" : "56fe98f060613c2c7cdfe558a00459e409149a85fc996ca8f50161487c5c9f775c1d7b748ee0991cfc1bc38d8af8f5c7"
         }
       ],
       "licenses" : [
@@ -295,7 +295,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "Apache License, Version 2.0",
+            "id" : "Apache-2.0",
             "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
           }
         }
@@ -352,7 +352,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "The Apache Software License, Version 2.0",
+            "id" : "Apache-2.0",
             "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
           }
         }
@@ -409,7 +409,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "The Apache Software License, Version 2.0",
+            "id" : "Apache-2.0",
             "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
           }
         }
@@ -466,7 +466,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "The Apache Software License, Version 2.0",
+            "id" : "Apache-2.0",
             "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
           }
         }
@@ -523,7 +523,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "The Apache Software License, Version 2.0",
+            "id" : "Apache-2.0",
             "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
           }
         }
@@ -580,7 +580,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "The Apache Software License, Version 2.0",
+            "id" : "Apache-2.0",
             "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
           }
         }
@@ -637,7 +637,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "The Apache License, Version 2.0",
+            "id" : "Apache-2.0",
             "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
           }
         }
@@ -694,7 +694,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "MIT",
+            "id" : "MIT",
             "url" : "https://opensource.org/licenses/MIT"
           }
         }
@@ -751,7 +751,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "Apache License Version 2.0",
+            "id" : "Apache-2.0",
             "url" : "https://www.apache.org/licenses/LICENSE-2.0"
           }
         }
@@ -808,7 +808,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "Apache-2.0",
+            "id" : "Apache-2.0",
             "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
           }
         }
@@ -865,7 +865,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "Apache-2.0",
+            "id" : "Apache-2.0",
             "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
           }
         }
@@ -1136,7 +1136,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "Apache-2.0",
+            "id" : "Apache-2.0",
             "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
           }
         }
@@ -1193,7 +1193,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "Apache-2.0",
+            "id" : "Apache-2.0",
             "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
           }
         }
@@ -1250,7 +1250,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "The Apache Software License, Version 2.0",
+            "id" : "Apache-2.0",
             "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
           }
         }
@@ -1307,7 +1307,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "The BSD 2-Clause License",
+            "id" : "BSD-2-Clause",
             "url" : "http://www.opensource.org/licenses/bsd-license.php"
           }
         }
@@ -1364,7 +1364,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "Apache-2.0",
+            "id" : "Apache-2.0",
             "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
           }
         }
@@ -1421,7 +1421,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "MIT",
+            "id" : "MIT",
             "url" : "https://opensource.org/license/mit"
           }
         }
@@ -1478,7 +1478,7 @@
       "licenses" : [
         {
           "license" : {
-            "name" : "Apache License, Version 2.0",
+            "id" : "Apache-2.0",
             "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
           }
         }

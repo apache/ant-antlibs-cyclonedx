@@ -88,8 +88,8 @@
         value="Foo Bar Test-Project"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
-        name="bom.metadata.component.licenses.license.name"
-        value="Apache Software License 2.0"/>
+        name="bom.metadata.component.licenses.license.id"
+        value="Apache-2.0"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.component.licenses.license.url"

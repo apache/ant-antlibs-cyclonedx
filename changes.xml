@@ -105,6 +105,10 @@
       This adds Ivy as a new dependency which is only required if you
       want to use this feature.
     </action>
+    <action type="add">
+      The license element now tries to guess the license's SPDX id
+      if only a name is given.
+    </action>
   </release>
 
   <release version="0.1" date="2026-06-03" description="initial release">

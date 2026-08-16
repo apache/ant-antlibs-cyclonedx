@@ -71,6 +71,48 @@
         value="https://example.org/"/>
   </target>
 
+  <target name="testLicenseGuessesIdFromLicenseName">
+    <cdx:componentbom
+        outputdirectory="${output}" format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <license name="Apache License 2.0">
+          <url url="https://example.org/"/>
+        </license>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.license.id"
+        value="Apache-2.0"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.license.url"
+        value="https://example.org/"/>
+  </target>
+
+  <target name="testLicenseGuessesIdFromLicenseUrl">
+    <cdx:componentbom
+        outputdirectory="${output}" format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <license name="foo">
+          <url url="https://www.apache.org/licenses/LICENSE-2.0"/>
+        </license>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.license.id"
+        value="Apache-2.0"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.license.url"
+        value="https://www.apache.org/licenses/LICENSE-2.0"/>
+  </target>
+
   <target name="testLicenseWorksViaReference">
     <cdx:license
         licenseId="0BSD" id="test-license"

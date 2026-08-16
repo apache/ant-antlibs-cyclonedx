@@ -1,5 +1,5 @@
---- ant-cyclonedx-0.2alpha.cdx.json	2026-08-16 08:03:01.398142552 +0200
-+++ ant-cyclonedx-0.2alpha.ivy.cdx.json	2026-08-16 08:02:57.645496553 +0200
+--- ant-cyclonedx-0.2alpha.cdx.json	2026-08-16 09:14:38.469315413 +0200
++++ ant-cyclonedx-0.2alpha.ivy.cdx.json	2026-08-16 09:14:42.941135681 +0200
 @@ -253,36 +253,64 @@
    "components" : [
      {
@@ -54,7 +54,7 @@
            "license" : {
 -            "id" : "MIT",
 -            "url" : "https://opensource.org/license/mit/"
-+            "name" : "Apache License, Version 2.0",
++            "id" : "Apache-2.0",
 +            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
            }
          }
@@ -85,7 +85,7 @@
          {
            "license" : {
 -            "id" : "Apache-2.0"
-+            "name" : "The Apache Software License, Version 2.0",
++            "id" : "Apache-2.0",
 +            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
            }
          }
@@ -126,7 +126,7 @@
          {
            "license" : {
 -            "id" : "Apache-2.0"
-+            "name" : "The Apache Software License, Version 2.0",
++            "id" : "Apache-2.0",
 +            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
            }
          }
@@ -167,7 +167,7 @@
          {
            "license" : {
 -            "id" : "Apache-2.0"
-+            "name" : "The Apache Software License, Version 2.0",
++            "id" : "Apache-2.0",
 +            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
            }
          }
@@ -208,7 +208,7 @@
          {
            "license" : {
 -            "id" : "Apache-2.0"
-+            "name" : "The Apache Software License, Version 2.0",
++            "id" : "Apache-2.0",
 +            "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
            }
          }
@@ -246,18 +246,18 @@
 -          "url" : "https://github.com/FasterXML/jackson-dataformat-xml"
 +          "alg" : "SHA-256",
 +          "content" : "cc3a0e540791a9a1cbcd7584767b84572ffda0b72823856558f47dea69ae8ed1"
-         },
-         {
--          "type" : "bom",
--          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.22.1/jackson-dataformat-xml-2.22.1-sbom-cyclonedx.json"
++        },
++        {
 +          "alg" : "SHA-512",
 +          "content" : "12398c493aa3b54716813a6297b72104fa52ab324bae54512e41a1285ac756fcbb800084c088f8e9d3aceae2e698ca164bc547421d5fe2fb62ed2dadf1d3d000"
 +        },
 +        {
 +          "alg" : "SHA3-256",
 +          "content" : "2d33856e0e0aa27571950d57227a66ab78f22c5cecf7c07afc3ad4dbe3b4b4ae"
-+        },
-+        {
+         },
+         {
+-          "type" : "bom",
+-          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.22.1/jackson-dataformat-xml-2.22.1-sbom-cyclonedx.json"
 +          "alg" : "SHA3-512",
 +          "content" : "47bdf965089a1949286216aed3b286d8990a3b9169dacb15f0a6f36df07ee397d0ecbcc1294228479068cdbff4b1d8a11718ad5efa744952c34eb092e62cf644"
 +        },
@@ -275,7 +275,7 @@
 +      "licenses" : [
 +        {
 +          "license" : {
-+            "name" : "The Apache Software License, Version 2.0",
++            "id" : "Apache-2.0",
 +            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
 +          }
 +        }
@@ -288,13 +288,11 @@
          }
        ]
      },
-@@ -615,12 +637,18 @@
-       "licenses" : [
+@@ -616,11 +638,17 @@
          {
            "license" : {
--            "id" : "Apache-2.0",
+             "id" : "Apache-2.0",
 -            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
-+            "name" : "The Apache License, Version 2.0",
 +            "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
            }
          }
@@ -319,13 +317,7 @@
        "hashes" : [
          {
            "alg" : "MD5",
-@@ -666,102 +694,16 @@
-       "licenses" : [
-         {
-           "license" : {
--            "id" : "MIT",
-+            "name" : "MIT",
-             "url" : "https://opensource.org/licenses/MIT"
+@@ -671,97 +699,11 @@
            }
          }
        ],
@@ -425,13 +417,11 @@
          }
        ]
      },
-@@ -809,17 +751,22 @@
-       "licenses" : [
+@@ -810,16 +752,21 @@
          {
            "license" : {
--            "id" : "Apache-2.0",
+             "id" : "Apache-2.0",
 -            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
-+            "name" : "Apache License Version 2.0",
 +            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
            }
          }
@@ -452,13 +442,11 @@
        "group" : "commons-codec",
        "name" : "commons-codec",
        "version" : "1.22.1",
-@@ -861,47 +808,22 @@
-       "licenses" : [
+@@ -862,46 +809,21 @@
          {
            "license" : {
--            "id" : "Apache-2.0",
+             "id" : "Apache-2.0",
 -            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
-+            "name" : "Apache-2.0",
 +            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
            }
          }
@@ -502,13 +490,11 @@
        "group" : "commons-io",
        "name" : "commons-io",
        "version" : "2.22.0",
-@@ -943,40 +865,16 @@
-       "licenses" : [
+@@ -944,39 +866,15 @@
          {
            "license" : {
--            "id" : "Apache-2.0",
+             "id" : "Apache-2.0",
 -            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
-+            "name" : "Apache-2.0",
 +            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
            }
          }
@@ -652,13 +638,11 @@
        "group" : "org.apache.commons",
        "name" : "commons-collections4",
        "version" : "4.5.0",
-@@ -1187,63 +1136,22 @@
-       "licenses" : [
+@@ -1188,62 +1137,21 @@
          {
            "license" : {
--            "id" : "Apache-2.0",
+             "id" : "Apache-2.0",
 -            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
-+            "name" : "Apache-2.0",
 +            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
            }
          }
@@ -718,13 +702,11 @@
        "group" : "org.apache.commons",
        "name" : "commons-lang3",
        "version" : "3.20.0",
-@@ -1285,95 +1193,26 @@
-       "licenses" : [
+@@ -1286,94 +1194,25 @@
          {
            "license" : {
--            "id" : "Apache-2.0",
+             "id" : "Apache-2.0",
 -            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
-+            "name" : "Apache-2.0",
 +            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
            }
          }
@@ -817,13 +799,11 @@
        "hashes" : [
          {
            "alg" : "MD5",
-@@ -1411,93 +1250,21 @@
-       "licenses" : [
+@@ -1412,92 +1251,20 @@
          {
            "license" : {
--            "id" : "Apache-2.0",
+             "id" : "Apache-2.0",
 -            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
-+            "name" : "The Apache Software License, Version 2.0",
 +            "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
            }
          }
@@ -914,13 +894,7 @@
        "bom-ref" : "pkg:maven/org.codehaus.woodstox/stax2-api@4.3.0?type=jar",
        "group" : "org.codehaus.woodstox",
        "name" : "stax2-api",
-@@ -1540,17 +1307,22 @@
-       "licenses" : [
-         {
-           "license" : {
--            "id" : "BSD-2-Clause",
-+            "name" : "The BSD 2-Clause License",
-             "url" : "http://www.opensource.org/licenses/bsd-license.php"
+@@ -1545,12 +1312,17 @@
            }
          }
        ],
@@ -940,13 +914,11 @@
        "group" : "org.cyclonedx",
        "name" : "cyclonedx-core-java",
        "version" : "13.1.0",
-@@ -1592,62 +1364,146 @@
-       "licenses" : [
+@@ -1593,61 +1365,145 @@
          {
            "license" : {
--            "id" : "Apache-2.0",
+             "id" : "Apache-2.0",
 -            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
-+            "name" : "Apache-2.0",
 +            "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
            }
          }
@@ -1013,7 +985,7 @@
 +      "licenses" : [
 +        {
 +          "license" : {
-+            "name" : "MIT",
++            "id" : "MIT",
 +            "url" : "https://opensource.org/license/mit"
 +          }
 +        }
@@ -1074,9 +1046,8 @@
        "licenses" : [
          {
            "license" : {
--            "id" : "Apache-2.0",
+             "id" : "Apache-2.0",
 -            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
-+            "name" : "Apache License, Version 2.0",
 +            "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
            }
          }
