@@ -20,6 +20,8 @@ package org.apache.ant.cyclonedx;
 import java.util.Comparator;
 
 import org.cyclonedx.model.LicenseChoice;
+import org.cyclonedx.model.LicenseItem;
+import org.cyclonedx.model.license.Expression;
 import org.cyclonedx.util.LicenseResolver;
 
 import org.apache.tools.ant.BuildException;
@@ -45,6 +47,7 @@ public class License extends DataType {
     private String id;
     private String name;
     private String url;
+    private String expression;
 
     /**
      * Comparator for CycloneDX license.
@@ -54,9 +57,30 @@ public class License extends DataType {
      *
      * @since CycloneDX Antlib 0.2
      */
-    public static final Comparator<org.cyclonedx.model.License> CycloneDxLicenseComparator =
+    private static final Comparator<org.cyclonedx.model.License> CycloneDxLicenseComparator =
         Comparator.comparing(org.cyclonedx.model.License::getId, Comparator.nullsLast(Comparator.naturalOrder()))
         .thenComparing(org.cyclonedx.model.License::getName, Comparator.nullsLast(Comparator.naturalOrder()));
+
+    /**
+     * Comparator for CycloneDX License Expressions.
+     *
+     * <p>Sorts by expression value.</p>
+     *
+     * @since CycloneDX Antlib 0.2
+     */
+    private static final Comparator<Expression> CycloneDxLicenseExpressionComparator =
+        Comparator.comparing(Expression::getValue, Comparator.naturalOrder());
+
+    /**
+     * Comparator for CycloneDX License Items.
+     *
+     * <p>Sorts licenses by id falling back to id before license expressions which are sorted by expression value.
+     *
+     * @since CycloneDX Antlib 0.2
+     */
+    public static final Comparator<LicenseItem> CycloneDxLicenseItemComparator =
+        Comparator.comparing(LicenseItem::getLicense, Comparator.nullsLast(CycloneDxLicenseComparator))
+        .thenComparing(LicenseItem::getExpression, Comparator.nullsLast(CycloneDxLicenseExpressionComparator));
 
     /**
      * Sets the {@code id} of the license.
@@ -83,6 +107,17 @@ public class License extends DataType {
     }
 
     /**
+     * Sets the SPDX license expression of the license.
+     *
+     * @param expression license expression
+     * @since CycloneDX Antlib 0.2
+     */
+    public void setExpression(String expression) {
+        checkAttributesAllowed();
+        this.expression = expression;
+    }
+
+    /**
      * Sets the url of the license.
      *
      * <p>Even though this is a nested element of the license element,
@@ -103,13 +138,21 @@ public class License extends DataType {
      *
      * @return CycloneDX version of this instance
      */
-    public org.cyclonedx.model.License toCycloneDxLicense() {
+    public LicenseItem toCycloneDxLicenseItem() {
         if (isReference()) {
-            return getRef().toCycloneDxLicense();
+            return getRef().toCycloneDxLicenseItem();
         }
         dieOnCircularReference();
-        if (name == null && id == null) {
-            throw new BuildException("license name or licenseId is required");
+        if (name == null && id == null && expression == null) {
+            throw new BuildException("license name, licenseId or expression is required");
+        }
+
+        if ((name != null || id != null) && expression != null) {
+            throw new BuildException("license name or licenseId prohibit expression");
+        }
+
+        if (expression != null) {
+            return LicenseItem.ofExpression(new Expression(expression));
         }
 
         if (id == null) {
@@ -118,7 +161,7 @@ public class License extends DataType {
                 if (url != null) {
                     l.setUrl(url);
                 }
-                return l;
+                return LicenseItem.ofLicense(l);
             }
         }
 
@@ -132,14 +175,25 @@ public class License extends DataType {
         if (url != null) {
             l.setUrl(url);
         }
-        return l;
+        return LicenseItem.ofLicense(l);
     }
 
     /**
      * @since CycloneDX Antlib 0.2
      */
-    public static License from(org.cyclonedx.model.License l) {
+    public static License from(LicenseItem licenseItem) {
         License license = new License();
+        Expression e = licenseItem.getExpression();
+        if (e != null) {
+            license.setExpression(e.getValue());
+            return license;
+        }
+
+        org.cyclonedx.model.License l = licenseItem.getLicense();
+        if (l == null) {
+            throw new BuildException("unsupported LicenseItem " + licenseItem);
+        }
+
         String id = l.getId();
         if (id != null) {
             license.setLicenseId(id);
@@ -170,12 +224,12 @@ public class License extends DataType {
      */
     private org.cyclonedx.model.License guessLicense() {
         LicenseChoice lc = LicenseResolver.resolve(name, false);
-        if ((lc == null || lc.getLicenses() == null || lc.getLicenses().isEmpty())
+        if ((lc == null || lc.getItems() == null || lc.getItems().isEmpty())
             && url != null) {
             lc = LicenseResolver.resolve(url, false);
         }
-        if (lc != null && lc.getLicenses() != null && !lc.getLicenses().isEmpty()) {
-            return lc.getLicenses().get(0);
+        if (lc != null && lc.getItems() != null && !lc.getItems().isEmpty()) {
+            return lc.getItems().get(0).getLicense();
         }
         return null;
     }

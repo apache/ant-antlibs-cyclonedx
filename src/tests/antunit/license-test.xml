@@ -19,15 +19,43 @@
 
   <import file="shared.xml" />
 
-  <target name="testLicenseRequiresIdOrName">
+  <target name="testLicenseRequiresIdNameOrExpression">
     <au:expectfailure
-        expectedMessage="license name or licenseId is required"
+        expectedMessage="license name, licenseId or expression is required"
         xmlns:au="antlib:org.apache.ant.antunit">
       <cdx:componentbom
           outputdirectory="${output}" format="xml"
           xmlns:cdx="antlib:org.apache.ant.cyclonedx">
         <component name="testname">
           <license/>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testLicenseDoesntAllowIdAndExpression">
+    <au:expectfailure
+        expectedMessage="license name or licenseId prohibit expression"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom
+          outputdirectory="${output}" format="xml"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname">
+          <license licenseId="Apache-2.0" expression="foo"/>
+        </component>
+      </cdx:componentbom>
+    </au:expectfailure>
+  </target>
+
+  <target name="testLicenseDoesntAllowNameAndExpression">
+    <au:expectfailure
+        expectedMessage="license name or licenseId prohibit expression"
+        xmlns:au="antlib:org.apache.ant.antunit">
+      <cdx:componentbom
+          outputdirectory="${output}" format="xml"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        <component name="testname">
+          <license name="bar" expression="foo"/>
         </component>
       </cdx:componentbom>
     </au:expectfailure>
@@ -50,7 +78,7 @@
     </au:expectfailure>
   </target>
 
-  <target name="testLicenseWorksAsDirectChildOfComponent">
+  <target name="testLicenseNameWorksAsDirectChildOfComponent">
     <cdx:componentbom
         outputdirectory="${output}" format="xml"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
@@ -69,6 +97,21 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.metadata.component.licenses.license.url"
         value="https://example.org/"/>
+  </target>
+
+  <target name="testLicenseExpressionWorksAsDirectChildOfComponent">
+    <cdx:componentbom
+        outputdirectory="${output}" format="xml"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <license expression="foo"/>
+      </component>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.metadata.component.licenses.expression"
+        value="foo"/>
   </target>
 
   <target name="testLicenseGuessesIdFromLicenseName">

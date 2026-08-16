@@ -272,7 +272,6 @@
         <manufacturer refid="ant-team"/>
       </additionalComponent>
     </cdx:componentbom>
-    <copy todir="/tmp" file="${output}/bom.xml"/>
     <xmlproperty file="${output}/bom.xml"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
@@ -352,7 +351,6 @@
         </cdx:ivyModule>
       </component>
     </cdx:componentbom>
-    <copy todir="/tmp" file="${output}/bom.xml"/>
     <xmlproperty file="${output}/bom.xml"/>
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"

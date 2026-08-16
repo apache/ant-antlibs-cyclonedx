@@ -84,7 +84,7 @@ public class ComponentBomTask extends Task {
     private boolean useComponentSupplier = false;
     private boolean useComponentManufacturer = false;
     private Union pureFileComponents = new Union();
-    private List<org.cyclonedx.model.License> licenses = new ArrayList<>();
+    private List<LicenseItem> licenses = new ArrayList<>();
 
     /**
      * Specifies the CycloneDX version to use.
@@ -216,7 +216,7 @@ public class ComponentBomTask extends Task {
      * @param l SBOM's license
      */
     public void addConfiguredLicense(License l) {
-        licenses.add(l.toCycloneDxLicense());
+        licenses.add(l.toCycloneDxLicenseItem());
     }
 
     /**
@@ -410,8 +410,7 @@ public class ComponentBomTask extends Task {
         if (!licenses.isEmpty()) {
             LicenseChoice lc = new LicenseChoice();
             lc.setItems(licenses.stream()
-                        .sorted(License.CycloneDxLicenseComparator)
-                        .map(LicenseItem::ofLicense)
+                        .sorted(License.CycloneDxLicenseItemComparator)
                         .collect(Collectors.toList()));
             meta.setLicenses(lc);
         }

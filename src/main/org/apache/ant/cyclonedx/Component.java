@@ -71,7 +71,7 @@ public class Component extends DataType {
     private Organization manufacturer = null;
     private Organization supplier = null;
     private boolean supplierIsManufacturer = false;
-    private List<org.cyclonedx.model.License> licenses = new ArrayList<>();
+    private List<LicenseItem> licenses = new ArrayList<>();
     private String purl;
     private String bomRef;
     private List<org.cyclonedx.model.ExternalReference> externalReferences = new ArrayList<>();
@@ -380,7 +380,7 @@ public class Component extends DataType {
      */
     public void addConfiguredLicense(License l) {
         checkChildrenAllowed();
-        licenses.add(l.toCycloneDxLicense());
+        licenses.add(l.toCycloneDxLicenseItem());
     }
 
     /**
@@ -1001,8 +1001,7 @@ public class Component extends DataType {
             // would create an empty licenses node otherwise
             LicenseChoice lc = new LicenseChoice();
             lc.setItems(licenses.stream()
-                        .sorted(License.CycloneDxLicenseComparator)
-                        .map(LicenseItem::ofLicense)
+                        .sorted(License.CycloneDxLicenseItemComparator)
                         .collect(Collectors.toList()));
             component.setLicenses(lc);
         }
@@ -1076,10 +1075,7 @@ public class Component extends DataType {
         if (licenses.isEmpty()) {
             LicenseChoice realLicenses = real.getLicenses();
             if (realLicenses != null) {
-                licenses.addAll(realLicenses.getItems().stream()
-                                .filter(i -> LicenseItem.LicenseItemType.LICENSE.equals(i.getType()))
-                                .map(LicenseItem::getLicense)
-                                .collect(Collectors.toList()));
+                licenses.addAll(realLicenses.getItems());
             }
         }
         if (externalReferences.isEmpty()) {
