@@ -254,6 +254,7 @@ public class Component extends DataType {
      *
      * @param description component description
      */
+    @Override
     public void setDescription(String description) {
         checkAttributesAllowed();
         this.description = description;
@@ -309,7 +310,7 @@ public class Component extends DataType {
      *
      * <p>At most one supplier can be set.</p>
      *
-     * @param supplier compoment supplier
+     * @param supplier component supplier
      */
     public void addSupplier(Organization supplier) {
         checkChildrenAllowed();
@@ -378,7 +379,7 @@ public class Component extends DataType {
     /**
      * Adds a license to this component.
      *
-     * @param l compoment license
+     * @param l component license
      */
     public void addConfiguredLicense(License l) {
         checkChildrenAllowed();
@@ -499,9 +500,37 @@ public class Component extends DataType {
     }
 
     /**
+     * Gets the resource the component is about.
+     *
+     * @return the resource holding the component's content - may be null
+     * @since CycloneDX Antlib 0.2
+     */
+    public Resource getComponentFile() {
+        if (isReference()) {
+            return getRef().getComponentFile();
+        }
+        dieOnCircularReference();
+        return resource;
+    }
+
+    /**
+     * Gets the component type.
+     *
+     * @return the component type  - may be null
+     * @since CycloneDX Antlib 0.2
+     */
+    public ComponentType getType() {
+        if (isReference()) {
+            return getRef().getType();
+        }
+        dieOnCircularReference();
+        return type == null ? null : ComponentType.from(type);
+    }
+
+    /**
      * Gets the name of the component.
      *
-     * @return component name
+     * @return component name - will not be null on a valid component
      */
     public String getName() {
         if (isReference()) {
@@ -514,7 +543,7 @@ public class Component extends DataType {
     /**
      * Gets the group of the component.
      *
-     * @return component group
+     * @return component group - may be null
      */
     public String getGroup() {
         if (isReference()) {
@@ -527,7 +556,7 @@ public class Component extends DataType {
     /**
      * Gets the version of the component.
      *
-     * @return component version
+     * @return component version - may be null
      * @since CycloneDX Antlib 0.2
      */
     public String getVersion() {
@@ -576,11 +605,229 @@ public class Component extends DataType {
     }
 
     /**
+     * Gets the decription of the component.
+     *
+     * @return component description - may be null
+     * @since CycloneDX Antlib 0.2
+     */
+    @Override
+    public String getDescription() {
+        if (isReference()) {
+            return getRef().getDescription();
+        }
+        dieOnCircularReference();
+        return description;
+    }
+
+    /**
+     * Gets the publisher of the component.
+     *
+     * @return component publisher - may be null
+     * @since CycloneDX Antlib 0.2
+     */
+    public String getPublisher() {
+        if (isReference()) {
+            return getRef().getPublisher();
+        }
+        dieOnCircularReference();
+        return publisher;
+    }
+
+    /**
+     * Gets the copyright of the component.
+     *
+     * @return component copyright - may be null
+     * @since CycloneDX Antlib 0.2
+     */
+    public String getCopyright() {
+        if (isReference()) {
+            return getRef().getCopyright();
+        }
+        dieOnCircularReference();
+        return copyright;
+    }
+
+    /**
+     * Gets the mime-type of the component.
+     *
+     * @return component mime-type - may be null
+     * @since CycloneDX Antlib 0.2
+     */
+    public String getMimeType() {
+        if (isReference()) {
+            return getRef().getMimeType();
+        }
+        dieOnCircularReference();
+        return mimeType;
+    }
+
+    /**
+     * Gets the manufacturer of the component.
+     *
+     * @return component manufacturer - may be null
+     * @since CycloneDX Antlib 0.2
+     */
+    public Organization getManufacturer() {
+        if (isReference()) {
+            return getRef().getManufacturer();
+        }
+        dieOnCircularReference();
+        return manufacturer;
+    }
+
+    /**
+     * Gets the supplier of the component.
+     *
+     * @return component supplier - may be null
+     * @since CycloneDX Antlib 0.2
+     */
+    public Organization getSupplier() {
+        if (isReference()) {
+            return getRef().getSupplier();
+        }
+        dieOnCircularReference();
+        return supplier;
+    }
+
+    /**
+     * Gets the authors of the component.
+     *
+     * @return component authors - will not be null
+     * @since CycloneDX Antlib 0.2
+     */
+    public Collection<OrganizationalContact> getAuthors() {
+        if (isReference()) {
+            return getRef().getAuthors();
+        }
+        dieOnCircularReference();
+        return authors;
+    }
+
+    /**
+     * Gets the tags of the component.
+     *
+     * @return component tags - will not be null
+     * @since CycloneDX Antlib 0.2
+     */
+    public Collection<Tag> getTags() {
+        if (isReference()) {
+            return getRef().getTags();
+        }
+        dieOnCircularReference();
+        return tags.stream().map(Tag::new).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets merged properties added via {@link #addConfiguredProperty} or {@link #addConfiguredPropertySet} to the
+     * component.
+     *
+     * @return component property - will not be null
+     * @since CycloneDX Antlib 0.2
+     */
+    public Collection<Property> getProperties() {
+        if (isReference()) {
+            return getRef().getProperties();
+        }
+        dieOnCircularReference();
+        return properties;
+    }
+
+    /**
+     * Gets whether the supplier shall also be used to provide the manufacturer information.
+     *
+     * @return whether to use supplier as manufacturer as well
+     * @since CycloneDX Antlib 0.2
+     */
+    public boolean getSupplierIsManufacturer() {
+        if (isReference()) {
+            return getRef().getSupplierIsManufacturer();
+        }
+        dieOnCircularReference();
+        return supplierIsManufacturer;
+    }
+
+    /**
+     * Gets licenses added to this component.
+     *
+     * @return component licenses - will not be null
+     * @since CycloneDX Antlib 0.2
+     */
+    public Collection<License> getLicenses() {
+        if (isReference()) {
+            return getRef().getLicenses();
+        }
+        dieOnCircularReference();
+        return licenses.stream().map(License::from).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets the merged external references added via {@see #addConfiguredExternalReference} or {@see
+     * #addConfiguredExternalReferenceSet} to the component.
+     *
+     * @return component's external references - will not be null
+     * @since CycloneDX Antlib 0.2
+     */
+    public Collection<org.cyclonedx.model.ExternalReference> getExternalReferences() {
+        if (isReference()) {
+            return getRef().getExternalReferences();
+        }
+        dieOnCircularReference();
+        return externalReferences;
+    }
+
+    /**
+     * Gets the scope of this component.
+     *
+     * @return component scope - may be null
+     * @since CycloneDX Antlib 0.2
+     */
+    public ComponentScope getScope() {
+        if (isReference()) {
+            return getRef().getScope();
+        }
+        dieOnCircularReference();
+        return scope == null ? null : ComponentScope.from(scope);
+    }
+
+    /**
+     * Gets whether the isExternal flag is true.
+     *
+     * @return whether the isExternal flag is true
+     * @since CycloneDX Antlib 0.2
+     */
+    public boolean getIsExternal() {
+        if (isReference()) {
+            return getRef().getIsExternal();
+        }
+        dieOnCircularReference();
+        return isExternal;
+    }
+
+    /**
+     * Recursively returns the nested components of this component.
+     *
+     * @return nested components of this component - will not be null
+     */
+    public List<Component> getNestedComponents() {
+        if (isReference()) {
+            return getRef().getNestedComponents();
+        }
+        dieOnCircularReference();
+        List<Component> result = new ArrayList<>();
+        result.addAll(nestedComponents);
+        result.addAll(nestedComponents
+                      .stream()
+                      .flatMap(c -> c.getNestedComponents().stream())
+                      .collect(Collectors.toList()));
+        return result;
+    }
+
+    /**
      * Gets the dependencies of the component.
      *
-     * @return component's dependencies
+     * @return component's dependencies - will not be null
      */
-    public Iterable<Dependency> getDependencies() {
+    public Collection<Dependency> getDependencies() {
         if (isReference()) {
             return getRef().getDependencies();
         }
@@ -600,81 +847,6 @@ public class Component extends DataType {
         }
         dieOnCircularReference();
         return unknownDependencies;
-    }
-
-    /**
-     * Recursively returns the nested components of this component.
-     *
-     * @return nested components of this component
-     */
-    public List<Component> getNestedComponents() {
-        if (isReference()) {
-            return getRef().getNestedComponents();
-        }
-        dieOnCircularReference();
-        List<Component> result = new ArrayList<>();
-        result.addAll(nestedComponents);
-        result.addAll(nestedComponents
-                      .stream()
-                      .flatMap(c -> c.getNestedComponents().stream())
-                      .collect(Collectors.toList()));
-        return result;
-    }
-
-    /**
-     * Gets the dependencies of the component.
-     *
-     * @return component's dependencies
-     * @since CycloneDX Antlib 0.2
-     */
-    Collection<org.cyclonedx.model.ExternalReference> getExternalReferences() {
-        if (isReference()) {
-            return getRef().getExternalReferences();
-        }
-        dieOnCircularReference();
-        return externalReferences;
-    }
-
-    /**
-     * Gets whether the isExternal flag is true.
-     *
-     * @return whether the isExternal flag is true
-     * @since CycloneDX Antlib 0.2
-     */
-    boolean getIsExternal() {
-        if (isReference()) {
-            return getRef().getIsExternal();
-        }
-        dieOnCircularReference();
-        return isExternal;
-    }
-
-    /**
-     * Gets whether any licenses have been explicitly configured for this component.
-     *
-     * @return whether any licenses have been explicitly configured
-     * @since CycloneDX Antlib 0.2
-     */
-    boolean hasLicenses() {
-        if (isReference()) {
-            return getRef().hasLicenses();
-        }
-        dieOnCircularReference();
-        return !licenses.isEmpty();
-    }
-
-    /**
-     * Gets whether any description been explicitly configured for this component.
-     *
-     * @return whether any description has been explicitly configured
-     * @since CycloneDX Antlib 0.2
-     */
-    boolean hasDescription() {
-        if (isReference()) {
-            return getRef().hasDescription();
-        }
-        dieOnCircularReference();
-        return description != null;
     }
 
     /**
@@ -867,7 +1039,7 @@ public class Component extends DataType {
         return component;
     }
 
-    static Component from(
+    protected static Component from(
         org.cyclonedx.model.Component real,
         List<org.cyclonedx.model.Dependency> dependencies) {
         Component c = new Component();
@@ -875,8 +1047,8 @@ public class Component extends DataType {
         return c;
     }
 
-    void fillFrom(org.cyclonedx.model.Component real,
-                  List<org.cyclonedx.model.Dependency> allDependencies) {
+    protected void fillFrom(org.cyclonedx.model.Component real,
+                            List<org.cyclonedx.model.Dependency> allDependencies) {
         if (type == null) {
             setType(ComponentType.from(real.getType()));
         }
@@ -1094,6 +1266,16 @@ public class Component extends DataType {
     public static class Tag {
         private String tag;
 
+        public Tag() {
+        }
+
+        /**
+         * @since CycloneDX Antlib 0.2
+         */
+        public Tag(String tag) {
+            this.tag = tag;
+        }
+
         /**
          * Sets the tag value.
          *
@@ -1150,7 +1332,7 @@ public class Component extends DataType {
 
         /**
          * Whether to create a bom-Type external reference in the
-         * resolved compoment based on the nested resource's URI.
+         * resolved component based on the nested resource's URI.
          *
          * <p>Will not create an external reference of there are
          * already external references om the component or the
@@ -1166,7 +1348,7 @@ public class Component extends DataType {
 
         /**
          * Whether to create a bom-Type external reference in the
-         * resolved compoment based on the nested resource's URI.
+         * resolved component based on the nested resource's URI.
          * @return create whether to create a bom-Type external reference
          */
         public boolean getCreateBomExternalReference() {
@@ -1244,7 +1426,7 @@ public class Component extends DataType {
          * <p>Any module that is included in the SBOM because it is required by on of the configurations given in {@link
          * #setConf} and only is included because of configurations listed here is marked optional. Including
          * configurations that are not part of {@link #setConf} doesn't have any effect. {@code *} is no supported. The
-         * default is to have no optional compoments.</p>
+         * default is to have no optional components.</p>
          *
          * @param comma separated list of the configurations to mark optional.
          */
@@ -1262,7 +1444,7 @@ public class Component extends DataType {
          * <p>Any module that is included in the SBOM because it is required by on of the configurations given in {@link
          * #setConf} and only is included because of configurations listed here is marked external. Including
          * configurations that are not part of {@link #setConf} doesn't have any effect. {@code *} is no supported. The
-         * default is to have no external compoments.</p>
+         * default is to have no external components.</p>
          *
          * @param comma separated list of the configurations to mark external.
          */

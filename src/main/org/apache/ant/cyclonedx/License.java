@@ -136,6 +136,27 @@ public class License extends DataType {
     }
 
     /**
+     * @since CycloneDX Antlib 0.2
+     */
+    public static License from(org.cyclonedx.model.License l) {
+        License license = new License();
+        String id = l.getId();
+        if (id != null) {
+            license.setLicenseId(id);
+        } else {
+            String name = l.getName();
+            if (name != null) {
+                license.setName(name);
+            }
+        }
+        String url = l.getName();
+        if (url != null) {
+            license.addConfiguredUrl(new URLResource(url));
+        }
+        return license;
+    }
+
+    /**
      * Perform the check for circular references and return the
      * referenced License.
      * @return <code>License</code>.

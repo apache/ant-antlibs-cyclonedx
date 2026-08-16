@@ -38,6 +38,7 @@ under the License.
       includeantruntime="true">
       <classpath refid="ivy.lib.path"/>
       <classpath refid="classpath.compile"/>
+      <compilerArg value="-Xlint:all"/>
     </javac>
   </target>
 

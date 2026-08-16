@@ -379,8 +379,8 @@ public class ComponentBomTask extends Task {
         }
         byte[] componentIdHash = new DigestUtils(MessageDigestAlgorithms.MD5).digest(componentId);
         long clockseq = ((long)(componentIdHash[0] & 0x3F) << 56) | ((long)(componentIdHash[1] & 0xFF) << 48);
-        long nodeLow = ((long)(componentIdHash[2] & 0xFFl) << 40) | ((long)(componentIdHash[3] & 0xFF) << 32);
-        long nodeHigh = ((long)(componentIdHash[4] & 0xFFl) << 24) | ((componentIdHash[5] & 0xFF) << 16)
+        long nodeLow = ((componentIdHash[2] & 0xFFl) << 40) | ((long)(componentIdHash[3] & 0xFF) << 32);
+        long nodeHigh = ((componentIdHash[4] & 0xFFl) << 24) | ((componentIdHash[5] & 0xFF) << 16)
             | ((componentIdHash[6] & 0xFF) << 8) | (componentIdHash[7] & 0xFF);
         long lsb = variant | clockseq | nodeLow | nodeHigh;
 

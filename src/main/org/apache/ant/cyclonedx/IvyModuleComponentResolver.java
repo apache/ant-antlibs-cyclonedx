@@ -209,12 +209,12 @@ class IvyModuleComponentResolver {
         if (component.getVersion() == null) {
             component.setVersion(mrid.getRevision());
         }
-        if (!component.hasDescription() && md.getDescription() != null && md.getDescription().length() > 0) {
+        if (component.getDescription() == null && md.getDescription() != null && md.getDescription().length() > 0) {
             component.setDescription(md.getDescription());
         }
 
         String licenseUrl = null;
-        if (!component.hasLicenses()) {
+        if (component.getLicenses().isEmpty()) {
             License[] ivyLicenses = md.getLicenses();
             if (ivyLicenses != null) {
 
