@@ -190,6 +190,8 @@ under the License.
         <dependency componentRef="ant"/>
         <dependency componentRef="ant-launcher"/>
         <dependency componentRef="cyclonedx-core"/>
+        <dependency componentRef="commons-codec"/>
+        <dependency componentRef="apache-ivy"/>
       </component>
       <additionalComponent refid="ant"/>
       <additionalComponent refid="ant-launcher"/>
@@ -313,7 +315,7 @@ under the License.
         <file file="${lib.dir.compile}/json-schema-validator-2.0.4.jar"/>
         <license refid="apache-2"/>
       </additionalComponent>
-      <additionalComponent>
+      <additionalComponent id="apache-ivy">
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.6.0/ivy-2.6.0.cdx.json"/>
         </sbomLink>
