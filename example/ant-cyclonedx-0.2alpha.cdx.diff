@@ -1,5 +1,5 @@
---- ant-cyclonedx-0.2alpha.cdx.json	2026-08-16 09:14:38.469315413 +0200
-+++ ant-cyclonedx-0.2alpha.ivy.cdx.json	2026-08-16 09:14:42.941135681 +0200
+--- ant-cyclonedx-0.2alpha.cdx.json	2026-08-16 09:31:45.900940846 +0200
++++ ant-cyclonedx-0.2alpha.ivy.cdx.json	2026-08-16 09:31:48.698014904 +0200
 @@ -253,36 +253,64 @@
    "components" : [
      {
@@ -246,8 +246,10 @@
 -          "url" : "https://github.com/FasterXML/jackson-dataformat-xml"
 +          "alg" : "SHA-256",
 +          "content" : "cc3a0e540791a9a1cbcd7584767b84572ffda0b72823856558f47dea69ae8ed1"
-+        },
-+        {
+         },
+         {
+-          "type" : "bom",
+-          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.22.1/jackson-dataformat-xml-2.22.1-sbom-cyclonedx.json"
 +          "alg" : "SHA-512",
 +          "content" : "12398c493aa3b54716813a6297b72104fa52ab324bae54512e41a1285ac756fcbb800084c088f8e9d3aceae2e698ca164bc547421d5fe2fb62ed2dadf1d3d000"
 +        },
@@ -256,18 +258,16 @@
 +          "content" : "2d33856e0e0aa27571950d57227a66ab78f22c5cecf7c07afc3ad4dbe3b4b4ae"
          },
          {
--          "type" : "bom",
--          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.22.1/jackson-dataformat-xml-2.22.1-sbom-cyclonedx.json"
+-          "type" : "distribution-intake",
+-          "url" : "https://central.sonatype.com/api/v1/publisher"
 +          "alg" : "SHA3-512",
 +          "content" : "47bdf965089a1949286216aed3b286d8990a3b9169dacb15f0a6f36df07ee397d0ecbcc1294228479068cdbff4b1d8a11718ad5efa744952c34eb092e62cf644"
 +        },
 +        {
 +          "alg" : "SHA-384",
 +          "content" : "2f20d92e2fc1932406055a055e0602c9d0a96d7c19b75aeb7dca7c19b30e65bd126677a9bb855ef493be8f4be1feaf62"
-         },
-         {
--          "type" : "distribution-intake",
--          "url" : "https://central.sonatype.com/api/v1/publisher"
++        },
++        {
 +          "alg" : "SHA3-384",
 +          "content" : "e0bc342c2bcd8d91b674657a28e0a762d68232729d7a53d0c04ba63807a1f6bc458bfb64c422408f0cb701ce753ff7cd"
 +        }
@@ -702,7 +702,7 @@
        "group" : "org.apache.commons",
        "name" : "commons-lang3",
        "version" : "3.20.0",
-@@ -1286,94 +1194,25 @@
+@@ -1286,77 +1194,22 @@
          {
            "license" : {
              "id" : "Apache-2.0",
@@ -778,87 +778,44 @@
 -    {
 -      "type" : "library",
        "bom-ref" : "pkg:maven/org.apache.ivy/ivy@2.6.0?type=jar",
--      "supplier" : {
--        "name" : "Apache Ant Project Management Committee",
--        "url" : [
--          "https://ant.apache.org/"
--        ]
--      },
--      "manufacturer" : {
--        "name" : "Apache Ant Project Management Committee",
--        "url" : [
--          "https://ant.apache.org/"
--        ]
--      },
--      "publisher" : "The Apache Software Foundation",
 +      "isExternal" : true,
-       "group" : "org.apache.ivy",
-       "name" : "ivy",
-       "version" : "2.6.0",
--      "description" : "Apache Ivy",
-       "hashes" : [
+       "supplier" : {
+         "name" : "Apache Ant Project Management Committee",
+         "url" : [
+@@ -1428,17 +1281,13 @@
+         },
          {
-           "alg" : "MD5",
-@@ -1412,92 +1251,20 @@
-         {
-           "license" : {
-             "id" : "Apache-2.0",
--            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
-+            "url" : "http://www.apache.org/licenses/LICENSE-2.0.txt"
-           }
-         }
-       ],
-       "purl" : "pkg:maven/org.apache.ivy/ivy@2.6.0?type=jar",
-       "externalReferences" : [
-         {
--          "type" : "vcs",
--          "url" : "https://gitbox.apache.org/repos/asf/ant-ivy.git"
--        },
--        {
--          "type" : "issue-tracker",
--          "url" : "http://issues.apache.org/jira/browse/IVY"
--        },
--        {
            "type" : "website",
 -          "url" : "https://ant.apache.org/ivy/"
--        },
--        {
--          "type" : "advisories",
--          "url" : "https://ant.apache.org/ivy/security.html"
--        },
--        {
++          "url" : "http://ant.apache.org/ivy/"
+         },
+         {
+           "type" : "advisories",
+           "url" : "https://ant.apache.org/ivy/security.html"
+         },
+         {
 -          "type" : "bom",
 -          "url" : "https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.6.0/ivy-2.6.0.cdx.json"
 -        },
 -        {
--          "type" : "mailing-list",
--          "url" : "https://ant.apache.org/ivy/mailing-lists.html"
--        },
--        {
--          "type" : "source-distribution",
--          "url" : "https://ant.apache.org/ivy/download.cgi"
--        },
--        {
--          "type" : "distribution",
--          "url" : "https://ant.apache.org/ivy/download.cgi"
--        },
--        {
--          "type" : "license",
--          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
--        },
--        {
+           "type" : "mailing-list",
+           "url" : "https://ant.apache.org/ivy/mailing-lists.html"
+         },
+@@ -1455,46 +1304,14 @@
+           "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+         },
+         {
 -          "type" : "build-system",
 -          "url" : "https://ci-builds.apache.org/job/Ant/job/Ivy/"
 -        },
 -        {
--          "type" : "security-contact",
--          "url" : "https://www.apache.org/security/"
-+          "url" : "http://ant.apache.org/ivy/"
-         }
-       ]
-     },
-     {
-       "type" : "library",
+           "type" : "security-contact",
+           "url" : "https://www.apache.org/security/"
+-        }
+-      ]
+-    },
+-    {
+-      "type" : "library",
 -      "bom-ref" : "pkg:maven/org.bouncycastle/bcpg-jdk15on@1.70?type=jar",
 -      "group" : "org.bouncycastle",
 -      "name" : "bcpg-jdk15on",
@@ -880,21 +837,22 @@
 -      "name" : "bcprov-jdk15on",
 -      "version" : "1.70",
 -      "licenses" : [
--        {
++        },
+         {
 -          "license" : {
 -            "name" : "Bouncy Castle Licence",
 -            "url" : "https://www.bouncycastle.org/licence.html"
 -          }
--        }
++          "type" : "rfc-9116",
++          "url" : "https://ant.apache.org/.well-known/security.txt"
+         }
 -      ],
 -      "purl" : "pkg:maven/org.bouncycastle/bcprov-jdk15on@1.70?type=jar"
--    },
--    {
--      "type" : "library",
-       "bom-ref" : "pkg:maven/org.codehaus.woodstox/stax2-api@4.3.0?type=jar",
-       "group" : "org.codehaus.woodstox",
-       "name" : "stax2-api",
-@@ -1545,12 +1312,17 @@
++      ]
+     },
+     {
+       "type" : "library",
+@@ -1545,12 +1362,17 @@
            }
          }
        ],
@@ -914,7 +872,7 @@
        "group" : "org.cyclonedx",
        "name" : "cyclonedx-core-java",
        "version" : "13.1.0",
-@@ -1593,61 +1365,145 @@
+@@ -1593,61 +1415,145 @@
          {
            "license" : {
              "id" : "Apache-2.0",
@@ -956,8 +914,10 @@
 -          "url" : "https://github.com/CycloneDX/cyclonedx-core-java"
 +          "alg" : "SHA-256",
 +          "content" : "7b751d952061954d5abfed7181c1f645d336091b679891591d63329c622eb832"
-+        },
-+        {
+         },
+         {
+-          "type" : "distribution-intake",
+-          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
 +          "alg" : "SHA-512",
 +          "content" : "9a3e79db6666a6096a3021bb2e1d918f30f589d8de51d6b600f8ebd92515a510ae2d8f87919cc2dfa8365d64f10194cac8dfa0fb950160eef0e9da06f6caaeb9"
 +        },
@@ -966,18 +926,16 @@
 +          "content" : "00559b4f4066b4917ba4fe2a6f23111eaeada321112d030910d218ced9084b5e"
          },
          {
--          "type" : "distribution-intake",
--          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+-          "type" : "build-system",
+-          "url" : "https://github.com/CycloneDX/cyclonedx-core-java/actions"
 +          "alg" : "SHA3-512",
 +          "content" : "9579c2f7e7516e177c2d493ccc9eb8150978cf19f6f09b28d116f6935239fd56dc6af2b62b3336f79b0b462445550cd1fb5377a07001a6f44aaab6a32fa2fa47"
 +        },
 +        {
 +          "alg" : "SHA-384",
 +          "content" : "6ea24f814a9b6ece428cfd0535e2f3b8927005745ef61006b50fdb5a90126ee5ea05650155382b3b755c5bce38ef3944"
-         },
-         {
--          "type" : "build-system",
--          "url" : "https://github.com/CycloneDX/cyclonedx-core-java/actions"
++        },
++        {
 +          "alg" : "SHA3-384",
 +          "content" : "9b1015052f0ec43f9be09764e131834157599611cb52f6fe591c4ac6a8ab4817518f2a4b8871e5e738c8678e93af5557"
 +        }
@@ -1080,7 +1038,7 @@
      },
      {
        "ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.1?type=jar",
-@@ -1667,10 +1523,33 @@
+@@ -1667,10 +1573,33 @@
        ]
      },
      {
@@ -1114,7 +1072,7 @@
        "ref" : "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
        "dependsOn" : [ ]
      },
-@@ -1700,9 +1579,7 @@
+@@ -1700,9 +1629,7 @@
      },
      {
        "ref" : "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
@@ -1125,7 +1083,7 @@
      },
      {
        "ref" : "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
-@@ -1710,20 +1587,7 @@
+@@ -1710,20 +1637,7 @@
      },
      {
        "ref" : "pkg:maven/org.apache.ivy/ivy@2.6.0?type=jar",
@@ -1147,7 +1105,7 @@
      },
      {
        "ref" : "pkg:maven/org.codehaus.woodstox/stax2-api@4.3.0?type=jar",
-@@ -1740,6 +1604,14 @@
+@@ -1740,6 +1654,14 @@
          "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
          "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar"
        ]
