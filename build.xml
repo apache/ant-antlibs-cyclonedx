@@ -28,6 +28,19 @@ under the License.
     </copy>
   </target>
 
+  <target name="compile" depends="ready-to-compile,resolve">
+    <javac
+      srcdir="src/main"
+      destdir="${build.classes}"
+      debug="${javac.debug}"
+      source="${javac.-source}"
+      target="${javac.-target}"
+      includeantruntime="true">
+      <classpath refid="ivy.lib.path"/>
+      <classpath refid="classpath.compile"/>
+    </javac>
+  </target>
+
   <target name="fetch-cyclonedx" depends="antlib">
     <condition property="can.use.cyclonedx">
       <isset property="jdk9+"/>
@@ -35,13 +48,53 @@ under the License.
     <condition property="add.ant.core.component">
       <isset property="jdk9+"/>
     </condition>
-    <typedef uri="antlib:org.apache.ant.cyclonedx"
-      resource="org/apache/ant/cyclonedx/antlib.xml">
+    <classloader name="cdx.loader" parentName="antlib.classloader.ivy">
       <classpath>
         <path refid="classpath.compile"/>
         <pathelement location="${jarname}"/>
       </classpath>
-    </typedef>
+    </classloader>
+    <typedef uri="antlib:org.apache.ant.cyclonedx"
+             resource="org/apache/ant/cyclonedx/antlib.xml"
+             loaderRef="cdx.loader"/>
+  </target>
+
+  <target name="antunit-test" depends="ready-to-test-with-antunit,resolve"
+    unless="skip-antunit">
+    <condition property="antunit.includes" value="${antunit.testcase}"
+               else="**/test.xml,**/*-test.xml">
+      <isset property="antunit.testcase" />
+    </condition>
+
+    <property name="antunit.excludes" value="" />
+
+    <mkdir dir="${antunit.report.dir}" />
+
+    <path id="ivy-plus-cdx">
+      <fileset dir="${ivy.jar.dir}" includes="*.jar" id="ivy.lib"/>
+      <path refid="classpath.test"/>
+      <pathelement location="${build.classes}"/>
+    </path>
+    <au:antunit xmlns:au="antlib:org.apache.ant.antunit"
+      failOnError="false"
+      errorProperty="antunit.tests.failed"
+      >
+      <classpath>
+        <path refid="ivy-plus-cdx"/>
+      </classpath>
+      <fileset dir="${src.antunit}" includes="${antunit.includes}"
+               excludes="${antunit.excludes}" />
+
+      <au:xmllistener todir="${antunit.report.dir}" />
+      <au:plainlistener/>
+      <referenceset>
+        <reference refid="classpath.test"/>
+        <reference refid="ivy-plus-cdx"/>
+      </referenceset>
+      <propertyset>
+        <propertyref name="antlib.location"/>
+      </propertyset>
+    </au:antunit>
   </target>
 
   <target name="define-cyclonedx-components"
@@ -60,6 +113,73 @@ under the License.
           type="DOCUMENTATION"
           url="https://ant.apache.org/antlibs/cyclonedx/manual/"/>
     </cdx:externalreferenceset>
+  </target>
+
+  <target name="create-antlib-sbom-ivy"
+          depends="define-cyclonedx-components"
+          if="can.use.cyclonedx">
+    <uptodate property="antlib-sbom-ok"
+              targetfile="${build.lib}/${artifact.stub}.ivy.cdx.json">
+      <srcresources>
+        <file file="${jarname}"/>
+        <file file="ivy.xml"/>
+        <file file="build.xml"/>
+      </srcresources>
+    </uptodate>
+    <cdx:componentbom
+        bomName="${artifact.stub}.ivy.cdx"
+        outputdirectory="${build.lib}"
+        format="all"
+        useComponentSupplier="true"
+        useComponentManufacturer="true"
+        unless:set="antlib-sbom-ok"
+        xmlns:unless="ant:unless"
+        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component
+          description="Apache CycloneDX Antlib"
+          publisher="The Apache Software Foundation"
+          supplierIsManufacturer="true">
+        <ivymodule conf="default,provided" externalConf="provided">
+          <templateComponent refid="ant"/>
+          <templateComponent refid="ant-launcher"/>
+          <templateComponent
+              name="ivy"
+              group="org.apache.ivy"
+              publisher="The Apache Software Foundation"
+              description="Apache Ivy"
+              supplierIsManufacturer="true">
+            <supplier refid="ant-pmc"/>
+            <license refid="apache-2"/>
+            <externalReferenceSet refid="ant-common-refs"/>
+            <externalReference
+                type="MAILING_LIST"
+                url="https://ant.apache.org/ivy/mailing-lists.html"/>
+            <externalReference
+                type="VCS"
+                url="https://gitbox.apache.org/repos/asf/ant-ivy.git"/>
+            <externalReference
+                type="ISSUE_TRACKER"
+                url="http://issues.apache.org/jira/browse/IVY"/>
+            <externalReference
+                type="DISTRIBUTION"
+                url="https://ant.apache.org/ivy/download.cgi"/>
+            <externalReference
+                type="SOURCE_DISTRIBUTION"
+                url="https://ant.apache.org/ivy/download.cgi"/>
+            <externalReference
+                type="ADVISORIES"
+                url="https://ant.apache.org/ivy/security.html"/>
+          </templateComponent>
+        </ivymodule>
+        <file file="${jarname}"/>
+        <supplier refid="ant-pmc"/>
+        <license refid="apache-2"/>
+        <externalReferenceSet refid="ant-common-refs"/>
+        <externalReferenceSet refid="antlibs-common-ext-refs"/>
+        <externalReferenceSet refid="antlib-ext-refs"/>
+      </component>
+      <license refid="apache-2"/>
+    </cdx:componentbom>
   </target>
 
   <target name="create-antlib-sbom"
@@ -98,6 +218,8 @@ under the License.
         <dependency componentRef="ant"/>
         <dependency componentRef="ant-launcher"/>
         <dependency componentRef="cyclonedx-core"/>
+        <dependency componentRef="commons-codec"/>
+        <dependency componentRef="apache-ivy"/>
       </component>
       <additionalComponent refid="ant"/>
       <additionalComponent refid="ant-launcher"/>
@@ -221,7 +343,7 @@ under the License.
         <file file="${lib.dir.compile}/json-schema-validator-2.0.4.jar"/>
         <license refid="apache-2"/>
       </additionalComponent>
-      <additionalComponent>
+      <additionalComponent id="apache-ivy">
         <sbomLink>
           <url url="https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.6.0/ivy-2.6.0.cdx.json"/>
         </sbomLink>

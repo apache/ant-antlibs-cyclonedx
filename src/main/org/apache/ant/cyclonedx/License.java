@@ -19,6 +19,9 @@ package org.apache.ant.cyclonedx;
 
 import java.util.Comparator;
 
+import org.cyclonedx.model.LicenseChoice;
+import org.cyclonedx.util.LicenseResolver;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.types.DataType;
 import org.apache.tools.ant.types.resources.URLResource;
@@ -108,6 +111,17 @@ public class License extends DataType {
         if (name == null && id == null) {
             throw new BuildException("license name or licenseId is required");
         }
+
+        if (id == null) {
+            org.cyclonedx.model.License l = guessLicense();
+            if (l != null) {
+                if (url != null) {
+                    l.setUrl(url);
+                }
+                return l;
+            }
+        }
+
         org.cyclonedx.model.License l = new org.cyclonedx.model.License();
         if (name != null) {
             l.setName(name);
@@ -128,5 +142,20 @@ public class License extends DataType {
      */
     protected License getRef() {
         return getCheckedRef(License.class);
+    }
+
+    /**
+     * Tries to guess the SPDX license identifier from the license's name or url.
+     */
+    private org.cyclonedx.model.License guessLicense() {
+        LicenseChoice lc = LicenseResolver.resolve(name, false);
+        if ((lc == null || lc.getLicenses() == null || lc.getLicenses().isEmpty())
+            && url != null) {
+            lc = LicenseResolver.resolve(url, false);
+        }
+        if (lc != null && lc.getLicenses() != null && !lc.getLicenses().isEmpty()) {
+            return lc.getLicenses().get(0);
+        }
+        return null;
     }
 }

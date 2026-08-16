@@ -1,0 +1,1745 @@
+{
+  "bomFormat" : "CycloneDX",
+  "specVersion" : "1.7",
+  "serialNumber" : "urn:uuid:068b13c8-01a0-1000-9297-150796a001fc",
+  "version" : 1,
+  "metadata" : {
+    "timestamp" : "2026-08-15T17:49:33Z",
+    "lifecycles" : [
+      {
+        "phase" : "build"
+      }
+    ],
+    "tools" : {
+      "components" : [
+        {
+          "type" : "library",
+          "supplier" : {
+            "name" : "Apache Ant Project Management Committee",
+            "url" : [
+              "https://ant.apache.org/"
+            ]
+          },
+          "manufacturer" : {
+            "name" : "Apache Ant Project Management Committee",
+            "url" : [
+              "https://ant.apache.org/"
+            ]
+          },
+          "publisher" : "The Apache Software Foundation",
+          "group" : "org.apache.ant",
+          "name" : "ant-cyclonedx",
+          "version" : "0.2alpha",
+          "description" : "Apache CycloneDX Antlib",
+          "hashes" : [
+            {
+              "alg" : "MD5",
+              "content" : "de73b2090ed784264d7cdf6b94c40b9f"
+            },
+            {
+              "alg" : "SHA-1",
+              "content" : "117736e22f1f27217eaf9068b1007fddedef5f8f"
+            },
+            {
+              "alg" : "SHA-256",
+              "content" : "aed1a008c3ebdbb2908d7dbacebbc1d8d489d08ebba0910217f239412ab36b04"
+            },
+            {
+              "alg" : "SHA-512",
+              "content" : "add20643bd0e106b27c7200863bf376ea28ee95cd42697820024b2eff5c5bdacc4be0bbbe1138ca8ac35e209df80ce30bd27e1a5eb32d1ae528234936f4ea0ca"
+            },
+            {
+              "alg" : "SHA3-256",
+              "content" : "192621053a51c43cc73078977487e42ec5b6597c5e95119ba86a283b1aca4470"
+            },
+            {
+              "alg" : "SHA3-512",
+              "content" : "11159291538dd1d7fec1de2214579732e76a1233acbff6887ead1b7520bdf784f47f0f6af1ca66f0096ddbbbf7470febd77369260653781ee4ed1b3a6d465c20"
+            },
+            {
+              "alg" : "SHA-384",
+              "content" : "c65ed1eb81aa20245bab2173bcab863663dec015f220bc5c5353a0d099e71013f85537a41e8fb673dba35f8bf9ada61d"
+            },
+            {
+              "alg" : "SHA3-384",
+              "content" : "031ca0350bcb44f06f57160d0d9bba747f37a403a58b54938758daf84f2b34f07201a6a69052ee8bbbfb15f6df0dec3b"
+            }
+          ],
+          "licenses" : [
+            {
+              "license" : {
+                "id" : "Apache-2.0",
+                "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+              }
+            }
+          ],
+          "purl" : "pkg:maven/org.apache.ant/ant-cyclonedx@0.2alpha?type=jar",
+          "externalReferences" : [
+            {
+              "type" : "vcs",
+              "url" : "https://gitbox.apache.org/repos/asf/ant-antlibs-cyclonedx.git"
+            },
+            {
+              "type" : "issue-tracker",
+              "url" : "https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&product=Ant"
+            },
+            {
+              "type" : "website",
+              "url" : "https://ant.apache.org/antlibs/cyclonedx/"
+            },
+            {
+              "type" : "mailing-list",
+              "url" : "https://ant.apache.org/mail.html"
+            },
+            {
+              "type" : "documentation",
+              "url" : "https://ant.apache.org/antlibs/cyclonedx/manual/"
+            },
+            {
+              "type" : "source-distribution",
+              "url" : "https://ant.apache.org/antlibs/srcdownload.cgi"
+            },
+            {
+              "type" : "distribution",
+              "url" : "https://ant.apache.org/antlibs/bindownload.cgi"
+            },
+            {
+              "type" : "license",
+              "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+            },
+            {
+              "type" : "build-system",
+              "url" : "https://ci-builds.apache.org/job/Ant/job/CycloneDX%20Antlib/"
+            },
+            {
+              "type" : "security-contact",
+              "url" : "https://www.apache.org/security/"
+            },
+            {
+              "type" : "rfc-9116",
+              "url" : "https://ant.apache.org/.well-known/security.txt"
+            }
+          ]
+        }
+      ]
+    },
+    "component" : {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.ant/ant-cyclonedx@0.2alpha?type=jar",
+      "supplier" : {
+        "name" : "Apache Ant Project Management Committee",
+        "url" : [
+          "https://ant.apache.org/"
+        ]
+      },
+      "manufacturer" : {
+        "name" : "Apache Ant Project Management Committee",
+        "url" : [
+          "https://ant.apache.org/"
+        ]
+      },
+      "publisher" : "The Apache Software Foundation",
+      "group" : "org.apache.ant",
+      "name" : "ant-cyclonedx",
+      "version" : "0.2alpha",
+      "description" : "Apache CycloneDX Antlib",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "de73b2090ed784264d7cdf6b94c40b9f"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "117736e22f1f27217eaf9068b1007fddedef5f8f"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "aed1a008c3ebdbb2908d7dbacebbc1d8d489d08ebba0910217f239412ab36b04"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "add20643bd0e106b27c7200863bf376ea28ee95cd42697820024b2eff5c5bdacc4be0bbbe1138ca8ac35e209df80ce30bd27e1a5eb32d1ae528234936f4ea0ca"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "192621053a51c43cc73078977487e42ec5b6597c5e95119ba86a283b1aca4470"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "11159291538dd1d7fec1de2214579732e76a1233acbff6887ead1b7520bdf784f47f0f6af1ca66f0096ddbbbf7470febd77369260653781ee4ed1b3a6d465c20"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "c65ed1eb81aa20245bab2173bcab863663dec015f220bc5c5353a0d099e71013f85537a41e8fb673dba35f8bf9ada61d"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "031ca0350bcb44f06f57160d0d9bba747f37a403a58b54938758daf84f2b34f07201a6a69052ee8bbbfb15f6df0dec3b"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.ant/ant-cyclonedx@0.2alpha?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://gitbox.apache.org/repos/asf/ant-antlibs-cyclonedx.git"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://bz.apache.org/bugzilla/buglist.cgi?component=CycloneDX%20Antlib&product=Ant"
+        },
+        {
+          "type" : "website",
+          "url" : "https://ant.apache.org/antlibs/cyclonedx/"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://ant.apache.org/mail.html"
+        },
+        {
+          "type" : "documentation",
+          "url" : "https://ant.apache.org/antlibs/cyclonedx/manual/"
+        },
+        {
+          "type" : "source-distribution",
+          "url" : "https://ant.apache.org/antlibs/srcdownload.cgi"
+        },
+        {
+          "type" : "distribution",
+          "url" : "https://ant.apache.org/antlibs/bindownload.cgi"
+        },
+        {
+          "type" : "license",
+          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+        },
+        {
+          "type" : "security-contact",
+          "url" : "https://www.apache.org/security/"
+        },
+        {
+          "type" : "rfc-9116",
+          "url" : "https://ant.apache.org/.well-known/security.txt"
+        }
+      ]
+    },
+    "manufacturer" : {
+      "name" : "Apache Ant Project Management Committee",
+      "url" : [
+        "https://ant.apache.org/"
+      ]
+    },
+    "supplier" : {
+      "name" : "Apache Ant Project Management Committee",
+      "url" : [
+        "https://ant.apache.org/"
+      ]
+    },
+    "licenses" : [
+      {
+        "license" : {
+          "id" : "Apache-2.0",
+          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+        }
+      }
+    ]
+  },
+  "components" : [
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/ch.randelshofer/fastdoubleparser@2.0.1?type=jar",
+      "group" : "ch.randelshofer",
+      "name" : "fastdoubleparser",
+      "version" : "2.0.1",
+      "description" : "A Java port of Daniel Lemire's fast_float project.",
+      "scope" : "required",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "MIT",
+            "url" : "https://opensource.org/license/mit/"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/ch.randelshofer/fastdoubleparser@2.0.1?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/wrandelshofer/FastDoubleParser/tree/master"
+        },
+        {
+          "type" : "website",
+          "url" : "https://github.com/wrandelshofer/FastDoubleParser"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.22?type=jar",
+      "publisher" : "FasterXML",
+      "group" : "com.fasterxml.jackson.core",
+      "name" : "jackson-annotations",
+      "version" : "2.22",
+      "description" : "Core annotations used for value types, used by Jackson data binding package.",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "04c11c456fd1e21b9a21c25c665109cc"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "15c67f9498d6934cff9510fc70c5a12e52290457"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "21ddb598807d3a51a876704eb979d9296e1c6a6f47ab1826ff88c6d6a127a2d0"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "63b597ec02b4e31c57266d9b96f05f301f217bc12ffb7ba046a5658d2829728930a559947b98eb6c3cc448413a96b4939427aa669ae1e2dc3597ab5d5d287f9f"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "6bfc7b4ba70779fe5f0b1e2af585abab982f7929a68beb2c0e62ea2e2a321de0"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "3f1bdfa32f7df76ac14cd2a3e689b65066fa0a6a760a9b8b1121773bb1b043a44587d4148c67f361dc6c630e6b31f29b2691a57d47caabea5ca23ae44af34a5e"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "35b6fe651afeed54d1e6f7a39ac6cf6fdbafacdf2e3bdff7b29b965ccb79a0c53342a56bf0ecea4d6c4c4651b1d6aa19"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "72267dc54c4175c42ca0dd430a87b12cc68619a8777be2048e1d2f0747db884a568b5c346c77c9c8c0714ab96018f5f7"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.22?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/FasterXML/jackson-annotations"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/FasterXML/jackson-annotations/issues"
+        },
+        {
+          "type" : "website",
+          "url" : "https://github.com/FasterXML/jackson"
+        },
+        {
+          "type" : "bom",
+          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.22/jackson-annotations-2.22-sbom-cyclonedx.json"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://central.sonatype.com/api/v1/publisher"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.22.1?type=jar",
+      "publisher" : "FasterXML",
+      "group" : "com.fasterxml.jackson.core",
+      "name" : "jackson-core",
+      "version" : "2.22.1",
+      "description" : "Core Jackson processing abstractions (aka Streaming API), implementation for JSON",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "09e866bcd73613665ef49f5086704fb1"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "da7ffb60088d7e8f37ecdd3b617520971cc7b9bf"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "941ff029bcdb93e83d209ce516c1a7fb8bbac07d0a2fa122f5bf194b2cd7b4f4"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "d4485af4465f561034df86686d672835b0272b6200efb0af55ea71e62d3faf09e9f90e42df4da64650795cf00519fc553f892bf6179330a3e74750110a785efb"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "48fc6e17c36e14b8bae387b92248a43da12293b68a61dd2517c708dbb24ed010"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "f72ef2d2a1012be8b1c972323527a396bbaea0b543bd79fac6d380f8e4855c6d98190b067ccec92ece9ed8e1ece1e6046b1d93f9c85944fcb7133fe0b4dc60e4"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "faaf92de6e93475fdbb7d56221fd35d8435ac4f87dddfd334ed05c4318b8b72220010effd08bf8dd156420771b294eb4"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "5c432f1a2f3369485c4ed7d3c3c4499342c23efd0d7a574b73421345df9762bd27643cc469b01632400691f3c09b5d8b"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.22.1?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/FasterXML/jackson-core"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/FasterXML/jackson-core/issues"
+        },
+        {
+          "type" : "website",
+          "url" : "https://github.com/FasterXML/jackson-core"
+        },
+        {
+          "type" : "bom",
+          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.22.1/jackson-core-2.22.1-sbom-cyclonedx.json"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://central.sonatype.com/api/v1/publisher"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.1?type=jar",
+      "publisher" : "FasterXML",
+      "group" : "com.fasterxml.jackson.core",
+      "name" : "jackson-databind",
+      "version" : "2.22.1",
+      "description" : "General data-binding functionality for Jackson: works on core streaming API",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "df2dcf8d581836d48aae7387311cba93"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "9e2fb91831cce9cb9262909cd76647508949f232"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "7dcd7e53bec1f56c7ad278bd1ca0840bebcc595d61ce44d6a8439abb75b965b2"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "d8a905e80e6d7dd2026b16b075dde2d409425b61417120980ea07b261c6bf98d5c065053f1c063b60da30b4324157778ec4eb859945fb8543176e55a2d3b8db8"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "ab1df340c8e99a3ea6f485b9e3bf0e1cb7b57810b09e9161c8eee38eb8db3e47"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "dc3f3df098898dc6bf71fcef0ca232a592f59fb465161b95b03a28eebc9539bede1db83bacaf14dc57328feffc7a4637b911a09356fa4330d93f52131ac7254e"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "b45efa1187b756bdfa7e0c6bc2eda85fcf13d879b4bf370f06ef95325c13b629f763a8027dbc34dab7c6a549bb33e945"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "7eeb7d7ea5434fdede4b0d256955d0ebf93a11ad89efcc2a3551d649bf197f6aa6c3dd60247805a13270fd8ed0a98ae8"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.1?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/FasterXML/jackson-databind"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/FasterXML/jackson-databind/issues"
+        },
+        {
+          "type" : "website",
+          "url" : "https://github.com/FasterXML/jackson"
+        },
+        {
+          "type" : "bom",
+          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.22.1/jackson-databind-2.22.1-sbom-cyclonedx.json"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://central.sonatype.com/api/v1/publisher"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-xml@2.22.1?type=jar",
+      "publisher" : "FasterXML",
+      "group" : "com.fasterxml.jackson.dataformat",
+      "name" : "jackson-dataformat-xml",
+      "version" : "2.22.1",
+      "description" : "Data format extension for Jackson to offer alternative support for serializing POJOs as XML and deserializing XML as POJOs.",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "dc9e8f9090ad8aab73dc3e850a77586b"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "52e415c14654d65bc80cc4942585c5a25423f3c2"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "243a9c67b3d7c40d13719daf0a2838942d3e969feafd6b2cae24eeb02c1d75e2"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "c8135e28efac33cf9950e6a0b58443df28501f17fbf5426a8ce407a6c5ff53de8e14c1cb1b20a297887a5915fe52e2ef9414946a4234a4b4173133a26be06832"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "7246efd028dcd9a3f10195bc10e7ca984a3e4a779050d74d10c42de3ccb57a2b"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "f376c49689c609dc890634c7c3ffcd4b0eb670893ba900ca7392b7ed841f28010283815155458532d1845dc0432c975b3b3c978895888d5a5c9ddb43714b9076"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "6ad9617cb4bad3701f76f098d84ebfbac6c86e7e6b780fea49a944e719b0d5667e90063dde614e4ed7bee8912d20599a"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "701a1eda9821af584e8a9ebc998637e7a21e10e6d370f99a0979a5c633605e10a0d13e8408f965b020d12fbba9341915"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-xml@2.22.1?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "http://github.com/FasterXML/jackson-dataformat-xml"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/FasterXML/jackson-dataformat-xml/issues"
+        },
+        {
+          "type" : "website",
+          "url" : "https://github.com/FasterXML/jackson-dataformat-xml"
+        },
+        {
+          "type" : "bom",
+          "url" : "https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.22.1/jackson-dataformat-xml-2.22.1-sbom-cyclonedx.json"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://central.sonatype.com/api/v1/publisher"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.fasterxml.woodstox/woodstox-core@7.2.0?type=jar",
+      "group" : "com.fasterxml.woodstox",
+      "name" : "woodstox-core",
+      "version" : "7.2.0",
+      "description" : "Woodstox is a high-performance XML processor that implements Stax (JSR-173), SAX2 and Stax2 APIs",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "d32a36b91bfa2ba1f69e9671ce2fba6a"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "ec9c97f566f812e249a7aba6c76815369ac00864"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "689f5be95f9bb369d6c0e8db99a99f930b0c48d6a69b46151782b5816c7ea820"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "f3baa0b19322e22ef0b5bb6739c1497167938901450e141b2e8769f0acf7ec2e5498349db007f6958de7eee00b2a9b36b0a1c09fa7877f074cb8b5ad2485559d"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "5f57a8d1f1a9cd8920c94436f53bcbca6164a221e793e5ef5db2b8861f9b113b"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "960c8d80a53fdbb0423432d018723f805fcdd674a49d2aef7a58f181bcc53d7a7adf2668ab51300e8789d9ffd4e98267cbceb34fcf03195a779b2faacbe461a8"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "d3f9eee2aa2ff88fa3efd0d52d4a0fa8cf79707d36f5a9dacc2852df80584300a32e5d54b77af3a7bf29e35b84413e18"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "f4862abab750ed951776c465833ecf3fc8747dd2bf4f6a3108b5d4ff1e6261a24cd4708e889154848d7bad55099c6c42"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.fasterxml.woodstox/woodstox-core@7.2.0?type=jar"
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.github.package-url/packageurl-java@1.5.0?type=jar",
+      "group" : "com.github.package-url",
+      "name" : "packageurl-java",
+      "version" : "1.5.0",
+      "description" : "The official Java implementation of the PackageURL specification. PackageURL (purl) is a minimal specification for describing a package via a \"mostly universal\" URL",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "90856d8bb5b17e08fdf03b6a2f93b81c"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "e6bf530f52feab911f4032604ca0b8216f7ff337"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "e45551727707acc0c56ac62d56964332ea0f138d6cc3656d988b9369150f5247"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "8064df400154caa110b8845bd17e6cea2683307e575ce88e40d7c0c8965ea0af6c150a376d8b9ba7354676c41b52c94535f30c6e830447613299ccf5fc7aa959"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "c9881b69bde35ea6ff4006877b9fbf91462f911b5b142aa699a45a00867d413a"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "2b9caf58deef687a9bf01abd61a7af4abdb61247a8a966683a18157ee948f1ea424602598dc8f665bf24f7e1e516866298ef0507e9d697cb20dcf60eff2095ca"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "0597100022f72e020c9d929bf57ecef91af7574610fb03b4019feba4b25f491a076f03577be2009e66d9001c4c0f8ab0"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "bbdd55a31a4755ef589bcb176283fe03e3c9089d315eab577fef3a9c2d02e632c6ac3fdebbc90a2f0f8ed7974b9f397c"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "MIT",
+            "url" : "https://opensource.org/licenses/MIT"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.github.package-url/packageurl-java@1.5.0?type=jar"
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.jcraft/jsch.agentproxy.connector-factory@0.0.9?type=jar",
+      "group" : "com.jcraft",
+      "name" : "jsch.agentproxy.connector-factory",
+      "version" : "0.0.9",
+      "description" : "a connector factory",
+      "licenses" : [
+        {
+          "license" : {
+            "name" : "Revised BSD",
+            "url" : "http://www.jcraft.com/jsch/LICENSE.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.jcraft/jsch.agentproxy.connector-factory@0.0.9?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "http://www.jcraft.com/"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.jcraft/jsch.agentproxy.jsch@0.0.9?type=jar",
+      "group" : "com.jcraft",
+      "name" : "jsch.agentproxy.jsch",
+      "version" : "0.0.9",
+      "description" : "a library to use jsch-agent-proxy with JSch",
+      "licenses" : [
+        {
+          "license" : {
+            "name" : "Revised BSD",
+            "url" : "http://www.jcraft.com/jsch/LICENSE.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.jcraft/jsch.agentproxy.jsch@0.0.9?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "http://www.jcraft.com/"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.jcraft/jsch.agentproxy@0.0.9?type=jar",
+      "group" : "com.jcraft",
+      "name" : "jsch.agentproxy",
+      "version" : "0.0.9",
+      "description" : "a proxy to ssh-agent and Pageant in Java",
+      "licenses" : [
+        {
+          "license" : {
+            "name" : "Revised BSD",
+            "url" : "http://www.jcraft.com/jsch/LICENSE.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.jcraft/jsch.agentproxy@0.0.9?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "http://www.jcraft.com/"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.jcraft/jsch@0.1.55?type=jar",
+      "group" : "com.jcraft",
+      "name" : "jsch",
+      "version" : "0.1.55",
+      "description" : "JSch is a pure Java implementation of SSH2",
+      "licenses" : [
+        {
+          "license" : {
+            "name" : "Revised BSD",
+            "url" : "http://www.jcraft.com/jsch/LICENSE.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.jcraft/jsch@0.1.55?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "website",
+          "url" : "http://www.jcraft.com/"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/com.networknt/json-schema-validator@2.0.4?type=jar",
+      "group" : "com.networknt",
+      "name" : "json-schema-validator",
+      "version" : "2.0.4",
+      "description" : "A json schema validator that supports draft v4, v6, v7, v2019-09 and v2020-12",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "e9d8e2cb13ac8c788731f05c6a3a6e8f"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "57ec5a08b2fd6dab50a48b84ec42fdcd0436690f"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "4856729c8f38ffba02380b0895b7e98a511f6e68a1fb6424782f3e6549dbba07"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "8d427c2dcad5ec81ecf8f3e9cb0d561086d22d41c5dda0b48ffbd6f81ff1e6b2d886ede115580f6fa8c25f102eb802efb79224d7f8aae56455d2c019c9733343"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "60b4e1de5308fb203b93c87e221ff8670a372c55004f8583e7ed9985a2843241"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "2bb2e958de2f406905aad9d7798ed0074e936676f74cc9e7588bad52744e6ef808a4a358047bf0273fcaec7007503c1f361ea73709b2726a1a208e291f6d619b"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "6c0391ffe0f08dd308e6f092668992b3b6b10be89dec79918cf23529c6800084ecd4ba41dbdde5010b8d340ea840dad9"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "ba9c59890cb53e0475d3f7e645ac6c54e5b42462d582441af794244dca642032ff318c4b719a6865f8c2e86748f20bc1"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/com.networknt/json-schema-validator@2.0.4?type=jar"
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
+      "publisher" : "The Apache Software Foundation",
+      "group" : "commons-codec",
+      "name" : "commons-codec",
+      "version" : "1.22.1",
+      "description" : "The Apache Commons Codec component contains encoders and decoders for formats such as Base16, Base32, Base64, digest, and Hexadecimal. In addition to these widely used encoders and decoders, the codec package also maintains a collection of phonetic encoding utilities.",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "7bfd10447817907ffd7f14fbc6493940"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "da09bcdb330deef7cfee70f30c6889fda70d5ebf"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "78a5d732fbd715e2d10bd7150d2f8030bae57267f8aacc5c88f642cb6c2e5d3f"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "1e2023b6e7715339a309226c94635db77fd3d8d7f6fc1048e0138dc4b4ff27540e1e1ff2238a41b94029a9497b2935af6e8b05eeeed69b76600c2f4eed3e36ed"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "70d7c377536c088c88d043b4f3297cb58ea9bd7d8374514f16060ca62977253e"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "7885692a52215d8ea620afc25b22719c835d9079265592a9b790e4c13b1cd5cbb023eb9cf39a304e463cf280dd7931ca966528c9bb14b58c400018699c058ec7"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "29f01c913caa51660ff4a8623255f819961ee63b20b125a1c3e5f061b4a75864c1a349420f6d314009b4cf12524aecfb"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "de7a0317378663055c9a2f80d30bc543549924e994a27c683ee1ff405587395d00b13d277dd39ceb09fa64a9f110d09e"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/apache/commons-codec"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://issues.apache.org/jira/browse/CODEC"
+        },
+        {
+          "type" : "website",
+          "url" : "https://commons.apache.org/proper/commons-codec/"
+        },
+        {
+          "type" : "bom",
+          "url" : "https://repo1.maven.org/maven2/commons-codec/commons-codec/1.22.1/commons-codec-1.22.1-cyclonedx.json"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://mail-archives.apache.org/mod_mbox/commons-user/"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://repository.apache.org/service/local/staging/deploy/maven2"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://github.com/apache/commons-codec/actions"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
+      "publisher" : "The Apache Software Foundation",
+      "group" : "commons-io",
+      "name" : "commons-io",
+      "version" : "2.22.0",
+      "description" : "The Apache Commons IO library contains utility classes, stream implementations, file filters, file comparators, endian transformation classes, and much more.",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "f91d54bd47c42456b4a5ae62eed85565"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "5b1e18bc0ad651ed878029d83f88d9c8189fd51e"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "2b9a7b1f726fb86216dbd2c8321eabe0221dbd5b1be81c18e1cb53811b104758"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "fca0b4ae70e531bee74413e0b865981aa8b60a9390f789b63997203dae67be65362e95a0c35b9d4b072fbb0810114783415dd22b92fb42e5594b10992f632bc5"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "134157813629f4d9b97044602e1fa2f61c14c3be1f641490b3e06ac941ff3315"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "47832f3b7abe375f3b0ed169996d9776b2a0007b073ab3f06438dce67be9bda45e8aac84737cc639ada4424b13c7614d8c9fcb23779868f7421414777cc0946a"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "e1fbf3729c4d2d77b036d90234d9e2ed3fe0c2f5379d333a695c1cb0037f63d288c8b62de05022da0f612da65835fee0"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "02acc6e7f614d8684e7104a52123573152a2e1b651bc6a5be12d4b58861c757d6c56f51105bb97c92309d126059232ea"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://gitbox.apache.org/repos/asf?p=commons-io.git/commons-io"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://issues.apache.org/jira/browse/IO"
+        },
+        {
+          "type" : "website",
+          "url" : "https://commons.apache.org/proper/commons-io/"
+        },
+        {
+          "type" : "bom",
+          "url" : "https://repo1.maven.org/maven2/commons-io/commons-io/2.22.0/commons-io-2.22.0-cyclonedx.json"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://mail-archives.apache.org/mod_mbox/commons-user/"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://repository.apache.org/service/local/staging/deploy/maven2"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://github.com/apache/commons-io/actions"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar",
+      "isExternal" : true,
+      "supplier" : {
+        "name" : "Apache Ant Project Management Committee",
+        "url" : [
+          "https://ant.apache.org/"
+        ]
+      },
+      "group" : "org.apache.ant",
+      "name" : "ant-launcher",
+      "version" : "1.10.17",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://gitbox.apache.org/repos/asf/ant.git"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://bz.apache.org/bugzilla/buglist.cgi?product=Ant"
+        },
+        {
+          "type" : "website",
+          "url" : "https://ant.apache.org/"
+        },
+        {
+          "type" : "advisories",
+          "url" : "https://ant.apache.org/security.html#Apache%20Ant%20Security%20Vulnerabilities"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://ant.apache.org/mail.html"
+        },
+        {
+          "type" : "documentation",
+          "url" : "https://ant.apache.org/manual/"
+        },
+        {
+          "type" : "source-distribution",
+          "url" : "https://ant.apache.org/srcdownload.cgi"
+        },
+        {
+          "type" : "distribution",
+          "url" : "https://ant.apache.org/bindownload.cgi"
+        },
+        {
+          "type" : "license",
+          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+        },
+        {
+          "type" : "release-notes",
+          "url" : "https://github.com/apache/ant/blob/master/WHATSNEW"
+        },
+        {
+          "type" : "security-contact",
+          "url" : "https://www.apache.org/security/"
+        },
+        {
+          "type" : "rfc-9116",
+          "url" : "https://ant.apache.org/.well-known/security.txt"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
+      "isExternal" : true,
+      "supplier" : {
+        "name" : "Apache Ant Project Management Committee",
+        "url" : [
+          "https://ant.apache.org/"
+        ]
+      },
+      "group" : "org.apache.ant",
+      "name" : "ant",
+      "version" : "1.10.17",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://gitbox.apache.org/repos/asf/ant.git"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://bz.apache.org/bugzilla/buglist.cgi?product=Ant"
+        },
+        {
+          "type" : "website",
+          "url" : "https://ant.apache.org/"
+        },
+        {
+          "type" : "advisories",
+          "url" : "https://ant.apache.org/security.html#Apache%20Ant%20Security%20Vulnerabilities"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://ant.apache.org/mail.html"
+        },
+        {
+          "type" : "documentation",
+          "url" : "https://ant.apache.org/manual/"
+        },
+        {
+          "type" : "source-distribution",
+          "url" : "https://ant.apache.org/srcdownload.cgi"
+        },
+        {
+          "type" : "distribution",
+          "url" : "https://ant.apache.org/bindownload.cgi"
+        },
+        {
+          "type" : "license",
+          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+        },
+        {
+          "type" : "release-notes",
+          "url" : "https://github.com/apache/ant/blob/master/WHATSNEW"
+        },
+        {
+          "type" : "security-contact",
+          "url" : "https://www.apache.org/security/"
+        },
+        {
+          "type" : "rfc-9116",
+          "url" : "https://ant.apache.org/.well-known/security.txt"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.commons/commons-codec@1.18.0?type=jar",
+      "group" : "org.apache.commons",
+      "name" : "commons-codec",
+      "version" : "1.18.0",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.commons/commons-codec@1.18.0?type=jar"
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
+      "publisher" : "The Apache Software Foundation",
+      "group" : "org.apache.commons",
+      "name" : "commons-collections4",
+      "version" : "4.5.0",
+      "description" : "The Apache Commons Collections package contains types that extend and augment the Java Collections Framework.",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "d564105594035b363b193d8ce3c18b98"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "e5cf89f0c6e132fc970bd9a465fdcb8dbe94f75a"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "00f93263c267be201b8ae521b44a7137271b16688435340bf629db1bac0a5845"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "ee43c513ac9dcbd7dd23b5cbb4ea5f65a2e10cdfbb403d080b87e778b3b45062315522297c41eca514a9a946228ad7650f0a572d5b78effb8260dd8084131988"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "614c41bfd8f9c6c1c1e5667c5be45587c3021b780937ad62f54d17051f425086"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "3cfd12ec2d03ed29b682123cedae422a4c6dc459034a7e0ab5f00ccd422cb9a2ec423a08b953119c426569b888157a6d80aa0e0c63debea50c5c54c481e2eff5"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "73db8eb3e79569b3fa62aefdce413e6ea250b9853953cb75b9d5ce0f2f35b59b6e86ef708326a608ff20d95bdade8522"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "7a9c035fa846cdcebd4331eb86ed31a67595518299a8bee54597c1eb663aee63214553a561a510b929035266c2a4800b"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://gitbox.apache.org/repos/asf?p=commons-collections.git"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://issues.apache.org/jira/browse/COLLECTIONS"
+        },
+        {
+          "type" : "website",
+          "url" : "https://commons.apache.org/proper/commons-collections/"
+        },
+        {
+          "type" : "bom",
+          "url" : "https://repo1.maven.org/maven2/org/apache/commons/commons-collections4/4.5.0/commons-collections4-4.5.0-cyclonedx.json"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://mail-archives.apache.org/mod_mbox/commons-user/"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://repository.apache.org/service/local/staging/deploy/maven2"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://github.com/apache/commons-parent/actions"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar",
+      "group" : "org.apache.commons",
+      "name" : "commons-compress",
+      "version" : "1.27.1",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar"
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
+      "publisher" : "The Apache Software Foundation",
+      "group" : "org.apache.commons",
+      "name" : "commons-lang3",
+      "version" : "3.20.0",
+      "description" : "Apache Commons Lang, a package of Java utility classes for the classes that are in java.lang's hierarchy, or are considered to be so standard as to justify existence in java.lang. The code is tested using the latest revision of the JDK for supported LTS releases: 8, 11, 17, 21 and 25 currently. See https://github.com/apache/commons-lang/blob/master/.github/workflows/maven.yml Please ensure your build environment is up-to-date and kindly report any build issues.",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "4b29562ded527aa074e1d44f8646dac5"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "65897b3e5731220962e659e001904af3c3cbeba9"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "69e5c9fa35da7a51a5fd2099dfe56a2d8d32cf233e2f6d770e796146440263f4"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "1c72db334ea44f932c35e602b78907865f5bab43e30c871c9be67c8184eaa778f32d7bc3ab525d5921cd28619d3f9babfd483f17de54f007ee07db2e074b0307"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "36e3f71352fa14bc580db45a05b09b063392c6d39acf9e24ffa6a67bbc07a336"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "6ecbc05bb5cd3f7537078b0cf51b0a5f7189dfa60c22e5ec0d6b9e2fd3f7fa7566770b5da87e0c9929f48769933c3e3a473fd5cc7231672fca36ab1fee1f8670"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "77dd27c4d5e9372c002bd6878d2cfaaec3cf46dd57d65de63d7f2e09351344531cfa81a537b56628ac6db18adee7e484"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "3456de40eef224b3ad195d2f218dd28eacb0da07607aee7ead94bd8d54bd8311d51c28d4066db4bf8b69a2df48c415f5"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://gitbox.apache.org/repos/asf/commons-lang.git"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://issues.apache.org/jira/browse/LANG"
+        },
+        {
+          "type" : "website",
+          "url" : "https://commons.apache.org/proper/commons-lang/"
+        },
+        {
+          "type" : "bom",
+          "url" : "https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.20.0/commons-lang3-3.20.0-cyclonedx.json"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://mail-archives.apache.org/mod_mbox/commons-user/"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://repository.apache.org/service/local/staging/deploy/maven2"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://github.com/apache/commons-lang/actions"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.commons/commons-vfs2@2.2?type=jar",
+      "group" : "org.apache.commons",
+      "name" : "commons-vfs2",
+      "version" : "2.2",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.commons/commons-vfs2@2.2?type=jar"
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.httpcomponents/httpclient@4.5.13?type=jar",
+      "group" : "org.apache.httpcomponents",
+      "name" : "httpclient",
+      "version" : "4.5.13",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.httpcomponents/httpclient@4.5.13?type=jar"
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.apache.ivy/ivy@2.6.0?type=jar",
+      "supplier" : {
+        "name" : "Apache Ant Project Management Committee",
+        "url" : [
+          "https://ant.apache.org/"
+        ]
+      },
+      "manufacturer" : {
+        "name" : "Apache Ant Project Management Committee",
+        "url" : [
+          "https://ant.apache.org/"
+        ]
+      },
+      "publisher" : "The Apache Software Foundation",
+      "group" : "org.apache.ivy",
+      "name" : "ivy",
+      "version" : "2.6.0",
+      "description" : "Apache Ivy",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "db6f18e5dbe9c39be5d2655a1e354f73"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "11a76d2e1d439170c61b47a7a13110a78c6c0824"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "7e14fe77306a8cc71197cb3f1681e9e673ccc04254a5ede7e848e2248491ec78"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "0e66c0908287112b8a63e468a572ea265767225422bfb17ff3ec9deaa647d2aafbf79b0fa18d021fc3a3e0f8cabc7c07e7c4e613f1d49a538987c49df836dd29"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "be088a0f17e81e2f80d25b85833292a1ce40a0b8c6cb49a8e4cb39a78590d189"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "60c21fa8682b3f80fc62f1f2b10abb5de4dd21baccd85e305e9f14007a14aeb05556c25b1d1ab10107aed356eb4b76996c0a850b02c787e8861215816b34a095"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "aeec799ca675640ebd5dba6f91782e1fd338e31be3fbd1665422c1bf87693dd6923a95db9d6526bdcc43aebcaacd6268"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "54ca1ed904a57bc7268c6f1ed34bc5389663d7810967a5d89d109da39e7c7d609c299353b8a3be8df98fd3f050e42c74"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.apache.ivy/ivy@2.6.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://gitbox.apache.org/repos/asf/ant-ivy.git"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "http://issues.apache.org/jira/browse/IVY"
+        },
+        {
+          "type" : "website",
+          "url" : "https://ant.apache.org/ivy/"
+        },
+        {
+          "type" : "advisories",
+          "url" : "https://ant.apache.org/ivy/security.html"
+        },
+        {
+          "type" : "bom",
+          "url" : "https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.6.0/ivy-2.6.0.cdx.json"
+        },
+        {
+          "type" : "mailing-list",
+          "url" : "https://ant.apache.org/ivy/mailing-lists.html"
+        },
+        {
+          "type" : "source-distribution",
+          "url" : "https://ant.apache.org/ivy/download.cgi"
+        },
+        {
+          "type" : "distribution",
+          "url" : "https://ant.apache.org/ivy/download.cgi"
+        },
+        {
+          "type" : "license",
+          "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://ci-builds.apache.org/job/Ant/job/Ivy/"
+        },
+        {
+          "type" : "security-contact",
+          "url" : "https://www.apache.org/security/"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.bouncycastle/bcpg-jdk15on@1.70?type=jar",
+      "group" : "org.bouncycastle",
+      "name" : "bcpg-jdk15on",
+      "version" : "1.70",
+      "licenses" : [
+        {
+          "license" : {
+            "name" : "Bouncy Castle Licence",
+            "url" : "https://www.bouncycastle.org/licence.html"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.bouncycastle/bcpg-jdk15on@1.70?type=jar"
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.bouncycastle/bcprov-jdk15on@1.70?type=jar",
+      "group" : "org.bouncycastle",
+      "name" : "bcprov-jdk15on",
+      "version" : "1.70",
+      "licenses" : [
+        {
+          "license" : {
+            "name" : "Bouncy Castle Licence",
+            "url" : "https://www.bouncycastle.org/licence.html"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.bouncycastle/bcprov-jdk15on@1.70?type=jar"
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.codehaus.woodstox/stax2-api@4.3.0?type=jar",
+      "group" : "org.codehaus.woodstox",
+      "name" : "stax2-api",
+      "version" : "4.3.0",
+      "description" : "Stax2 API is an extension to basic Stax 1.0 API that adds significant new functionality, such as full-featured bi-direction validation interface and high-performance Typed Access API.",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "6eec6c1cb7f63d8a8098cc5569a47e99"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "59251773c44122e8d1366f68884e29dd784e141b"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "7c805f36129ea9fa42b696093b7ae1eb20bb6ccec65c8280d6f33db5609ca5e1"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "4d1bf5cb3a803423c5420050c245227b944acb4ced29e8095e470bc3a742d6a057c484fa1d531b58933ed8f81d52d5bbfc8406acc4241f6e4ec4c5116fe30d53"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "5a3bc0bf1b00df535d572ae16c62817788bea0f7d02a8c430fadd4cf4df95f5e"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "5d4e4618b22accb1fee19d6d2702dcd0538df7f9e3b7aa8590e7554811770bb317d4bab1eecebc4b31df49a349c68e746256b3e9cca5fbea6f102df411c0e678"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "664bf1044e8c9e80083d02d2ccdba3c3953a515594b6a262baef76d1cf3790da9d71eb853806c27c94721e65983d72a3"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "298f2dcfffb3fe28229452770a969b2138008a23c508599a13303f48f21d3458c61ad19df53a20d6447c0f8ef56e4216"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "BSD-2-Clause",
+            "url" : "http://www.opensource.org/licenses/bsd-license.php"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.codehaus.woodstox/stax2-api@4.3.0?type=jar"
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@13.1.0?type=jar",
+      "publisher" : "OWASP Foundation",
+      "group" : "org.cyclonedx",
+      "name" : "cyclonedx-core-java",
+      "version" : "13.1.0",
+      "description" : "The CycloneDX core module provides a model representation of the BOM along with utilities to assist in creating, parsing, and validating BOMs.",
+      "hashes" : [
+        {
+          "alg" : "MD5",
+          "content" : "2a1f9504d12d4dda17ee5c99b9403600"
+        },
+        {
+          "alg" : "SHA-1",
+          "content" : "7e386c72d52b61db961ca3e0dadb55015e8bb296"
+        },
+        {
+          "alg" : "SHA-256",
+          "content" : "bae52da4a65d5e085c935a1c31f31d511ab499f4bf6526b568c12fb724f26363"
+        },
+        {
+          "alg" : "SHA-512",
+          "content" : "30271282daab9f49f3fd9cfbf38bb6c108f4a3c3888256dcb7e830b2d6b7459c561e261ca4555a20da24b27d7780886fcd3243b6f260bf04f684ba862db43521"
+        },
+        {
+          "alg" : "SHA3-256",
+          "content" : "f731996247ea9149e4918473f894af24901ede63d6565d2be446c827994aedd3"
+        },
+        {
+          "alg" : "SHA3-512",
+          "content" : "f287f67e2510ec886385665f2790ce4c675c2a7ea175991660167825fd6e9fa3c3d867e74865081be91f0690bba215e5d010888e43c468e462dddba7dea9d108"
+        },
+        {
+          "alg" : "SHA-384",
+          "content" : "b9a088c711e4f3d99f07f4c4fada8fe40cff9fcfc83bd447f3eecde38f002d1d47dac98002645e3c43169ad3a333b1e0"
+        },
+        {
+          "alg" : "SHA3-384",
+          "content" : "5f45b1ecfda645f548e9e4a0fcc906f17178745835e640d127fae37cf981da7b26ab60c540d6ad99bab56a946b9b2f9e"
+        }
+      ],
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@13.1.0?type=jar",
+      "externalReferences" : [
+        {
+          "type" : "vcs",
+          "url" : "https://github.com/CycloneDX/cyclonedx-core-java.git"
+        },
+        {
+          "type" : "issue-tracker",
+          "url" : "https://github.com/CycloneDX/cyclonedx-core-java/issues"
+        },
+        {
+          "type" : "website",
+          "url" : "https://github.com/CycloneDX/cyclonedx-core-java"
+        },
+        {
+          "type" : "distribution-intake",
+          "url" : "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+        },
+        {
+          "type" : "build-system",
+          "url" : "https://github.com/CycloneDX/cyclonedx-core-java/actions"
+        }
+      ]
+    },
+    {
+      "type" : "library",
+      "bom-ref" : "pkg:maven/oro/oro@2.0.8?type=jar",
+      "group" : "oro",
+      "name" : "oro",
+      "version" : "2.0.8",
+      "licenses" : [
+        {
+          "license" : {
+            "id" : "Apache-2.0",
+            "url" : "https://www.apache.org/licenses/LICENSE-2.0.txt"
+          }
+        }
+      ],
+      "purl" : "pkg:maven/oro/oro@2.0.8?type=jar"
+    }
+  ],
+  "dependencies" : [
+    {
+      "ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.22?type=jar",
+      "dependsOn" : [ ]
+    },
+    {
+      "ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.22.1?type=jar",
+      "dependsOn" : [
+        "pkg:maven/ch.randelshofer/fastdoubleparser@2.0.1?type=jar"
+      ]
+    },
+    {
+      "ref" : "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.1?type=jar",
+      "dependsOn" : [
+        "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.22?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.22.1?type=jar"
+      ]
+    },
+    {
+      "ref" : "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-xml@2.22.1?type=jar",
+      "dependsOn" : [
+        "pkg:maven/com.fasterxml.jackson.core/jackson-annotations@2.22?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-core@2.22.1?type=jar",
+        "pkg:maven/com.fasterxml.jackson.core/jackson-databind@2.22.1?type=jar",
+        "pkg:maven/com.fasterxml.woodstox/woodstox-core@7.2.0?type=jar",
+        "pkg:maven/org.codehaus.woodstox/stax2-api@4.3.0?type=jar"
+      ]
+    },
+    {
+      "ref" : "pkg:maven/com.github.package-url/packageurl-java@1.5.0?type=jar",
+      "dependsOn" : [ ]
+    },
+    {
+      "ref" : "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
+      "dependsOn" : [ ]
+    },
+    {
+      "ref" : "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
+      "dependsOn" : [ ]
+    },
+    {
+      "ref" : "pkg:maven/org.apache.ant/ant-cyclonedx@0.2alpha?type=jar",
+      "dependsOn" : [
+        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
+        "pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar",
+        "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
+        "pkg:maven/org.apache.ivy/ivy@2.6.0?type=jar",
+        "pkg:maven/org.cyclonedx/cyclonedx-core-java@13.1.0?type=jar"
+      ]
+    },
+    {
+      "ref" : "pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar",
+      "dependsOn" : [ ]
+    },
+    {
+      "ref" : "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
+      "dependsOn" : [
+        "pkg:maven/org.apache.ant/ant-launcher@1.10.17?type=jar"
+      ]
+    },
+    {
+      "ref" : "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
+      "dependsOn" : [
+        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar"
+      ]
+    },
+    {
+      "ref" : "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar",
+      "dependsOn" : [ ]
+    },
+    {
+      "ref" : "pkg:maven/org.apache.ivy/ivy@2.6.0?type=jar",
+      "dependsOn" : [
+        "pkg:maven/com.jcraft/jsch.agentproxy.connector-factory@0.0.9?type=jar",
+        "pkg:maven/com.jcraft/jsch.agentproxy.jsch@0.0.9?type=jar",
+        "pkg:maven/com.jcraft/jsch.agentproxy@0.0.9?type=jar",
+        "pkg:maven/com.jcraft/jsch@0.1.55?type=jar",
+        "pkg:maven/org.apache.ant/ant@1.10.17?type=jar",
+        "pkg:maven/org.apache.commons/commons-codec@1.18.0?type=jar",
+        "pkg:maven/org.apache.commons/commons-compress@1.27.1?type=jar",
+        "pkg:maven/org.apache.commons/commons-vfs2@2.2?type=jar",
+        "pkg:maven/org.apache.httpcomponents/httpclient@4.5.13?type=jar",
+        "pkg:maven/org.bouncycastle/bcpg-jdk15on@1.70?type=jar",
+        "pkg:maven/org.bouncycastle/bcprov-jdk15on@1.70?type=jar",
+        "pkg:maven/oro/oro@2.0.8?type=jar"
+      ]
+    },
+    {
+      "ref" : "pkg:maven/org.codehaus.woodstox/stax2-api@4.3.0?type=jar",
+      "dependsOn" : [ ]
+    },
+    {
+      "ref" : "pkg:maven/org.cyclonedx/cyclonedx-core-java@13.1.0?type=jar",
+      "dependsOn" : [
+        "pkg:maven/com.fasterxml.jackson.dataformat/jackson-dataformat-xml@2.22.1?type=jar",
+        "pkg:maven/com.github.package-url/packageurl-java@1.5.0?type=jar",
+        "pkg:maven/com.networknt/json-schema-validator@2.0.4?type=jar",
+        "pkg:maven/commons-codec/commons-codec@1.22.1?type=jar",
+        "pkg:maven/commons-io/commons-io@2.22.0?type=jar",
+        "pkg:maven/org.apache.commons/commons-collections4@4.5.0?type=jar",
+        "pkg:maven/org.apache.commons/commons-lang3@3.20.0?type=jar"
+      ]
+    }
+  ]
+}
