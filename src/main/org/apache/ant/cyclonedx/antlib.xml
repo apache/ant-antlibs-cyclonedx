@@ -83,4 +83,13 @@ under the License.
       </cdx:componentbom>
     </sequential>
   </macrodef>
+
+  <!-- ComponentResolvers -->
+  <componentdef
+      name="sbomLink"
+      classname="org.apache.ant.cyclonedx.SbomLinkComponentResolver"/>
+  <componentdef
+      name="ivyModule"
+      classname="org.apache.ant.cyclonedx.IvyModuleComponentResolver"/>
+
 </antlib>

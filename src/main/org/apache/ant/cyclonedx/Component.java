@@ -38,7 +38,6 @@ import org.apache.tools.ant.types.DataType;
 import org.apache.tools.ant.types.Reference;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.resources.FileProvider;
-import org.apache.tools.ant.types.resources.Union;
 
 import org.cyclonedx.Version;
 import org.cyclonedx.model.LicenseChoice;
@@ -86,8 +85,7 @@ public class Component extends DataType {
     private Set<String> tags = new HashSet<>();
     private List<Property> properties = new ArrayList<>();
     private String mimeType;
-    private SbomLink sbomLink;
-    private IvyModule ivyModule;
+    private ComponentResolver resolver;
 
     /**
      * Comparator for components.
@@ -166,8 +164,7 @@ public class Component extends DataType {
         this.tags = new HashSet<>(other.tags);
         this.properties = new ArrayList<>(other.properties);
         this.mimeType = other.mimeType;
-        this.sbomLink = other.sbomLink;
-        this.ivyModule = other.ivyModule;
+        this.resolver = other.resolver;
     }
 
     /**
@@ -473,30 +470,16 @@ public class Component extends DataType {
     }
 
     /**
-     * Container for SBOM link resource.
-     *
-     * @return container for SBOM link resource
-     */
-    public SbomLink createSbomLink() {
-        checkChildrenAllowed();
-        if (ivyModule != null) {
-            throw new BuildException("sbomLink and ivyModule are mutually exclusive");
-        }
-        return sbomLink == null ? (sbomLink = new SbomLink(getProject())) : sbomLink;
-    }
-
-    /**
-     * Container for Ivy module configuration.
-     *
-     * @return container for Ivy module configuration
+     * Resolver that uses external data to enrich this component.
+     * @param resolver the resolver
      * @since CycloneDX Antlib 0.2
      */
-    public IvyModule createIvyModule() {
+    public void add(ComponentResolver resolver) {
         checkChildrenAllowed();
-        if (sbomLink != null) {
-            throw new BuildException("sbomLink and ivyModule are mutually exclusive");
+        if (this.resolver != null) {
+            throw new BuildException("only one resolver can be used at a time");
         }
-        return ivyModule == null ? (ivyModule = new IvyModule()) : ivyModule;
+        this.resolver = resolver;
     }
 
     /**
@@ -866,14 +849,7 @@ public class Component extends DataType {
         if (!resolved) {
             resolved = true;
 
-            if (sbomLink != null) {
-                SbomLinkComponentResolver resolver = new SbomLinkComponentResolver(getProject(), sbomLink);
-                return resolver.resolve(this);
-            }
-
-            if (ivyModule != null) {
-                IvyModuleComponentResolver resolver = new IvyModuleComponentResolver(ivyModule, getProject());
-
+            if (resolver != null) {
                 return resolver.resolve(this);
             }
         }
@@ -1317,181 +1293,6 @@ public class Component extends DataType {
                 pushAndInvokeCircularReferenceCheck(c, stk, p);
             }
             setChecked(true);
-        }
-    }
-
-    /**
-     * @since CycloneDX Antlib 0.2
-     */
-    public static class SbomLink extends Union {
-        private boolean createBomExternalReference = true;
-
-        public SbomLink(Project project) {
-            super(project);
-        }
-
-        /**
-         * Whether to create a bom-Type external reference in the
-         * resolved component based on the nested resource's URI.
-         *
-         * <p>Will not create an external reference of there are
-         * already external references om the component or the
-         * resolved SBOM already contains a bom-type reference.</p>
-         *
-         * <p>Defaults to <code>true</code>.
-         *
-         * @param create whether to create a bom-Type external reference
-         */
-        public void setCreateBomExternalReference(boolean create) {
-            createBomExternalReference = create;
-        }
-
-        /**
-         * Whether to create a bom-Type external reference in the
-         * resolved component based on the nested resource's URI.
-         * @return create whether to create a bom-Type external reference
-         */
-        public boolean getCreateBomExternalReference() {
-            return createBomExternalReference;
-        }
-    }
-
-    /**
-     * Configuration for Ivy module resolution.
-     *
-     * <p>This nested element allows a Component to be populated from
-     * an Ivy module descriptor. The Ivy file should already be resolved
-     * (i.e., ivy:resolve should have been run).</p>
-     *
-     * @since CycloneDX Antlib 0.2
-     */
-    public static class IvyModule {
-        private String conf;
-        private String optionalConf;
-        private String externalConf;
-        private String resolveId;
-        private Reference antIvyEngineRef;
-        private String pattern;
-        private Map<String, Component> templateComponents = new HashMap<>();
-
-        /**
-         * Sets the configurations to include in the SBOM.
-         *
-         * <p>Defaults to the configurations resolved by the last resolve call, or {@code *} if no resolve was
-         * explicitly called</p>
-         *
-         * @param comma separated list of the configurations to retrieve or {@code *}.
-         */
-        public void setConf(String conf) {
-            this.conf = conf;
-        }
-
-        String getConf() {
-            return conf;
-        }
-
-        /**
-         * Sets the id which was used for a previous resolve.
-         *
-         * <p>Defaults to {@code [org].[module]}.</p>
-         *
-         * @param id which was used for a previous resolve
-         */
-        public void setResolveId(String resolveId) {
-            this.resolveId = resolveId;
-        }
-
-        String getResolveId() {
-            return resolveId;
-        }
-
-        /**
-         * Sets a reference is a different Ivy settings file than the default shall be used.
-         *
-         * <p>Defaults to {@code ivy.instance}.</p>
-         *
-         * @param ref A reference to Ivy settings that must be used by this component
-         */
-        public void setSettingsRef(Reference ref) {
-            antIvyEngineRef = ref;
-        }
-
-        Reference getSettingsRef() {
-            return antIvyEngineRef;
-        }
-
-        /**
-         * Marks configurations as optional.
-         *
-         * <p>Any module that is included in the SBOM because it is required by on of the configurations given in {@link
-         * #setConf} and only is included because of configurations listed here is marked optional. Including
-         * configurations that are not part of {@link #setConf} doesn't have any effect. {@code *} is no supported. The
-         * default is to have no optional components.</p>
-         *
-         * @param comma separated list of the configurations to mark optional.
-         */
-        public void setOptionalConf(String optionalConf) {
-            this.optionalConf = optionalConf;
-        }
-
-        String getOptionalConf() {
-            return optionalConf;
-        }
-
-        /**
-         * Marks configurations as external.
-         *
-         * <p>Any module that is included in the SBOM because it is required by on of the configurations given in {@link
-         * #setConf} and only is included because of configurations listed here is marked external. Including
-         * configurations that are not part of {@link #setConf} doesn't have any effect. {@code *} is no supported. The
-         * default is to have no external components.</p>
-         *
-         * @param comma separated list of the configurations to mark external.
-         */
-        public void setExternalConf(String externalConf) {
-            this.externalConf = externalConf;
-        }
-
-        String getExternalConf() {
-            return externalConf;
-        }
-
-        /**
-         * The retrieve pattern used for retrieving the dependency artifacts.
-         *
-         * <p>Defaults to {@code ${ivy.retrieve.pattern}}.</p>
-         */
-        public void setPattern(String pattern) {
-            this.pattern = pattern;
-        }
-
-        String getPattern() {
-            return pattern;
-        }
-
-        /**
-         * Adds a nested template component.
-         *
-         * @param c nested template component
-         */
-        public void addConfiguredTemplateComponent(Component c) {
-            templateComponents.put(getTemplateComponentKey(c), c);
-        }
-
-        Map<String, Component> getTemplateComponents() {
-            return templateComponents;
-        }
-
-        private static String getTemplateComponentKey(Component c) {
-            String group = c.getGroup();
-            if (group == null) {
-                group = "";
-            }
-            String name = c.getName();
-            if (name == null) {
-                name = "";
-            }
-            return group + ":" + name;
         }
     }
 }

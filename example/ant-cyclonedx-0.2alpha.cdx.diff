@@ -1,5 +1,5 @@
---- ant-cyclonedx-0.2alpha.cdx.json	2026-08-16 12:54:15.035134147 +0200
-+++ ant-cyclonedx-0.2alpha.ivy.cdx.json	2026-08-16 12:54:22.467055136 +0200
+--- ant-cyclonedx-0.2alpha.cdx.json	2026-08-16 16:28:01.254033959 +0200
++++ ant-cyclonedx-0.2alpha.ivy.cdx.json	2026-08-16 16:28:03.535753306 +0200
 @@ -253,36 +253,68 @@
    "components" : [
      {

@@ -30,6 +30,7 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.resources.FileProvider;
+import org.apache.tools.ant.types.resources.Union;
 import org.apache.tools.ant.types.resources.URLProvider;
 
 import org.cyclonedx.exception.ParseException;
@@ -42,13 +43,23 @@ import org.cyclonedx.parsers.Parser;
  *
  * @since CycloneDX Antlib 0.2
  */
-class SbomLinkComponentResolver {
-    private final Project project;
-    private final Component.SbomLink sbomLink;
+public class SbomLinkComponentResolver extends Union implements ComponentResolver {
+    private boolean createBomExternalReference = true;
 
-    SbomLinkComponentResolver(Project project, Component.SbomLink sbomLink) {
-        this.project = project;
-        this.sbomLink = sbomLink;
+    /**
+     * Whether to create a bom-Type external reference in the
+     * resolved component based on the nested resource's URI.
+     *
+     * <p>Will not create an external reference of there are
+     * already external references om the component or the
+     * resolved SBOM already contains a bom-type reference.</p>
+     *
+     * <p>Defaults to <code>true</code>.
+     *
+     * @param create whether to create a bom-Type external reference
+     */
+    public void setCreateBomExternalReference(boolean create) {
+        createBomExternalReference = create;
     }
 
     /**
@@ -58,7 +69,7 @@ class SbomLinkComponentResolver {
      * @param parent component the link applies to
      * @return Components that are direct dependencies of the parent component
      */
-    Collection<Component> resolve(Component parent) throws IOException, BuildException {
+    public Collection<Component> resolve(Component parent) throws IOException, BuildException {
         Bom bom = readLinkedSbom();
         if (bom.getMetadata() == null) {
             throw new BuildException("referenced SBOM file lacks metadata");
@@ -78,10 +89,10 @@ class SbomLinkComponentResolver {
             parent.fillFrom(real, Collections.emptyList());
         }
 
-        if (sbomLink.getCreateBomExternalReference()
+        if (createBomExternalReference
             && !parent.getExternalReferences().stream()
             .anyMatch(e -> e.getType().equals(org.cyclonedx.model.ExternalReference.Type.BOM))) {
-            Resource sbom = sbomLink.iterator().next();
+            Resource sbom = iterator().next();
             URLProvider up = sbom.as(URLProvider.class);
             if (up != null) {
                 ExternalReference e = new ExternalReference();
@@ -102,10 +113,10 @@ class SbomLinkComponentResolver {
     }
 
     private Bom readLinkedSbom() throws IOException {
-        if (sbomLink.size() != 1) {
+        if (size() != 1) {
             throw new BuildException("sbomLink requires exactly one nested resource");
         }
-        Resource sbom = sbomLink.iterator().next();
+        Resource sbom = iterator().next();
         logSbom(sbom);
         try (InputStream data = sbom.getInputStream();
              ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -136,7 +147,7 @@ class SbomLinkComponentResolver {
                 name = up.getURL().toExternalForm();
             }
         }
-        project.log("reading SBOM from " + name, Project.MSG_VERBOSE);
+        log("reading SBOM from " + name, Project.MSG_VERBOSE);
     }
 
     private List<Component> extractComponentsThatAreDirectDependencies(Component parent,

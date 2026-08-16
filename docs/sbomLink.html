@@ -1,0 +1,98 @@
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       https://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<html>
+  <head>
+    <meta http-equiv="Content-Language" content="en-us"></meta>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Apache CycloneDX Ant Library - sbomLink ComponentResolver</title>
+  </head>
+
+  <body>
+    <h2 id="sbomLink">sbomLink ComponentResolver</h2>
+
+    <p>Enriches a component by reading an existing CycloneDX SBOM.</p>
+
+    <p>At most one resource can be specified as nested element which
+      is then read as CycloneDX SBOM and enriches the component that
+      contains this ComponentResolver:</p>
+
+    <ul>
+      <li><code>type</code>, <code>name</code>, <code>group</code>, <code>version</code>,
+        <code>purl</code>, <code>bomRef</code>, <code>scope</code>,
+        <code>decription</code>, <code>publisher</code>, <code>copright</code>,
+        <code>mimeType</code> and <code>supplier</code> are taken
+        from the SBOM's metadata component unless they are explicitly
+        specified on the component element itself.</li>
+      <li><code>manufacturer</code> is taken from the SBOM's metadata
+        component unless it is explicitly specified on the component
+        element itself or <code>supplierismanufacturer</code>
+        is <code>true</code>.</li>
+      <li>Tags are merged with those of the SBOM's metadata
+        component.</li>
+      <li><code>author</code>s, <code>license</code>s, <code>externalReference</code>s,
+        <code>dependency</code>s and nested <code>components</code>
+        are taken from the SBOM's metadata component if and only if
+        there is no corresponding element in this component
+        element.</li>
+      <li>a "bom"-type <code>externalReference</code> is added to the
+        enclosing component if the nested resource provides an URL,
+        the enclosing component doesn't already
+        contain <code>externalReference</code>s, the parsed SBOM
+        doesn't already contain such an <code>externalReference</code>
+        and this element's <code>createBomExternalReference</code> is
+        not <code>false</code>.</li>
+      <li>Hashes of the linked SBOM are ignored completely.</li>
+      <li>Other components specified in the linked SBOM are also added
+        to the SBOM created by the compomentbom task if they are
+        direct dependencies of the current component element. And
+        their dependencies are set to "unknown" as handling of
+        transitive dependencies is beyond the scope of this
+        library.<br/>
+        Components specified explicitly in the SBOM take precedence
+        over those found by parsing an SBOM link. If there already
+        exists a component as part of the SBOM with the same name and
+        group as one read from the linked SBOM, the linked component
+        will be ignored. Here the version is ignored, it is assumed
+        the component explicitly specified is the result of a process
+        that resolved conflicts in dependency versions. Currently this
+        only applies to Components with <code>pkg:maven/</code> Package-URLs
+        as bom-ref.
+      </li>
+    </ul>
+
+    <p>The <a hre="https://github.com/CycloneDX/cyclonedx-core-java">CycloneDX
+        Core (Java) library</a> is used to read the linked SBOM.</p>
+
+    <h3>Attributes</h3>
+
+    <table class="attr">
+      <tr>
+        <th scope="col">Attribute</th>
+        <th scope="col">Description</th>
+        <th scope="col">Required</th>
+      </tr>
+      <tr>
+        <td>createBomExternalReference</td>
+        <td>Whether to create a bom-Type external reference in the
+          resolved compoment based on the nested resource's URI.<br>
+          <em>since CycloneDX Antlib 0.2</em></td>
+        <td>No, defaults to <code>true</code></td>
+      </tr>
+    </table>
+
+  </body>
+</html>    

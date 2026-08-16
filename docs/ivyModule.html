@@ -1,0 +1,246 @@
+<!--
+   Licensed to the Apache Software Foundation (ASF) under one or more
+   contributor license agreements.  See the NOTICE file distributed with
+   this work for additional information regarding copyright ownership.
+   The ASF licenses this file to You under the Apache License, Version 2.0
+   (the "License"); you may not use this file except in compliance with
+   the License.  You may obtain a copy of the License at
+
+       https://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+-->
+<html>
+  <head>
+    <meta http-equiv="Content-Language" content="en-us"></meta>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <title>Apache CycloneDX Ant Library - ivyModule ComponentResolver</title>
+  </head>
+
+  <body>
+    <h2 id="ivyModule">ivyModule ComponentResolver</h2>
+
+    <p><em>since CycloneDX Antlib 0.2</em>. The optional Ivy
+      dependency is required when using an <code>ivyModule</code>
+      element.</p>
+
+    <p>Using a <code>ivyModule</code> ComponentResolver within a
+      component you can use Apache Ivy to fill in fields from
+      an <code>ivy.xml</code> file and have Ivy provide all
+      (transitive) dependencies of this module to the SBOM.</p>
+
+    <p>The <code>ivyModule</code> element is similar to
+      a <a href="https://ant.apache.org/ivy/history/2.6.0/use/postresolvetask.html">post
+      resolve task</a> and expects the Ivy module used for the current
+      component to be "resolved" already.</p>
+
+    <p>When present the Ivy module will be used to enrich the
+      component it is nested into:</p>
+
+    <ul>
+      <li><code>name</code>, <code>group</code>, <code>version</code>,
+        <code>decription</code> are directly taken from the Ivy module
+        unless the compoment already specifies it explicitly.</li>
+      <li><code>license</code> and
+        "website"-type <code>externalReference</code> are taken from
+        the module's license and homePage if and only if there is no
+        corresponding element in this component element.</li>
+      <li>Dependencies of the given module that are included because
+        of the configurations given by the <code>conf</code> attribute
+        are added to the SBOM by the compomentbom task with data taken
+        from their module descriptors. This includes transitive
+        dependencies. The components will have hashes if an Ivy
+        retrieve operation has retrieved them and local files are
+        available prior to running the componentbom task.<br/>
+        Components specified explicitly in the SBOM take precedence
+        over those found by parsing the module. If there already
+        exists a component as part of the SBOM with the same name and
+        group as one read from the module, the dependencies will be
+        ignored. Here the version is ignored, it is assumed the
+        component explicitly specified is the result of a process that
+        resolved conflicts in dependency versions and is unknown to
+        Ivy. Currently this only applies to Components
+        with <code>pkg:maven/</code> Package-URLs as bom-ref.
+      </li>
+    </ul>
+
+    <p>Not all parts of an SBOM component you may want to provide are
+      part of an Ivy module definition and you may want to provide
+      them explicitly. Supplier and manufacturer information, more
+      external references or the publisher are missing for
+      example. The <code>type</code> defaults to "library" and
+      the <code>scope</code> to "required". For the component that
+      contains the <code>ivyModule</code> child element itself, you
+      can use the "normal" attributes and nested element of the
+      component to augment data - for the dependencies identified by
+      the Ivy module you can provide extra data
+      as <code>templateComponent</code> child elements.</p>
+
+    <h3>Attributes</h3>
+
+    <table class="attr">
+      <tr>
+        <th scope="col">Attribute</th>
+        <th scope="col">Description</th>
+        <th scope="col">Required</th>
+      </tr>
+      <tr>
+        <td>conf</td>
+        <td>comma-separated list of configurations that will be
+          consulted for dependencies of this component.</td>
+        <td>No, defaults to <code>*</code></td>
+      </tr>
+      <tr>
+        <td>optionalconf</td>
+        <td>comma-separated list of configurations. Any dependency
+          that is only included because of configurations specified in
+          this list will be marked with <code>scope</code>
+          optional.</td>
+        <td>No, by default no dependency is marked as optional.</td>
+      </tr>
+      <tr>
+        <td>externalconf</td>
+        <td>comma-separated list of configurations. Any dependency
+          that is only included because of configurations specified in
+          this list will have their <code>isExternal</code> flag set
+          to true.</td>
+        <td>No, by default no dependency is marked as external.</td>
+      </tr>
+      <tr>
+        <td>resolveId</td>
+        <td>The id which was used for a previous resolve.</td>
+        <td>No, defaults to <code>[org]-[module]</code> of the last
+          <code>ivy:resolve</code> task.</td>
+      </tr>
+      <tr>
+        <td>settingsRef</td>
+        <td>A reference to Ivy settings that must be used.</td>
+        <td>No, defaults to <code>ivy.instance</code>.</td>
+      </tr>
+      <tr>
+        <td>pattern</td>
+        <td>The pattern used by the <code>ivy:retrieve</code> task
+          that copied the dependencies.</td>
+        <td>No, defaults to <code>ivy.retrieve.pattern</code>.</td>
+      </tr>
+    </table>
+
+    <h3>Nested elements</h3>
+
+    <h4>templateComponent</h4>
+
+    <p>A nested <code>templateComponent</code> element supports all
+      attributes and nested elements of a component, but
+      neither <code>sbomLink</code> nor <code>ivyModule</code> have
+      any effect.</p>
+
+    <p>A <code>templateComponent</code> can be used to enrich a
+      component detected by Ivy as a dependency of the current
+      component. For example by adding more external references or a
+      manufacturer. Template components take precedence over a data
+      detected by Ivy, they are matched to a detected dependency by
+      name and group only, the version is ignored. If
+      the <code>templateComponent</code> has a <code>version</code>
+      attribute, no hashes will be calculated from the resolved
+      file.</p>
+
+    <p>The combination
+      of <code>ivyModule</code>, <code>templateComponent</code> and
+      an <code>additionalComponent</code> specified in
+      a <code>compomentbom</code> may be a bit
+      confusing. An <code>additionalComponent</code> is always added
+      to the generated SBOM and any <code>ivyModule</code> dependency
+      or <code>templateComponent</code> that matches the name and
+      group of an <code>additionalComponent</code> is ignored. Apart
+      from that a <code>templateComponent</code> will only show up in
+      the SBOM if a matching dependency is detected
+      by <code>ivyModule</code>. <code>templateComponent</code> and
+      Ivy module dependencies are merged
+      while <code>additionalComponent</code>s completely replace Ivy
+      module dependencies.</p>
+
+    <p>As an example, assume the <code>ivyModule</code> resolves a
+      module with group "org.example", name "module" and version "1"
+      which has a dependency on a component with group "com.example",
+      name "dependency", version "2" and description "my
+      description".</p>
+
+    <p>The following snippet adds two components to the SBOM with
+      bom-refs "pkg:maven/org.example/module@1?type=jar" and
+      "pkg:maven/com.example/dependency@2?type=jar" where the later has a
+      description of "my description" and hashes if the dependency has
+      been retrieved:</p>
+
+    <pre>
+      &lt;cdx:componentbom
+        &lt;cdx:component>
+          &lt;cdx:ivyModule/>
+        &lt;/cdx:component>
+      &lt;/cdx:componentbom>
+    </pre>
+
+    <p>The following snippet adds two components to the SBOM with
+      bom-refs "pkg:maven/org.example/module@1?type=jar" and
+      "pkg:maven/com.example/dependency@3?type=jar" where the later has
+      a no description at all and no hashes either.</p>
+
+    <pre>
+      &lt;cdx:componentbom
+        &lt;cdx:component>
+          &lt;cdx:ivyModule/>
+        &lt;/cdx:component>
+        &lt;cdx:additionalComponent
+            name="dependency"
+            group="com.example"
+            version="3"
+          />
+      &lt;/cdx:componentbom>
+    </pre>
+
+    <p>The following snippet adds two components to the SBOM with
+      bom-refs "pkg:maven/org.example/module@1?type=jar" and
+      "pkg:maven/com.example/dependency@2?type=jar" where the later
+      has a description "my description" a publisher "example" and
+      hashes if the dependency has been retrieved.</p>
+
+    <pre>
+      &lt;cdx:componentbom
+        &lt;cdx:component>
+          &lt;cdx:ivyModule>
+            &lt;templateComponent
+                name="dependency"
+                group="com.example"
+                publisher="Example"
+              />
+          &lt;/cdx:ivyModule>
+        &lt;/cdx:component>
+      &lt;/cdx:componentbom>
+    </pre>
+
+    <p>The following snippet adds two components to the SBOM with
+      bom-refs "pkg:maven/org.example/module@1?type=jar" and
+      "pkg:maven/com.example/dependency@3?type=jar" where the later has
+      a description "another description" but no hashes (as the
+      version doesn't match).</p>
+
+    <pre>
+      &lt;cdx:componentbom
+        &lt;cdx:component>
+          &lt;cdx:ivyModule>
+            &lt;templateComponent
+                name="dependency"
+                group="com.example"
+                version="3"
+                description="another description"
+              />
+          &lt;/cdx:ivyModule>
+        &lt;/cdx:component>
+      &lt;/cdx:componentbom>
+    </pre>
+  </body>
+</html>
+    

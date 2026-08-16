@@ -100,10 +100,10 @@ under the License.
 
   <target name="define-cyclonedx-components"
           depends="define-core-ant-components"
-          if="can.use.cyclonedx">
+          if="can.use.cyclonedx"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
     <cdx:externalreferenceset
-        id="antlib-ext-refs"
-        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        id="antlib-ext-refs">
       <externalReference
           type="VCS"
           url="https://gitbox.apache.org/repos/asf/ant-antlibs-cyclonedx.git"/>
@@ -118,7 +118,8 @@ under the License.
 
   <target name="create-antlib-sbom-ivy"
           depends="define-cyclonedx-components"
-          if="can.use.cyclonedx">
+          if="can.use.cyclonedx"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
     <uptodate property="antlib-sbom-ok"
               targetfile="${build.lib}/${artifact.stub}.ivy.cdx.json">
       <srcresources>
@@ -134,13 +135,12 @@ under the License.
         useComponentSupplier="true"
         useComponentManufacturer="true"
         unless:set="antlib-sbom-ok"
-        xmlns:unless="ant:unless"
-        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        xmlns:unless="ant:unless">
       <component
           description="Apache CycloneDX Antlib"
           publisher="The Apache Software Foundation"
           supplierIsManufacturer="true">
-        <ivymodule conf="default,provided" externalConf="provided">
+        <cdx:ivyModule conf="default,provided" externalConf="provided">
           <templateComponent refid="ant"/>
           <templateComponent refid="ant-launcher"/>
           <templateComponent
@@ -171,7 +171,7 @@ under the License.
                 type="ADVISORIES"
                 url="https://ant.apache.org/ivy/security.html"/>
           </templateComponent>
-        </ivymodule>
+        </cdx:ivyModule>
         <file file="${jarname}"/>
         <supplier refid="ant-pmc"/>
         <license refid="apache-2"/>
@@ -185,7 +185,8 @@ under the License.
 
   <target name="create-antlib-sbom"
           depends="define-cyclonedx-components"
-          if="can.use.cyclonedx">
+          if="can.use.cyclonedx"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
     <uptodate property="antlib-sbom-ok"
               targetfile="${build.lib}/${artifact.stub}.cdx.json">
       <srcresources>
@@ -201,8 +202,7 @@ under the License.
         useComponentSupplier="true"
         useComponentManufacturer="true"
         unless:set="antlib-sbom-ok"
-        xmlns:unless="ant:unless"
-        xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+        xmlns:unless="ant:unless">
       <component
           name="${artifact.name}"
           group="org.apache.ant"
@@ -257,27 +257,27 @@ under the License.
         <dependency componentRef="json-schema-validator"/>
       </additionalComponent>
       <additionalComponent id="commons-codec">
-        <sbomLink>
+        <cdx:sbomLink>
           <url url="https://repo1.maven.org/maven2/commons-codec/commons-codec/1.22.1/commons-codec-1.22.1-cyclonedx.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
         <file file="${lib.dir.compile}/commons-codec-1.22.1.jar"/>
       </additionalComponent>
       <additionalComponent id="commons-io">
-        <sbomLink>
+        <cdx:sbomLink>
           <url url="https://repo1.maven.org/maven2/commons-io/commons-io/2.22.0/commons-io-2.22.0-cyclonedx.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
         <file file="${lib.dir.compile}/commons-io-2.22.0.jar"/>
       </additionalComponent>
       <additionalComponent id="commons-lang3">
-        <sbomLink>
+        <cdx:sbomLink>
           <url url="https://repo1.maven.org/maven2/org/apache/commons/commons-lang3/3.20.0/commons-lang3-3.20.0-cyclonedx.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
         <file file="${lib.dir.compile}/commons-lang3-3.20.0.jar"/>
       </additionalComponent>
       <additionalComponent id="commons-collections4">
-        <sbomLink>
+        <cdx:sbomLink>
           <url url="https://repo1.maven.org/maven2/org/apache/commons/commons-collections4/4.5.0/commons-collections4-4.5.0-cyclonedx.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
         <file file="${lib.dir.compile}/commons-collections4-4.5.0.jar"/>
       </additionalComponent>
       <additionalComponent
@@ -292,27 +292,27 @@ under the License.
         </license>
       </additionalComponent>
       <additionalComponent id="jackson-dataformat-xml">
-        <sbomLink>
+        <cdx:sbomLink>
           <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/dataformat/jackson-dataformat-xml/2.22.1/jackson-dataformat-xml-2.22.1-sbom-cyclonedx.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
         <file file="${lib.dir.compile}/jackson-dataformat-xml-2.22.1.jar"/>
       </additionalComponent>
       <additionalComponent>
-        <sbomLink>
+        <cdx:sbomLink>
           <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-core/2.22.1/jackson-core-2.22.1-sbom-cyclonedx.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
         <file file="${lib.dir.compile}/jackson-core-2.22.1.jar"/>
       </additionalComponent>
       <additionalComponent>
-        <sbomLink>
+        <cdx:sbomLink>
           <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-annotations/2.22/jackson-annotations-2.22-sbom-cyclonedx.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
         <file file="${lib.dir.compile}/jackson-annotations-2.22.jar"/>
       </additionalComponent>
       <additionalComponent>
-        <sbomLink>
+        <cdx:sbomLink>
           <url url="https://repo1.maven.org/maven2/com/fasterxml/jackson/core/jackson-databind/2.22.1/jackson-databind-2.22.1-sbom-cyclonedx.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
         <file file="${lib.dir.compile}/jackson-databind-2.22.1.jar"/>
       </additionalComponent>
       <additionalComponent
@@ -345,9 +345,9 @@ under the License.
         <license refid="apache-2"/>
       </additionalComponent>
       <additionalComponent id="apache-ivy">
-        <sbomLink>
+        <cdx:sbomLink>
           <url url="https://repo1.maven.org/maven2/org/apache/ivy/ivy/2.6.0/ivy-2.6.0.cdx.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
         <file file="ivy/ivy.jar"/>
       </additionalComponent>
       <license refid="apache-2"/>
@@ -444,7 +444,9 @@ under the License.
         binarysource="Source Distribution"/>
   </target>
 
-  <target name="after-bin-dist" depends="after-dist" if="can.use.cyclonedx">
+  <target name="after-bin-dist" depends="after-dist"
+          if="can.use.cyclonedx"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
     <create-tarball-boms
         distdir="${bin.dist.dir}"
         distbase="${dist.base}"
@@ -452,15 +454,17 @@ under the License.
         binsrc="bin"
         binarysource="Binary Distribution">
       <component>
-        <sbomLink createBomExternalReference="false">
+        <cdx:sbomLink createBomExternalReference="false">
           <file file="${bin.dist.dir}/${artifact.stub}.cdx.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
         <file file="${bin.dist.dir}/${artifact.stub}.jar"/>
       </component>
     </create-tarball-boms>
   </target>
 
-  <target name="after-fat-bin-dist" depends="after-dist" if="can.use.cyclonedx">
+  <target name="after-fat-bin-dist" depends="after-dist"
+          if="can.use.cyclonedx"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx">
     <create-tarball-boms
         distdir="${bin.dist.dir}"
         distbase="${dist.base}"
@@ -468,9 +472,9 @@ under the License.
         binsrc="bin-withdeps"
         binarysource="Binary Distribution Including Dependencies">
       <component>
-        <sbomLink createBomExternalReference="false">
+        <cdx:sbomLink createBomExternalReference="false">
           <file file="${bin.dist.dir}/${artifact.stub}.cdx.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
         <file file="${bin.dist.dir}/${artifact.stub}.jar"/>
       </component>
     </create-tarball-boms>

@@ -98,10 +98,15 @@
       The default SBOM version now is 1.7 and the isExternal attribute
       of component now also sets the attribute in the generated SBOM.
     </action>
+    <action type="add" breaks-bwc="true">
+      Generalized sbomLink to a ComponentResolver componentdef. As a
+      side effect the nested sbomLink element of component now must
+      live in the "antlib:org.apache.ant.cyclonedx" XML namespace
+      (i.e. something like cdx:sbomLink).
+    </action>
     <action type="add">
-      The component type now supports a new nested element "ivymodule"
-      which uses Apache Ivy to fill in the details of a component and
-      its dependencies.
+      Added a ComponentResolver "ivyModule" which uses Apache Ivy to
+      fill in the details of a component and its dependencies.
       This adds Ivy as a new dependency which is only required if you
       want to use this feature.
     </action>

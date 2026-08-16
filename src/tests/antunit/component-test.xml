@@ -756,7 +756,7 @@
         xmlns:au="antlib:org.apache.ant.antunit">
       <cdx:component refid="foo"
                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-        <sbomLink/>
+        <cdx:sbomLink/>
       </cdx:component>
     </au:expectfailure>
     <au:expectfailure
@@ -764,7 +764,7 @@
         xmlns:au="antlib:org.apache.ant.antunit">
       <cdx:component refid="foo"
                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-        <ivymodule/>
+        <cdx:ivyModule/>
       </cdx:component>
     </au:expectfailure>
   </target>
@@ -772,11 +772,11 @@
   <target
       name="testSbomLinkAndIvyModuleAreMutuallyExclusive">
     <au:expectfailure
-        expectedMessage='sbomLink and ivyModule are mutually exclusive'
+        expectedMessage='only one resolver can be used at a time'
         xmlns:au="antlib:org.apache.ant.antunit">
       <cdx:component xmlns:cdx="antlib:org.apache.ant.cyclonedx">
-        <sbomLink/>
-        <ivymodule/>
+        <cdx:sbomLink/>
+        <cdx:ivyModule/>
       </cdx:component>
     </au:expectfailure>
   </target>

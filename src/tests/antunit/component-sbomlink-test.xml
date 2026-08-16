@@ -26,9 +26,9 @@
         format="xml"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component>
-        <sbomLink>
+        <cdx:sbomLink>
           <file file="${output}/bom.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
       </component>
     </cdx:componentbom>
     <xmlproperty file="${output}/merged.xml"/>
@@ -165,9 +165,9 @@
         format="xml"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component>
-        <sbomLink>
+        <cdx:sbomLink>
           <url url="https://repo1.maven.org/maven2/org/apache/ant/ant-cyclonedx/0.1/ant-cyclonedx-0.1-cyclonedx.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
       </component>
     </cdx:componentbom>
     <xmlproperty file="${output}/merged.xml"/>
@@ -188,9 +188,9 @@
         format="xml"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component>
-        <sbomLink createBomExternalReference="false">
+        <cdx:sbomLink createBomExternalReference="false">
           <url url="https://repo1.maven.org/maven2/org/apache/ant/ant-cyclonedx/0.1/ant-cyclonedx-0.1-cyclonedx.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
       </component>
     </cdx:componentbom>
     <xmlproperty file="${output}/merged.xml"/>
@@ -207,9 +207,9 @@
         format="xml"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component>
-        <sbomLink>
+        <cdx:sbomLink>
           <url url="https://repo1.maven.org/maven2/org/apache/ant/ant-cyclonedx/0.1/ant-cyclonedx-0.1-cyclonedx.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
         <externalReference type="bom" url="https://example.org/"/>
       </component>
     </cdx:componentbom>
@@ -233,9 +233,9 @@
         format="xml"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component supplierIsManufacturer="true">
-        <sbomLink>
+        <cdx:sbomLink>
           <file file="${output}/bom.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
       </component>
     </cdx:componentbom>
     <xmlproperty file="${output}/merged.xml"/>
@@ -290,9 +290,9 @@
         <tag>label2</tag>
         <property name="xyzzy" value="baz"/>
         <dependency bomRef="my-own-dependency"/>
-        <sbomLink>
+        <cdx:sbomLink>
           <file file="${output}/bom.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
       </component>
       <additionalComponent name="my-own-dependency" bomRef="my-own-dependency"/>
     </cdx:componentbom>
@@ -441,9 +441,9 @@
         format="xml"
         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component>
-        <sbomLink>
+        <cdx:sbomLink>
           <file file="${output}/bom.json"/>
-        </sbomLink>
+        </cdx:sbomLink>
       </component>
       <additionalComponent
           name="commons-codec"

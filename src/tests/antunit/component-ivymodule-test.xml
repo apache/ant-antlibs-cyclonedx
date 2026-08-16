@@ -39,7 +39,7 @@
       <cdx:componentbom outputdirectory="${output}" format="xml"
                         xmlns:cdx="antlib:org.apache.ant.cyclonedx">
         <component>
-          <ivymodule/>
+          <cdx:ivyModule/>
         </component>
       </cdx:componentbom>
     </au:expectfailure>
@@ -51,7 +51,7 @@
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component>
-        <ivymodule/>
+        <cdx:ivyModule/>
       </component>
     </cdx:componentbom>
     <xmlproperty file="${output}/bom.xml"/>
@@ -146,7 +146,7 @@
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component>
-        <ivymodule conf="default"/>
+        <cdx:ivyModule conf="default"/>
       </component>
     </cdx:componentbom>
     <xmlproperty file="${output}/bom.xml"/>
@@ -168,7 +168,7 @@
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component>
-        <ivymodule optionalconf="ant"/>
+        <cdx:ivyModule optionalconf="ant"/>
       </component>
     </cdx:componentbom>
     <xmlproperty file="${output}/bom.xml"/>
@@ -188,7 +188,7 @@
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component>
-        <ivymodule externalconf="ant"/>
+        <cdx:ivyModule externalconf="ant"/>
       </component>
     </cdx:componentbom>
     <xmlproperty file="${output}/bom.xml"/>
@@ -211,7 +211,7 @@
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component>
-        <ivymodule resolveId="foo-bar-id"/>
+        <cdx:ivyModule resolveId="foo-bar-id"/>
       </component>
     </cdx:componentbom>
     <xmlproperty file="${output}/bom.xml"/>
@@ -227,7 +227,7 @@
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component description="my description">
-        <ivymodule/>
+        <cdx:ivyModule/>
         <manufacturer name="Example">
           <url url="https://example.org/"/>
         </manufacturer>
@@ -260,7 +260,7 @@
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component>
-        <ivymodule/>
+        <cdx:ivyModule/>
       </component>
       <additionalComponent
         name="ant"
@@ -340,7 +340,7 @@
     <cdx:componentbom outputdirectory="${output}" format="xml"
                       xmlns:cdx="antlib:org.apache.ant.cyclonedx">
       <component>
-        <ivymodule>
+        <cdx:ivyModule>
           <templateComponent
               name="ant"
               group="org.apache.ant"
@@ -349,7 +349,7 @@
               id="ant">
             <manufacturer refid="ant-team"/>
           </templateComponent>
-        </ivymodule>
+        </cdx:ivyModule>
       </component>
     </cdx:componentbom>
     <copy todir="/tmp" file="${output}/bom.xml"/>

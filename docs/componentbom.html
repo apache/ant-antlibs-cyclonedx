@@ -33,10 +33,10 @@
       required that specifies the component to create an SBOM
       for.</p>
 
-    <p>Components that get "resolved" because they specify
-      an <code>sbomLink</code> can add more components to the SBOM than
-      are specified explicitly via the child elements of this
-      task.</p>
+    <p>Components that get "resolved" because they specify a nested
+      resolver like <code>sbomLink</code> or <code>ivyModule</code>
+      can add more components to the SBOM than are specified
+      explicitly via the child elements of this task.</p>
 
     <p>It is an error if any component specifies a dependency on a
       component that is not part of the generated SBOM. The bom-refs

@@ -45,8 +45,10 @@ import org.apache.ivy.core.resolve.IvyNodeCallers.Caller;
 import org.apache.ivy.core.retrieve.RetrieveEngine;
 import org.apache.ivy.core.retrieve.RetrieveOptions;
 import org.apache.ivy.core.settings.IvySettings;
+
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
+import org.apache.tools.ant.ProjectComponent;
 import org.apache.tools.ant.types.Reference;
 import org.apache.tools.ant.types.resources.FileResource;
 import org.apache.tools.ant.types.resources.URLResource;
@@ -64,18 +66,99 @@ import org.cyclonedx.model.Component.Scope;
  *
  * @since CycloneDX Antlib 0.2
  */
-class IvyModuleComponentResolver {
+public class IvyModuleComponentResolver extends ProjectComponent implements ComponentResolver {
 
-    private final Component.IvyModule ivyModule;
-    private final Project project;
+    private String conf;
+    private String optionalConf;
+    private String externalConf;
+    private String resolveId;
+    private Reference settingRef;
+    private String pattern;
+    private Map<String, Component> templateComponents = new HashMap<>();
+
     private boolean includeAllConfigurations;
     private Set<String> includedConfigurations;
     private Set<String> optionalConfigurations;
     private Set<String> externalConfigurations;
 
-    IvyModuleComponentResolver(Component.IvyModule ivyModule, Project project) {
-        this.ivyModule = ivyModule;
-        this.project = project;
+    /**
+     * Sets the configurations to include in the SBOM.
+     *
+     * <p>Defaults to the configurations resolved by the last resolve call, or {@code *} if no resolve was explicitly
+     * called</p>
+     *
+     * @param comma separated list of the configurations to retrieve or {@code *}.
+     */
+    public void setConf(String conf) {
+        this.conf = conf;
+    }
+
+    /**
+     * Sets the id which was used for a previous resolve.
+     *
+     * <p>Defaults to {@code [org].[module]}.</p>
+     *
+     * @param id which was used for a previous resolve
+     */
+    public void setResolveId(String resolveId) {
+        this.resolveId = resolveId;
+    }
+
+    /**
+     * Sets a reference is a different Ivy settings file than the default shall be used.
+     *
+     * <p>Defaults to {@code ivy.instance}.</p>
+     *
+     * @param ref A reference to Ivy settings that must be used by this component
+     */
+    public void setSettingsRef(Reference ref) {
+        settingRef = ref;
+    }
+
+    /**
+     * Marks configurations as optional.
+     *
+     * <p>Any module that is included in the SBOM because it is required by on of the configurations given in {@link
+     * #setConf} and only is included because of configurations listed here is marked optional. Including configurations
+     * that are not part of {@link #setConf} doesn't have any effect. {@code *} is no supported. The default is to have
+     * no optional components.</p>
+     *
+     * @param comma separated list of the configurations to mark optional.
+     */
+    public void setOptionalConf(String optionalConf) {
+        this.optionalConf = optionalConf;
+    }
+
+    /**
+     * Marks configurations as external.
+     *
+     * <p>Any module that is included in the SBOM because it is required by on of the configurations given in {@link
+     * #setConf} and only is included because of configurations listed here is marked external. Including configurations
+     * that are not part of {@link #setConf} doesn't have any effect. {@code *} is no supported. The default is to have
+     * no external components.</p>
+     *
+     * @param comma separated list of the configurations to mark external.
+     */
+    public void setExternalConf(String externalConf) {
+        this.externalConf = externalConf;
+    }
+
+    /**
+     * The retrieve pattern used for retrieving the dependency artifacts.
+     *
+     * <p>Defaults to {@code ${ivy.retrieve.pattern}}.</p>
+     */
+    public void setPattern(String pattern) {
+        this.pattern = pattern;
+    }
+
+    /**
+     * Adds a nested template component.
+     *
+     * @param c nested template component
+     */
+    public void addConfiguredTemplateComponent(Component c) {
+        templateComponents.put(getTemplateComponentKey(c), c);
     }
 
     /**
@@ -109,19 +192,18 @@ class IvyModuleComponentResolver {
     }
 
     private Ivy createIvyInstance(Component component) {
-        Reference settingRef = ivyModule.getSettingsRef();
         IvyAntSettings engine;
         if (settingRef == null) {
             engine = IvyAntSettings.getDefaultInstance(component);
         }
         else {
-            engine = settingRef.getReferencedObject(project);
+            engine = settingRef.getReferencedObject(getProject());
         }
         return engine.getConfiguredIvyInstance(component);
     }
 
     private void parseConfigurations(IvySettings settings) {
-        String conf = ivyModule.getConf();
+        String conf = this.conf;
         if (conf == null || "*".equals(conf)) {
             conf = settings.getVariable("ivy.resolved.configurations");
         }
@@ -134,8 +216,8 @@ class IvyModuleComponentResolver {
         } else {
             includedConfigurations = confAsSet(conf);
         }
-        optionalConfigurations = confAsSet(ivyModule.getOptionalConf());
-        externalConfigurations = confAsSet(ivyModule.getExternalConf());
+        optionalConfigurations = confAsSet(optionalConf);
+        externalConfigurations = confAsSet(externalConf);
     }
 
     private ResolveReport loadResolveReport(IvySettings settings) {
@@ -159,15 +241,14 @@ class IvyModuleComponentResolver {
     }
 
     private ResolveReport getResolvedReport(String org, String module) {
-        String resolveId = ivyModule.getResolveId();
         ResolveReport report;
         if (resolveId != null) {
-            report = project.getReference("ivy.resolved.report." + resolveId);
+            report = getProject().getReference("ivy.resolved.report." + resolveId);
         } else {
-            report = project.getReference("ivy.resolved.report." + org + "." + module);
+            report = getProject().getReference("ivy.resolved.report." + org + "." + module);
         }
         if (report == null) {
-            report = project.getReference("ivy.resolved.report");
+            report = getProject().getReference("ivy.resolved.report");
         }
         return report;
     }
@@ -178,9 +259,9 @@ class IvyModuleComponentResolver {
                                   Set<ModuleRevisionId> externalModules,
                                   Map<ModuleRevisionId, File> componentFiles) {
         ModuleRevisionId mrid = md.getModuleRevisionId();
-        Component template = ivyModule.getTemplateComponents().get(mrid.getOrganisation() + ":" + mrid.getName());
+        Component template = templateComponents.get(mrid.getOrganisation() + ":" + mrid.getName());
         Component c = template == null ? new Component() : new Component(template);
-        c.setProject(project);
+        c.setProject(getProject());
         fillFromModuleDescriptor(c, md, dependencyTree);
 
         if (optionalModules.contains(mrid)) {
@@ -328,18 +409,18 @@ class IvyModuleComponentResolver {
     private Map<ModuleRevisionId, File> findDownloadedArtifacts(Ivy ivy,
                                                                 IvySettings settings,
                                                                 ModuleRevisionId mrid) {
-        String pattern = ivyModule.getPattern();
+        String pattern = this.pattern;
         if (pattern == null) {
             pattern = settings.getVariable("ivy.retrieve.pattern");
         }
         if (pattern == null) {
-            project.log("no retrieve pattern, won't look for dependency artifact files");
+            log("no retrieve pattern, won't look for dependency artifact files");
             return Collections.emptyMap();
         }
 
         RetrieveEngine retrieveEngine = ivy.getRetrieveEngine();
         if (retrieveEngine == null) {
-            project.log("no RetrieveEngine, won't look for dependency artifact files");
+            log("no RetrieveEngine, won't look for dependency artifact files");
             return Collections.emptyMap();
         }
 
@@ -348,7 +429,6 @@ class IvyModuleComponentResolver {
             ? new String[] { "*" }
             : includedConfigurations.toArray(new String[includedConfigurations.size()]);
         opts.setConfs(confs);
-        String resolveId = ivyModule.getResolveId();
         if (resolveId != null) {
             opts.setResolveId(resolveId);
         }
@@ -366,7 +446,7 @@ class IvyModuleComponentResolver {
             }
             return result;
         } catch (ParseException | IOException e) {
-            project.log(e.getMessage(), Project.MSG_ERR);
+            log(e.getMessage(), Project.MSG_ERR);
             throw new BuildException("syntax errors in ivy file: " + e, e);
         }
     }
@@ -407,5 +487,17 @@ class IvyModuleComponentResolver {
     private static String getBomRef(IvyNode n) {
         ModuleRevisionId mrid = n.getId();
         return "pkg:maven/" + mrid.getOrganisation() + "/" + mrid.getName() + "@" + mrid.getRevision() + "?type=jar";
+    }
+
+    private static String getTemplateComponentKey(Component c) {
+        String group = c.getGroup();
+        if (group == null) {
+            group = "";
+        }
+        String name = c.getName();
+        if (name == null) {
+            name = "";
+        }
+        return group + ":" + name;
     }
 }
