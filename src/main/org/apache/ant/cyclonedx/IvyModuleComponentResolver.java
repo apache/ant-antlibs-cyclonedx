@@ -147,6 +147,8 @@ public class IvyModuleComponentResolver extends ProjectComponent implements Comp
      * The retrieve pattern used for retrieving the dependency artifacts.
      *
      * <p>Defaults to {@code ${ivy.retrieve.pattern}}.</p>
+     *
+     * @param pattern retrieve pattern used
      */
     public void setPattern(String pattern) {
         this.pattern = pattern;

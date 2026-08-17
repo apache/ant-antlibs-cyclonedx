@@ -28,6 +28,14 @@ import org.apache.tools.ant.BuildException;
  */
 public class EnumUtils {
 
+    /**
+     * Provides strings that can be mapped to enum values unambiguously.
+     *
+     * @param clazz the enum type
+     * @param alternativeProvider a function generating alternative names for the enum constant
+     * @param <E> the enum type
+     * @return array of enum constants and alternative names for each constant.
+     */
     public static <E extends Enum<E>> String[] valuesPlus(
         Class<E> clazz,
         Function<E, String> alternativeProvider) {
@@ -36,6 +44,17 @@ public class EnumUtils {
             .toArray(String[]::new);
     }
 
+    /**
+     * Maps a string to an enum value.
+     *
+     * @param clazz the enum type
+     * @param value the string to translate
+     * @param alternativeProvider a function generating alternative names for the enum constant
+     * @param <E> the enum type
+     * @return the enum constant the string could be mapped to
+     * @throws NullPointerException if value is null
+     * @throws BuildException if value can not be translated
+     */
     public static <E extends Enum<E>> E valueOf(
         Class<E> clazz,
         String value,

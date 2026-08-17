@@ -58,6 +58,8 @@ public final class FilesystemOnlyMappedResourceCollection
 
     /**
      * Adds the resources to map.
+     *
+     * @param c the resources
      */
     public void add(ResourceCollection c) throws BuildException {
         checkChildrenAllowed();
@@ -73,6 +75,8 @@ public final class FilesystemOnlyMappedResourceCollection
 
     /**
      * Creates a nested mapper.
+     *
+     * @return a mapper instance that can be used to configure filename mapping
      */
     public Mapper createMapper() throws BuildException {
         checkChildrenAllowed();
@@ -86,6 +90,8 @@ public final class FilesystemOnlyMappedResourceCollection
 
     /**
      * Creates a nested mapper by directly providing the implementation.
+     *
+     * @param fileNameMapper the mapper to use
      */
     public void add(FileNameMapper fileNameMapper) {
         createMapper().add(fileNameMapper);

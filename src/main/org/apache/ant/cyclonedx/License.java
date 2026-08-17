@@ -179,6 +179,11 @@ public class License extends DataType {
     }
 
     /**
+     * Creates an instance of the License class based on a CylconeDX LicenseItem.
+     *
+     * @param licenseItem CycloneDX LicenseItem to tranlate
+     * @return mapped License instance
+     *
      * @since CycloneDX Antlib 0.2
      */
     public static License from(LicenseItem licenseItem) {

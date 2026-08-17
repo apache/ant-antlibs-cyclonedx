@@ -1014,6 +1014,13 @@ public class Component extends DataType {
         return component;
     }
 
+    /**
+     * Maps from a CycloneDX Component to an incstance of this type.
+     *
+     * @param real the CycloneDX component
+     * @param dependencies list of dependencies of "real"
+     * @return a {@link Component} matching real and dependencies
+     */
     protected static Component from(
         org.cyclonedx.model.Component real,
         List<org.cyclonedx.model.Dependency> dependencies) {
@@ -1022,6 +1029,14 @@ public class Component extends DataType {
         return c;
     }
 
+    /**
+     * Enriches this instance with data read from a CycloneDX component and its dependencies.
+     *
+     * <p>Any values already set on this component will not be overwritten by "real"'s values.</p>
+     +
+     * @param real the CycloneDX component
+     * @param allDependencies list of dependencies of "real"
+     */
     protected void fillFrom(org.cyclonedx.model.Component real,
                             List<org.cyclonedx.model.Dependency> allDependencies) {
         if (type == null) {
@@ -1238,10 +1253,17 @@ public class Component extends DataType {
     public static class Tag {
         private String tag;
 
+        /**
+         * Creates an empty instance.
+         */
         public Tag() {
         }
 
         /**
+         * Creates a new instance.
+         *
+         * @param tag the tag
+         *
          * @since CycloneDX Antlib 0.2
          */
         public Tag(String tag) {
