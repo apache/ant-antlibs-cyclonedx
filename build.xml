@@ -42,6 +42,35 @@ under the License.
     </javac>
   </target>
 
+  <target name="javadoc" depends="javadoc_check, resolve"
+          description="--> creates the API documentation"
+          unless="javadoc.notrequired">
+    <mkdir dir="${build.javadoc}"/>
+    <javadoc useexternalfile="yes"
+             maxmemory="1000M"	
+             destdir="${build.javadoc}"
+             version="true"
+             locale="en"
+             windowtitle="${artifact.name} API"
+             doctitle="${artifact.name}"
+             failonerror="true"
+             additionalparam="${javadoc.additionalparam}"
+             verbose="false">
+      <packageset dir="src/main"/>
+      <classpath>
+        <path refid="classpath.compile"/>
+        <path refid="ivy.lib.path"/>
+        <fileset dir="${ant.home}/lib" includes="*.jar"/>
+      </classpath>
+      <tag name="todo" description="To do:" scope="all"/>
+      <tag name="ant.task" enabled="false" description="Task:" scope="types"/>
+      <tag name="ant.datatype" enabled="false" description="Data type:" scope="types"/>
+      <tag name="ant.attribute" enabled="false" description="Attribute:" scope="types"/>
+      <tag name="ant.attribute.group" enabled="false" description="Attribute group:" scope="types"/>
+      <tag name="ant.element" enabled="false" description="Nested element:" scope="types"/>
+    </javadoc>
+  </target>
+
   <target name="fetch-cyclonedx" depends="antlib">
     <condition property="can.use.cyclonedx">
       <isset property="jdk9+"/>

@@ -87,7 +87,7 @@ public class IvyModuleComponentResolver extends ProjectComponent implements Comp
      * <p>Defaults to the configurations resolved by the last resolve call, or {@code *} if no resolve was explicitly
      * called</p>
      *
-     * @param comma separated list of the configurations to retrieve or {@code *}.
+     * @param conf comma separated list of the configurations to retrieve or {@code *}.
      */
     public void setConf(String conf) {
         this.conf = conf;
@@ -98,7 +98,7 @@ public class IvyModuleComponentResolver extends ProjectComponent implements Comp
      *
      * <p>Defaults to {@code [org].[module]}.</p>
      *
-     * @param id which was used for a previous resolve
+     * @param resolveId id which was used for a previous resolve
      */
     public void setResolveId(String resolveId) {
         this.resolveId = resolveId;
@@ -123,7 +123,7 @@ public class IvyModuleComponentResolver extends ProjectComponent implements Comp
      * that are not part of {@link #setConf} doesn't have any effect. {@code *} is no supported. The default is to have
      * no optional components.</p>
      *
-     * @param comma separated list of the configurations to mark optional.
+     * @param optionalConf comma separated list of the configurations to mark optional.
      */
     public void setOptionalConf(String optionalConf) {
         this.optionalConf = optionalConf;
@@ -137,7 +137,7 @@ public class IvyModuleComponentResolver extends ProjectComponent implements Comp
      * that are not part of {@link #setConf} doesn't have any effect. {@code *} is no supported. The default is to have
      * no external components.</p>
      *
-     * @param comma separated list of the configurations to mark external.
+     * @param externalConf comma separated list of the configurations to mark external.
      */
     public void setExternalConf(String externalConf) {
         this.externalConf = externalConf;
