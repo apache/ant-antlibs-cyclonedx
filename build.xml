@@ -28,47 +28,13 @@ under the License.
     </copy>
   </target>
 
-  <target name="compile" depends="ready-to-compile,resolve">
-    <javac
-      srcdir="src/main"
-      destdir="${build.classes}"
-      debug="${javac.debug}"
-      source="${javac.-source}"
-      target="${javac.-target}"
-      includeantruntime="true">
-      <classpath refid="ivy.lib.path"/>
-      <classpath refid="classpath.compile"/>
-      <compilerArg value="-Xlint:all"/>
-    </javac>
-  </target>
-
-  <target name="javadoc" depends="javadoc_check, resolve"
-          description="--> creates the API documentation"
-          unless="javadoc.notrequired">
-    <mkdir dir="${build.javadoc}"/>
-    <javadoc useexternalfile="yes"
-             maxmemory="1000M"	
-             destdir="${build.javadoc}"
-             version="true"
-             locale="en"
-             windowtitle="${artifact.name} API"
-             doctitle="${artifact.name}"
-             failonerror="true"
-             additionalparam="${javadoc.additionalparam}"
-             verbose="false">
-      <packageset dir="src/main"/>
-      <classpath>
-        <path refid="classpath.compile"/>
-        <path refid="ivy.lib.path"/>
-        <fileset dir="${ant.home}/lib" includes="*.jar"/>
-      </classpath>
-      <tag name="todo" description="To do:" scope="all"/>
-      <tag name="ant.task" enabled="false" description="Task:" scope="types"/>
-      <tag name="ant.datatype" enabled="false" description="Data type:" scope="types"/>
-      <tag name="ant.attribute" enabled="false" description="Attribute:" scope="types"/>
-      <tag name="ant.attribute.group" enabled="false" description="Attribute group:" scope="types"/>
-      <tag name="ant.element" enabled="false" description="Nested element:" scope="types"/>
-    </javadoc>
+  <target name="ready-to-compile" depends="setup,resolve">
+    <path id="classpath.compile.extra">
+      <path refid="ivy.lib.path"/>
+    </path>
+    <path id="classpath.test.extra">
+      <path refid="ivy.lib.path"/>
+    </path>
   </target>
 
   <target name="fetch-cyclonedx" depends="antlib">
@@ -101,8 +67,8 @@ under the License.
     <mkdir dir="${antunit.report.dir}" />
 
     <path id="ivy-plus-cdx">
-      <fileset dir="${ivy.jar.dir}" includes="*.jar" id="ivy.lib"/>
       <path refid="classpath.test"/>
+      <path refid="classpath.test.extra"/>
       <pathelement location="${build.classes}"/>
     </path>
     <au:antunit xmlns:au="antlib:org.apache.ant.antunit"
