@@ -73,7 +73,7 @@
     <dependency>
       <groupId>org.cyclonedx</groupId>
       <artifactId>cyclonedx-core-java</artifactId>
-      <version>13.1.0</version>
+      <version>13.2.0</version>
       <scope>compile</scope>
     </dependency>
     <dependency>

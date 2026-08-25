@@ -22,6 +22,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -44,8 +46,6 @@ import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Resource;
 import org.apache.tools.ant.types.ResourceCollection;
 import org.apache.tools.ant.types.resources.Union;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.commons.codec.digest.MessageDigestAlgorithms;
 
 import org.cyclonedx.Format;
 import org.cyclonedx.exception.GeneratorException;
@@ -377,7 +377,7 @@ public class ComponentBomTask extends Task {
                 + ":" + (component.getGroup() == null ? "group" : component.getGroup())
                 + ":" + (component.getVersion() == null ? "group" : component.getVersion());
         }
-        byte[] componentIdHash = new DigestUtils(MessageDigestAlgorithms.MD5).digest(componentId);
+        byte[] componentIdHash = digest(componentId);
         long clockseq = ((long)(componentIdHash[0] & 0x3F) << 56) | ((long)(componentIdHash[1] & 0xFF) << 48);
         long nodeLow = ((componentIdHash[2] & 0xFFl) << 40) | ((long)(componentIdHash[3] & 0xFF) << 32);
         long nodeHigh = ((componentIdHash[4] & 0xFFl) << 24) | ((componentIdHash[5] & 0xFF) << 16)
@@ -385,6 +385,19 @@ public class ComponentBomTask extends Task {
         long lsb = variant | clockseq | nodeLow | nodeHigh;
 
         return new UUID(msb, lsb);
+    }
+
+    private byte[] digest(String s) {
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+            if (messageDigest == null) {
+                throw new BuildException("Unable to create Message Digest", getLocation());
+            }
+            messageDigest.update(s.getBytes(StandardCharsets.UTF_8));
+            return messageDigest.digest();
+        } catch (NoSuchAlgorithmException noalgo) {
+            throw new BuildException(noalgo, getLocation());
+        }
     }
 
     private Metadata createMetadata(Date timestamp) throws IOException {
