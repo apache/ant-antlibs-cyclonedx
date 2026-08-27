@@ -111,6 +111,38 @@ under the License.
     </cdx:externalreferenceset>
   </target>
 
+  <!-- overridden until common/cyclonedx.xml supports compositionAggregate -->
+  <target name="define-core-ant-components"
+          if="add.ant.core.component"
+          xmlns:cdx="antlib:org.apache.ant.cyclonedx"
+          depends="define-common-cyclonedx-references">
+    <cdx:component
+        name="ant-launcher"
+        group="org.apache.ant"
+        version="${ant.core.version}"
+        isExternal="true"
+        compositionAggregate="complete"
+        id="ant-launcher">
+      <supplier refid="ant-pmc"/>
+      <license refid="apache-2"/>
+      <externalReferenceSet refid="ant-common-refs"/>
+      <externalReferenceSet refid="ant-ext-refs"/>
+    </cdx:component>
+    <cdx:component
+        name="ant"
+        group="org.apache.ant"
+        version="${ant.core.version}"
+        isExternal="true"
+        compositionAggregate="complete"
+        id="ant">
+      <supplier refid="ant-pmc"/>
+      <license refid="apache-2"/>
+      <externalReferenceSet refid="ant-common-refs"/>
+      <externalReferenceSet refid="ant-ext-refs"/>
+      <dependency componentRef="ant-launcher"/>
+    </cdx:component>
+  </target>
+
   <target name="create-antlib-sbom"
           depends="define-cyclonedx-components"
           if="can.use.cyclonedx"
@@ -134,7 +166,8 @@ under the License.
       <component
           description="Apache CycloneDX Antlib"
           publisher="The Apache Software Foundation"
-          supplierIsManufacturer="true">
+          supplierIsManufacturer="true"
+          compositionAggregate="complete">
         <cdx:ivyModule conf="default,provided" externalConf="provided">
           <templateComponent refid="ant"/>
           <templateComponent refid="ant-launcher"/>
@@ -143,7 +176,8 @@ under the License.
               group="org.apache.ivy"
               publisher="The Apache Software Foundation"
               description="Apache Ivy"
-              supplierIsManufacturer="true">
+              supplierIsManufacturer="true"
+              compositionAggregate="complete">
             <supplier refid="ant-pmc"/>
             <license refid="apache-2"/>
             <externalReferenceSet refid="ant-common-refs"/>

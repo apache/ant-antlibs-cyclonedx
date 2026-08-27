@@ -118,6 +118,10 @@
       The license element now supports a new expression attribute you
       can use to specify license expressions.
     </action>
+    <action type="add">
+      A new attribute compositionAggregate on component allows you to
+      specify the completeness of the component's description.
+    </action>
   </release>
 
   <release version="0.1" date="2026-06-03" description="initial release">

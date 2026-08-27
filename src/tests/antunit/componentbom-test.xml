@@ -538,4 +538,52 @@
         resource="${output}/bom.xml"
         value='&lt;hash alg="SHA-256"&gt;${ant.file.sha256}&lt;/hash&gt;'/>
   </target>
+
+  <target name="testNoCompositionsByDefault">
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component name="testname">
+        <file file="${antlib.location}"/>
+      </component>
+    </cdx:componentbom>
+    <au:assertResourceDoesntContain
+        xmlns:au="antlib:org.apache.ant.antunit"
+        resource="${output}/bom.xml"
+        value='&lt;compositions&gt;'/>
+  </target>
+
+  <target name="testAddsCompositionsWhenAggregateIsSet">
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component bomRef="name@1.0" name="testname" compositionAggregate="complete"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.compositions.composition.aggregate"
+        value="complete"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.compositions.composition.dependencies.dependency(ref)"
+        value="name@1.0"/>
+  </target>
+
+  <target name="testGroupsCompositionsByAggregate">
+    <cdx:componentbom outputdirectory="${output}" format="xml"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component bomRef="testname1@1.0" name="testname1" compositionAggregate="complete"/>
+      <additionalComponent bomRef="testname2@1.0" name="testname2" compositionAggregate="unknown"/>
+      <additionalComponent bomRef="testname4@1.0" name="testname4" compositionAggregate="complete"/>
+      <additionalComponent bomRef="testname3@1.0" name="testname3" compositionAggregate="complete"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.compositions.composition.aggregate"
+        value="complete,unknown"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.compositions.composition.dependencies.dependency(ref)"
+        value="testname1@1.0,testname3@1.0,testname4@1.0,testname2@1.0"/>
+  </target>
 </project>

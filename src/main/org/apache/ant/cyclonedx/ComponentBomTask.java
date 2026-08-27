@@ -35,6 +35,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.UUID;
 import java.util.function.Consumer;
 import java.util.regex.Matcher;
@@ -53,6 +54,8 @@ import org.cyclonedx.generators.BomGeneratorFactory;
 import org.cyclonedx.generators.json.BomJsonGenerator;
 import org.cyclonedx.generators.xml.BomXmlGenerator;
 import org.cyclonedx.model.Bom;
+import org.cyclonedx.model.BomReference;
+import org.cyclonedx.model.Composition;
 import org.cyclonedx.model.Dependency;
 import org.cyclonedx.model.LicenseChoice;
 import org.cyclonedx.model.LicenseItem;
@@ -346,6 +349,7 @@ public class ComponentBomTask extends Task {
         cs.sort(Component.CycloneDxComponentComparator);
         bom.setComponents(cs);
         addDependencies(bom, knownComponents, resolvedComponentsAdded);
+        addCompositions(bom, resolvedComponentsAdded);
 
         return bom;
     }
@@ -482,6 +486,32 @@ public class ComponentBomTask extends Task {
 
         dependencies.sort(Comparator.comparing(Dependency::getRef));
         bom.setDependencies(dependencies);
+    }
+
+    private void addCompositions(Bom bom, List<Component> resolvedComponentsAdded) {
+        final Map<Composition.Aggregate, List<String>> componentsByAggregate = new TreeMap<>();
+        visitAllComponentsWithExtra(resolvedComponentsAdded, c -> {
+                String bomRef = c.getBomRef();
+                CompositionAggregate a = c.getCompositionAggregate();
+                if (bomRef != null && a != null) {
+                    Composition.Aggregate key = a.getAggregate();
+                    componentsByAggregate.putIfAbsent(key, new ArrayList<>());
+                    List<String> dependencies = componentsByAggregate.get(key);
+                    dependencies.add(bomRef);
+                }
+            });
+
+        List<Composition> compositions = new ArrayList<>();
+        for (Map.Entry<Composition.Aggregate, List<String>> compositionEntry : componentsByAggregate.entrySet()) {
+            Composition composition = new Composition();
+            composition.setAggregate(compositionEntry.getKey());
+            compositionEntry.getValue().stream().sorted().forEach(s -> composition.addDependency(new BomReference(s)));
+            compositions.add(composition);
+        }
+
+        if (!compositions.isEmpty()) {
+            bom.setCompositions(compositions);
+        }
     }
 
     private void visitAllComponents(Consumer<Component> visitor) {

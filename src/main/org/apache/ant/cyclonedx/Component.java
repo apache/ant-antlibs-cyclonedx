@@ -85,6 +85,7 @@ public class Component extends DataType {
     private Set<String> tags = new HashSet<>();
     private List<Property> properties = new ArrayList<>();
     private String mimeType;
+    private CompositionAggregate compositionAggregate;
     private ComponentResolver resolver;
 
     /**
@@ -164,6 +165,7 @@ public class Component extends DataType {
         this.tags = new HashSet<>(other.tags);
         this.properties = new ArrayList<>(other.properties);
         this.mimeType = other.mimeType;
+        this.compositionAggregate = other.compositionAggregate;
         this.resolver = other.resolver;
     }
 
@@ -285,6 +287,16 @@ public class Component extends DataType {
     public void setMimeType(String mimeType) {
         checkAttributesAllowed();
         this.mimeType = mimeType;
+    }
+
+    /**
+     * Sets the composition aggregate of this component.
+     *
+     * @param compositionAggregate composition aggregate
+     * @since CycloneDX Antlib 0.2
+     */
+    public void setCompositionAggregate(CompositionAggregate compositionAggregate) {
+        this.compositionAggregate = compositionAggregate;
     }
 
     /**
@@ -642,6 +654,20 @@ public class Component extends DataType {
         }
         dieOnCircularReference();
         return mimeType;
+    }
+
+    /**
+     * Gets the composition aggregate of the component.
+     *
+     * @return composition aggregate - may be null
+     * @since CycloneDX Antlib 0.2
+     */
+    public CompositionAggregate getCompositionAggregate() {
+        if (isReference()) {
+            return getRef().getCompositionAggregate();
+        }
+        dieOnCircularReference();
+        return compositionAggregate;
     }
 
     /**
