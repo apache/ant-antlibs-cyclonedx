@@ -156,6 +156,14 @@
         xmlns:au="antlib:org.apache.ant.antunit"
         resource="${output}/merged.xml"
         value='&lt;hash alg="SHA-256"&gt;${ant.file.sha256}&lt;/hash&gt;'/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.compositions.composition.aggregate"
+        value="incomplete"/>
+    <au:assertPropertyEquals
+        xmlns:au="antlib:org.apache.ant.antunit"
+        name="bom.compositions.composition.dependencies.dependency(ref)"
+        value="pkg:maven/org.example/testname@1.0?type=jar"/>
   </target>
 
   <target name="testSbomLinkAddsBomExternalLink" depends="createMaximalComponentData">

@@ -50,4 +50,16 @@ public class CompositionAggregate extends EnumeratedAttribute {
     public Aggregate getAggregate() {
         return EnumUtils.valueOf(Aggregate.class, getValue(), Aggregate::getAggregateName);
     }
+
+    /**
+     * Maps a CycloneDX Aggregate.
+     *
+     * @param aggregate CycloneDX aggregate.
+     * @return translated aggregate
+     */
+    public static CompositionAggregate from(Aggregate aggregate) {
+        CompositionAggregate a = new CompositionAggregate();
+        a.setValue(aggregate.getAggregateName());
+        return a;
+    }
 }

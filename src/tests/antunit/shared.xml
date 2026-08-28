@@ -88,6 +88,7 @@
           publisher="test publisher"
           copyright="Copyright 2026 ACME Com"
           mimeType="text/plain"
+          compositionAggregate="incomplete"
           >
         <file file="${ant.file}"/>
         <manufacturer name="Example">

@@ -25,6 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Project;
@@ -35,6 +36,7 @@ import org.apache.tools.ant.types.resources.URLProvider;
 
 import org.cyclonedx.exception.ParseException;
 import org.cyclonedx.model.Bom;
+import org.cyclonedx.model.Composition;
 import org.cyclonedx.parsers.BomParserFactory;
 import org.cyclonedx.parsers.Parser;
 
@@ -102,6 +104,8 @@ public class SbomLinkComponentResolver extends Union implements ComponentResolve
             }
         }
 
+        setCompositionAggregate(parent, bom, real.getBomRef());
+
         if (!parent.areDependenciesUnknown() && parent.getDependencies().iterator().hasNext()) {
             List<org.cyclonedx.model.Component> additionalComponents = bom.getComponents();
             if (additionalComponents != null) {
@@ -166,4 +170,22 @@ public class SbomLinkComponentResolver extends Union implements ComponentResolve
         }
         return toReturn;
     }
+
+    private void setCompositionAggregate(Component parent, Bom bom, String realBomRef) {
+        if (realBomRef != null && parent.getCompositionAggregate() == null) {
+            List<Composition> allCompositions = bom.getCompositions();
+            if (allCompositions == null) {
+                return;
+            }
+            List<Composition> componentsComposition = allCompositions
+                .stream()
+                .filter(c -> c.getDependencies().stream()
+                        .anyMatch(d -> realBomRef.equals(d.getRef())))
+                .collect(Collectors.toList());
+            if (componentsComposition.size() == 1) {
+                parent.setCompositionAggregate(CompositionAggregate.from(componentsComposition.get(0).getAggregate()));
+            }
+        }
+    }
+
 }
