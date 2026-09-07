@@ -122,6 +122,10 @@
       A new attribute compositionAggregate on component allows you to
       specify the completeness of the component's description.
     </action>
+    <action type="update">
+      Updated the Ant dependency to 1.10.18, but the library should
+      work with earlier versions of Ant 1.10.x.
+    </action>
   </release>
 
   <release version="0.1" date="2026-06-03" description="initial release">
