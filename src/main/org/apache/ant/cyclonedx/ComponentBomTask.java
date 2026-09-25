@@ -379,7 +379,7 @@ public class ComponentBomTask extends Task {
         if (componentId == null) {
             componentId = component.getName()
                 + ":" + (component.getGroup() == null ? "group" : component.getGroup())
-                + ":" + (component.getVersion() == null ? "group" : component.getVersion());
+                + ":" + (component.getVersion() == null ? "version" : component.getVersion());
         }
         byte[] componentIdHash = digest(componentId);
         long clockseq = ((long)(componentIdHash[0] & 0x3F) << 56) | ((long)(componentIdHash[1] & 0xFF) << 48);
