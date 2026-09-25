@@ -72,6 +72,7 @@ under the License.
             description="@{description}"
             publisher="@{publisher}"
             type="@{componentType}"
+            compositionAggregate="complete"
             supplierIsManufacturer="@{supplierIsManufacturer}">
           <file file="@{archiveLocation}" unless:blank="@{archiveLocation}"/>
           <additionalComponentChildren/>

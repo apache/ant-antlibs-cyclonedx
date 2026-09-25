@@ -38,6 +38,10 @@
   </properties>
 
   <release version="0.9.0" date="unreleased">
+    <action type="update">
+      The archivebom task now sets compositionAggregate for the
+      archive's component itself to complete.
+    </action>
   </release>
 
   <release version="0.2" date="2026-09-25">
