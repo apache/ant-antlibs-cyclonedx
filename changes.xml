@@ -37,7 +37,10 @@
     <title>Apache CycloneDX Antlib</title>
   </properties>
 
-  <release version="0.2" date="unreleased">
+  <release version="0.9.0" date="unreleased">
+  </release>
+
+  <release version="0.2" date="2026-09-25">
     <action type="fix" breaks-bwc="true">
       The name attribute of properties is required by the spec and
       this is now enforced.
