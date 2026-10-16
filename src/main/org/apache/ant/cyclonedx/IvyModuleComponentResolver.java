@@ -309,7 +309,10 @@ public class IvyModuleComponentResolver extends ProjectComponent implements Comp
                     org.apache.ant.cyclonedx.License license = new org.apache.ant.cyclonedx.License();
                     license.setName(ivyLicense.getName());
                     if (ivyLicense.getUrl() != null) {
-                        license.addConfiguredUrl(new URLResource(ivyLicense.getUrl()));
+                        try {
+                            license.addConfiguredUrl(new URLResource(ivyLicense.getUrl()));
+                        } catch (Exception ignored) {
+                        }
                     }
                     component.addConfiguredLicense(license);
                 }
