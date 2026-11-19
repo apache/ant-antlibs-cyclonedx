@@ -28,6 +28,7 @@
           description CDATA #IMPLIED>
 <!ATTLIST action
           issue CDATA #IMPLIED
+          githubPr CDATA #IMPLIED
           type (add|fix|remove|update) #REQUIRED
           breaks-bwc (true|false) #IMPLIED>
 ]
@@ -41,6 +42,10 @@
     <action type="update">
       The archivebom task now sets compositionAggregate for the
       archive's component itself to complete.
+    </action>
+    <action type="fix" githubPr="3">
+      Malformed URLs for licenses no longer cause the SBOM generation
+      to fail.
     </action>
   </release>
 

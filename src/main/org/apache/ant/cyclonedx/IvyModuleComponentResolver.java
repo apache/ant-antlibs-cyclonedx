@@ -19,6 +19,8 @@ package org.apache.ant.cyclonedx;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.ArrayList;
@@ -279,7 +281,7 @@ public class IvyModuleComponentResolver extends ProjectComponent implements Comp
         return c;
     }
 
-    private static void fillFromModuleDescriptor(Component component,
+    private void fillFromModuleDescriptor(Component component,
                                                  ModuleDescriptor md,
                                                  Map<ModuleRevisionId, Set<IvyNode>> dependencyTree) {
         ModuleRevisionId mrid = md.getModuleRevisionId();
@@ -308,10 +310,13 @@ public class IvyModuleComponentResolver extends ProjectComponent implements Comp
                 for (License ivyLicense : ivyLicenses) {
                     org.apache.ant.cyclonedx.License license = new org.apache.ant.cyclonedx.License();
                     license.setName(ivyLicense.getName());
-                    if (ivyLicense.getUrl() != null) {
+                    String ivyLicenseUrl = ivyLicense.getUrl();
+                    if (ivyLicenseUrl != null) {
                         try {
-                            license.addConfiguredUrl(new URLResource(ivyLicense.getUrl()));
-                        } catch (Exception ignored) {
+                            license.addConfiguredUrl(new URLResource(new URL(ivyLicenseUrl)));
+                        } catch (MalformedURLException e) {
+                            log("the license url of component '" + component.getName()
+                                    + "' is not a valid URL and will be ignored: " + ivyLicenseUrl, Project.MSG_VERBOSE);
                         }
                     }
                     component.addConfiguredLicense(license);
