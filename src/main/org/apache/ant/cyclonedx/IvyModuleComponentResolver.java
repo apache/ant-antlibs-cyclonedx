@@ -329,6 +329,12 @@ public class IvyModuleComponentResolver extends ProjectComponent implements Comp
             Set<IvyNode> dependencies = dependencyTree.get(mrid);
             if (dependencies != null) {
                 for (IvyNode n : dependencies) {
+                    if (n.isEvicted(this.conf)) {
+                        log("the dependency '" + n + "' is evicted for conf '" + this.conf
+                                + "' and will not be added to the component '" + component.getName() + "'.", Project.MSG_DEBUG);
+                        continue;
+                    }
+
                     Component.Dependency d = new Component.Dependency();
                     d.setBomRef(getBomRef(n));
                     component.addDependency(d);
@@ -397,20 +403,25 @@ public class IvyModuleComponentResolver extends ProjectComponent implements Comp
         ModuleRevisionId rootId = root.getModuleRevisionId();
         seen.add(rootId);
         List<ModuleDescriptor> deps = new ArrayList<>();
-        appendDependencies(tree, rootId, deps, seen);
+        appendDependencies(tree, rootId, deps, seen, rootId);
         return deps;
     }
 
     private void appendDependencies(Map<ModuleRevisionId, Set<IvyNode>> tree, ModuleRevisionId mrid,
-                                    List<ModuleDescriptor> deps, Set<ModuleRevisionId> seen) {
+                                    List<ModuleDescriptor> deps, Set<ModuleRevisionId> seen, ModuleRevisionId rootId) {
         Set<IvyNode> thisDeps = tree.get(mrid);
         if (thisDeps != null) {
             for (IvyNode d : thisDeps) {
+                if (d.isEvicted(this.conf)) {
+                    log("the dependency '" + d + "' is evicted for conf '" + this.conf + "' and will not be included in '" + rootId + "'.", Project.MSG_INFO);
+                    continue;
+                }
+
                 ModuleRevisionId depId = d.getId();
                 if (!seen.contains(depId)) {
                     seen.add(depId);
                     deps.add(d.getDescriptor());
-                    appendDependencies(tree, depId, deps, seen);
+                    appendDependencies(tree, depId, deps, seen, rootId);
                 }
             }
         }
