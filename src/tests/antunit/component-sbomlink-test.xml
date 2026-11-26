@@ -466,6 +466,38 @@
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.dependencies.dependency.dependency(ref)"
-        value="pkg:maven/commons-codec/commons-codec@1.22.0?type=jar"/>
+        value="pkg:maven/commons-codec/commons-codec@1.21.0?type=jar"/>
+  </target>
+
+  <target name="testMultipleVersionsOfSingleLibrary">
+    <cdx:componentbom
+            outputdirectory="${output}"
+            format="xml"
+            xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component
+              name="testname"
+              group="org.example"
+              version="1.0">
+        <dependency bomRef="pkg:maven/commons-codec/commons-codec@1.21.0?type=jar"/>
+        <dependency bomRef="pkg:maven/commons-codec/commons-codec@1.22.0?type=jar"/>
+      </component>
+      <additionalComponent
+              name="commons-codec"
+              group="commons-codec"
+              version="1.21.0"/>
+      <additionalComponent
+              name="commons-codec"
+              group="commons-codec"
+              version="1.22.0"/>
+    </cdx:componentbom>
+    <xmlproperty file="${output}/bom.xml"/>
+    <au:assertPropertyEquals
+            xmlns:au="antlib:org.apache.ant.antunit"
+            name="bom.dependencies.dependency(ref)"
+            value="pkg:maven/commons-codec/commons-codec@1.21.0?type=jar,pkg:maven/commons-codec/commons-codec@1.22.0?type=jar,pkg:maven/org.example/testname@1.0?type=jar"/>
+    <au:assertPropertyEquals
+            xmlns:au="antlib:org.apache.ant.antunit"
+            name="bom.dependencies.dependency.dependency(ref)"
+            value="pkg:maven/commons-codec/commons-codec@1.21.0?type=jar,pkg:maven/commons-codec/commons-codec@1.22.0?type=jar"/>
   </target>
 </project>
