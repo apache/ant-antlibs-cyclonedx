@@ -43,9 +43,9 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.types.Resource;
-import org.apache.tools.ant.types.ResourceCollection;
 import org.apache.tools.ant.types.resources.Union;
 
 import org.cyclonedx.Format;
@@ -288,7 +288,7 @@ public class ComponentBomTask extends Task {
 
         Metadata meta = createMetadata(currentTime);
 
-        Map<String, String> knownComponents = new HashMap<>();
+        Map<String, Set<String>> knownComponents = new HashMap<>();
         List<Component> resolvedComponents = new ArrayList<>();
         visitAllComponents(c -> {
                 try {
@@ -298,7 +298,8 @@ public class ComponentBomTask extends Task {
                 }
                 String unversionedKey = getUnversionedCoordinates(c);
                 if (unversionedKey != null) {
-                    knownComponents.put(unversionedKey, c.getBomRef());
+                    Set<String> versions = knownComponents.computeIfAbsent(unversionedKey, k -> new HashSet<>());
+                    versions.add(c.getBomRef());
                 }
             });
         meta.setComponent(component.toMainCycloneDxComponent(specVersion.getVersion()));
@@ -334,10 +335,15 @@ public class ComponentBomTask extends Task {
             if (unversionedKey == null) {
                 cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
                 resolvedComponentsAdded.add(c);
-            } else if (!knownComponents.containsKey(unversionedKey)) {
-                knownComponents.put(unversionedKey, c.getBomRef());
-                cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
-                resolvedComponentsAdded.add(c);
+            } else {
+                Set<String> versions = knownComponents.computeIfAbsent(unversionedKey, k -> new HashSet<>());
+                String cBomRef = c.getBomRef();
+                if (versions.add(cBomRef)) {
+                    cs.add(c.toAdditionalCycloneDxComponent(specVersion.getVersion()));
+                    resolvedComponentsAdded.add(c);
+                } else {
+                    log("skip duplicate bomRef '" + cBomRef + "'", Project.MSG_DEBUG);
+                }
             }
         }
 
@@ -448,7 +454,7 @@ public class ComponentBomTask extends Task {
         return meta;
     }
 
-    private void addDependencies(Bom bom, Map<String, String> unversionedToVersioned,
+    private void addDependencies(Bom bom, Map<String, Set<String>> unversionedToVersioned,
                                  List<Component> resolvedComponentsAdded) {
         final Set<String> bomRefs = new HashSet<>();
         visitAllBomComponents(bom, c -> {
@@ -466,19 +472,22 @@ public class ComponentBomTask extends Task {
                 if (bomRef != null && !c.areDependenciesUnknown()) {
                     Dependency dep = new Dependency(bomRef);
                     for (Component.Dependency d : c.getDependencies()) {
-                        String br = d.getBomRef();
-                        if (!bomRefs.contains(br)) {
-                            String mappedRef = null;
+                        String dBomRef = d.getBomRef();
+                        Set<String> brs = Collections.singleton(dBomRef);
+                        if (!bomRefs.contains(dBomRef)) {
+                            Set<String> mappedRefs = null;
                             String unversionedKey = getUnversionedCoordinates(d);
                             if (unversionedKey != null) {
-                                mappedRef = unversionedToVersioned.get(unversionedKey);
+                                mappedRefs = unversionedToVersioned.get(unversionedKey);
                             }
-                            if (mappedRef == null) {
-                                throw new BuildException("dependency '" + br + "' is unknown");
+                            if (mappedRefs == null || mappedRefs.isEmpty()) {
+                                throw new BuildException("dependency '" + dBomRef + "' is unknown");
                             }
-                            br = mappedRef;
+                            brs = mappedRefs;
                         }
-                        dep.addDependency(new Dependency(br));
+                        for (String br : brs) {
+                            dep.addDependency(new Dependency(br));
+                        }
                     }
                     dependencies.add(dep);
                 }
