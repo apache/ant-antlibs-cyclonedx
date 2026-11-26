@@ -466,6 +466,6 @@
     <au:assertPropertyEquals
         xmlns:au="antlib:org.apache.ant.antunit"
         name="bom.dependencies.dependency.dependency(ref)"
-        value="pkg:maven/commons-codec/commons-codec@1.22.0?type=jar"/>
+        value="pkg:maven/commons-codec/commons-codec@1.21.0?type=jar"/>
   </target>
 </project>

@@ -47,7 +47,7 @@
       Malformed URLs for licenses no longer cause the SBOM generation
       to fail.
     </action>
-    <action type="fix" githubPr="5">
+    <action type="fix" githubPr="5" breaks-bwc="true">
       When a project includes multiple versions of the same dependency
       by using the 'NoConflictManager', now all included versions are
       present in the SBOM.
