@@ -408,4 +408,62 @@
         resource="${output}/bom.xml"
         value='&lt;hash alg="SHA-1"&gt;fa8a13422ac460563171d10a37c3f28340a953f6&lt;/hash&gt;'/>
   </target>
+
+  <target name="testEvictionHandlingWithMultipleConfigurations">
+    <!--
+      this test intends to hit a lot of edge cases:
+      - configurations and their 'superclass' must be treated equally ('empty,b' = 'testIncludeConf')
+      - during resolution, more dependencies were resolved than those included in the SBOM (ant-launcher 1.10.17 is only present in conf 'a')
+      - the same dependency is included by 2 separate confs, but evicted by one of them (ant / ant-launcher 1.10.16 is included by 'b' and 'c', but evicted by 'b')
+      - a transitive dependency is omitted from the SBOM ('b' only resolves the 'master' configuration of ant)
+    -->
+
+    <local name="ant.tstamp.now"/>
+    <property name="ant.tstamp.now" value="1795779119"/>
+
+    <ivy:resolve file="resources/multiple-versions.ivy.xml" conf="*"
+                 xmlns:ivy="antlib:org.apache.ivy.ant"/>
+    <!-- outputdirectory="${output}" -->
+    <cdx:componentbom outputdirectory="${output}" format="xml" bomName="directConf" serialNumber="urn:uuid:e8ef3511-734a-47b8-b8c8-19c13c255335"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component>
+        <cdx:ivyModule conf="empty,b,c" externalconf="c"/>
+      </component>
+    </cdx:componentbom>
+    <cdx:componentbom outputdirectory="${output}" format="xml" bomName="extendConf" serialNumber="urn:uuid:e8ef3511-734a-47b8-b8c8-19c13c255335"
+                      xmlns:cdx="antlib:org.apache.ant.cyclonedx">
+      <component>
+        <cdx:ivyModule conf="testIncludeConf,testExternalConf" externalconf="testExternalConf"/>
+      </component>
+    </cdx:componentbom>
+
+    <!-- validate that both SBOMs are exactly equal -->
+    <au:assertFilesMatch
+            xmlns:au="antlib:org.apache.ant.antunit"
+            expected="${output}/directConf.xml"
+            actual="${output}/extendConf.xml"/>
+
+    <xmlproperty file="${output}/directConf.xml"/>
+    <au:assertPropertyEquals
+            xmlns:au="antlib:org.apache.ant.antunit"
+            name="bom.components.component.name"
+            value="ant-launcher,ant,ant"/>
+    <au:assertPropertyEquals
+            xmlns:au="antlib:org.apache.ant.antunit"
+            name="bom.components.component.version"
+            value="1.10.16,1.10.16,1.10.17"/>
+
+    <!-- validate that conf 'c' is marked as external, and that 'b' is not. -->
+    <local name="directConf.xml.text"/>
+    <loadfile property="directConf.xml.txt" srcfile="${output}/directConf.xml"/>
+    <au:assertTrue xmlns:au="antlib:org.apache.ant.antunit" message="ant@1.10.16 must be marked as external">
+      <contains string="${directConf.xml.txt}" substring="bom-ref=&quot;pkg:maven/org.apache.ant/ant@1.10.16?type=jar&quot; isExternal=&quot;true&quot;"/>
+    </au:assertTrue>
+    <au:assertTrue xmlns:au="antlib:org.apache.ant.antunit" message="ant-launcher@1.10.16 must be marked as external">
+      <contains string="${directConf.xml.txt}" substring="bom-ref=&quot;pkg:maven/org.apache.ant/ant-launcher@1.10.16?type=jar&quot; isExternal=&quot;true&quot;"/>
+    </au:assertTrue>
+    <au:assertTrue xmlns:au="antlib:org.apache.ant.antunit" message="ant@1.10.17 must not be marked as external">
+      <contains string="${directConf.xml.txt}" substring="bom-ref=&quot;pkg:maven/org.apache.ant/ant@1.10.17?type=jar&quot;&gt;"/>
+    </au:assertTrue>
+  </target>
 </project>
