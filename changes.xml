@@ -47,6 +47,10 @@
       Malformed URLs for licenses no longer cause the SBOM generation
       to fail.
     </action>
+    <action type="fix" issue="70273">
+      Evicted Ivy dependencies are now ignored.
+      Fixes a NullPointerException when Ivy conflict-managers are used.
+    </action>
   </release>
 
   <release version="0.2" date="2026-09-25">

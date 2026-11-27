@@ -329,6 +329,11 @@ public class IvyModuleComponentResolver extends ProjectComponent implements Comp
             Set<IvyNode> dependencies = dependencyTree.get(mrid);
             if (dependencies != null) {
                 for (IvyNode n : dependencies) {
+                    if(isEvicted(n)) {
+                        log("the dependency '" + n + "' is evicted and will not be added to the component '" + component.getName() + "'.", Project.MSG_DEBUG);
+                        continue;
+                    }
+
                     Component.Dependency d = new Component.Dependency();
                     d.setBomRef(getBomRef(n));
                     component.addDependency(d);
@@ -397,20 +402,30 @@ public class IvyModuleComponentResolver extends ProjectComponent implements Comp
         ModuleRevisionId rootId = root.getModuleRevisionId();
         seen.add(rootId);
         List<ModuleDescriptor> deps = new ArrayList<>();
-        appendDependencies(tree, rootId, deps, seen);
+        appendDependencies(tree, rootId, deps, seen, rootId);
         return deps;
     }
 
     private void appendDependencies(Map<ModuleRevisionId, Set<IvyNode>> tree, ModuleRevisionId mrid,
-                                    List<ModuleDescriptor> deps, Set<ModuleRevisionId> seen) {
+                                    List<ModuleDescriptor> deps, Set<ModuleRevisionId> seen, ModuleRevisionId rootId) {
         Set<IvyNode> thisDeps = tree.get(mrid);
         if (thisDeps != null) {
             for (IvyNode d : thisDeps) {
+                if (isEvicted(d)) {
+                    log("the dependency '" + d + "' is evicted and will not be included in '" + rootId + "'.", Project.MSG_INFO);
+                    continue;
+                }
+                ModuleDescriptor depDesc = d.getDescriptor();
+                if (depDesc == null) {
+                    Set<String> includingConfs = getIncludedBecauseOf(d);
+                    throw new BuildException("the dependency '" + d + "' is included by the configuration(s) " + includingConfs + " but the moduleDescriptor is null");
+                }
+
                 ModuleRevisionId depId = d.getId();
                 if (!seen.contains(depId)) {
                     seen.add(depId);
-                    deps.add(d.getDescriptor());
-                    appendDependencies(tree, depId, deps, seen);
+                    deps.add(depDesc);
+                    appendDependencies(tree, depId, deps, seen, rootId);
                 }
             }
         }
@@ -488,10 +503,32 @@ public class IvyModuleComponentResolver extends ProjectComponent implements Comp
         if (specialConfigurations.isEmpty()) {
             return false;
         }
-        Set<String> rootConfs = node.getRootModuleConfigurationsSet();
-        Stream<String> includedBecauseOf = includeAllConfigurations ? rootConfs.stream()
-            : rootConfs.stream().filter(c -> includedConfigurations.contains(c));
-        return includedBecauseOf.allMatch(c -> specialConfigurations.contains(c));
+        return node.getRootModuleConfigurationsSet().stream()
+                .filter(this::isConfIncluded)
+                .filter(c -> !node.isEvicted(c))
+                .allMatch(specialConfigurations::contains);
+    }
+
+    private boolean isConfIncluded(String c) {
+        if(includeAllConfigurations) {
+            return true;
+        }
+        return includedConfigurations.contains(c);
+    }
+
+    private boolean isEvicted(IvyNode n) {
+        return n.getRootModuleConfigurationsSet().stream()
+                .filter(this::isConfIncluded)
+                .allMatch(n::isEvicted);
+    }
+
+    /**
+     * @return the Set of configurations that caused the dependency to be included.
+     * <br/>- limited to the Set of configurations that are included in the SBOM.
+     * <br/>- excluding configurations that evicted the dependency.
+     */
+    private Set<String> getIncludedBecauseOf(IvyNode n) {
+        return n.getRootModuleConfigurationsSet().stream().filter(c -> isConfIncluded(c) && !n.isEvicted(c)).collect(Collectors.toSet());
     }
 
     private static String getBomRef(IvyNode n) {
